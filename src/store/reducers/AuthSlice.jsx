@@ -1,6 +1,8 @@
 import { createSlice, isPending, isRejected } from "@reduxjs/toolkit";
-
-import { loginAction, signUpAction, logoutAction } from "../actions/AuthThunks";
+import {
+  loginAction,
+  signUpAction,
+  logoutAction } from "../actions/AuthThunks";
 
 const authSlice = createSlice({
   name: "auth",
