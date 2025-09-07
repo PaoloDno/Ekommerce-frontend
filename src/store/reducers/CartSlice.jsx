@@ -6,7 +6,7 @@ import {
   clearCartAction,
 } from "../actions/CartThunks";
 
-export const cartSlice = createSlice({
+const cartSlice = createSlice({
   name: "cart",
   initialState: {
     items: [],
@@ -77,7 +77,11 @@ export const cartSlice = createSlice({
         state.totalPrice = 0;
       })
       .addMatcher(
-        isPending(getCartAction, addToCartAction, clearCartAction, removeFromCartAction),
+        isPending(
+          getCartAction,
+          addToCartAction,
+          clearCartAction,
+          removeFromCartAction),
         (state) => {
           state.isPending = true;
           state.isRejected = false;
