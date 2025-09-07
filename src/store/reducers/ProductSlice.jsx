@@ -6,7 +6,6 @@ import {
   updateProductAction,
   deleteProductAction,
 } from "../actions/ProductThunks";
-import { build } from "vite";
 
 const productSlice = createSlice({
   name: "product",

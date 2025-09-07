@@ -9,13 +9,13 @@ import {
 export const categorySlice = createSlice({
   name: "category",
   initialState: {
-    category,
+    category: "",
     isPending: false,
     isRejected: false,
     isSuccess: false,
     error: null,
   },
-  reducers,
+  reducers: {},
   extraReducers: (builder) => {
     builder
       .addCase(createLinkCategoryAction.fulfilled, (state, action) => {

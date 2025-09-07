@@ -6,8 +6,6 @@ import AppRoutes from "./components/Routes/AppRoutes";
 //components
 import HeaderComponent from "./components/Header/HeaderComponent";
 
-import './App.css'
-
 function App() {
   return (
     <Router>
