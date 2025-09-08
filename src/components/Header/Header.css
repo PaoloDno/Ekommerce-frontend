@@ -1,0 +1,24 @@
+@tailwind components;
+
+@layer components {
+  .header-link {
+    @apply flex items-center justify-center 
+         w-1/3 min-w-fit px-4 py-1
+         text-stylep1 text-skin-color1
+         rounded-md transition-all duration-200
+         hover:bg-skin-secondary hover:text-skin-colorHigh hover:scale-x-110
+         hover:scale-y-105 
+         hover:rounded-lg hover:shadow-lg;
+  }
+  .header-link-icon {
+    @apply flex text-styleh4 px-2;
+  }
+
+  .header-desktop {
+    @apply hidden md:grid grid-cols-[200px_1.5fr_1fr_auto] bg-skin-primary items-center  text-styleh4;
+  }
+
+  .header-mobile {
+    @apply flex md:hidden justify-between items-center flex-col min-w-[355px] text-styleh4;
+  }
+}

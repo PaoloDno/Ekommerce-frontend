@@ -1,3 +1,11 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import url('https://fonts.googleapis.com/css2?family=Merriweather:opsz,wdth,wght@18..144,90,500&family=Montserrat&family=Oswald&display=swap');
+@import './styles/base.css';
+@import './styles/component.css';
+@import './styles//utilities.css';
+@import './styles/theme.css';
+
+
+/* componennts */
+
+@import './components/Header/Header.css';
+
