@@ -1,91 +1,84 @@
 import { Link } from "react-router-dom";
 import { useAppContext } from "../../context/AppContext";
-import { FaHome, FaSearch, FaStore, FaTag } from "react-icons/fa";
+import { FaHome, FaSearch, FaStore, FaTag, FaShoppingCart } from "react-icons/fa";
 
 export default function HeaderComponent() {
-  const { user, cartQuantity, theme } = useAppContext();
+  const { user, cartQuantity } = useAppContext();
+  const brandName = "Ekommerce";
+
+  const navLinks = [
+    { to: "/", label: "Home", icon: <FaHome /> },
+    { to: "/stores", label: "Store", icon: <FaStore /> },
+    { to: "/categories", label: "Categories", icon: <FaTag /> },
+  ];
+
+  const AuthButtons = () => (
+    <div className="space-x-2 flex flex-row items-center">
+      <button className="header-login hover:scale-110">LOGIN</button>
+      <button className="header-signup hover:scale-110">SIGNUP</button>
+    </div>
+  );
+
+  const SearchBar = () => (
+    <div className="flex items-center w-full max-w-md">
+      <input
+        type="text"
+        placeholder="Search Products..."
+        className="header-search"
+      />
+      <span className="header-icons">
+        <FaSearch />
+      </span>
+    </div>
+  );
 
   return (
-    <header className="bg-skin-primary items-center justify-center pb-2 w-full">
+    <header className="bg-skin-primary w-full p-2">
       
-      <div className="header-desktop gap-3">
-        <h1 className="text-skin-color1 font-bold text-styleh3 ml-2 bg-yellow-200">Ekommerce</h1>
+      <div className="header-desktop">
         
-        <div className="flex items-center bg-green-200">
-          <input
-            type="text"
-            placeholder="Search..."
-            className="rounded text-stylep1 px-3 py-1 border border-skin-color2 w-full"
-          />
-          <span className="p-[1rem] text-stylep1"><FaSearch /></span>
-        </div>
+        <h1 className="text-skin-color1 font-bold text-styleh3 ml-2">
+          {brandName}
+        </h1>
 
-        <nav className="flex space-x-2 mx-2">
-          <Link className="header-link" 
-            to="/">
-            <span className="header-link-icon"><FaHome /></span>
-            <span className="mr-2">Home</span>
-          </Link>
-          <Link className="header-link" 
-            to="/">
-            <span className="header-link-icon"><FaStore /></span>
-            <span className="mr-2">Store</span>
-          </Link>
-          <Link className="header-link" 
-            to="/">
-            <span className="header-link-icon"><FaTag /></span>
-            <span className="mr-3">Categories</span>
-          </Link>
-          
+        <SearchBar />
+
+        <nav className="flex space-x-3">
+          {navLinks.map(({ to, label, icon }) => (
+            <Link key={to} to={to} className="header-link space-x-2">
+              <span>{icon}</span>
+              <span>{label}</span>
+            </Link>
+          ))}
         </nav>
 
-        <div className="text-skin-color1">
-          {user ? (
-            <span>Profile</span>
-          ) : (
-            <div className="space-x-2">
-              <button className="px-4 py-2 bg-skin-buttonColor text-white rounded">
-                Login
-              </button>
-              <button className="px-4 py-2 border border-white rounded">
-                Signup
-              </button>
-            </div>
-          )}
+        <div className="flex items-center space-x-4 text-skin-color1">
+          <Link to="/cart" className="relative">
+            <span className="header-icons">
+            <FaShoppingCart />
+            </span>
+            {cartQuantity > 0 && (
+              <span className="absolute -top-2 -right-2 bg-red-500 text-white text-xs rounded-full px-1">
+                {cartQuantity}
+              </span>
+            )}
+          </Link>
+          {user ? <span>Profile</span> : <AuthButtons />}
         </div>
       </div>
 
-      <div className="header-mobile">
-        <div className="flex w-full justify-between">
-          <h1 className="text-skin-color1 font-bold text-styleh3">My Site</h1>
-          {user ? (
-            <span>Profile</span>
-          ) : (
-            <div className="space-x-2">
-              <button className="px-4 py-2 bg-skin-buttonColor text-white rounded">
-                Login
-              </button>
-              <button className="px-4 py-2 border border-white rounded">
-                Signup
-              </button>
-            </div>
-          )}
+      <div className="flex flex-col md:hidden gap-2">
+        <div className="flex justify-between items-center">
+          <h1 className="text-skin-color1 font-bold text-styleh3">{brandName}</h1>
+          {user ? <span>Profile</span> : <AuthButtons />}
         </div>
-        <div className="flex items-center w-full">
-          <input
-            type="text"
-            placeholder="Search..."
-            className="rounded px-3 py-1 border w-full border-skin-color2"
-          />
-          <span>Icon</span>
-        </div>
-        <div className="flex">
-
-        </div>
-        <nav className="text-skin-color1 space-x-2 mx-4 text-stylep1 flex">
-          <Link to="/">Home</Link>
-          <Link to="/stores">Stores</Link>
-          <Link to="/categories">Categories</Link>
+        <SearchBar />
+        <nav className="flex justify-around text-skin-color1 text-stylep1 mt-2">
+          {navLinks.map(({ to, label }) => (
+            <Link key={to} to={to}>
+              {label}
+            </Link>
+          ))}
         </nav>
       </div>
     </header>

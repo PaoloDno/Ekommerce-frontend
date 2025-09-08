@@ -5,9 +5,9 @@
     @apply flex items-center justify-center 
          w-1/3 min-w-fit px-4 py-1
          text-stylep1 text-skin-color1
-         rounded-md transition-all duration-200
-         hover:bg-skin-secondary hover:text-skin-colorHigh hover:scale-x-110
-         hover:scale-y-105 
+         rounded-md transition-all duration-300
+         hover:bg-skin-secondary hover:bg-opacity-5 hover:text-skin-colorHigh
+         hover:scale-y-110 
          hover:rounded-lg hover:shadow-lg;
   }
   .header-link-icon {
@@ -15,10 +15,33 @@
   }
 
   .header-desktop {
-    @apply hidden md:grid grid-cols-[200px_1.5fr_1fr_auto] bg-skin-primary items-center  text-styleh4;
+    @apply hidden md:grid grid-cols-[200px_1.5fr_1fr_auto] bg-skin-primary 
+          items-center  text-styleh4 gap-4;
   }
 
   .header-mobile {
-    @apply flex md:hidden justify-between items-center flex-col min-w-[355px] text-styleh4;
+    @apply flex md:hidden justify-between items-center 
+          flex-col min-w-[355px] text-styleh4 gap-2;
+  }
+  .header-signup {
+    @apply flex p-2 text-skin-color1 text-stylep2 items-center px-4 font-bold
+          font-Montserrat hover:text-skin-colorHigh hover:scale-110;
+  }
+  
+  .header-login {
+    @apply flex p-2 bg-skin-buttonColor-1 border border-skin-colorBorder1 
+          text-skin-color1 px-4 rounded-2xl my-2 text-stylep2
+          items-center font-Montserrat font-bold hover:border-skin-colorBorder1
+          hover:bg-black hover:bg-opacity-25 hover:text-skin-colorHigh;
+  }
+
+  .header-icons {
+    @apply flex p-2 text-skin-color1 text-styleh4 bg-skin-buttonColor-1 bg-opacity-5 m-1
+          hover:text-skin-colorHigh hover:scale-110;
+    ;
+  }
+
+  .header-search {
+    @apply flex rounded text-stylep1 px-3 py-1 border border-skin-colorBorder2 w-full min-w-[200px];
   }
 }
