@@ -3,20 +3,20 @@
 @layer components {
   .header-link {
     @apply flex items-center justify-center 
-         w-1/3 min-w-fit px-4 py-1
+         w-1/3 min-w-fit px-2 lg:px-4 py-1
          text-stylep1 text-skin-color1
          rounded-md transition-all duration-300
-         hover:bg-skin-secondary hover:bg-opacity-5 hover:text-skin-colorHigh
+         hover:bg-skin-fill-3 hover:bg-opacity-25 hover:text-skin-colorHigh
          hover:scale-y-110 
          hover:rounded-lg hover:shadow-lg;
   }
   .header-link-icon {
-    @apply flex text-styleh4 px-2;
+    @apply flex text-styleh4 px-1;
   }
 
   .header-desktop {
-    @apply hidden md:grid grid-cols-[200px_1.5fr_1fr_auto] bg-skin-primary 
-          items-center  text-styleh4 gap-4;
+    @apply hidden md:grid grid-cols-[150px_1.5fr_1fr_auto] bg-skin-primary 
+          items-center text-styleh4 md:gap-1 lg:gap-4;
   }
 
   .header-mobile {
@@ -24,15 +24,17 @@
           flex-col min-w-[355px] text-styleh4 gap-2;
   }
   .header-signup {
-    @apply flex p-2 text-skin-color1 text-stylep2 items-center px-4 font-bold
+    @apply flex py-1 bg-skin-buttonColor-2 text-skin-color2 md:text-skin-color1 md:bg-transparent text-stylep2 items-center
+          md:pr-2 md:pl-0 font-bold p-2
           font-Montserrat hover:text-skin-colorHigh hover:scale-110;
   }
   
   .header-login {
-    @apply flex p-2 bg-skin-buttonColor-1 border border-skin-colorBorder1 
-          text-skin-color1 px-4 rounded-2xl my-2 text-stylep2
+    @apply flex py-1 px-2 bg-skin-buttonColor-1 border border-skin-colorBorder1 
+          text-skin-color1 rounded-sm my-2 text-stylep2
           items-center font-Montserrat font-bold hover:border-skin-colorBorder1
-          hover:bg-black hover:bg-opacity-25 hover:text-skin-colorHigh;
+          hover:bg-skin-fill-3 hover:bg-opacity-75 hover:text-skin-colorHigh hover:rounded-2xl
+          transition-all duration-100 hover:scale-x-125 hover:px-4;
   }
 
   .header-icons {
@@ -42,6 +44,6 @@
   }
 
   .header-search {
-    @apply flex rounded text-stylep1 px-3 py-1 border border-skin-colorBorder2 w-full min-w-[200px];
+    @apply flex rounded-sm text-stylep1 pl-3 py-1 border border-skin-colorBorder2 w-full min-w-[200px];
   }
 }

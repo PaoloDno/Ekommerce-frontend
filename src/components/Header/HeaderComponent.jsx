@@ -20,7 +20,7 @@ export default function HeaderComponent() {
   );
 
   const SearchBar = () => (
-    <div className="flex items-center w-full max-w-md">
+    <div className="flex items-center w-full min-w-[120px]">
       <input
         type="text"
         placeholder="Search Products..."
@@ -37,13 +37,13 @@ export default function HeaderComponent() {
       
       <div className="header-desktop">
         
-        <h1 className="text-skin-color1 font-bold text-styleh3 ml-2">
+        <h1 className="text-skin-color1 font-bold text-styleh4 ml-2">
           {brandName}
         </h1>
 
         <SearchBar />
 
-        <nav className="flex space-x-3">
+        <nav className="flex">
           {navLinks.map(({ to, label, icon }) => (
             <Link key={to} to={to} className="header-link space-x-2">
               <span>{icon}</span>
@@ -52,8 +52,9 @@ export default function HeaderComponent() {
           ))}
         </nav>
 
-        <div className="flex items-center space-x-4 text-skin-color1">
-          <Link to="/cart" className="relative">
+        <div className="flex items-center space-x-4 text-skin-color1 border-l-2 border-skin-colorBorder1 pl-3">
+          {user ? <span>
+            <Link to="/cart" className="relative">
             <span className="header-icons">
             <FaShoppingCart />
             </span>
@@ -62,8 +63,8 @@ export default function HeaderComponent() {
                 {cartQuantity}
               </span>
             )}
-          </Link>
-          {user ? <span>Profile</span> : <AuthButtons />}
+            </Link>
+            Profile</span> : <AuthButtons />}
         </div>
       </div>
 
@@ -73,10 +74,11 @@ export default function HeaderComponent() {
           {user ? <span>Profile</span> : <AuthButtons />}
         </div>
         <SearchBar />
-        <nav className="flex justify-around text-skin-color1 text-stylep1 mt-2">
-          {navLinks.map(({ to, label }) => (
-            <Link key={to} to={to}>
-              {label}
+        <nav className="flex justify-around relative text-skin-color1 text-stylep1 mt-2">
+          {navLinks.map(({ to, label, icon }) => (
+            <Link key={to} to={to}  className="header-link space-x-2">
+              <span>{icon}</span>
+              <span>{label}</span>
             </Link>
           ))}
         </nav>

@@ -1,17 +1,17 @@
 import { createSlice } from '@reduxjs/toolkit'
 const themes = ['default', 'coffee', 'dark', 'sakura', 'dark2'];
+const initialState = {currentTheme: 'default'};
 
 const themeSlice = createSlice({
   name: 'theme',
-  initialState: {
-    currentTheme: 'default',
-  },
+  initialState,
   reducers: {
     nextTheme: (state) => {
       const currentIndex = themes.indexOf(state.currentTheme);
       state.currentTheme = themes[(currentIndex + 1) % themes.length];
     },
     setTheme: (state, action) => {
+      console.log("themes: ", action.payload);
       if (themes.includes(action.payload)) {
         state.currentTheme = action.payload;
       }

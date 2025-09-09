@@ -1,106 +1,125 @@
 @layer base {
   /* ========== Base (Default) Theme ========== */
-  :root,
-  .theme-default {
-    --color-primary: 34, 87, 165;
-    --color-secondary: 58, 128, 219;
-    --color-button: 28, 60, 122; 
+  /* ========== Base (Default) Theme ========== */
+:root,
+.theme-default {
+  --color-primary: 34, 87, 165;
+  --color-secondary: 58, 128, 219;
+  --color-button: 28, 60, 122;
 
-    --color-text1: 255, 255, 255;
-    --color-text2: 33, 37, 41;
-    --color-contrast: 255, 166, 0;
-    --color-disable: 200, 200, 200;
+  --color-text1: 255, 255, 255;
+  --color-text2: 203, 221, 238;
+  --color-contrast: 255, 166, 0;
+  --color-disable: 58, 47, 47;
 
-    --color-fill-1: 245, 248, 252;
-    --color-fill-2: 230, 238, 247;
-    --color-fill-3: 255, 255, 255;
-    --color-fill-4: 255, 230, 180;
+  --color-fill-1: 24, 71, 141;
+  --color-fill-2: 41, 48, 58;
+  --color-fill-3: 4, 15, 32;
+  --color-fill-4: 83, 97, 119;
 
-    --color-button-1: 28, 60, 122;
-    --color-button-2: 255, 255, 255;
+  --color-button-1: 28, 60, 122;
+  --color-button-2: 9, 27, 65;
 
-    --color-back: 248, 250, 252;
-    --color-border1: 210, 220, 220;
-    --color-border2: 19, 26, 34;
-  }
+  --color-back: 248, 250, 252;
+  --color-border1: 210, 220, 220;
+  --color-border2: 19, 26, 34;
+}
 
-  /* ========== Coffee Theme ========== */
-  .theme-coffee {
-    --color-primary: 60, 34, 16;
-    --color-secondary: 125, 82, 48;
-    --color-text1: 255, 248, 240;
-    --color-text2: 60, 34, 16;
-    --color-contrast: 209, 98, 45;
-    --color-disable: 170, 140, 120;
+/* ========== Coffee Theme ========== */
+.theme-coffee {
+  --color-primary: 238, 214, 186;
+  --color-secondary: 204, 167, 118;
+  --color-button: 179, 133, 65;
 
-    --color-fill-1: 250, 240, 230;
-    --color-fill-2: 235, 210, 185;
-    --color-fill-3: 255, 248, 240;
-    --color-fill-inverted: 209, 98, 45;
+  --color-text1: 54, 29, 10;
+  --color-text2: 34, 29, 25;
+  --color-contrast: 145, 53, 0;
+  --color-disable: 243, 224, 213;
 
-    --color-button: 125, 82, 48;
-    --color-back: 250, 245, 238;
-    --color-border1: 190, 160, 130;
-    --color-border2: 220, 200, 180;
-  }
+  --color-fill-1: 230, 180, 144;
+  --color-fill-2: 230, 219, 189;
+  --color-fill-3: 243, 233, 200;
+  --color-fill-4: 252, 243, 239;
 
-  /* ========== Dark Theme ========== */
-  .theme-dark {
-    --color-primary: 18, 18, 18;
-    --color-secondary: 45, 45, 45;
-    --color-text1: 240, 240, 240;
-    --color-text2: 180, 180, 180;
-    --color-contrast: 88, 156, 255;
-    --color-disable: 100, 100, 100;
+  --color-button-1: 245, 225, 160;
+  --color-button-2: 77, 53, 1;
 
-    --color-fill-1: 28, 28, 28;
-    --color-fill-2: 38, 38, 38;
-    --color-fill-3: 48, 48, 48;
-    --color-fill-inverted: 88, 156, 255;
+  --color-back: 54, 36, 11;
+  --color-border1: 119, 60, 1;
+  --color-border2: 255, 176, 4;
+}
 
-    --color-button: 88, 156, 255;
-    --color-back: 20, 20, 20;
-    --color-border1: 60, 60, 60;
-    --color-border2: 80, 80, 80;
-  }
+/* ========== Dark Theme ========== */
+.theme-dark {
+  --color-primary: 18, 18, 18;
+  --color-secondary: 45, 45, 45;
+  --color-button: 61, 61, 59;
 
-  /* ========== Sakura Theme ========== */
-  .theme-sakura {
-    --color-primary: 255, 204, 221;
-    --color-secondary: 230, 140, 175;
-    --color-text1: 70, 40, 60;
-    --color-text2: 255, 230, 240;
-    --color-contrast: 255, 120, 150;
-    --color-disable: 220, 180, 190;
+  --color-text1: 240, 240, 240;
+  --color-text2: 180, 180, 180;
+  --color-contrast: 147, 210, 235;
+  --color-disable: 8, 4, 4;
 
-    --color-fill-1: 255, 240, 245;
-    --color-fill-2: 255, 220, 230;
-    --color-fill-3: 255, 250, 255;
-    --color-fill-inverted: 255, 120, 150;
+  --color-fill-1: 28, 28, 28;
+  --color-fill-2: 38, 38, 38;
+  --color-fill-3: 58, 58, 58;
+  --color-fill-4: 173, 245, 250;
 
-    --color-button: 255, 140, 180;
-    --color-back: 255, 245, 250;
-    --color-border1: 240, 200, 210;
-    --color-border2: 255, 220, 230;
-  }
+  --color-button-1: 11, 26, 22;
+  --color-button-2: 25, 5, 27;
 
-  /* ========== Dark2 Theme ========== */
-  .theme-dark2 {
-    --color-primary: 10, 20, 60;
-    --color-secondary: 30, 50, 80;
-    --color-text1: 220, 240, 255;
-    --color-text2: 140, 160, 180;
-    --color-contrast: 0, 200, 255;
-    --color-disable: 90, 110, 140;
+  --color-back: 20, 18, 18;
+  --color-border1: 200, 213, 214;
+  --color-border2: 185, 236, 245;
+}
 
-    --color-fill-1: 15, 25, 50;
-    --color-fill-2: 20, 40, 70;
-    --color-fill-3: 30, 60, 100;
-    --color-fill-inverted: 0, 200, 255;
+/* ========== Sakura Theme ========== */
+.theme-sakura {
+  --color-primary: 247, 190, 209;
+  --color-secondary: 230, 140, 175;
+  --color-button: 233, 205, 236;
+  
+  --color-text1: 78, 20, 35;
+  --color-text2: 82, 56, 66;
+  --color-contrast: 32, 95, 32;
+  --color-disable: 220, 180, 190;
 
-    --color-button: 0, 140, 220;
-    --color-back: 10, 15, 30;
-    --color-border1: 40, 60, 90;
-    --color-border2: 60, 80, 110;
-  }
+  --color-fill-1: 255, 240, 245;
+  --color-fill-2: 255, 220, 230;
+  --color-fill-3: 247, 150, 177;
+  --color-fill-4: 34, 22, 25;
+
+  --color-button-1: 245, 158, 223;
+  --color-button-2: 228, 108, 200;
+
+  --color-back: 245, 215, 230;
+  --color-border1: 31, 11, 11;
+  --color-border2: 92, 7, 31;
+}
+
+/* ========== Dark2 Theme ========== */
+.theme-dark2 {
+  --color-primary: 10, 20, 60;
+  --color-secondary: 20, 32, 48;
+  --color-button: 65, 49, 121;
+  
+  --color-text1: 220, 240, 255;
+  --color-text2: 228, 229, 158;
+  --color-contrast: 157, 255, 0;
+  --color-disable: 43, 46, 49;
+
+  --color-fill-1: 15, 25, 50;
+  --color-fill-2: 16, 37, 68;
+  --color-fill-3: 6, 12, 71;
+  --color-fill-4: 49, 56, 63;
+
+  --color-button-1: 12, 27, 17;
+  --color-button-2: 0, 0, 0;
+
+  --color-back: 4, 16, 31;
+  --color-border1: 239, 241, 66;
+  --color-border2: 159, 241, 66;
+}
+
+
 }
