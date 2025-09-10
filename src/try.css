@@ -21,30 +21,36 @@
   --color-back: rgb(248, 250, 252);
   --color-border1: rgb(210, 220, 220);
   --color-border2: rgb(19, 26, 34);
+
+  --color-content-text: rgb(31, 14, 14);
+  --color-content-bg: rgb(214, 233, 250);
 }
 
 /* ========== Coffee Theme ========== */
 .theme-coffee {
-  --color-primary: rgb(238, 214, 186);
-  --color-secondary: rgb(204, 167, 118);
+  --color-primary: rgb(248, 214, 151);
+  --color-secondary: rgb(237, 175, 93);
   --color-button: rgb(179, 133, 65);
 
   --color-text1: rgb(54, 29, 10);
   --color-text2: rgb(34, 29, 25);
-  --color-contrast: rgb(145, 53, 0);
-  --color-disable: rgb(243, 224, 213);
+  --color-contrast: rgb(90, 18, 106);
+  --color-disable: rgb(174, 148, 133);
 
   --color-fill-1: rgb(230, 180, 144);
   --color-fill-2: rgb(230, 219, 189);
-  --color-fill-3: rgb(243, 233, 200);
+  --color-fill-3: rgb(251, 132, 132);
   --color-fill-4: rgb(252, 243, 239);
 
-  --color-button-1: rgb(245, 225, 160);
-  --color-button-2: rgb(255, 176, 4);
+  --color-button-1: rgb(227, 170, 37);
+  --color-button-2: rgb(212, 215, 196);
 
   --color-back: rgb(54, 36, 11);
   --color-border1: rgb(119, 60, 1);
   --color-border2: rgb(24, 17, 10);
+
+  --color-content-text: rgb(227, 228, 214);
+  --color-content-bg: rgb(65, 32, 17);
 }
 
 /* ========== Dark Theme ========== */
@@ -69,6 +75,9 @@
   --color-back: rgb(20, 18, 18);
   --color-border1: rgb(200, 213, 214);
   --color-border2: rgb(185, 236, 245);
+
+  --color-content-text: rgb(0, 0, 0);
+  --color-content-bg: rgb(220, 222, 224);
 }
 
 /* ========== Sakura Theme ========== */
@@ -93,6 +102,9 @@
   --color-back: rgb(245, 215, 230);
   --color-border1: rgb(31, 11, 11);
   --color-border2: rgb(92, 7, 31);
+
+  --color-content-text: rgb(248, 240, 240);
+  --color-content-bg: rgb(70, 5, 5);
 }
 
 /* ========== Dark2 Theme ========== */
@@ -117,4 +129,7 @@
   --color-back: rgb(4, 16, 31);
   --color-border1: rgb(239, 241, 66);
   --color-border2: rgb(159, 241, 66);
+
+  --color-content-text: rgb(19, 44, 39);
+  --color-content-bg: rgb(221, 234, 245);
 }

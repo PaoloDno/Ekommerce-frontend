@@ -1,0 +1,21 @@
+@tailwind components;
+
+@layer components {
+  .carousel-button-styles {
+    @apply absolute top-1/3 md:top-1/2 -translate-y-1/2 p-2 py-5 rounded-sm  md:py-8
+    bg-opacity-50 hover:bg-opacity-100 shadow bg-skin-colorContent md:text-styleh3
+    text-skin-colorContent text-stylep1 border border-skin-colorBorder1;
+  }
+  .carousel-image-slide {
+    @apply flex items-center justify-center flex-shrink-0 w-full bg-black
+      max-h-[300px] md:max-h-[500px] border border-black
+    ;
+  }
+
+  .carousel-image {
+    @apply w-full shadow-lg justify-center object-cover shadow-lg
+  }
+
+}
+
+

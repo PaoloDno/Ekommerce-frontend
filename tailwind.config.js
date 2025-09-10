@@ -27,6 +27,7 @@ export default {
           color2: withOpacity("--color-text2"),
           colorHigh: withOpacity("--color-contrast"),
           colorDis: withOpacity("--color-disable"),
+          colorContent: withOpacity("--color-content-text"),
         },
       },
       backgroundColor: {
@@ -41,6 +42,7 @@ export default {
           "fill-3": withOpacity("--color-fill-3"),
           "fill-4": withOpacity("--color-fill-4"),
           "color-back": withOpacity("--color-back"),
+          colorContent: withOpacity("--color-content-bg"),
         },
       },
       borderColor: {
@@ -49,10 +51,16 @@ export default {
           colorBorder2: withOpacity("--color-border2"),
         },
       },
+      gradientColorStops: {
+        skin: {
+          end: withOpacity("--color-back"),
+        }
+      },
       fontFamily: {
         Montserrat: ["Montserrat", "sans-serif"],
         Merriweather: ["Merriweather", "serif"],
         Oswald: ["Oswald", "sans-serif"],
+        Opensans: ["Open Sans", "sansa-serif"]
       },
     },
   },

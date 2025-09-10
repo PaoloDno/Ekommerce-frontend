@@ -37,7 +37,7 @@ export default function HeaderComponent() {
       
       <div className="header-desktop">
         
-        <h1 className="text-skin-color1 font-bold text-styleh4 ml-2">
+        <h1 className="text-skin-color1 font-Merriweather font-bold text-styleh4 ml-2">
           {brandName}
         </h1>
 

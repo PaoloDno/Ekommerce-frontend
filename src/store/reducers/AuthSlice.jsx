@@ -7,7 +7,7 @@ import {
 const authSlice = createSlice({
   name: "auth",
   initialState: {
-  user: null,
+  user: localStorage.getItem("token.user") || null,
   token: localStorage.getItem("token") || null,
   isPending: false,
   isRejected: false,
@@ -21,7 +21,7 @@ const authSlice = createSlice({
         state.isPending = false;
         state.isSuccess = true;
         state.isRejected = false;
-        state.user = action.payload.user || null;
+        state.user = action.payload.token.user || null;
         state.token = action.payload.token || null;
       })
 
@@ -29,8 +29,8 @@ const authSlice = createSlice({
         state.isPending = false;
         state.isSuccess = true;
         state.isRejected = false;
-        state.user = action.payload.user || null;
-        state.token = action.payload.token || null;
+        state.user = action.payload?.token.user || null;
+        state.token = action.payload?.token || null;
       })
 
       .addCase(logoutAction.fulfilled, (state) => {

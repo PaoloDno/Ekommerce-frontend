@@ -1,12 +1,11 @@
 import React from "react"
 import HomePage from "../../pages/HomePage";
-import LandingPage from "../../pages/LandingPage";
+import LandingPage from "../../pages/Landing/LandingPage.jsx";
 import LoginPage from "../../pages/LoginPage";
-import SignUpPage from "../../pages/SignUpPage";
 
 import {Routes, Route} from "react-router-dom"
 
-const AppRoutes = (props) => {
+const AppRoutes = () => {
   return (
     <Routes>
       <Route path="/" element={<LandingPage />} />

@@ -21,7 +21,7 @@ export const ThemeProvider = ({ children }) => {
 
   return (
     <ThemeContext.Provider value={{ current, toggleTheme, changeTheme }}>
-      <div className={`theme-${current} font-Merriweather bg-skin-color-back`}>
+      <div className={`theme-${current} font-Merriweather bg-skin-color-back transition-colors duration-250 ease-in`}>
         {children}
       </div>
     </ThemeContext.Provider>

@@ -1,14 +1,16 @@
 @tailwind components;
 
 @layer components {
-  .btn-primary {
-    @apply px-6 py-2 rounded-lg font-semibold 
-           bg-skin-buttonColor text-skin-color1
-           hover:bg-skin-primary transition;
+  .page-section {
+    @apply relative flex w-full flex-col min-h-screen h-full overflow-x-hidden
+      bg-opacity-5 bg-skin-primary my-2 p-2 items-center justify-start z-0
   }
-
-  .card {
-    @apply bg-white shadow-lg rounded-2xl p-4
-           border border-skin-colorBorder2;
+  .page-body {
+    @apply flex flex-col items-start justify-start w-full lg:w-[80vw] h-full
+      min-h-[80vh] max-w-screen-xl text-skin-color1 z-20
+  }
+  .page-background {
+    @apply absolute inset-0 w-full h-full pointer-events-none backdrop-blur-sm bg-skin-color-back
+      bg-opacity-10 z-10
   }
 }
