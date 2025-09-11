@@ -9,8 +9,8 @@ export default function FooterComponent() {
   const brandName = "Ekommerce";
 
   return (
-    <footer className="footer-section bg-skin-primary text-skin-color1 py-6 mt-10">
-      <div className="grid-footer grid grid-cols-1 sm:grid-cols-3 gap-6 px-6">
+    <footer className="footer-section ">
+      <div className="grid-footer grid grid-cols-1 sm:grid-cols-3 gap-6 p-1">
         
         <div className="footer-component flex flex-col">
           <span className="text-lg font-bold">About</span>

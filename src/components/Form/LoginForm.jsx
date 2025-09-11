@@ -1,29 +1,19 @@
 import React, { useState } from "react"
 import { useDispatch } from "react-redux";
 import { loginAction } from "../../store/actions/AuthThunks";
-
-const sanitizeInput = (input) => {
-  const map = {
-    "&": "&amp;",
-    "<": "&lt;",
-    ">": "&gt;",
-    '"': "&quot;",
-    "'": "&#x27;",
-    "/": "&#x2F;",
-  };
-  return input.replace(/[&<>"'/]/g, (match) => map[match]);
-};
+import { useNavigate } from "react-router-dom";
+import { useAppContext } from "../../context/AppContext";
 
 const LoginFormComponent = () => {
-  
+  const { username } = useAppContext(); // ✅ Correct place for hook
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const [userCreds, setUserCreds] = useState({ username: "", password: "" });
 
   const handleChange = (e) => {
-    const { name, value} = e.target;
-    setUserCreds((prev) => ({ ...prev, [name]: value}));
-  }
+    const { name, value } = e.target;
+    setUserCreds((prev) => ({ ...prev, [name]: value }));
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -35,23 +25,45 @@ const LoginFormComponent = () => {
     const resultAction = await dispatch(loginAction(sanitizedCreds));
 
     if (loginAction.fulfilled.match(resultAction)) {
-      console.log('login successful');
+      console.log("Login successful");
       const timeoutId = setTimeout(() => {
-        navigate('/home');
+        navigate("/home");
       }, 1500);
       return () => clearTimeout(timeoutId);
     } else {
-      console.log('Login failed. Please check your username and password.');
-    };
-  }  
+      console.log("Login failed. Please check your username and password.");
+    }
+  };
 
   return (
-    <div className="flex flex-col items-center justify-start w-full">
-    {
-      
-    }    
+    <div className="flex flex-col w-full min-h-screen justify-center items-center">
+      {username ? (
+        <div className="flex w-full h-full">Welcome, {username}!</div>
+      ) : (
+        <form onSubmit={handleSubmit} className="flex flex-col gap-2">
+          <input
+            type="text"
+            name="username"
+            placeholder="Username"
+            value={userCreds.username}
+            onChange={handleChange}
+            className="border p-2"
+          />
+          <input
+            type="password"
+            name="password"
+            placeholder="Password"
+            value={userCreds.password}
+            onChange={handleChange}
+            className="border p-2"
+          />
+          <button type="submit" className="bg-blue-500 text-white p-2 rounded">
+            Login
+          </button>
+        </form>
+      )}
     </div>
-  )
+  );
 };
 
 export default LoginFormComponent;

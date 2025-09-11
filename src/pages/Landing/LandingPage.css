@@ -1,0 +1,39 @@
+@tailwind components;
+
+@layer components {
+  .feature-page-content {
+    @apply grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 
+      max-w-screen-xl w-full lg:w-[80vw]
+      px-1 md:px-2 lg:px-4 h-full z-30 bg-skin-color-back
+      bg-opacity-15 md:-mt-5 -mt-8;
+  }
+
+  .feature-card {
+    @apply relative flex flex-col p-3 md:p-5 pb-5 md:pb-8 w-full min-h-[40vh]
+      bg-skin-colorContent text-skin-colorContent shadow-xl
+      rounded-sm items-center overflow-hidden justify-evenly font-Opensans;
+  }
+
+  .feature-card-image {
+    @apply flex relative justify-center items-center w-full mx-2 h-4/5
+      overflow-hidden text-skin-colorContent;
+  }
+
+  
+  .feature-gradient {
+    @apply hidden md:block md:absolute md:bottom-0 md:left-0 md:w-full md:h-1/2
+      md:bg-gradient-to-b md:from-transparent md:to-skin-end md:pointer-events-none
+      md:transition-opacity md:duration-300 opacity-0;
+  }
+
+  
+  .feature-card:hover .feature-gradient {
+    @apply md:opacity-60;
+  }
+
+  .feature-card-link {
+    @apply ml-auto hover:text-skin-colorHigh 
+      hover:shadow-md hover:bg-skin-fill-3 transition-all duration-500
+      hover:bg-opacity-90 hover:scale-x-110 p-2 rounded-lg;
+  }
+}

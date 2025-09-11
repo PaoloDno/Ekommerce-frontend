@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useAppContext } from "../../context/AppContext";
 import { FaHome, FaSearch, FaStore, FaTag, FaShoppingCart } from "react-icons/fa";
 
@@ -14,7 +14,9 @@ export default function HeaderComponent() {
 
   const AuthButtons = () => (
     <div className="space-x-2 flex flex-row items-center">
-      <button className="header-login hover:scale-110">LOGIN</button>
+      <Link className="header-login hover:scale-110"
+        to="/login"
+      >LOGIN</Link>
       <button className="header-signup hover:scale-110">SIGNUP</button>
     </div>
   );
@@ -37,7 +39,7 @@ export default function HeaderComponent() {
       
       <div className="header-desktop">
         
-        <h1 className="text-skin-color1 font-Merriweather font-bold text-styleh4 ml-2">
+        <h1 className="text-skin-color1 font-Opensans font-semibold text-styleh4 ml-2">
           {brandName}
         </h1>
 
