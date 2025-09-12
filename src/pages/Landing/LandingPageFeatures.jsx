@@ -10,7 +10,7 @@ const LandingFeatureComponent = () => {
           <div className="feature-gradient"></div>
         </div>
         <span className="flex w-full p-2 flex-row">
-          <spam>Title</spam><span className="feature-card-link">see more</span>
+          <span>Title</span><span className="feature-card-link">see more</span>
         </span>
       </div>
       <div className="feature-card">
@@ -19,7 +19,7 @@ const LandingFeatureComponent = () => {
           <div className="feature-gradient"></div>
         </div>
         <span className="flex w-full p-2 flex-row">
-          <spam>Title</spam><span className="feature-card-link">see more</span>
+          <span>Title</span><span className="feature-card-link">see more</span>
         </span>
       </div>
       <div className="feature-card">
@@ -28,7 +28,7 @@ const LandingFeatureComponent = () => {
           <div className="feature-gradient"></div>
         </div>
         <span className="flex w-full p-2 flex-row">
-          <spam>Title</spam><span className="feature-card-link">see more</span>
+          <span>Title</span><span className="feature-card-link">see more</span>
         </span>
       </div>
       <div className="feature-card">
@@ -37,7 +37,7 @@ const LandingFeatureComponent = () => {
           <div className="feature-gradient"></div>
         </div>
         <span className="flex w-full p-2 flex-row">
-          <spam>Title</spam><span className="feature-card-link">see more</span>
+          <span>Title</span><span className="feature-card-link">see more</span>
         </span>
       </div>
       <div className="feature-card">
@@ -46,7 +46,7 @@ const LandingFeatureComponent = () => {
           <div className="feature-gradient"></div>
         </div>
         <span className="flex w-full p-2 flex-row">
-          <spam>Title</spam><span className="feature-card-link">see more</span>
+          <span>Title</span><span className="feature-card-link">see more</span>
         </span>
       </div>
       <div className="feature-card">
@@ -55,7 +55,7 @@ const LandingFeatureComponent = () => {
           <div className="feature-gradient"></div>
         </div>
         <span className="flex w-full p-2 flex-row">
-          <spam>Title</spam><span className="feature-card-link">see more</span>
+          <span>Title</span><span className="feature-card-link">see more</span>
         </span>
       </div>
     </div>

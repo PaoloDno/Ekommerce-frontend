@@ -1,11 +1,10 @@
 import React from "react"
-
-const SignUpPage = (props) => {
+import SignInFormComponent from "../../components/Form/SignupForm";
+const SignUpPage = () => {
   return (
-    <div>
-      
+    <div className="flex flex-row relative justify-center w-full max-w-screen-xl">
+      <SignInFormComponent />
     </div>
-  )
-};
+  )};
 
 export default SignUpPage;

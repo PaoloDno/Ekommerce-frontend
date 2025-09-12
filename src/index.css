@@ -10,4 +10,5 @@
 @import './components/Header/Header.css';
 @import './components//Footer/Footer.css';
 @import './components/Carousel/Carousel.css';
-@import './pages/Landing/LandingPage.css'
+@import './pages/Landing/LandingPage.css';
+@import './pages/AuthPage/AuthPage.css';
