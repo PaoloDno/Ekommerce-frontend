@@ -3,7 +3,7 @@
 @layer components {
   .auth-form {
     @apply flex flex-col w-full min-h-[70vh] max-w-sm
-      mt-5 bg-opacity-20 pt-10 font-Opensans
+      my-5 bg-opacity-20 py-10 font-Opensans
       justify-start items-center bg-skin-primary rounded-xl;
   }
 
@@ -13,7 +13,7 @@
   }
 
   .auth-field {
-    @apply relative w-full;
+    @apply relative w-full mb-5;
   }
   .auth-inputs {
     @apply border-2 border-skin-colorBorder1 p-2 px-3 
@@ -32,5 +32,21 @@
       font-Montserrat font-bold hover:border-skin-colorBorder1
       hover:bg-skin-fill-3 hover:bg-opacity-75 hover:text-skin-colorHigh hover:rounded-2xl
       transition-all duration-300 hover:scale-x-125 hover:px-6;
+  }
+
+  .form-helper {
+    @apply absolute top-full mt-1 max-w-xs 
+         bg-gray-800 text-white text-xs leading-snug
+         rounded-md shadow-lg px-4 py-2 z-20 w-full
+         opacity-0 scale-95 
+         pointer-events-none peer-focus:opacity-100 peer-focus:scale-100
+         transition-all duration-500
+         ;
+  }
+  .form-helper span {
+    @apply block mb-1 last:mb-0;
+  }
+  .error-p {
+    @apply block text-red-500 text-xs py-1
   }
 }

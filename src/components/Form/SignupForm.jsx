@@ -6,12 +6,18 @@ import { signUpAction } from "../../store/actions/AuthThunks";
 import { FaCircleArrowLeft } from "react-icons/fa6";
 
 const SignInFormComponent = () => {
-  const { isPending } = useSelector((state) => state.auth);
+  const { isPending, error } = useSelector((state) => state.auth);
   const { username } = useAppContext();
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
+  // ====== Helpers ======
   const sanitizeInput = (input) => input.trim().replace(/[\/<>#]/g, "");
+
+  const USER_REGEX = /^[A-Za-z][A-Za-z0-9-_]{3,23}$/;
+  const PWD_REGEX = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%]).{8,24}$/;
+  const EMAIL_REGEX = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,24}$/;
+  const CLEAN_TEXT_REGEX = /^[^&<>"'/]*$/;
 
   const [userData, setUserData] = useState({
     username: "",
@@ -27,14 +33,7 @@ const SignInFormComponent = () => {
       postalCode: "",
     },
   });
-
-  const USER_REGEX = /^[A-Za-z][A-Za-z0-9-_]{3,23}$/;
-  const PWD_REGEX = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%]).{8,24}$/;
-  const EMAIL_REGEX = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,24}$/;
-  const CLEAN_TEXT_REGEX = /^[^&<>"'/]*$/;
-
   const [errors, setErrors] = useState({});
-  const [success, setSuccess] = useState(false);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -45,14 +44,15 @@ const SignInFormComponent = () => {
     const { name, value } = e.target;
     setUserData((prev) => ({
       ...prev,
-      address: {
-        ...prev.address,
-        [name]: value,
-      },
+      address: { ...prev.address, [name]: value },
     }));
   };
 
   const validateField = (name, value) => {
+    if (!value || value.trim() === "") {
+      return "This field is required.";
+    }
+
     switch (name) {
       case "username":
         return USER_REGEX.test(value) ? "" : "Invalid username.";
@@ -65,11 +65,11 @@ const SignInFormComponent = () => {
     }
   };
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    let newErrors = {};
+  const validateFields = () => {
+    console.log("a");
+    let newErrors = {}; // initiate an empty object
 
-    // Validate top-level fields
+    // Validate all fields
     Object.keys(userData).forEach((key) => {
       if (typeof userData[key] !== "object") {
         const error = validateField(key, userData[key]);
@@ -77,7 +77,8 @@ const SignInFormComponent = () => {
       }
     });
 
-    // Validate address fields
+    console.log("err");
+
     Object.keys(userData.address).forEach((addrKey) => {
       const error = validateField(addrKey, userData.address[addrKey]);
       if (error) newErrors[addrKey] = error;
@@ -85,57 +86,66 @@ const SignInFormComponent = () => {
 
     if (Object.keys(newErrors).length > 0) {
       setErrors(newErrors);
-      return;
+      console.log(errors);
+      return false;
     }
 
     setErrors({});
-    setSuccess(true);
 
-    const sanitizedData = {
-      ...userData,
-      username: sanitizeInput(userData.username),
-      firstname: sanitizeInput(userData.firstname),
-      lastname: sanitizeInput(userData.lastname),
-      middlename: sanitizeInput(userData.middlename),
-      email: sanitizeInput(userData.email),
-      password: sanitizeInput(userData.password),
-      address: {
-        street: sanitizeInput(userData.address.street),
-        city: sanitizeInput(userData.address.city),
-        country: sanitizeInput(userData.address.country),
-        postalCode: sanitizeInput(userData.address.postalCode),
-      },
-    };
+    return true;
+  };
 
-    const resultAction = await dispatch(signUpAction(sanitizedData));
+  const handleSubmit = async (e) => {
+    e.preventDefault();
 
-    if (loginAction.fulfilled.match(resultAction)) {
-      console.log("Login successful");
-      setTimeout(() => {
-        navigate("/");
-      }, 1000);
-    } else {
-      console.log("Login failed");
-      setError("Invalid username or password");
+    if (validateFields()) {
+      // Sanitize before sending
+      const sanitizedData = {
+        ...userData,
+        username: sanitizeInput(userData.username),
+        firstname: sanitizeInput(userData.firstname),
+        lastname: sanitizeInput(userData.lastname),
+        middlename: sanitizeInput(userData.middlename),
+        email: sanitizeInput(userData.email),
+        password: sanitizeInput(userData.password),
+        address: {
+          street: sanitizeInput(userData.address.street),
+          city: sanitizeInput(userData.address.city),
+          country: sanitizeInput(userData.address.country),
+          postalCode: sanitizeInput(userData.address.postalCode),
+        },
+      };
+
+      console.log("badas");
+
+      try {
+        const resultAction = await dispatch(signUpAction(sanitizedData));
+
+        if (signUpAction.fulfilled.match(resultAction)) {
+          console.log("Signup successful");
+          setTimeout(() => navigate("/"), 1000);
+        } else {
+          console.log("SignUp failed");
+        }
+      } catch (error) {
+        console.log(error);
+      }
     }
   };
 
-  const tailwindPeerLabel =
-    "auth-label peer-placeholder-shown:translate-y-0 peer-placeholder-shown:scale-100 peer-placeholder-shown:text-sm peer-focus:-translate-y-4 peer-focus:scale-90 peer-focus:text-xs peer-[&:not(:placeholder-shown)]:-translate-y-4  peer-[&:not(:placeholder-shown)]:scale-90 peer-[&:not(:placeholder-shown)]:text-xs";
+  // tailwind styles
 
-  const inputClasses = (field) =>
-    `block w-full p-2 mb-2 border rounded auth-inputs peer
-    ${
-      errors[field]
-        ? "border-red-500"
-        : success
-        ? "border-green-500"
-        : "border-gray-300"
-    }`;
+  const tailwindPeerLabel =
+    "auth-label peer-placeholder-shown:translate-y-0 peer-placeholder-shown:scale-100 peer-placeholder-shown:text-sm peer-focus:-translate-y-4 peer-focus:scale-90 peer-focus:text-xs peer-[&:not(:placeholder-shown)]:-translate-y-4 peer-[&:not(:placeholder-shown)]:scale-90 peer-[&:not(:placeholder-shown)]:text-xs";
+
+  const tailwindHelper =
+    "form-helper hidden opacity-0 peer-focus:block peer-focus:opacity-80 transition-opacity duration-200";
+
+  const inputClasses = "rounded auth-inputs peer border border-gray-300";
 
   return (
     <div className="auth-form">
-      {username ? (
+       {username ? (
         <div className="flex w-full h-full flex-col items-start">
           <p className="text-stylep1">Welcome! You are logged in!</p>
           <Link
@@ -148,7 +158,8 @@ const SignInFormComponent = () => {
       ) : (
         <form onSubmit={handleSubmit} className="p-6 bg-gray-200 rounded-md">
           <h2 className="text-xl font-bold mb-4">Sign In</h2>
-
+          {!error ? "" : <span className="error-p">{error}</span>}
+     
           {/* Username */}
           <div className="auth-field">
             <input
@@ -157,12 +168,15 @@ const SignInFormComponent = () => {
               placeholder="Username"
               value={userData.username}
               onChange={handleChange}
-              className={inputClasses("username")}
+              className={inputClasses}
             />
             <label className={tailwindPeerLabel}>Username</label>
-            {errors.username && (
-              <p className="text-red-500">{errors.username}</p>
-            )}
+            <div className={tailwindHelper}>
+              <span>Must start with a letter A to Z, a to z</span>
+              <span>Can include letters, numbers, underscores, or hyphens</span>
+              <span>Length: 4 to 24 characters</span>
+            </div>
+            {errors.username && <p className="error-p">{errors.username}</p>}
           </div>
 
           {/* Email */}
@@ -173,10 +187,14 @@ const SignInFormComponent = () => {
               placeholder="Email"
               value={userData.email}
               onChange={handleChange}
-              className={inputClasses("email")}
+              className={inputClasses}
             />
             <label className={tailwindPeerLabel}>Email</label>
-            {errors.email && <p className="text-red-500">{errors.email}</p>}
+            <div className={tailwindHelper}>
+              <span>Must follow a valid email format</span>
+              <span>Domain extension: 2–24 letters</span>
+            </div>
+            {errors.email && <p className="error-p">{errors.email}</p>}
           </div>
 
           {/* Password */}
@@ -187,75 +205,56 @@ const SignInFormComponent = () => {
               placeholder="Password"
               value={userData.password}
               onChange={handleChange}
-              className={inputClasses("password")}
+              className={inputClasses}
             />
             <label className={tailwindPeerLabel}>Password</label>
-            {errors.password && (
-              <p className="text-red-500">{errors.password}</p>
-            )}
+            <div className={tailwindHelper}>
+              <span>At least 1 lowercase, 1 uppercase, 1 number</span>
+              <span>At least 1 special: ! @ # $ %</span>
+              <span>8 to 24 characters</span>
+            </div>
+            {errors.password && <p className="error-p">{errors.password}</p>}
           </div>
+
+          <h3 className="text-lg font-semibold mt-4 mb-2">Identification</h3>
+
+          {["firstname", "lastname", "middlename"].map((field) => (
+            <div className="auth-field" key={field}>
+              <input
+                type="text"
+                name={field}
+                placeholder={field}
+                value={userData.field}
+                onChange={handleChange}
+                className={inputClasses}
+              />
+              <label className={tailwindPeerLabel}>
+                {field.charAt(0).toUpperCase() + field.slice(1)}
+              </label>
+              {errors[field] && <p className="error-p">{errors[field]}</p>}
+            </div>
+          ))}
 
           <h3 className="text-lg font-semibold mt-4 mb-2">Address</h3>
 
-          {/* Street */}
-          <div className="auth-field">
-            <input
-              type="text"
-              name="street"
-              placeholder="Street"
-              value={userData.address.street}
-              onChange={handleChangeAddress}
-              className={inputClasses("street")}
-            />
-            <label className={tailwindPeerLabel}>Street</label>
-            {errors.street && <p className="text-red-500">{errors.street}</p>}
-          </div>
+          {/* address field */}
+          {["street", "city", "country", "postalCode"].map((field) => (
+            <div className="auth-field" key={field}>
+              <input
+                type="text"
+                name={field}
+                placeholder={field}
+                value={userData.address[field]}
+                onChange={handleChangeAddress}
+                className={inputClasses}
+              />
+              <label className={tailwindPeerLabel}>
+                {field.charAt(0).toUpperCase() + field.slice(1)}
+              </label>
+              {errors[field] && <p className="error-p">{errors[field]}</p>}
+            </div>
+          ))}
 
-          {/* City */}
-          <div className="auth-field">
-            <input
-              type="text"
-              name="city"
-              placeholder="City"
-              value={userData.address.city}
-              onChange={handleChangeAddress}
-              className={inputClasses("city")}
-            />
-            <label className={tailwindPeerLabel}>City</label>
-            {errors.city && <p className="text-red-500">{errors.city}</p>}
-          </div>
-
-          {/* Country */}
-          <div className="auth-field">
-            <input
-              type="text"
-              name="country"
-              placeholder="Country"
-              value={userData.address.country}
-              onChange={handleChangeAddress}
-              className={inputClasses("country")}
-            />
-            <label className={tailwindPeerLabel}>Country</label>
-            {errors.country && <p className="text-red-500">{errors.country}</p>}
-          </div>
-
-          {/* Postal Code */}
-          <div className="auth-field">
-            <input
-              type="text"
-              name="postalCode"
-              placeholder="Postal Code"
-              value={userData.address.postalCode}
-              onChange={handleChangeAddress}
-              className={inputClasses("postalCode")}
-            />
-            <label className={tailwindPeerLabel}>Postal Code</label>
-            {errors.postalCode && (
-              <p className="text-red-500">{errors.postalCode}</p>
-            )}
-          </div>
-
-          {/* Submit Button */}
           <button
             type="submit"
             className="auth-button flex items-center justify-center mt-4"
