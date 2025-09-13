@@ -2,7 +2,7 @@
 
 @layer components {
   .page-section {
-    @apply relative flex w-full flex-col min-h-screen h-full overflow-x-hidden
+    @apply relative flex w-full max-w-screen-xl flex-col min-h-screen h-full overflow-x-hidden
       bg-opacity-5 bg-skin-primary my-2 p-2 items-center justify-start z-0
   }
   .page-body {

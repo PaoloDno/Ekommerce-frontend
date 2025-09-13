@@ -66,7 +66,7 @@ const SignInFormComponent = () => {
   };
 
   const validateFields = () => {
-    console.log("a");
+    //console.log("a");
     let newErrors = {}; // initiate an empty object
 
     // Validate all fields
@@ -89,9 +89,7 @@ const SignInFormComponent = () => {
       console.log(errors);
       return false;
     }
-
     setErrors({});
-
     return true;
   };
 
