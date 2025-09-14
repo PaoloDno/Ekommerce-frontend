@@ -1,38 +1,59 @@
-import React, { useEffect } from "react"
-import { useSelector } from "react-redux";
-import { useAppContext } from "../../context/AppContext";
+import React, { useEffect, useCallback } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { getUserProfileAction } from "../../store/actions/AuthThunks";
 
 const HomePage = () => {
-  const {token } = useSelector((state) => state.auth);
-  const { username,totalItems } = useAppContext();
+  const dispatch = useDispatch();
+  const { token, profile, isLoading } = useSelector((state) => state.auth);
+
+  // 🔹 Async fetch handler
+  const fetchProfile = useCallback(async () => {
+    if (token) {
+      await dispatch(getUserProfileAction()); 
+    }
+  }, [dispatch, token]);
+
+  // 🔹 Fetch profile on mount
   useEffect(() => {
-    console.log(token);
-    console.log(totalItems);
-  }, [])
+    if (token && !profile) {
+      fetchProfile();
+    }
+  }, [fetchProfile, token, profile]);
+
   return (
     <div className="page-section">
       <div className="page-body">
-        {/* homepage */}
-        <div className="flex flex-col">
-          {token}
-          <span>{totalItems || "jesus"}
+        <div className="flex flex-col text-black">
+          {/* Debug info */}
+          <span>Token: {token || "No token"}</span>
+          <span>Username: {profile?.username || "Guest"}</span>
+          <span>
+            Fullname: {`${profile?.firstname || ""} ${profile?.lastname || ""}`}
           </span>
-          <span>{username || "christ"}</span>
-          <span>Username</span>
-          <span>fullname</span>
-          <span>address</span>
+          <span>
+            Address:
+          </span>
         </div>
+
         <div>Store</div>
         <div>
-          <span>Carts</span>
+          <span>Cart Items: {profile?.cart?.length || 0}</span>
         </div>
         <div>Reviews</div>
         <div>Order History</div>
 
+        {/* 🔹 Refresh Button */}
+        <button
+          onClick={fetchProfile}
+          disabled={isLoading}
+          className="px-4 py-2 mt-4 bg-blue-500 text-white rounded-md hover:bg-blue-600 disabled:opacity-50"
+        >
+          {isLoading ? "Refreshing..." : "Refresh Profile"}
+        </button>
       </div>
       <div className="page-background"></div>
     </div>
-  )
+  );
 };
 
 export default HomePage;

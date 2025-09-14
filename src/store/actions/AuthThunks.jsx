@@ -22,11 +22,11 @@ export const loginAction = createAsyncThunk(
 );
 
 export const signUpAction = createAsyncThunk(
-  "auth/SignUpAction", 
+  "auth/SignUpAction",
   async (signUpData, thunkAPI) => {
     try {
       const response = await api.post("/user/signup", signUpData);
-    // Optionally store token if API returns one
+      // Optionally store token if API returns one
       if (response.data?.token) {
         localStorage.setItem("token", response.data.token);
       }
@@ -34,10 +34,34 @@ export const signUpAction = createAsyncThunk(
       return response.data;
     } catch (error) {
       console.error(error);
-      return thunkAPI.rejectWithValue(error.response?.data?.message || "Signup failed");
+      return thunkAPI.rejectWithValue(
+        error.response?.data?.message || "Signup failed"
+      );
     }
   }
 );
+
+export const getUserProfileAction = createAsyncThunk(
+  "auth/GetUserProfileAction",
+  async (_, thunkAPI) => {
+    try {
+      const token = thunkAPI.getState().auth.token;
+      console.log(token);
+
+      const response = await api.get("/user/get-user-profile", {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      return response.data;
+    } catch (error) {
+      console.log(error);
+      return thunkAPI.rejectWithValue(error.response?.data.message);
+    }
+  }
+);
+
+
 
 export const logoutAction = createAsyncThunk(
   "auth/LogoutAction",
@@ -48,7 +72,11 @@ export const logoutAction = createAsyncThunk(
       return { message: "Logged out successfully" };
     } catch (error) {
       console.error(error);
-      return thunkAPI.rejectWithValue(error.response?.data?.message || "Logout failed");
+      return thunkAPI.rejectWithValue(
+        error.response?.data?.message || "Logout failed"
+      );
     }
   }
 );
+
+
