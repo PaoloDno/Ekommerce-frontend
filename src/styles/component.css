@@ -7,10 +7,17 @@
   }
   .page-body {
     @apply flex flex-col items-start justify-start w-full lg:w-[80vw] h-full
-      min-h-[80vh] max-w-screen-xl text-skin-color1 z-20
+      min-h-[80vh] max-w-screen-xl text-skin-color1 z-20 space-y-2
   }
   .page-background {
     @apply absolute inset-0 w-full h-full pointer-events-none backdrop-blur-sm bg-skin-color-back
       bg-opacity-10 z-10
+  }
+  .text-div {
+    @apply flex flex-col w-full text-skin-color1 text-stylep2
+    bg-skin-primary p-2 font-Opensans;
+  }
+  .text-div h2{
+    @apply font-Merriweather text-styleh3
   }
 }
