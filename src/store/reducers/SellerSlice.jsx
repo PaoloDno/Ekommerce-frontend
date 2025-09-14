@@ -10,7 +10,7 @@ const sellerSlice = createSlice({
     isPending: false,
     isRejected: false,
     isSuccess: false,
-    error: nullm
+    error: null
   },
   reducers: {},
   extraReducers: (builder) => {

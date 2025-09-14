@@ -4,15 +4,15 @@ import { useSelector } from 'react-redux';
 const AppContext = createContext();
 
 export const AppProvider = ({ children }) => {
-  const user = useSelector((state) => state.auth?.user || null);
-  const totalQuantity = useSelector((state) => state.cart?.totalQuantity || 0);
+  const username = useSelector((state) => state.auth?.username || null);
+  const totalItems = useSelector((state) => state.auth?.totalItems || 0);
 
   const value = useMemo(
     () => ({
-      username: user,
-      cartQuantity: totalQuantity,
+      username: username,
+      totalItems: totalItems,
     }),
-    [user, totalQuantity]
+    [username, totalItems]
   );
 
   return <AppContext.Provider value={value}>{children}</AppContext.Provider>;

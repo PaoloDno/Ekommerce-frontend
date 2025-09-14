@@ -7,7 +7,8 @@ import {
 const authSlice = createSlice({
   name: "auth",
   initialState: {
-  user: localStorage.getItem("token.user") || null,
+  username: '',
+  totalItems: 0,
   token: localStorage.getItem("token") || null,
   isPending: false,
   isRejected: false,
@@ -21,24 +22,27 @@ const authSlice = createSlice({
         state.isPending = false;
         state.isSuccess = true;
         state.isRejected = false;
-        state.user = action.payload.token.user || null;
+        state.username = action.payload.username || null;
         state.token = action.payload.token || null;
+        state.totalItems = action.payload.cartSummary.totalItems;
       })
 
       .addCase(signUpAction.fulfilled, (state, action) => {
         state.isPending = false;
         state.isSuccess = true;
         state.isRejected = false;
-        state.user = action.payload?.token.user || null;
-        state.token = action.payload?.token || null;
+        state.username = action.payload.username || null;
+        state.token = action.payload.token || null;
+        state.totalItems = action.payload.cartSummary.totalItems;
       })
 
       .addCase(logoutAction.fulfilled, (state) => {
         state.isPending = false;
         state.isSuccess = true;
         state.isRejected = false;
-        state.user = null;
+        state.username = null;
         state.token = null;
+        state.totalItems = null;
       })
 
       .addMatcher(isPending(loginAction, signUpAction, logoutAction), (state) => {
