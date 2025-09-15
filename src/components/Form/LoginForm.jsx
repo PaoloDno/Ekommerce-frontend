@@ -108,7 +108,7 @@ const LoginFormComponent = () => {
           </Link>
         </div>
       ) : (
-        <div>
+        <div className="flex w-full h-full flex-row bg-red-400">
           <div className="flex flex-col text-start justify-start w-5/6 p-4 md:p-5 z-10 text-stylep1">
             <p className="text-stylep1">Welcome! No account?</p>
             <Link
@@ -120,6 +120,9 @@ const LoginFormComponent = () => {
           </div>
 
           <form onSubmit={handleSubmit} className="auth-form-content">
+            <div className="auth-title">
+              Login
+            </div>
             <div className="auth-field">
               <input
                 type="text"

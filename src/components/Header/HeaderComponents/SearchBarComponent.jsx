@@ -31,7 +31,7 @@ function SearchBar() {
       <select
         value={filter}
         onChange={(e) => setFilter(e.target.value)}
-        className="bg-skin-colorContent border border-skin-colorBorder1 text-skin-colorContent rounded-md px-2 py-1 text-sm focus:outline-none focus:ring-2 focus:ring-skin-color1 transition-colors"
+        className="bg-skin-colorContent border border-b-skin-colorBorder1 shadow-md text-skin-colorContent rounded-md px-2 py-1 text-sm focus:outline-none focus:ring-2 focus:ring-skin-color1 transition-colors"
       >
         <option value="product">Product</option>
         <option value="category">Category</option>

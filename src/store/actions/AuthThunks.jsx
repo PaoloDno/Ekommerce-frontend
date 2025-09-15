@@ -67,7 +67,6 @@ export const logoutAction = createAsyncThunk(
   "auth/LogoutAction",
   async (_, thunkAPI) => {
     try {
-      // Clear token from localStorage
       localStorage.removeItem("token");
       return { message: "Logged out successfully" };
     } catch (error) {

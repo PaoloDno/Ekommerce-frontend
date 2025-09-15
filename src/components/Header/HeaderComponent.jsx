@@ -2,7 +2,6 @@ import { Link, useNavigate } from "react-router-dom";
 import { useAppContext } from "../../context/AppContext";
 import {
   FaHome,
-  FaSearch,
   FaStore,
   FaTag,
   FaShoppingCart,
@@ -36,20 +35,23 @@ export default function HeaderComponent() {
         </>
       ) : (
         <>
+          <Link className="header-signup hover:scale-110" to="/home">
+            Home
+          </Link>
+          
           <Link className="header-signup hover:scale-110" to="/cart">
             Cart
           </Link>
-          <Link className="header-signup hover:scale-110" to="/home">
+           <div className="header-signup hover:scale-110 w-fit">
             <ProfileDropdown />
-          </Link>
+          </div>
         </>
       )}
     </div>
   );
 
-
   return (
-    <header className="bg-skin-primary w-full p-2">
+    <header className="bg-skin-primary w-full p-2 z-50">
       <div className="header-desktop">
         <h1 className="text-skin-color1 font-Opensans font-semibold text-styleh4 ml-2">
           {brandName}
@@ -66,7 +68,10 @@ export default function HeaderComponent() {
           ))}
         </nav>
 
-        <div className="flex items-center space-x-4 text-skin-color1 border-l-2 border-skin-colorBorder1 pl-3">
+        <div
+          className="flex items-center space-x-4 text-skin-color1 
+        border-l-2 border-skin-colorBorder1 pl-3"
+        >
           {user ? (
             <span>
               <Link to="/cart" className="relative">

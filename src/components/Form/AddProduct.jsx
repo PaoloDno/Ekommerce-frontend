@@ -77,7 +77,36 @@ const AddProductFormComponent = () => {
     }
   };
 
-  return <div></div>;
+  const tailwindPeerLabel =
+    "auth-label peer-placeholder-shown:translate-y-0 peer-placeholder-shown:scale-100 peer-placeholder-shown:text-sm peer-focus:-translate-y-4 peer-focus:scale-90 peer-focus:text-xs peer-[&:not(:placeholder-shown)]:-translate-y-4 peer-[&:not(:placeholder-shown)]:scale-90 peer-[&:not(:placeholder-shown)]:text-xs";
+
+  const tailwindHelper =
+    "form-helper hidden opacity-0 peer-focus:block peer-focus:opacity-80 transition-opacity duration-200";
+
+  const inputClasses = "rounded auth-inputs peer border border-gray-300";
+
+
+
+  return (
+    <div className="auth-form">
+      <form action="auth-form-content">
+        {["name", ""].map((field) => (
+        <div className="auth-field" key={field}>
+          <input
+            type="text"
+            name={field}
+            placeholder={field}
+            value={productData.field}
+            onChange={handleChange}
+            className={inputClasses}
+          />
+          <label className={tailwindPeerLabel}>Product{field}</label>
+          {errors[field] && <p className="error-p">{errors[field]}</p>}
+        </div>
+        ))};
+      </form>
+    </div>
+  )
 };
 
 export default AddProductFormComponent;
