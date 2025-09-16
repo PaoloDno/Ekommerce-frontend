@@ -61,8 +61,6 @@ export const getUserProfileAction = createAsyncThunk(
   }
 );
 
-
-
 export const logoutAction = createAsyncThunk(
   "auth/LogoutAction",
   async (_, thunkAPI) => {
@@ -78,4 +76,24 @@ export const logoutAction = createAsyncThunk(
   }
 );
 
-
+export const themeToggleAction = createAsyncThunk(
+  "auth/ThemeToggle",
+  async (theme, thunkAPI) => {
+    try {
+      const token = thunkAPI.getState().auth.token;
+      console.log(token);
+      console.log(themeData);
+      const response = await api.post("/user/theme", {theme}, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      return response.data.theme;
+    } catch {
+      console.error(error);
+      return thunkAPI.rejectWithValue(
+        error.response?.data?.message || "theme toggle failed "
+      );
+    }
+  }
+);

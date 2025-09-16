@@ -12,6 +12,7 @@ const authSlice = createSlice({
     userId: "",
     profile: null,
     username: "",
+    theme: null,
     totalItems: 0,
     token: localStorage.getItem("token") || null,
     isPending: false,

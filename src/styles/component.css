@@ -18,6 +18,9 @@
     bg-skin-primary p-2 font-Opensans;
   }
   .text-div h2{
-    @apply font-Merriweather text-styleh3
+    @apply font-Merriweather text-styleh4 md:text-styleh3
+  }
+  .text-div button {
+    @apply flex w-fit min-w-[50px] px-2 items-center justify-center bg-skin-colorContent text-skin-colorContent
   }
 }
