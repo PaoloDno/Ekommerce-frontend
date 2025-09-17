@@ -4,6 +4,7 @@ import {
   signUpAction,
   logoutAction,
   getUserProfileAction,
+  themeToggleAction,
 } from "../actions/AuthThunks";
 
 const authSlice = createSlice({
@@ -58,11 +59,19 @@ const authSlice = createSlice({
         state.isSuccess = true;
         state.isRejected = false;
         state.profile = action.payload.data;
+        state.theme = action.payload.data.userTheme;
+      })
+
+      .addCase(themeToggleAction.fulfilled, (state, action) => {
+        state.isPending = false;
+        state.isSuccess = true;
+        state.isRejected = false;
+        state.theme = action.payload.data;
       })
 
       .addMatcher(
         isPending(
-          loginAction, signUpAction, logoutAction, getUserProfileAction),
+          loginAction, signUpAction, logoutAction, getUserProfileAction, themeToggleAction),
         (state) => {
           state.isPending = true;
           state.isRejected = false;
@@ -73,7 +82,7 @@ const authSlice = createSlice({
 
       .addMatcher(
         isRejected(
-          loginAction, signUpAction, logoutAction, getUserProfileAction),
+          loginAction, signUpAction, logoutAction, getUserProfileAction, themeToggleAction),
         (state, action) => {
           state.isPending = false;
           state.isRejected = true;

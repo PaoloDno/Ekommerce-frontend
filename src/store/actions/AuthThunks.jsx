@@ -81,14 +81,14 @@ export const themeToggleAction = createAsyncThunk(
   async (theme, thunkAPI) => {
     try {
       const token = thunkAPI.getState().auth.token;
-      console.log(token);
-      console.log(themeData);
-      const response = await api.post("/user/theme", {theme}, {
+      console.log("theme: ", token);
+      console.log(theme);
+      const response = await api.put("/user/theme", {theme}, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
       });
-      return response.data.theme;
+      return response.data;
     } catch {
       console.error(error);
       return thunkAPI.rejectWithValue(

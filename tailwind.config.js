@@ -17,8 +17,8 @@ export default {
         stylep3: ["clamp(0.75rem, 0.9vw, 0.875rem)", { lineHeight: "1.25rem" }],
 
         styleh1: ["clamp(2rem, 4.2vw, 3rem)", { lineHeight: "3.5rem" }],
-        styleh2: ["clamp(1.75rem, 3vw, 2.5rem)", { lineHeight: "3rem" }],
-        styleh3: ["clamp(1.5rem, 2.5vw, 2rem)", { lineHeight: "2.5rem" }],
+        styleh2: ["clamp(1.75rem, 3.2vw, 2.5rem)", { lineHeight: "3.2rem" }],
+        styleh3: ["clamp(1.6rem, 3vw, 2.2rem)", { lineHeight: "2.5rem" }],
         styleh4: ["clamp(0.8rem, 2.3vw, 1.15rem)", { lineHeight: "2.25rem" }],
       },
       textColor: {

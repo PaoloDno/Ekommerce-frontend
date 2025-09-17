@@ -3,12 +3,14 @@ import { useDispatch, useSelector } from "react-redux";
 import { getUserProfileAction } from "../../store/actions/AuthThunks";
 import { useNavigate } from "react-router-dom";
 import ThemeSelectorProfile from "./ThemeSelectorProfile";
+import { useTheme } from "../../context/ThemeContext";
 
 const HomePage = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const { token, isPending } = useSelector((state) => state.auth);
 
+  const {current, changeTheme } = useTheme();
   const [profile, setProfile] = useState({});
   const isMounted = useRef(true);
 
@@ -22,11 +24,13 @@ const HomePage = () => {
         isMounted.current
       ) {
         setProfile(resultAction.payload.data);
-        console.log(profile);
+        changeTheme(resultAction.payload.data.userTheme);
       }
     } catch (error) {
       console.error(error);
     }
+    
+    console.log(profile);
   }, [dispatch, token]);
 
   useEffect(() => {
@@ -42,13 +46,15 @@ const HomePage = () => {
   if (!token) {
     return (
       <div className="page-section">
-        <p className="bg-black text-white p-4">Please login to continue</p>
+        <div className="page-body">
+        <p className="text-white p-4">Please login to continue</p>
         <button
           onClick={() => navigate("/login")}
           className="px-4 py-2 mt-2 bg-blue-500 text-white rounded-md hover:bg-blue-600"
         >
           Go to Login
         </button>
+        </div>
       </div>
     );
   }
