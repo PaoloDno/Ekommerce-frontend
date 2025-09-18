@@ -5,6 +5,8 @@ import { Link, useNavigate } from "react-router-dom";
 import { useAppContext } from "../../context/AppContext";
 import { FaCircleArrowLeft } from "react-icons/fa6";
 
+import AuthImg from "./images/authImg.jpg";
+
 const LoginFormComponent = () => {
   const { isPending, isRejected, isSuccess, error } = useSelector(
     (state) => state.auth
@@ -14,8 +16,11 @@ const LoginFormComponent = () => {
   const navigate = useNavigate();
 
   const [errors, setErrors] = useState({});
-  
+
   const CLEAN_TEXT_REGEX = /^[^&<>"'/]*$/;
+  const USER_REGEX = /^[A-z][A-z0-9-_]{3,23}$/;
+  const PWD_REGEX =
+    /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%]).{8,24}$/;
 
   const sanitizeInput = (input) => {
     return input.trim().replace(/[\/<>#]/g, "");
@@ -47,24 +52,25 @@ const LoginFormComponent = () => {
     let newErrors = {};
 
     Object.keys(userCreds).forEach((key) => {
-      const error = validateField(key, userData[key]);
+      const error = validateField(key, userCreds[key]);
       if (error) newErrors[key] = error;
     });
 
     if (Object.keys(newErrors).length > 0) {
       setErrors(newErrors);
-      console.log(errors);
+      console.log(newErrors);
       return false;
     }
+
     setErrors({});
     return true;
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setErrors("");
+    setErrors({}); // reset to empty object
 
-    if (validateFields) {
+    if (validateFields()) {
       const sanitizedCreds = {
         username: sanitizeInput(userCreds.username),
         password: sanitizeInput(userCreds.password),
@@ -98,7 +104,7 @@ const LoginFormComponent = () => {
   return (
     <div className="auth-form">
       {username ? (
-        <div className="flex w-full h-full">
+        <div className="flex w-full h-full bg-skin-primary text-skin-color1">
           <p className="text-stylep1">Welcome! u r logged in!</p>
           <Link
             to="/signup"
@@ -108,21 +114,30 @@ const LoginFormComponent = () => {
           </Link>
         </div>
       ) : (
-        <div className="flex w-full h-full flex-row bg-red-400">
-          <div className="flex flex-col text-start justify-start w-5/6 p-4 md:p-5 z-10 text-stylep1">
-            <p className="text-stylep1">Welcome! No account?</p>
-            <Link
-              to="/signup"
-              className="flex flex-row items-center text-stylep1 w-fit py-1"
-            >
-              <FaCircleArrowLeft className="text-styleh4 mr-2" /> Sign Up!
-            </Link>
+        <div className="flex w-full h-full flex-row bg-red-400 z-0 rounded-l-2xl">
+          <div className="flex h-full min-w-[200px] overflow-hidden relative">
+            <img src={AuthImg} className="w-full h-full bg-contain" />
+            
+            <div className="absolute inset-0 bg-gradient-to-t from-transparent to-skin-end z-20 bg-opacity-90"></div>
+            <div className="absolute top-0 left-0 flex-col text-start justify-start w-5/6 p-4 md:p-5 z-30 text-styleh">
+              <p className="text-styleh4 text-skin-colorContent font-Montserrat mb-2
+              flex flex-col
+              ">
+                <span className="text-styleh3 font-bold">Welcome!</span> <span>No account?</span></p>
+              <Link
+                to="/signup"
+                className="flex flex-row items-center text-stylep3 py-1
+                border-skin-colorBorder2 border-2 rounded-lg px-3 w-full
+                "
+              >
+                <FaCircleArrowLeft className="text-styleh4 mr-2 h-[2rem] w-[2.25rem] box-border p-1" /> SignUp instead!
+              </Link>
+            </div>
           </div>
 
           <form onSubmit={handleSubmit} className="auth-form-content">
-            <div className="auth-title">
-              Login
-            </div>
+            <div className="auth-title">Login</div>
+
             <div className="auth-field">
               <input
                 type="text"
@@ -166,7 +181,7 @@ const LoginFormComponent = () => {
             <button
               type="submit"
               className="auth-button flex items-center justify-center"
-              disabled={isPending}
+              disabled={isPending || isSuccess}
             >
               {isPending ? (
                 <div className="w-5 h-5 border-2 border-t-transparent border-white rounded-full animate-spin"></div>

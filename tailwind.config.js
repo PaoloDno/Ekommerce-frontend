@@ -53,8 +53,9 @@ export default {
       },
       gradientColorStops: {
         skin: {
-          end: withOpacity("--color-back"),
-        }
+          end: withOpacity("--color-content-bg"),
+          start: withOpacity(""),
+        },
       },
       fontFamily: {
         Montserrat: ["Montserrat", "sans-serif"],
