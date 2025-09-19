@@ -1,6 +1,8 @@
 @layer base {
   /* ========== Base (Default) Theme ========== */
-  :root,
+  :root {
+    --color-shadow: 0, 0, 0;
+  }
   .theme-default {
     --color-primary: 34, 87, 165;
     --color-secondary: 58, 128, 219;
@@ -25,6 +27,8 @@
 
     --color-content-text: 31, 14, 14;
     --color-content-bg: 231, 234, 248;
+
+    --color-shadow: 252, 152, 58;
   }
 
   /* ========== Coffee Theme ========== */
@@ -52,6 +56,9 @@
 
     --color-content-text: 65, 32, 17;
     --color-content-bg: 227, 228, 214;
+
+    
+    --color-shadow: 225, 236, 59;
   }
 
   /* ========== Dark Theme ========== */
@@ -79,6 +86,8 @@
 
     --color-content-text: 0, 0, 0;
     --color-content-bg: 220, 222, 224;
+      
+    --color-shadow: 91, 107, 114;
   }
 
   /* ========== Sakura Theme ========== */
@@ -106,6 +115,8 @@
 
     --color-content-text: 70, 5, 5;
     --color-content-bg: 248, 240, 240;
+      
+    --color-shadow: 21, 194, 64;
   }
 
   /* ========== Dark2 Theme ========== */
@@ -133,5 +144,7 @@
 
     --color-content-text: 19, 44, 39;
     --color-content-bg: 221, 234, 245;
+    
+    --color-shadow: 200, 220, 220;
   }
 }

@@ -54,14 +54,30 @@ export default {
       gradientColorStops: {
         skin: {
           end: withOpacity("--color-content-bg"),
-          start: withOpacity(""),
+          start: withOpacity("--color-fill-3"),
         },
       },
+      boxShadow: {
+        skin: {
+          light: "0 2px 4px rgba(var(--color-shadow), 0.1)",
+          medium: "0 4px 6px rgba(var(--color-shadow), 0.15)",
+          heavy: "0 10px 15px rgba(var(--color-shadow), 0.25)",
+          inner: "inset 0 2px 4px rgba(var(--color-shadow), 0.2)",
+        },
+      },
+      dropShadow: {
+        skin: {
+          soft: "0 1px 2px rgba(var(--color-shadow), 0.25)",
+          glow: "0 0 8px rgba(var(--color-shadow), 0.5)",
+          strong: "0 2px 6px rgba(var(--color-shadow), 0.35)",
+        },
+      },
+
       fontFamily: {
         Montserrat: ["Montserrat", "sans-serif"],
         Merriweather: ["Merriweather", "serif"],
         Oswald: ["Oswald", "sans-serif"],
-        Opensans: ["Open Sans", "sansa-serif"]
+        Opensans: ["Open Sans", "sansa-serif"],
       },
     },
   },

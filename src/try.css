@@ -24,6 +24,8 @@
 
   --color-content-text: rgb(31, 14, 14);
   --color-content-bg: rgb(231, 234, 248);
+
+  --color-shadow: rgb(252, 152, 58);
 }
 
 /* ========== Coffee Theme ========== */
@@ -51,6 +53,9 @@
 
   --color-content-text: rgb(227, 228, 214);
   --color-content-bg: rgb(65, 32, 17);
+
+  
+  --color-shadow: rgb(225, 236, 59);
 }
 
 /* ========== Dark Theme ========== */
@@ -78,6 +83,8 @@
 
   --color-content-text: rgb(0, 0, 0);
   --color-content-bg: rgb(220, 222, 224);
+   
+  --color-shadow: rgb(91, 107, 114);
 }
 
 /* ========== Sakura Theme ========== */
@@ -105,6 +112,8 @@
 
   --color-content-text: rgb(248, 240, 240);
   --color-content-bg: rgb(70, 5, 5);
+
+  --color-shadow: rgb(21, 194, 64);
 }
 
 /* ========== Dark2 Theme ========== */
@@ -132,4 +141,6 @@
 
   --color-content-text: rgb(19, 44, 39);
   --color-content-bg: rgb(221, 234, 245);
+  
+  --color-shadow: rgb(21, 194, 64);
 }

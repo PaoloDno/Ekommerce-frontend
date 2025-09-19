@@ -6,7 +6,7 @@ import { signUpAction } from "../../store/actions/AuthThunks";
 import { FaCircleArrowLeft } from "react-icons/fa6";
 
 const SignInFormComponent = () => {
-  const { isPending, error } = useSelector((state) => state.auth);
+  const { token, isPending, error } = useSelector((state) => state.auth);
   const { username } = useAppContext();
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -143,14 +143,14 @@ const SignInFormComponent = () => {
 
   return (
     <div className="auth-form">
-       {username ? (
-        <div className="flex w-full h-full flex-col items-start">
-          <p className="text-stylep1">Welcome! You are logged in!</p>
+       {token ? (
+        <div className="flex w-full h-full flex-col items-start bg-skin-primary">
+          <p className="text-stylep1 text-black">Welcome! You are logged in!</p>
           <Link
             to="/"
             className="flex flex-row items-center text-stylep1 w-fit py-1"
           >
-            <FaCircleArrowLeft className="text-styleh4 mr-2" /> Go to Homepage!
+            <FaCircleArrowLeft className="text-styleh4 mr-2 bg-blue" /> Go to Homepage!
           </Link>
         </div>
       ) : (
@@ -266,6 +266,7 @@ const SignInFormComponent = () => {
           </button>
         </form>
       )}
+    <div className="authbgblur"></div>
     </div>
   );
 };

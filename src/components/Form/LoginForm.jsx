@@ -102,9 +102,10 @@ const LoginFormComponent = () => {
   const inputClasses = "rounded auth-inputs peer border border-gray-300";
 
   return (
-    <div className="auth-form">
+    <div className="auth-form shadow-skin-medium">
+       <div className="authbgblur"></div>
       {username ? (
-        <div className="flex w-full h-full bg-skin-primary text-skin-color1">
+        <div className="flex z-20 w-full h-full bg-skin-primary text-skin-color1">
           <p className="text-stylep1">Welcome! u r logged in!</p>
           <Link
             to="/signup"
@@ -114,19 +115,19 @@ const LoginFormComponent = () => {
           </Link>
         </div>
       ) : (
-        <div className="flex w-full h-full flex-row bg-red-400 z-0 rounded-l-2xl">
-          <div className="flex h-full min-w-[200px] overflow-hidden relative">
+        <div className="auth-container">
+          <div className="auth-container-left">
             <img src={AuthImg} className="w-full h-full bg-contain" />
             
             <div className="absolute inset-0 bg-gradient-to-t from-transparent to-skin-end z-20 bg-opacity-90"></div>
-            <div className="absolute top-0 left-0 flex-col text-start justify-start w-5/6 p-4 md:p-5 z-30 text-styleh">
-              <p className="text-styleh4 text-skin-colorContent font-Montserrat mb-2
+            <div className="absolute top-10 md:top-2 left-0 flex-col text-start justify-start w-full md:w-5/6 p-4 md:p-5 z-30 text-styleh">
+              <p className="text-styleh4 text-skin-colorContent font-Montserrat mb-2 p-2 md:p-3 text-start
               flex flex-col
               ">
-                <span className="text-styleh3 font-bold">Welcome!</span> <span>No account?</span></p>
+                <span className="text-styleh4 font-bold">Welcome!</span> <span>No account?</span></p>
               <Link
                 to="/signup"
-                className="flex flex-row items-center text-stylep3 py-1
+                className="flex flex-row items-center text-stylep3 md:text-stylep3 py-1
                 border-skin-colorBorder2 border-2 rounded-lg px-3 w-full
                 "
               >
