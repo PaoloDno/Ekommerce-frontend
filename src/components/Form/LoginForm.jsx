@@ -8,7 +8,7 @@ import { FaCircleArrowLeft } from "react-icons/fa6";
 import AuthImg from "./images/authImg.jpg";
 
 const LoginFormComponent = () => {
-  const { isPending, isRejected, isSuccess, error } = useSelector(
+  const { token, isPending, isRejected, isSuccess, error } = useSelector(
     (state) => state.auth
   );
   const { username } = useAppContext();
@@ -97,14 +97,14 @@ const LoginFormComponent = () => {
     "auth-label peer-placeholder-shown:translate-y-0 peer-placeholder-shown:scale-100 peer-placeholder-shown:text-sm peer-focus:-translate-y-4 peer-focus:scale-90 peer-focus:text-xs peer-[&:not(:placeholder-shown)]:-translate-y-4 peer-[&:not(:placeholder-shown)]:scale-90 peer-[&:not(:placeholder-shown)]:text-xs";
 
   const tailwindHelper =
-    "form-helper hidden opacity-0 peer-focus:block peer-focus:opacity-80 transition-opacity duration-200";
+    "form-helper hidden opacity-0 peer-focus:block peer-focus:opacity-90 transition-opacity duration-200";
 
   const inputClasses = "rounded auth-inputs peer border border-gray-300";
 
   return (
-    <div className="auth-form shadow-skin-medium">
-       <div className="authbgblur"></div>
-      {username ? (
+    <div className="auth-form shadow-sm">
+      <div className="authbgblur"></div>
+      {token && username ? (
         <div className="flex z-20 w-full h-full bg-skin-primary text-skin-color1">
           <p className="text-stylep1">Welcome! u r logged in!</p>
           <Link
@@ -117,21 +117,22 @@ const LoginFormComponent = () => {
       ) : (
         <div className="auth-container">
           <div className="auth-container-left">
-            <img src={AuthImg} className="w-full h-full bg-contain" />
+            <img src={AuthImg} className="w-full h-full bg-cover" />
             
+            <div className="hidden md:absolute inset-0 bg-gradient-to-t from-transparent to-skin-start z-20 bg-opacity-10"></div>
             <div className="absolute inset-0 bg-gradient-to-t from-transparent to-skin-end z-20 bg-opacity-90"></div>
-            <div className="absolute top-10 md:top-2 left-0 flex-col text-start justify-start w-full md:w-5/6 p-4 md:p-5 z-30 text-styleh">
-              <p className="text-styleh4 text-skin-colorContent font-Montserrat mb-2 p-2 md:p-3 text-start
-              flex flex-col
-              ">
-                <span className="text-styleh4 font-bold">Welcome!</span> <span>No account?</span></p>
+            <div className="absolute top-10 md:top-2 left-0 flex-col text-start justify-start w-full md:w-11/12 p-3 md:p-5 z-30">
+              <p className="auht-p">
+                <span className="text-styleh4 font-bold">Welcome!</span>
+                <span className="flex flex-row text-stylep2">No account?</span>
+                <span className="flex flex-row text-stylep2">Go to signup instead.</span>  
+              </p>
               <Link
                 to="/signup"
-                className="flex flex-row items-center text-stylep3 md:text-stylep3 py-1
-                border-skin-colorBorder2 border-2 rounded-lg px-3 w-full
-                "
+                className="auth-redirection"
               >
-                <FaCircleArrowLeft className="text-styleh4 mr-2 h-[2rem] w-[2.25rem] box-border p-1" /> SignUp instead!
+                <FaCircleArrowLeft className="auth-redirection-icon" />
+                <span className="auth-redirection-text">SIGN UP!</span>
               </Link>
             </div>
           </div>

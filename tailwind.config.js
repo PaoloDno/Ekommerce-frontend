@@ -12,14 +12,14 @@ export default {
   theme: {
     extend: {
       fontSize: {
-        stylep1: ["clamp(0.8rem, 1.2vw, 1rem)", { lineHeight: "1.75rem" }],
-        stylep2: ["clamp(0.75rem, 1vw, 0.8rem)", { lineHeight: "1.5rem" }],
-        stylep3: ["clamp(0.75rem, 0.9vw, 0.875rem)", { lineHeight: "1.25rem" }],
+        stylep1: ["clamp(0.8rem, 1.2vw, 1.4rem)", { lineHeight: "1.75rem" }],
+        stylep2: ["clamp(0.75rem, 1vw, 1rem)", { lineHeight: "1.5rem" }],
+        stylep3: ["clamp(0.75rem, 0.8vw, 0.75rem)", { lineHeight: "1.25rem" }],
 
-        styleh1: ["clamp(2rem, 4.2vw, 3rem)", { lineHeight: "3.5rem" }],
-        styleh2: ["clamp(1.75rem, 3.2vw, 2.5rem)", { lineHeight: "3.2rem" }],
-        styleh3: ["clamp(1.6rem, 3vw, 2.2rem)", { lineHeight: "2.5rem" }],
-        styleh4: ["clamp(0.8rem, 2.3vw, 1.15rem)", { lineHeight: "2.25rem" }],
+        styleh1: ["clamp(2.2rem, 4.2vw, 3rem)", { lineHeight: "3.5rem" }],
+        styleh2: ["clamp(1.85rem, 3.2vw, 2.5rem)", { lineHeight: "3.2rem" }],
+        styleh3: ["clamp(1.5rem, 3vw, 1.75rem)", { lineHeight: "2.5rem" }],
+        styleh4: ["clamp(1rem, 2.2vw, 1.5rem)", { lineHeight: "2.25rem" }],
       },
       textColor: {
         skin: {

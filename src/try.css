@@ -36,16 +36,16 @@
 
   --color-text1: rgb(54, 29, 10);
   --color-text2: rgb(34, 29, 25);
-  --color-contrast: rgb(90, 18, 106);
+  --color-contrast: rgb(78, 46, 4);
   --color-disable: rgb(174, 148, 133);
 
   --color-fill-1: rgb(230, 180, 144);
   --color-fill-2: rgb(230, 219, 189);
-  --color-fill-3: rgb(251, 132, 132);
+  --color-fill-3: rgb(233, 230, 65);
   --color-fill-4: rgb(252, 243, 239);
 
   --color-button-1: rgb(227, 170, 37);
-  --color-button-2: rgb(212, 215, 196);
+  --color-button-2: rgb(100, 21, 1);
 
   --color-back: rgb(54, 36, 11);
   --color-border1: rgb(119, 60, 1);
@@ -95,12 +95,12 @@
   
   --color-text1: rgb(78, 20, 35);
   --color-text2: rgb(80, 36, 53);
-  --color-contrast: rgb(32, 95, 32);
+  --color-contrast: rgb(17, 17, 11);
   --color-disable: rgb(121, 40, 60);
 
   --color-fill-1: rgb(255, 240, 245);
   --color-fill-2: rgb(255, 220, 230);
-  --color-fill-3: rgb(247, 150, 177);
+  --color-fill-3: rgb(93, 241, 137);
   --color-fill-4: rgb(34, 22, 25);
 
   --color-button-1: rgb(245, 158, 223);

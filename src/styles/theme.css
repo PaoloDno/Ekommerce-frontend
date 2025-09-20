@@ -39,12 +39,12 @@
 
     --color-text1: 54, 29, 10;
     --color-text2: 34, 29, 25;
-    --color-contrast: 90, 18, 106;
+    --color-contrast: 78, 46, 4;
     --color-disable: 174, 148, 133;
 
     --color-fill-1: 230, 180, 144;
     --color-fill-2: 230, 219, 189;
-    --color-fill-3: 251, 132, 132;
+    --color-fill-3: 233, 230, 65;
     --color-fill-4: 252, 243, 239;
 
     --color-button-1: 227, 170, 37;
@@ -52,7 +52,7 @@
 
     --color-back: 54, 36, 11;
     --color-border1: 245, 225, 160;
-    --color-border2: 5, 20, 37;
+    --color-border2: 100, 21, 1;
 
     --color-content-text: 65, 32, 17;
     --color-content-bg: 227, 228, 214;
@@ -98,12 +98,12 @@
 
     --color-text1: 78, 20, 35;
     --color-text2: 82, 56, 66;
-    --color-contrast: 32, 95, 32;
+    --color-contrast: 17, 17, 11;
     --color-disable: 121, 40, 60;
 
     --color-fill-1: 255, 240, 245;
     --color-fill-2: 255, 220, 230;
-    --color-fill-3: 247, 150, 177;
+    --color-fill-3: 93, 241, 137;
     --color-fill-4: 34, 22, 25;
 
     --color-button-1: 245, 158, 223;
