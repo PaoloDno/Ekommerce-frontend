@@ -2,7 +2,7 @@ import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate, Link } from "react-router-dom";
 import { signUpAction } from "../../store/actions/AuthThunks";
-import { FaCircleArrowLeft } from "react-icons/fa6";
+import { FaCircleArrowLeft, FaCircleArrowRight } from "react-icons/fa6";
 
 import AuthImg from "./images/authImg.jpg";
 import { useAppContext } from "../../context/AppContext";
@@ -150,147 +150,132 @@ const SignInFormComponent = () => {
     <div className="auth-form shadow-sm">
       <div className="authbgblur"></div>
       {token && username ? (
-        <div className="flex z-20 w-full h-full bg-skin-primary text-skin-color1">
+        <div className="flex z-20 w-full h-full bg-skin-primary text-skin-color1 relative">
           <p className="text-stylep1">Welcome! u r logged in!</p>
           <Link
             to="/signup"
-            className="flex flex-row items-center text-stylep1 w-fit py-1"
+            className="flex flex-row items-center text-stylep1 md:w-fit py-1"
           >
             <FaCircleArrowLeft className="text-styleh4 mr-2" /> Go to Homepage!
           </Link>
         </div>
       ) : (
-        <div className="auth-container">
-          <div className="auth-container-left">
-            <img src={AuthImg} className="w-full h-full bg-cover" />
-
-            <div className="hidden md:absolute inset-0 bg-gradient-to-t from-transparent to-skin-start z-20 bg-opacity-10"></div>
-            <div className="absolute inset-0 bg-gradient-to-t from-transparent to-skin-end z-20 bg-opacity-90"></div>
-            <div className="absolute top-10 md:top-2 left-0 flex-col text-start justify-start w-full md:w-11/12 p-3 md:p-5 z-30">
-              <p className="auht-p">
-                <span className="text-styleh4 font-bold">Welcome!</span>
-                <span className="flex flex-row text-stylep2">
-                  Already log-in
-                </span>
-                <span className="flex flex-row text-stylep2">
-                  Login instead.
-                </span>
-              </p>
-              <Link to="/login" className="auth-redirection">
-                <FaCircleArrowLeft className="auth-redirection-icon" />
-                <span className="auth-redirection-text">LOGIN!</span>
-              </Link>
-            </div>
-          </div>
-
-          <form onSubmit={handleSubmit} className="auth-sign-form-content">
-            <h2 className="auth-header-2">Sign In</h2>
-            {!error ? "" : <span className="error-p">{error}</span>}
-
+        <div className="auth-container-sign">
+          <form onSubmit={handleSubmit} className="auth-form-content">
             {/* Username */}
-            <div className="auth-fields">
-              <div className="auth-field">
-                <input
-                  type="text"
-                  name="username"
-                  placeholder="Username"
-                  value={userData.username}
-                  onChange={handleChange}
-                  className={inputClasses}
-                />
-                <label className={tailwindPeerLabel}>Username</label>
-                <div className={tailwindHelper}>
-                  <span>Must start with a letter A to Z, a to z</span>
-                  <span>
-                    Can include letters, numbers, underscores, or hyphens
-                  </span>
-                  <span>Length: 4 to 24 characters</span>
-                </div>
-                {errors.username && (
-                  <p className="error-p">{errors.username}</p>
-                )}
-              </div>
+            <div className="auth-sign-form-content">
+              <div className="auth-fields">
+                <h2 className="auth-header-2">Sign In</h2>
+                {!error ? "" : <span className="error-p">{error}</span>}
 
-              {/* Email */}
-              <div className="auth-field">
-                <input
-                  type="email"
-                  name="email"
-                  placeholder="Email"
-                  value={userData.email}
-                  onChange={handleChange}
-                  className={inputClasses}
-                />
-                <label className={tailwindPeerLabel}>Email</label>
-                <div className={tailwindHelper}>
-                  <span>Must follow a valid email format</span>
-                  <span>Domain extension: 2–24 letters</span>
-                </div>
-                {errors.email && <p className="error-p">{errors.email}</p>}
-              </div>
-
-              {/* Password */}
-              <div className="auth-field">
-                <input
-                  type="password"
-                  name="password"
-                  placeholder="Password"
-                  value={userData.password}
-                  onChange={handleChange}
-                  className={inputClasses}
-                />
-                <label className={tailwindPeerLabel}>Password</label>
-                <div className={tailwindHelper}>
-                  <span>At least 1 lowercase, 1 uppercase, 1 number</span>
-                  <span>At least 1 special: ! @ # $ %</span>
-                  <span>8 to 24 characters</span>
-                </div>
-                {errors.password && (
-                  <p className="error-p">{errors.password}</p>
-                )}
-              </div>
-            </div>
-
-            <h3 className="auth-header-2">Identification</h3>
-
-            <div className="auth-fields">
-              {["firstname", "lastname", "middlename"].map((field) => (
-                <div className="auth-field" key={field}>
+                <div className="auth-field">
                   <input
                     type="text"
-                    name={field}
-                    placeholder={field}
-                    value={userData.field}
+                    name="username"
+                    placeholder="Username"
+                    value={userData.username}
                     onChange={handleChange}
                     className={inputClasses}
                   />
-                  <label className={tailwindPeerLabel}>
-                    {field.charAt(0).toUpperCase() + field.slice(1)}
-                  </label>
-                  {errors[field] && <p className="error-p">{errors[field]}</p>}
+                  <label className={tailwindPeerLabel}>Username</label>
+                  <div className={tailwindHelper}>
+                    <span>Must start with a letter A to Z, a to z</span>
+                    <span>
+                      Can include letters, numbers, underscores, or hyphens
+                    </span>
+                    <span>Length: 4 to 24 characters</span>
+                  </div>
+                  {errors.username && (
+                    <p className="error-p">{errors.username}</p>
+                  )}
                 </div>
-              ))}
-            </div>
-            <h3 className="auth-header-2">Address</h3>
 
-            <div className="auth-fields">
-              {/* address field */}
-              {["street", "city", "country", "postalCode"].map((field) => (
-                <div className="auth-field" key={field}>
+                {/* Email */}
+                <div className="auth-field">
                   <input
-                    type="text"
-                    name={field}
-                    placeholder={field}
-                    value={userData.address[field]}
-                    onChange={handleChangeAddress}
+                    type="email"
+                    name="email"
+                    placeholder="Email"
+                    value={userData.email}
+                    onChange={handleChange}
                     className={inputClasses}
                   />
-                  <label className={tailwindPeerLabel}>
-                    {field.charAt(0).toUpperCase() + field.slice(1)}
-                  </label>
-                  {errors[field] && <p className="error-p">{errors[field]}</p>}
+                  <label className={tailwindPeerLabel}>Email</label>
+                  <div className={tailwindHelper}>
+                    <span>Must follow a valid email format</span>
+                    <span>Domain extension: 2–24 letters</span>
+                  </div>
+                  {errors.email && <p className="error-p">{errors.email}</p>}
                 </div>
-              ))}
+
+                {/* Password */}
+                <div className="auth-field">
+                  <input
+                    type="password"
+                    name="password"
+                    placeholder="Password"
+                    value={userData.password}
+                    onChange={handleChange}
+                    className={inputClasses}
+                  />
+                  <label className={tailwindPeerLabel}>Password</label>
+                  <div className={tailwindHelper}>
+                    <span>At least 1 lowercase, 1 uppercase, 1 number</span>
+                    <span>At least 1 special: ! @ # $ %</span>
+                    <span>8 to 24 characters</span>
+                  </div>
+                  {errors.password && (
+                    <p className="error-p">{errors.password}</p>
+                  )}
+                </div>
+              </div>
+
+              <div className="auth-fields">
+                <h3 className="auth-header-2">Identification</h3>
+
+                {["firstname", "lastname", "middlename"].map((field) => (
+                  <div className="auth-field" key={field}>
+                    <input
+                      type="text"
+                      name={field}
+                      placeholder={field}
+                      value={userData.field}
+                      onChange={handleChange}
+                      className={inputClasses}
+                    />
+                    <label className={tailwindPeerLabel}>
+                      {field.charAt(0).toUpperCase() + field.slice(1)}
+                    </label>
+                    {errors[field] && (
+                      <p className="error-p">{errors[field]}</p>
+                    )}
+                  </div>
+                ))}
+              </div>
+
+              <div className="auth-fields">
+                <h3 className="auth-header-2">Address</h3>
+
+                {/* address field */}
+                {["street", "city", "country", "postalCode"].map((field) => (
+                  <div className="auth-field" key={field}>
+                    <input
+                      type="text"
+                      name={field}
+                      placeholder={field}
+                      value={userData.address[field]}
+                      onChange={handleChangeAddress}
+                      className={inputClasses}
+                    />
+                    <label className={tailwindPeerLabel}>
+                      {field.charAt(0).toUpperCase() + field.slice(1)}
+                    </label>
+                    {errors[field] && (
+                      <p className="error-p">{errors[field]}</p>
+                    )}
+                  </div>
+                ))}
+              </div>
             </div>
             <button
               type="submit"
@@ -304,6 +289,28 @@ const SignInFormComponent = () => {
               )}
             </button>
           </form>
+
+          <div className="auth-container-right ">
+            <img src={AuthImg} className="w-full h-full object-cover" />
+            <div className="absolute md:hidden inset-0 bg-gradient-to-b from-transparent to-skin-end z-20 bg-opacity-10"></div>
+            <div className="hidden md:absolute inset-0 bg-gradient-to-tl from-transparent to-skin-start z-20 bg-opacity-10"></div>
+            <div className="absolute inset-0 bg-gradient-to-tl  md:bg-gradient-to-t from-transparent to-skin-end z-20 bg-opacity-90"></div>
+            <div className="absolute top-10 md:top-2 left-0 flex-col text-start w-full md:w-11/12 p-3 md:p-5 z-30">
+              <p className="auht-p">
+                <span className="text-styleh4 font-bold">Welcome!</span>
+                <span className="flex flex-row text-stylep1">
+                  Already log-in
+                </span>
+                <span className="flex flex-row text-stylep1">
+                  Login instead.
+                </span>
+              </p>
+              <Link to="/login" className="auth-redirection">
+                <span className="auth-redirection-text">LOGIN!</span>
+                <FaCircleArrowRight className="auth-redirection-icon" />
+              </Link>
+            </div>
+          </div>
         </div>
       )}
     </div>

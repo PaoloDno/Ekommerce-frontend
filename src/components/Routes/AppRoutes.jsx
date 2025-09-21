@@ -3,6 +3,10 @@ import LandingPage from "../../pages/Landing/LandingPage.jsx";
 // auth
 import LoginPage from "../../pages/AuthPage/LoginPage.jsx";
 import SignUpPage from "../../pages/AuthPage/SignUpPage.jsx";
+
+import LoginFormComponent from "../Form/components/LoginFormComponent.jsx";
+import SignUpFormComponent from "../Form/components/SignupFormComponent.jsx";
+
 // store
 import StoresPage from "../../pages/StorePage/StoresPage.jsx";
 import CreateStorePage from "../../pages/AuthPage/SellerPage.jsx";
@@ -26,8 +30,8 @@ const AppRoutes = () => {
       <Route path="/home" element={<HomePage />} />
       <Route path="/cart-user" element={<CartOwnerPage />} />
       {/* auth */}
-      <Route path="/login" element={<LoginPage />} />
-      <Route path="/signup" element={<SignUpPage />} />
+      <Route path="/login" element={<LoginFormComponent />} />
+      <Route path="/signup" element={<SignUpFormComponent />} />
       {/* stores */}
       <Route path="/stores" element={<StoresPage />} />
       <Route path="/create-store/:id" element={<CreateStorePage />} />
