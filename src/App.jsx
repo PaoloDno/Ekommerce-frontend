@@ -8,7 +8,7 @@ import FooterComponent from "./components/Footer/Footer";
 function App() {
   return (
     <Router>
-      <main className="flex flex-col pl-1 pr-2 items-center overflow-x-hidden min-h-screen w-full max-w-screen">
+      <main className="flex flex-col px-0 items-center overflow-x-hidden min-h-screen w-full">
       <HeaderComponent />
       <AppRoutes />
       <FooterComponent />
