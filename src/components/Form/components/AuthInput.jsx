@@ -17,6 +17,7 @@ const AuthInput = ({
 
   return (
     <div className="auth-field">
+      <div className="auth-input-field">
       <input
         type={type}
         name={name}
@@ -26,6 +27,7 @@ const AuthInput = ({
         className={inputClasses}
       />
       <label className={peerLabel}>{label}</label>
+      </div>
       {helper && <div className={helperClasses}>{helper}</div>}
       {error && <p className="error-p">{error}</p>}
     </div>

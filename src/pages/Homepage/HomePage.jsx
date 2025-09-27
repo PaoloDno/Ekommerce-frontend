@@ -60,7 +60,7 @@ const HomePage = () => {
   }
 
   if (isPending) {
-    return <div className="w-full h-full">Loading...</div>;
+    return <div className="flex justify-center items-center w-full h-full">Loading...</div>;
   }
 
   return (
