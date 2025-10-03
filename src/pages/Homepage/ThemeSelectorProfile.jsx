@@ -41,7 +41,8 @@ const ThemeSelectorProfile = () => {
         <button
           key={theme}
           onClick={() => changeTheme(theme)}
-          className={`text theme-${theme} text-stylep4 gap-2 rounded-full p-1 py-2 m-1 border-2
+          className={` text-div-button
+            text theme-${theme} text-stylep4 gap-2 rounded-full p-1 py-2 m-1 border-2
             ${current === theme ? "bg-skin-fill2 border-skin-colorActive" : "border-skin-colorBorder1"}`}
         >
           <FaPalette />
@@ -52,7 +53,7 @@ const ThemeSelectorProfile = () => {
       ))}
     </div>
     <div className="flex flex-col w-full justify-center items-center">
-      <button className="flex items-center justify-center px-3 py-1 my-2"
+      <button className="text-div-button flex items-center justify-center px-3 py-1 my-2"
         onClick={() => themeToggle()}
       >
        SAVE THEME

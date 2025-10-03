@@ -54,7 +54,9 @@ const SignUpFormComponent = () => {
   const validateField = (section, field, value) => {
     switch (field) {
       case "username":
-        return USER_REGEX.test(value) ? "" : "Username must be 3-23 characters, alphanumeric.";
+        return USER_REGEX.test(value)
+          ? ""
+          : "Username must be 3-23 characters, alphanumeric.";
       case "email":
         return EMAIL_REGEX.test(value) ? "" : "Invalid email format.";
       case "password":
@@ -62,9 +64,13 @@ const SignUpFormComponent = () => {
           ? ""
           : "Password must be 8-24 characters, include uppercase, lowercase, number, and symbol.";
       case "confirmPassword":
-        return value === formData.user.password ? "" : "Passwords do not match.";
+        return value === formData.user.password
+          ? ""
+          : "Passwords do not match.";
       default:
-        return CLEAN_TEXT_REGEX.test(value) && value ? "" : "No special characters allowed.";
+        return CLEAN_TEXT_REGEX.test(value) && value
+          ? ""
+          : "No special characters allowed.";
     }
   };
 
@@ -101,7 +107,9 @@ const SignUpFormComponent = () => {
     e.preventDefault();
     if (validateStep()) {
       const { user, profile, address } = formData;
-      const resultAction = await dispatch(signUpAction({ ...user, ...profile, address: {...address} }));
+      const resultAction = await dispatch(
+        signUpAction({ ...user, ...profile, address: { ...address } })
+      );
       if (signUpAction.fulfilled.match(resultAction)) {
         const timeoutId = setTimeout(() => {
           navigate("/home");
@@ -112,54 +120,58 @@ const SignUpFormComponent = () => {
   };
 
   const renderStep = () => (
-    <div>
+    <>
       {step === 1 && (
         <div className="flex flex-col w-full h-full min-h-[520px] justify-between">
-            <div className="flex flex-col w-full">
-          
-          <div className="auth-title">Sign Up</div>
-          <AuthInput
-            label="Username"
-            name="username"
-            value={formData.user.username}
-            onChange={(e) => handleChange("user", e)}
-            error={errors.user.username}
-          />
-          <AuthInput
-            type="email"
-            label="Email"
-            name="email"
-            value={formData.user.email}
-            onChange={(e) => handleChange("user", e)}
-            error={errors.user.email}
-          />
-          <AuthInput
-            type="password"
-            label="Password"
-            name="password"
-            value={formData.user.password}
-            onChange={(e) => handleChange("user", e)}
-            error={errors.user.password}
-          />
-          <AuthInput
-            type="password"
-            label="Repeat Password"
-            name="confirmPassword"
-            value={formData.user.confirmPassword}
-            onChange={(e) => handleChange("user", e)}
-            error={errors.user.confirmPassword}
-          />
+          <div className="flex flex-col w-full">
+            <div className="auth-title">Sign Up</div>
+            <AuthInput
+              label="Username"
+              name="username"
+              value={formData.user.username}
+              onChange={(e) => handleChange("user", e)}
+              error={errors.user.username}
+              helper="Username must be 3-23 characters, alphanumeric."
+            />
+            <AuthInput
+              type="email"
+              label="Email"
+              name="email"
+              value={formData.user.email}
+              onChange={(e) => handleChange("user", e)}
+              error={errors.user.email}
+              helper="email format"
+            />
+            <AuthInput
+              type="password"
+              label="Password"
+              name="password"
+              value={formData.user.password}
+              onChange={(e) => handleChange("user", e)}
+              error={errors.user.password}
+              helper="Password must be 8-24 characters, include uppercase, lowercase, number, and symbol."
+            />
+            <AuthInput
+              type="password"
+              label="Repeat Password"
+              name="confirmPassword"
+              value={formData.user.confirmPassword}
+              onChange={(e) => handleChange("user", e)}
+              error={errors.user.confirmPassword}
+              helper="repeat the password"
+            />
           </div>
           <span className="flex flex-row justify-between">
-            <button className="auth-button" 
-            type="button" onClick={handleNext}>Next</button>
+            <button className="auth-button" type="button" onClick={handleNext}>
+              Next
+            </button>
           </span>
         </div>
       )}
 
       {step === 2 && (
         <div className="flex flex-col w-full h-full min-h-[520px] justify-between">
-            <div className="flex flex-col w-full">
+          <div className="flex flex-col w-full">
             <div className="auth-title">Profile Info</div>
             <AuthInput
               label="Firstname"
@@ -167,6 +179,7 @@ const SignUpFormComponent = () => {
               value={formData.profile.firstname}
               onChange={(e) => handleChange("profile", e)}
               error={errors.profile.firstname}
+              helper="required and clean text"
             />
             <AuthInput
               label="Lastname"
@@ -174,6 +187,7 @@ const SignUpFormComponent = () => {
               value={formData.profile.lastname}
               onChange={(e) => handleChange("profile", e)}
               error={errors.profile.lastname}
+              helper="required and clean text"
             />
             <AuthInput
               label="Middlename"
@@ -181,62 +195,69 @@ const SignUpFormComponent = () => {
               value={formData.profile.middlename}
               onChange={(e) => handleChange("profile", e)}
               error={errors.profile.middlename}
+              helper="required and clean text"
             />
           </div>
           <span className="flex flex-row justify-between">
-            <button className="auth-button" 
-            type="button" onClick={handleBack}>Prev</button>
-            <button className="auth-button"
-            type="button" onClick={handleNext}>Next</button>
+            <button className="auth-button" type="button" onClick={handleBack}>
+              Prev
+            </button>
+            <button className="auth-button" type="button" onClick={handleNext}>
+              Next
+            </button>
           </span>
         </div>
       )}
 
       {step === 3 && (
-       <div className="flex flex-col w-full h-full min-h-[520px] justify-between">
-            <div className="flex flex-col w-full">
-          <div className="auth-title">Address</div>
-          <AuthInput
-            label="Street"
-            name="street"
-            value={formData.address.street}
-            onChange={(e) => handleChange("address", e)}
-            error={errors.address.street}
-          />
-          <AuthInput
-            label="City"
-            name="city"
-            value={formData.address.city}
-            onChange={(e) => handleChange("address", e)}
-            error={errors.address.city}
-          />
-          <AuthInput
-            label="Country"
-            name="country"
-            value={formData.address.country}
-            onChange={(e) => handleChange("address", e)}
-            error={errors.address.country}
-          />
-          <AuthInput
-            label="Postal Code"
-            name="postalCode"
-            value={formData.address.postalCode}
-            onChange={(e) => handleChange("address", e)}
-            error={errors.address.postalCode}
-          />
+        <div className="flex flex-col w-full h-full min-h-[520px] justify-between">
+          <div className="flex flex-col w-full">
+            <div className="auth-title">Address</div>
+            <AuthInput
+              label="Street"
+              name="street"
+              value={formData.address.street}
+              onChange={(e) => handleChange("address", e)}
+              error={errors.address.street}
+            />
+            <AuthInput
+              label="City"
+              name="city"
+              value={formData.address.city}
+              onChange={(e) => handleChange("address", e)}
+              error={errors.address.city}
+            />
+            <AuthInput
+              label="Country"
+              name="country"
+              value={formData.address.country}
+              onChange={(e) => handleChange("address", e)}
+              error={errors.address.country}
+            />
+            <AuthInput
+              label="Postal Code"
+              name="postalCode"
+              value={formData.address.postalCode}
+              onChange={(e) => handleChange("address", e)}
+              error={errors.address.postalCode}
+            />
           </div>
           <span className="flex flex-row justify-between">
-            <button className="auth-button"
-            type="button" onClick={handleBack}>Prev</button>
-            <button type="submit" 
+            <button className="auth-button" type="button" onClick={handleBack}>
+              Prev
+            </button>
+            <button
+              type="submit"
               onClick={handleSubmit}
-              disabled={isPending} className="auth-button">
+              disabled={isPending}
+              className="auth-button"
+            >
               {isPending ? <div>loading . . .</div> : "Sign Up"}
             </button>
           </span>
         </div>
       )}
-    </div>
+    </>
   );
 
   return (
@@ -256,8 +277,12 @@ const SignUpFormComponent = () => {
           <div className="absolute inset-0 bg-gradient-to-t to-skin-end from-transparent opacity-30"></div>
           <div className="absolute flex flex-col w-full top-1/4 right-0 gap-2 pt-2 text-stylep2 p-5 font-Oswald bg-skin-colorContent bg-opacity-70 hover:bg-skin-primary hover:text-skin-color1 transition-colors duration-1000 ease-in-out">
             <div className="absolute inset-0 w-full h-full bg-skin-colorContent blur-sm opacity-20 z-10"></div>
-            <span className="z-20 text-stylep3 md:text-stylep2">Already registered?</span>
-            <span className="z-20 text-stylep3 md:text-stylep2 mb-2">Go to Login instead..</span>
+            <span className="z-20 text-stylep3 md:text-stylep2">
+              Already registered?
+            </span>
+            <span className="z-20 text-stylep3 md:text-stylep2 mb-2">
+              Go to Login instead..
+            </span>
             <Link
               to="/login"
               className="flex w-full md:w-2/3 mx-auto justify-center items-center p-2 px-3 bg-skin-primary 
@@ -270,11 +295,16 @@ const SignUpFormComponent = () => {
         </>
       }
       redirect={{
-        to: "/login",
-        text: "LOGIN!",
-        icon: <FaCircleArrowRight className="auth-redirection-icon" />,
+        to: "/",
+        text: "go back to landing page",
+        icon: <FaCircleArrowRight />,
       }}
     >
+      {isLoading && (
+        <div className="absolute inset-0 flex items-center justify-center bg-black bg-opacity-40 z-50">
+          <div className="w-12 h-12 border-4 border-t-transparent border-white rounded-full animate-spin"></div>
+        </div>
+      )}
       {renderStep()}
       {error && <p className="error-p">{error}</p>}
     </AuthLayout>

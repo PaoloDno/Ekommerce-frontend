@@ -143,9 +143,9 @@ const LoginFormComponent = () => {
         </>
       }
       redirect={{
-        to: "/signup",
-        text: "SIGN UP!",
-        icon: <FaCircleArrowLeft className="auth-redirection-icon" />,
+        to: "/",
+        text: "go back to landing page",
+        icon: <FaCircleArrowLeft />,
       }}
     >
       <div className="auth-title">Welcome! We Miss You</div>

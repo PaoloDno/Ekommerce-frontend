@@ -1,14 +1,15 @@
 import React from "react"
-import SellerFormComponent from "../../components/Form/SellerForm";
 import { useParams } from "react-router-dom";
+import CreateSellerFormComponent from "./components/CreateSellerFormComponent";
+
+
 const CreateStorePage = () => {
-  const { ownerId } = useParams;
+  const { ownerId } = useParams();
   
   return (
     <div className="page-section">
       <div className="page-body">
-        <p>Hello {ownerId}</p>
-        <SellerFormComponent />
+        <CreateSellerFormComponent />
       </div>
       <div className="page-background"></div>
     </div>

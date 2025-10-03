@@ -9,7 +9,9 @@ import SignUpFormComponent from "../Form/components/SignupFormComponent.jsx";
 
 // store
 import StoresPage from "../../pages/StorePage/StoresPage.jsx";
-import CreateStorePage from "../../pages/AuthPage/SellerPage.jsx";
+
+// seller
+import CreateStorePage from "../../pages/SellerPage/CreateStorePage.jsx";
 // products
 import ProductDisplayPage from "../../pages/ProductPage/ProductPageDisplay.jsx";
 import AddProductPage from "../../pages/ProductPage/AddProductPage.jsx";
@@ -34,7 +36,7 @@ const AppRoutes = () => {
       <Route path="/signup" element={<SignUpFormComponent />} />
       {/* stores */}
       <Route path="/stores" element={<StoresPage />} />
-      <Route path="/create-store/:id" element={<CreateStorePage />} />
+      <Route path="/create-store/:ownerId" element={<CreateStorePage />} />
       <Route path="/categories" element={<CategoriesPage />} />
       {/* stores */}
       <Route path="/sell-products" element={<AddProductPage />} />

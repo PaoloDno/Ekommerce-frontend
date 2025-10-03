@@ -1,0 +1,287 @@
+import { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { Link, useNavigate } from "react-router-dom";
+import { createStoreAction } from "../../../store/actions/SellerThunks";
+import SellerInput from "./SellerFormInput";
+import SellerLayout from "./SellerFormLayoput";
+import { FaHome } from "react-icons/fa";
+
+import AuthVideo from "../../../components/Form/videos/Rainy.mp4";
+
+const CreateSellerFormComponent = () => {
+  const { token, isPending } = useSelector((s) => s.auth);
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+
+  const EMAIL_REGEX = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,24}$/;
+  const CLEAN_TEXT = /^[^&<>"'/]*$/;
+
+  const [step, setStep] = useState(1);
+  const [isLoading, setIsLoading] = useState(false);
+
+  const [formData, setFormData] = useState({
+    store: {
+      storeName: "",
+      email: "",
+      phone: "",
+      description: "",
+    },
+    address: {
+      street: "",
+      city: "",
+      country: "",
+      postalCode: "",
+    },
+    display: {
+      sellerLogo: "A1",
+      sellerBanner: "A1",
+    },
+  });
+
+  const [errors, setErrors] = useState({
+    store: {},
+    address: {},
+  });
+
+  const handleChange = (section, e) => {
+    const { name, value } = e.target;
+    setFormData((prev) => ({
+      ...prev,
+      [section]: {
+        ...prev[section],
+        [name]: value,
+      },
+    }));
+    setErrors((prev) => ({
+      ...prev,
+      [section]: {
+        ...prev[section],
+        [name]: "",
+      },
+    }));
+  };
+
+  const validateField = (section, field, value) => {
+    switch (field) {
+      case "email":
+        return EMAIL_REGEX.test(value) ? "" : "Invalid email format.";
+      default:
+        return CLEAN_TEXT.test(value) && value ? "" : "No special characters allowed.";
+    }
+  };
+
+  const validateStep = () => {
+    const section = step === 1 ? "store" : "address";
+    const fields = formData[section];
+    let stepErrors = {};
+    for (const field in fields) {
+      const error = validateField(section, field, fields[field]);
+      if (error) stepErrors[field] = error;
+    }
+    if (Object.keys(stepErrors).length) {
+      setErrors((prev) => ({ ...prev, [section]: stepErrors }));
+      return false;
+    }
+    return true;
+  };
+
+  const handleNext = () => {
+    setIsLoading(true);
+    if (validateStep()) setStep((prev) => prev + 1);
+  };
+
+  const handleBack = () => {
+    setStep((prev) => Math.max(prev - 1, 1));
+  };
+
+  useEffect(() => {
+    if (isLoading) {
+      const timer = setTimeout(() => setIsLoading(false), 1500);
+      return () => clearTimeout(timer);
+    }
+  }, [isLoading]);
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    if (validateStep()) {
+      const { store, address } = formData;
+      const resultAction = await dispatch(
+        createStoreAction({...store, ...address})
+      );
+
+      if (createStoreAction.fulfilled.match(resultAction)) {
+        const timeoutId = setTimeout(() => {
+          navigate("/home");
+        }, 1000);
+        return () => clearTimeout(timeoutId);
+      }
+    }
+  };
+
+  const renderStep = () => {
+    return (
+    <>
+      {step === 1 && (
+        <div className="flex flex-col w-full h-full min-h-[520px] justify-between">
+          <div className="flex flex-col w-full">
+            <h2 className="form-title">Create A Store</h2>
+            <SellerInput
+              label="Store Name"
+              name="storeName"
+              value={formData.store.storeName}
+              onChange={(e) => handleChange("store", e)}
+              error={errors.store.storeName}
+              helper="Name for the store is required"
+            />
+            <SellerInput
+              label="Email"
+              name="email"
+              type="email"
+              value={formData.store.email}
+              onChange={(e) => handleChange("store", e)}
+              error={errors.store.email}
+              helper="Email format"
+            />
+            <SellerInput
+              label="Phone Number"
+              name="phone"
+              type="text"
+              value={formData.store.phone}
+              onChange={(e) => handleChange("store", e)}
+              error={errors.store.phone}
+              helper="Store contact number"
+            />
+            <SellerInput
+              label="Description"
+              name="description"
+              type="text"
+              value={formData.store.description}
+              onChange={(e) => handleChange("store", e)}
+              error={errors.store.description}
+              helper="Describe the store"
+            />
+          </div>
+          <span className="flex flex-row justify-between">
+            <button className="form-button" type="button" onClick={handleNext}>
+              Next
+            </button>
+          </span>
+        </div>
+      )}
+
+      {step === 2 && (
+        <div className="flex flex-col w-full h-full min-h-[520px] justify-between">
+          <div className="flex flex-col w-full">
+            <h2 className="form-title">Store Address</h2>
+            <SellerInput
+              label="Street"
+              name="street"
+              value={formData.address.street}
+              onChange={(e) => handleChange("address", e)}
+              error={errors.address.street}
+            />
+            <SellerInput
+              label="City"
+              name="city"
+              value={formData.address.city}
+              onChange={(e) => handleChange("address", e)}
+              error={errors.address.city}
+            />
+            <SellerInput
+              label="Country"
+              name="country"
+              value={formData.address.country}
+              onChange={(e) => handleChange("address", e)}
+              error={errors.address.country}
+            />
+            <SellerInput
+              label="Street"
+              name="street"
+              value={formData.address.street}
+              onChange={(e) => handleChange("address", e)}
+              error={errors.address.street}
+            />
+          </div>
+          <span className="flex flex-row justify-between">
+            <button className="form-button" type="button" onClick={handleBack}>
+              PREV
+            </button>
+            <button
+              type="submit"
+              onClick={handleSubmit}
+              disabled={isPending}
+              className="form-button"
+            >
+              {isPending ? <div>loading . . .</div> : "CREATE STORE"}
+            </button>
+          </span>
+        </div>
+      )}
+    </>
+    );
+  };
+
+  return (
+    <SellerLayout
+      previewSide={
+        <>
+          <video
+            src={AuthVideo}
+            autoPlay
+            loop
+            muted
+            playsInline
+            className="absolute inset-0 w-full h-full object-cover"
+          />
+          <div className="authbgblur"></div>
+          <div className="absolute inset-0 w-full h-full bg-gradient-to-t to-green-400 from-transparent opacity-30 z-10"></div>
+          <div className="absolute inset-0 bg-gradient-to-t to-skin-end from-transparent opacity-30"></div>
+          <div className="absolute flex flex-col w-full top-1/4 right-0 gap-2 pt-2 text-stylep2 p-5 font-Oswald bg-skin-colorContent bg-opacity-70 hover:bg-skin-primary hover:text-skin-color1 transition-colors duration-1000 ease-in-out">
+            <div className="absolute inset-0 w-full h-full bg-skin-colorContent blur-sm opacity-20 z-10"></div>
+            <span className="z-20 text-stylep3 md:text-stylep2">
+              Already registered?
+            </span>
+            <span className="z-20 text-stylep3 md:text-stylep2 mb-2">
+              Go to Login instead..
+            </span>
+            <Link
+              to="/login"
+              className="flex w-full md:w-2/3 mx-auto justify-center items-center p-2 px-3 bg-skin-primary 
+              hover:bg-green-800 hover:text-green-100 text-skin-color1 font-bold md:font-Oswald text-stylep2 
+              md:text-stylep1 rounded-lg shadow-xl z-20 opacity-100 "
+            >
+              LOGIN
+            </Link>
+          </div>
+        </>
+      }
+      redirect={{
+        to: "/",
+        text: "go back to homepage",
+        icon: <FaHome />,
+      }}
+    >
+      {renderStep()}
+    </SellerLayout>
+  );
+
+  {
+    /* 
+  storeName
+  owner
+  email
+  phone
+  description
+
+
+  address { street, city, country, postalCode }
+
+  sellerLogo
+  sellerBanner
+
+
+*/
+  }
+};
+
+export default CreateSellerFormComponent;

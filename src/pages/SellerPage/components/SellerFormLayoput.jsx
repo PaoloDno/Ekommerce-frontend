@@ -1,19 +1,17 @@
-import { Link } from "react-router-dom";
+import {Link} from "react-router-dom"
 
-
-const AuthLayout = ({ children, imageSide, redirect }) => {
+const SellerLayout = ({ children, previewSide, redirect}) => {
   return (
-    <div className="auth-form-container">
-      <div className="authbgblur"></div>
-      
-      <div className="auth-video-content">
-        {imageSide}
+    <div className="seller-form-container">
+      <div className="authbgblur" />
+      <div className="form-preview-design">
+        {previewSide}
       </div>
 
-      <form className="auth-form-content">
+      <form className="form-content">
         {children}
       </form>
-
+      
       {redirect && (
         <div className="absolute bottom-5 w-full flex justify-center z-30">
           <Link to={redirect.to} className="auth-redirection">
@@ -26,4 +24,4 @@ const AuthLayout = ({ children, imageSide, redirect }) => {
   );
 };
 
-export default AuthLayout;
+export default SellerLayout;
