@@ -12,6 +12,7 @@ import StoresPage from "../../pages/StorePage/StoresPage.jsx";
 
 // seller
 import CreateStorePage from "../../pages/SellerPage/CreateStorePage.jsx";
+import UserStorePage from "../../pages/SellerPage/UserStorePage.jsx";
 // products
 import ProductDisplayPage from "../../pages/ProductPage/ProductPageDisplay.jsx";
 import AddProductPage from "../../pages/ProductPage/AddProductPage.jsx";
@@ -36,9 +37,11 @@ const AppRoutes = () => {
       <Route path="/signup" element={<SignUpFormComponent />} />
       {/* stores */}
       <Route path="/stores" element={<StoresPage />} />
-      <Route path="/create-store/:ownerId" element={<CreateStorePage />} />
+      <Route path="/create-store" element={<CreateStorePage />} />
+      <Route path="/user-store" element={<UserStorePage />} />
+      {/* categories */}
       <Route path="/categories" element={<CategoriesPage />} />
-      {/* stores */}
+      {/* products */}
       <Route path="/sell-products" element={<AddProductPage />} />
       <Route path="/product" element={<ProductDisplayPage />} />
     </Routes>

@@ -66,7 +66,9 @@ const CreateSellerFormComponent = () => {
       case "email":
         return EMAIL_REGEX.test(value) ? "" : "Invalid email format.";
       default:
-        return CLEAN_TEXT.test(value) && value ? "" : "No special characters allowed.";
+        return CLEAN_TEXT.test(value) && value
+          ? ""
+          : "No Empty or Special Characters Allowed.";
     }
   };
 
@@ -76,10 +78,14 @@ const CreateSellerFormComponent = () => {
     let stepErrors = {};
     for (const field in fields) {
       const error = validateField(section, field, fields[field]);
-      if (error) stepErrors[field] = error;
+      if (error) {
+        stepErrors[field] = error;
+        console.log(error);
+      }
     }
     if (Object.keys(stepErrors).length) {
       setErrors((prev) => ({ ...prev, [section]: stepErrors }));
+      console.log(errors);
       return false;
     }
     return true;
@@ -103,10 +109,11 @@ const CreateSellerFormComponent = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    console.log("A");
     if (validateStep()) {
       const { store, address } = formData;
       const resultAction = await dispatch(
-        createStoreAction({...store, ...address})
+        createStoreAction({ ...store, ...address })
       );
 
       if (createStoreAction.fulfilled.match(resultAction)) {
@@ -115,109 +122,187 @@ const CreateSellerFormComponent = () => {
         }, 1000);
         return () => clearTimeout(timeoutId);
       }
+    } else {
+      console.log("err");
     }
   };
 
+  const selectLabel = `text-gray-800 text-stylep1`;
+  const selectOptions = `border-2 border-skin-colorBorder1 rounded-lg
+    w-full px-2 py-2 text-stylep2
+    placeholder-transparent shadow-sm
+    focus:border-green-500 focus:ring focus:ring-green-200
+    focus:outline-none
+    transition-all duration-30`;
+  const selectOption = `text-gray-600 text-stylep2 py-2 px-4`;
+
   const renderStep = () => {
     return (
-    <>
-      {step === 1 && (
-        <div className="flex flex-col w-full h-full min-h-[520px] justify-between">
-          <div className="flex flex-col w-full">
-            <h2 className="form-title">Create A Store</h2>
-            <SellerInput
-              label="Store Name"
-              name="storeName"
-              value={formData.store.storeName}
-              onChange={(e) => handleChange("store", e)}
-              error={errors.store.storeName}
-              helper="Name for the store is required"
-            />
-            <SellerInput
-              label="Email"
-              name="email"
-              type="email"
-              value={formData.store.email}
-              onChange={(e) => handleChange("store", e)}
-              error={errors.store.email}
-              helper="Email format"
-            />
-            <SellerInput
-              label="Phone Number"
-              name="phone"
-              type="text"
-              value={formData.store.phone}
-              onChange={(e) => handleChange("store", e)}
-              error={errors.store.phone}
-              helper="Store contact number"
-            />
-            <SellerInput
-              label="Description"
-              name="description"
-              type="text"
-              value={formData.store.description}
-              onChange={(e) => handleChange("store", e)}
-              error={errors.store.description}
-              helper="Describe the store"
-            />
+      <>
+        {step === 1 && (
+          <div className="flex flex-col w-full h-full min-h-[520px] justify-between">
+            <div className="flex flex-col w-full">
+              <h2 className="form-title">Create A Store</h2>
+              <SellerInput
+                label="Store Name"
+                name="storeName"
+                value={formData.store.storeName}
+                onChange={(e) => handleChange("store", e)}
+                error={errors.store.storeName}
+                helper="Name for the store is required"
+              />
+              <SellerInput
+                label="Email"
+                name="email"
+                type="email"
+                value={formData.store.email}
+                onChange={(e) => handleChange("store", e)}
+                error={errors.store.email}
+                helper="Email format"
+              />
+              <SellerInput
+                label="Phone Number"
+                name="phone"
+                type="text"
+                value={formData.store.phone}
+                onChange={(e) => handleChange("store", e)}
+                error={errors.store.phone}
+                helper="Store contact number"
+              />
+              <SellerInput
+                label="Description"
+                name="description"
+                type="text"
+                value={formData.store.description}
+                onChange={(e) => handleChange("store", e)}
+                error={errors.store.description}
+                helper="Describe the store"
+              />
+            </div>
+            <span className="flex flex-row justify-between">
+              <button
+                className="form-button"
+                type="button"
+                onClick={handleNext}
+              >
+                Next
+              </button>
+            </span>
           </div>
-          <span className="flex flex-row justify-between">
-            <button className="form-button" type="button" onClick={handleNext}>
-              Next
-            </button>
-          </span>
-        </div>
-      )}
+        )}
 
-      {step === 2 && (
-        <div className="flex flex-col w-full h-full min-h-[520px] justify-between">
-          <div className="flex flex-col w-full">
-            <h2 className="form-title">Store Address</h2>
-            <SellerInput
-              label="Street"
-              name="street"
-              value={formData.address.street}
-              onChange={(e) => handleChange("address", e)}
-              error={errors.address.street}
-            />
-            <SellerInput
-              label="City"
-              name="city"
-              value={formData.address.city}
-              onChange={(e) => handleChange("address", e)}
-              error={errors.address.city}
-            />
-            <SellerInput
-              label="Country"
-              name="country"
-              value={formData.address.country}
-              onChange={(e) => handleChange("address", e)}
-              error={errors.address.country}
-            />
-            <SellerInput
-              label="Street"
-              name="street"
-              value={formData.address.street}
-              onChange={(e) => handleChange("address", e)}
-              error={errors.address.street}
-            />
+        {step === 2 && (
+          <div className="flex flex-col w-full h-full min-h-[520px] justify-between">
+            <div className="flex flex-col w-full">
+              <h2 className="form-title">Store Address</h2>
+              <SellerInput
+                label="Street"
+                name="street"
+                value={formData.address.street}
+                onChange={(e) => handleChange("address", e)}
+                error={errors.address.street}
+              />
+              <SellerInput
+                label="City"
+                name="city"
+                value={formData.address.city}
+                onChange={(e) => handleChange("address", e)}
+                error={errors.address.city}
+              />
+              <SellerInput
+                label="Country"
+                name="country"
+                value={formData.address.country}
+                onChange={(e) => handleChange("address", e)}
+                error={errors.address.country}
+              />
+              <SellerInput
+                label="Postal Code"
+                name="postalCode"
+                value={formData.address.postalCode}
+                onChange={(e) => handleChange("address", e)}
+                error={errors.address.postalCode}
+              />
+            </div>
+            <span className="flex flex-row justify-between">
+              <button
+                className="form-button"
+                type="button"
+                onClick={handleBack}
+              >
+                PREV
+              </button>
+              <button
+                className="form-button"
+                type="button"
+                onClick={handleNext}
+              >
+                Next
+              </button>
+            </span>
           </div>
-          <span className="flex flex-row justify-between">
-            <button className="form-button" type="button" onClick={handleBack}>
-              PREV
-            </button>
-            <button
-              type="submit"
-              onClick={handleSubmit}
-              disabled={isPending}
-              className="form-button"
-            >
-              {isPending ? <div>loading . . .</div> : "CREATE STORE"}
-            </button>
-          </span>
-        </div>
-      )}
-    </>
+        )}
+
+        {step === 3 && (
+          <div className="flex flex-col w-full h-full min-h-[520px] justify-between">
+            <div className="flex flex-col w-full space-y-4">
+              <h2 className="form-title">Store Display</h2>
+              <div className="flex flex-col w-full">
+                <label 
+                className={selectLabel}
+                htmlFor="sellerLogo">Choose a Logo:</label>
+                <select
+                  className={selectOptions}
+                  name="sellerLogo"
+                  id="sellerLogo"
+                  value={formData.display.sellerLogo}
+                  onChange={(e) => handleChange("display", e)}
+                >
+                  <option className={selectOption} value="A1">Logo A1</option>
+                  <option className={selectOption} value="A2">Logo A2</option>
+                  <option className={selectOption} value="A3">Logo A3</option>
+                  <option className={selectOption} value="A4">Logo A4</option>
+                </select>
+              </div>
+
+              <div className="flex flex-col w-full">
+                <label 
+                className={selectLabel}
+                htmlFor="sellerBanner">Choose a Banner:</label>
+                <select
+                  className={selectOptions}
+                  name="sellerBanner"
+                  id="sellerBanner"
+                  value={formData.display.sellerBanner}
+                  onChange={(e) => handleChange("display", e)}
+                >
+                  <option className={selectOption} value="B1">Banner B1</option>
+                  <option className={selectOption} value="B2">Banner B2</option>
+                  <option className={selectOption} value="B3">Banner B3</option>
+                  <option className={selectOption} value="B4">Banner B4</option>
+                </select>
+              </div>
+            </div>
+            <span className="flex flex-row justify-between">
+              <button
+                className="form-button"
+                type="button"
+                onClick={handleBack}
+              >
+                PREV
+              </button>
+              <button
+                type="submit"
+                onClick={handleSubmit}
+                disabled={isPending}
+                className="form-button"
+              >
+                {isPending ? <div>loading . . .</div> : "CREATE STORE"}
+              </button>
+            </span>
+          </div>
+        )}
+      </>
     );
   };
 
@@ -265,23 +350,6 @@ const CreateSellerFormComponent = () => {
     </SellerLayout>
   );
 
-  {
-    /* 
-  storeName
-  owner
-  email
-  phone
-  description
-
-
-  address { street, city, country, postalCode }
-
-  sellerLogo
-  sellerBanner
-
-
-*/
-  }
 };
 
 export default CreateSellerFormComponent;

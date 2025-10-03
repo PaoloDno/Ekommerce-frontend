@@ -91,13 +91,13 @@ const HomePage = () => {
             </div>
             <div className="md:col-span-2">
               <h2 className="text-div-header">Profile Detail</h2>
-              <div className="text-line"/>
+              <div className="text-line" />
               <span className="flex flex-col md:grid md:grid-cols-2 w-full justify-between">
                 <span>Firstname: {profile?.firstname || ""}</span>
                 <span>Lastname: {profile?.lastname || ""}</span>
               </span>
               <h2 className="text-div-header">Address</h2>
-              <div className="text-line"/>
+              <div className="text-line" />
               <span>{profile?.address?.[0]?.street || ""}</span>
               <span>
                 {profile?.address?.[0]?.city || ""},{" "}
@@ -110,26 +110,25 @@ const HomePage = () => {
 
         <div className="text-div">
           <h2 className="text-div-header">Check Store</h2>
-          <div className="text-line w-full items-center justify-center"/>
+          <div className="text-line w-full items-center justify-center" />
           <div className="flex flex-col w-full items-center md:ml-3 md:items-start justify-center">
-          { profile?.storeName == null ?
-          (
-          <>
-            <p>You dont own a store</p>
-            <h2>Get Started...</h2>
-            <Link to={`/create-store/${profile?._id}`}
-            className="link-button">Start Selling</Link>
-          </>
-          ) :
-          (
-          <Link
-          >
-            
-          {/*to = /user-store*/}
-            Go to Store
-          </Link>  
-          )
-          }
+            {profile?.storeName == null ? (
+              <>
+                <p>You dont own a store</p>
+                <h2>Get Started...</h2>
+                <Link to={`/create-store`} className="link-button">
+                  Start Selling
+                </Link>
+              </>
+            ) : (
+              <>
+                <p>visit your store</p>
+                <h2>Go to Store...</h2>
+                <Link to={`/user-store`} className="link-button">
+                  Go to Store
+                </Link>
+              </>
+            )}
           </div>
         </div>
 
