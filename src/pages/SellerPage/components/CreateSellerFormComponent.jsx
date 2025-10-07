@@ -113,12 +113,12 @@ const CreateSellerFormComponent = () => {
     if (validateStep()) {
       const { store, address } = formData;
       const resultAction = await dispatch(
-        createStoreAction({ ...store, ...address })
+        createStoreAction({ ...store, address: { ...address}})
       );
 
       if (createStoreAction.fulfilled.match(resultAction)) {
         const timeoutId = setTimeout(() => {
-          navigate("/home");
+          navigate("/user-store");
         }, 1000);
         return () => clearTimeout(timeoutId);
       }

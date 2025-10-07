@@ -1,0 +1,13 @@
+@tailwind components;
+
+@layer components {
+
+  .product-form-container {
+    @apply relative flex flex-row items-center justify-center container
+    min-h-screen max-w-screen-lg w-full overflow-hidden
+    bg-skin-colorContent placeholder-opacity-90 text-skin-colorContent
+    p-3 my-3 rounded-lg mx-auto
+    z-10;
+  }
+  
+}

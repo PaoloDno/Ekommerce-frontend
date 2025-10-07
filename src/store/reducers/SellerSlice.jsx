@@ -1,6 +1,7 @@
 import { createSlice, isPending, isRejected } from "@reduxjs/toolkit";
 import {
-  createStoreAction
+  createStoreAction,
+  getUserStoreAction
 } from "../actions/SellerThunks";
 
 const sellerSlice = createSlice({
@@ -19,7 +20,12 @@ const sellerSlice = createSlice({
       state.isPending = false;
       state.isSuccess = true;
       state.isRejected = false;
-      state.store = action.payload.store || null;
+    })
+    .addCase(getUserStoreAction.fulfilled, (state, action) => {
+      state.isPending = false;
+      state.isSuccess = true;
+      state.isRejected = false;
+      state.store = action.payload.store;
     })
     .addMatcher(isPending(createStoreAction), (state) => {
       state.isPending = true;
@@ -27,7 +33,6 @@ const sellerSlice = createSlice({
       state.isSuccess = false;
       state.error = null;
     })
-
     .addMatcher(isRejected(createStoreAction), (state) => {
       state.isPending = false;
       state.isRejected = true;
