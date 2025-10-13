@@ -70,24 +70,19 @@ const UserStorePage = () => {
     );
   }
 
-  const ProductBox = ({ id, name, productImage, price, stock }) => {
-
-
+  const ProductBox = ({ name, productImage, price, stock }) => {
     return (
       <div
-        key={id}
-        className="flex flex-col w-[130px] h-[130px] md:w-[120px] md:h-[170px] 
-        container relative overflow-hidden
-        px-1 py-2 
-        bg-skin-colorContent bg-opacity-75 rounded-xl shadow-sm hover:shadow-md
-        "
+        className="flex-none flex flex-col w-[130px] h-[150px] md:w-[120px] md:h-[170px] 
+          relative overflow-hidden px-1 py-2 bg-skin-colorContent bg-opacity-75 
+          rounded-xl shadow-sm hover:shadow-md"
       >
         <div className="flex w-full h-1/2 bg-white rounded-lg overflow-hidden">
-            <img
-              src={productImage}
-              alt={name}
-              className="object-cover w-full h-full"
-            />
+          <img
+            src={productImage}
+            alt={name}
+            className="object-cover w-full h-full"
+          />
         </div>
         <div className="flex flex-col justify-between mt-1 text-sm">
           <span className="font-semibold truncate">{name}</span>
@@ -155,26 +150,34 @@ const UserStorePage = () => {
           <h2 className="text-div-header">Products</h2>
           <div className="text-line w-full items-center justify-center" />
           <div className="flex flex-col w-full items-center md:ml-3 md:items-start justify-center">
-            <p>You dont own a product</p>
-            <h2>Get Started...</h2>
+            {store?.product ? (
+              <>
+                <p>You dont own a product</p>
+                <h2>Get Started...</h2>
+              </>
+            ) : (
+              <>
+                <p>sell more products</p>
+                <h2>Let's keep selling...</h2>
+              </>
+            )}
             <Link to={`/create-product/${store?._id}`} className="link-button">
-              Start Selling
+              Sell A Product
             </Link>
           </div>
 
-          <h2 className="text-div-header">Products</h2>
           <div className="text-line w-full items-center justify-center" />
-          <div className="flex flex-row w-full h-[140px] md:h-fit bg-skin-colorContent gap-2 bg-opacity-10 m-1 p-1">
-              {store?.products?.map((product) => (
+          <div className="flex flex-wrap w-full min-h-[140px] justify-start items-start bg-skin-colorContent gap-2 bg-opacity-10 m-1 p-1">
+            {store?.products?.map((product) => (
+              <Link to={`/product/${product._id}`} className="p-1">
                 <ProductBox
-                  key={product._id}
-                  id={product._id}
                   name={product.name}
                   productImage={product.productImage}
                   price={product.price}
                   stock={product.stock}
                 />
-              ))}
+              </Link>
+            ))}
           </div>
         </div>
 

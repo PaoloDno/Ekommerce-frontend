@@ -22,6 +22,7 @@ export const getProductIdAction = createAsyncThunk(
   "product/GetProductIdAction",
   async ( productId, thunkAPI ) => {
     try {
+      const token = thunkAPI.getState().auth.token;
       const response = await api.get(`product/${productId}`, {
         headers: {
           Authorization: `Bearer ${token}`,
