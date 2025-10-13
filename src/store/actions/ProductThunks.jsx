@@ -39,6 +39,7 @@ export const createProductAction = createAsyncThunk(
   "product/CreateProductAction",
   async ( productData, thunkAPI ) => {
     try {
+      const token = thunkAPI.getState().auth.token;
       const response = await api.post(`product/`, productData, {
         headers: {
           Authorization: `Bearer ${token}`,

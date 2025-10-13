@@ -89,13 +89,18 @@ const HomePage = () => {
                 Hello {profile?.username || "Guest"}!
               </span>
             </div>
-            <div className="md:col-span-2">
+            <div className="grid md:grid-cols-2 grid-cols-1 md:col-span-2 items-center justify-center w-full bg-skin-colorContent
+            text-skin-colorContent p-2 mt-1 text-stylep3 gap-2 rounded-lg"
+            >
+              <span className="flex flex-col md:items-start w-full h-full">
               <h2 className="text-div-header">Profile Detail</h2>
               <div className="text-line" />
               <span className="flex flex-col md:grid md:grid-cols-2 w-full justify-between">
                 <span>Firstname: {profile?.firstname || ""}</span>
                 <span>Lastname: {profile?.lastname || ""}</span>
               </span>
+              </span>
+              <span>
               <h2 className="text-div-header">Address</h2>
               <div className="text-line" />
               <span>{profile?.address?.[0]?.street || ""}</span>
@@ -103,6 +108,7 @@ const HomePage = () => {
                 {profile?.address?.[0]?.city || ""},{" "}
                 {profile?.address?.[0]?.country || ""} -{" "}
                 {profile?.address?.[0]?.postalCode || ""}
+              </span>
               </span>
             </div>
           </div>

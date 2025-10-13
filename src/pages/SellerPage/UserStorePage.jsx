@@ -69,6 +69,35 @@ const UserStorePage = () => {
       </div>
     );
   }
+
+  const ProductBox = ({ id, name, productImage, price, stock }) => {
+
+
+    return (
+      <div
+        key={id}
+        className="flex flex-col w-[130px] h-[130px] md:w-[120px] md:h-[170px] 
+        container relative overflow-hidden
+        px-1 py-2 
+        bg-skin-colorContent bg-opacity-75 rounded-xl shadow-sm hover:shadow-md
+        "
+      >
+        <div className="flex w-full h-1/2 bg-white rounded-lg overflow-hidden">
+            <img
+              src={productImage}
+              alt={name}
+              className="object-cover w-full h-full"
+            />
+        </div>
+        <div className="flex flex-col justify-between mt-1 text-sm">
+          <span className="font-semibold truncate">{name}</span>
+          <span className="text-stylep3 text-gray-500">₱{price}</span>
+          <span className="text-stylep3 text-gray-400">Stock: {stock}</span>
+        </div>
+      </div>
+    );
+  };
+
   return (
     <div className="page-section">
       <div className="page-body">
@@ -111,8 +140,7 @@ const UserStorePage = () => {
               <FaMapMarkerAlt className="mt-1" />
               <div className="flex flex-col">
                 <span>
-                  {store?.address?.street || ""},{" "}
-                  {store?.address?.city || ""},
+                  {store?.address?.street || ""}, {store?.address?.city || ""},
                 </span>
                 <span>
                   {store?.address?.country || ""},{" "}
@@ -129,15 +157,24 @@ const UserStorePage = () => {
           <div className="flex flex-col w-full items-center md:ml-3 md:items-start justify-center">
             <p>You dont own a product</p>
             <h2>Get Started...</h2>
-            <Link to={`/create-product`} className="link-button">
+            <Link to={`/create-product/${store?._id}`} className="link-button">
               Start Selling
             </Link>
           </div>
 
           <h2 className="text-div-header">Products</h2>
           <div className="text-line w-full items-center justify-center" />
-          <div className="flex w-full h-[140px] bg-skin-colorContent bg-opacity-10 m-1 p-1">
-            <div className="flex flex-col w-[120px] h-[130px] bg-skin-colorContent bg-opacity-75 rounded-xl"></div>
+          <div className="flex flex-row w-full h-[140px] md:h-fit bg-skin-colorContent gap-2 bg-opacity-10 m-1 p-1">
+              {store?.products?.map((product) => (
+                <ProductBox
+                  key={product._id}
+                  id={product._id}
+                  name={product.name}
+                  productImage={product.productImage}
+                  price={product.price}
+                  stock={product.stock}
+                />
+              ))}
           </div>
         </div>
 
