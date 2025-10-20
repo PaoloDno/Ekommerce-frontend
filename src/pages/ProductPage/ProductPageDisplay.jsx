@@ -1,8 +1,13 @@
 import React, { useCallback, useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useNavigate, useParams } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 
 import { getProductIdAction } from "../../store/actions/ProductThunks";
+import { createReviewAction } from "../../store/actions/ReviewThunks";
+
+import { FaCartShopping, FaNoteSticky, FaStore } from "react-icons/fa6";
+
+import ReviewForm from "./components/AddReviewProductForm";
 
 const ProductDisplayPage = () => {
   const { productId } = useParams();
@@ -59,6 +64,20 @@ const ProductDisplayPage = () => {
     );
   }
 
+  const [showReviewForm, setShowReviewForm] = useState(false);
+
+  const handleSubmitReview = async (reviewData) => {
+    console.log("Review submitted:", reviewData);
+    
+    const resultAction = await(dispatch(createReviewAction(reviewData)));
+
+    if (createReviewAction.fulfilled.match(resultAction)) {
+      console.log("subnmission success")   
+    } else {
+      console.log("Submission failed");
+    }
+  };
+
   if (isPending) {
     return (
       <div className="flex justify-center items-center w-full h-full">
@@ -90,6 +109,10 @@ const ProductDisplayPage = () => {
             text-skin-colorContent py-2 md:py-5 mt-1 text-stylep3 gap-2 rounded-lg
             font-medium md:px-4 px-3"
           >
+            <span className="col-span-2">
+              <h2 className="text-div-header">Product</h2>
+              <div className="text-line w-full items-center justify-center" />
+            </span>
             <span className="flex flex-row items-center gap-x-2">
               <span>Name: </span>
               <span>{product?.name}</span>
@@ -141,7 +164,51 @@ const ProductDisplayPage = () => {
               )}
           </div>
         </div>
+        <div className="text-div justify-between">
+          <div
+            className="grid sm:grid-cols-2 grid-cols-1 items-center justify-center w-full bg-skin-colorContent
+            text-skin-colorContent p-2 mt-1 text-stylep3 gap-2 rounded-lg pb-3 md:pb-2"
+          >
+            <span
+              className="flex flex-row items-center p-1 justify-center px-3 gap-2 bg-yellow-500 rounded-sm
+              col-span-2"
+            >
+              <span>
+                <FaCartShopping />
+              </span>
+              <span>Add to Cart</span>
+            </span>
+            <span className="col-span-2">
+              <h2 className="text-div-header">Reviews</h2>
+              <div className="text-line w-full items-center justify-center" />
+            </span>
+            <span
+              onClick={() => setShowReviewForm(true)}
+              className="flex flex-row items-center p-1 justify-center px-3 gap-2 bg-green-400 rounded-sm col-span-2 cursor-pointer hover:bg-green-500 transition"
+            >
+              <span>
+                <FaNoteSticky />
+              </span>
+              <span>Leave A Review</span>
+            </span>
+          </div>
+          <span className="flex w-full text-stylep2 text-skin-colorDis opacity-95 items-center justify-center">
+            <Link className="underline flex flex-row items-center justify-center gap-2" to={`/product/${product?._id}`}><FaStore /> visit store</Link> 
+          </span>
+        </div>
+        <div className="text-div">
+          <div className="flex w-full flex-col items-start gap-4">
+
+          </div>
+        </div>
       </div>
+      { showReviewForm && (
+        <ReviewForm
+          onClose={() => setShowReviewForm(false)}
+          onSubmit={handleSubmitReview}
+          productId={productId}
+        />
+      )}
       <div className="page-background"></div>
     </div>
   );

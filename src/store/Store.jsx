@@ -7,6 +7,7 @@ import productReducer from "./reducers/ProductSlice.jsx";
 import errorReducer from "./reducers/ErrorSlice.jsx";
 import themeReducer from "./reducers/ThemeSlice.jsx";
 import sellerReducer from "./reducers/SellerSlice.jsx";
+import reviewReducer from "./reducers/reviewSlice.jsx";
 
 const store = configureStore({
   reducer: {
@@ -17,6 +18,7 @@ const store = configureStore({
     category: categoryReducer,
     product: productReducer,
     seller: sellerReducer,
+    review: reviewReducer,
   },
 });
 
