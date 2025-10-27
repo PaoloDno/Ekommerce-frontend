@@ -26,7 +26,7 @@ export const signUpAction = createAsyncThunk(
   async (signUpData, thunkAPI) => {
     try {
       const response = await api.post("/user/signup", signUpData);
-      // Optionally store token if API returns one
+      
       if (response.data?.token) {
         localStorage.setItem("token", response.data.token);
       }
@@ -66,6 +66,7 @@ export const logoutAction = createAsyncThunk(
   async (_, thunkAPI) => {
     try {
       localStorage.removeItem("token");
+      localStorage.removeItem("app_state");
       return { message: "Logged out successfully" };
     } catch (error) {
       console.error(error);

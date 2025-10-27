@@ -7,6 +7,8 @@ import SellerLayout from "./SellerFormLayoput";
 import { FaHome } from "react-icons/fa";
 
 import AuthVideo from "../../../components/Form/videos/Rainy.mp4";
+import StoreImage from "../../../components/ImagesComponent/components/StoreImageComponent";
+import BannerImage from "../../../components/ImagesComponent/components/BannerImageComponent";
 
 const CreateSellerFormComponent = () => {
   const { token, isPending } = useSelector((s) => s.auth);
@@ -33,8 +35,8 @@ const CreateSellerFormComponent = () => {
       postalCode: "",
     },
     display: {
-      sellerLogo: "A1",
-      sellerBanner: "A1",
+      sellerLogo: "S1",
+      sellerBanner: "B1",
     },
   });
 
@@ -113,7 +115,7 @@ const CreateSellerFormComponent = () => {
     if (validateStep()) {
       const { store, address } = formData;
       const resultAction = await dispatch(
-        createStoreAction({ ...store, address: { ...address}})
+        createStoreAction({ ...store, address: { ...address } })
       );
 
       if (createStoreAction.fulfilled.match(resultAction)) {
@@ -247,10 +249,21 @@ const CreateSellerFormComponent = () => {
           <div className="flex flex-col w-full h-full min-h-[520px] justify-between">
             <div className="flex flex-col w-full space-y-4">
               <h2 className="form-title">Store Display</h2>
+              <div className="flex flex-col items-center md:grid gap-1 md:grid-cols-[1fr_1.5fr] my-2">
+                <span className="flex w-full h-[120px] relative rounded-lg bg-gray-500 p-4 overflow-hidden">
+                  <span className="absolute inset-0 w-full h-[60px]">
+                    <BannerImage bannerImage={formData.display.sellerBanner} />
+                  </span>
+
+                  <span className="absolute left-2 bottom-0 w-[100px] h-[100px] rounded-full overflow-hidden">
+                    <StoreImage storeImage={formData.display.sellerLogo} />
+                  </span>
+                </span>
+              </div>
               <div className="flex flex-col w-full">
-                <label 
-                className={selectLabel}
-                htmlFor="sellerLogo">Choose a Logo:</label>
+                <label className={selectLabel} htmlFor="sellerLogo">
+                  Choose a Store Logo:
+                </label>
                 <select
                   className={selectOptions}
                   name="sellerLogo"
@@ -258,17 +271,25 @@ const CreateSellerFormComponent = () => {
                   value={formData.display.sellerLogo}
                   onChange={(e) => handleChange("display", e)}
                 >
-                  <option className={selectOption} value="A1">Logo A1</option>
-                  <option className={selectOption} value="A2">Logo A2</option>
-                  <option className={selectOption} value="A3">Logo A3</option>
-                  <option className={selectOption} value="A4">Logo A4</option>
+                  <option className={selectOption} value="S1">
+                    Logo A1
+                  </option>
+                  <option className={selectOption} value="S2">
+                    Logo A2
+                  </option>
+                  <option className={selectOption} value="S3">
+                    Logo A3
+                  </option>
+                  <option className={selectOption} value="S4">
+                    Logo A4
+                  </option>
                 </select>
               </div>
 
               <div className="flex flex-col w-full">
-                <label 
-                className={selectLabel}
-                htmlFor="sellerBanner">Choose a Banner:</label>
+                <label className={selectLabel} htmlFor="sellerBanner">
+                  Choose a Store Banner:
+                </label>
                 <select
                   className={selectOptions}
                   name="sellerBanner"
@@ -276,10 +297,18 @@ const CreateSellerFormComponent = () => {
                   value={formData.display.sellerBanner}
                   onChange={(e) => handleChange("display", e)}
                 >
-                  <option className={selectOption} value="B1">Banner B1</option>
-                  <option className={selectOption} value="B2">Banner B2</option>
-                  <option className={selectOption} value="B3">Banner B3</option>
-                  <option className={selectOption} value="B4">Banner B4</option>
+                  <option className={selectOption} value="B1">
+                    Banner B1
+                  </option>
+                  <option className={selectOption} value="B2">
+                    Banner B2
+                  </option>
+                  <option className={selectOption} value="B3">
+                    Banner B3
+                  </option>
+                  <option className={selectOption} value="B4">
+                    Banner B4
+                  </option>
                 </select>
               </div>
             </div>
@@ -310,34 +339,11 @@ const CreateSellerFormComponent = () => {
     <SellerLayout
       previewSide={
         <>
-          <video
-            src={AuthVideo}
-            autoPlay
-            loop
-            muted
-            playsInline
-            className="absolute inset-0 w-full h-full object-cover"
-          />
-          <div className="authbgblur"></div>
-          <div className="absolute inset-0 w-full h-full bg-gradient-to-t to-green-400 from-transparent opacity-30 z-10"></div>
-          <div className="absolute inset-0 bg-gradient-to-t to-skin-end from-transparent opacity-30"></div>
-          <div className="absolute flex flex-col w-full top-1/4 right-0 gap-2 pt-2 text-stylep2 p-5 font-Oswald bg-skin-colorContent bg-opacity-70 hover:bg-skin-primary hover:text-skin-color1 transition-colors duration-1000 ease-in-out">
-            <div className="absolute inset-0 w-full h-full bg-skin-colorContent blur-sm opacity-20 z-10"></div>
-            <span className="z-20 text-stylep3 md:text-stylep2">
-              Already registered?
+          <span className="overflow-hidden w-full justify-center items-center bg-cover flex">
+            <span className="absolute inset-0 max-w-screen-xl">
+            <StoreImage storeImage={"S2"} />
             </span>
-            <span className="z-20 text-stylep3 md:text-stylep2 mb-2">
-              Go to Login instead..
-            </span>
-            <Link
-              to="/login"
-              className="flex w-full md:w-2/3 mx-auto justify-center items-center p-2 px-3 bg-skin-primary 
-              hover:bg-green-800 hover:text-green-100 text-skin-color1 font-bold md:font-Oswald text-stylep2 
-              md:text-stylep1 rounded-lg shadow-xl z-20 opacity-100 "
-            >
-              LOGIN
-            </Link>
-          </div>
+          </span>
         </>
       }
       redirect={{
@@ -349,7 +355,6 @@ const CreateSellerFormComponent = () => {
       {renderStep()}
     </SellerLayout>
   );
-
 };
 
 export default CreateSellerFormComponent;

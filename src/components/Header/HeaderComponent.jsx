@@ -8,6 +8,9 @@ import {
 } from "react-icons/fa";
 import { useSelector } from "react-redux";
 
+import logoA from "./HeaderComponents/images/LogoHeader.png";
+import logoB from "./HeaderComponents/images/EkommerceLogo.png";
+
 import ProfileDropdown from "./HeaderComponents/ProfileDropDown";
 import SearchBar from "./HeaderComponents/SearchBarComponent";
 
@@ -51,10 +54,13 @@ export default function HeaderComponent() {
   );
 
   return (
-    <header className="bg-skin-primary w-full p-2 z-50">
-      <div className="header-desktop">
-        <h1 className="text-skin-color1 font-Opensans font-semibold text-styleh4 ml-2">
-          {brandName}
+    <header className="flex items-center bg-skin-primary w-full p-2 z-50 lg:h-[65px]">
+      <div className="header-desktop w-full">
+        <h1 className="text-skin-color1 font-Merriweather font-semibold text-styleh4 ml-2 h-full overflow-hidden">
+          <span className="hidden lg:flex flex-row gap-1 items-center justify-center overflow-hidden">
+            <img src={logoB} alt="Ekommerce logo" className="h-[42px] w-[42px] bg-cover" /> {brandName}
+          </span>
+         
         </h1>
 
         <SearchBar />
@@ -92,10 +98,12 @@ export default function HeaderComponent() {
         </div>
       </div>
 
-      <div className="flex flex-col md:hidden gap-2">
+      <div className="flex flex-col lg:hidden gap-2 w-full">
         <div className="flex justify-between items-center">
           <h1 className="text-skin-color1 font-bold text-styleh3">
-            {brandName}
+             <span className="block">
+            <img src={logoB} alt="Ekommerce title logo" className="h-[60px] w-auto" />
+          </span>
           </h1>
           {user ? <span>Profile</span> : <AuthButtons />}
         </div>

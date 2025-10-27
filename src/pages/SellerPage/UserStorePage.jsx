@@ -9,6 +9,9 @@ import { MdDescription } from "react-icons/md";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 import { getUserStoreAction } from "../../store/actions/SellerThunks";
+import ProductImages from "../../components/ImagesComponent/components/ProductImageComponent";
+import BannerImage from "../../components/ImagesComponent/components/BannerImageComponent";
+import StoreImage from "../../components/ImagesComponent/components/StoreImageComponent";
 
 const UserStorePage = () => {
   const dispatch = useDispatch();
@@ -53,7 +56,7 @@ const UserStorePage = () => {
           <p className="text-white p-4">Please login to continue</p>
           <button
             onClick={() => navigate("/login")}
-            className="px-4 py-2 mt-2 bg-blue-500 text-white rounded-md hover:bg-blue-600"
+            className="px-4 py-2 mt-2 bg-green-500 text-white rounded-md hover:bg-blue-600"
           >
             Go to Login
           </button>
@@ -77,12 +80,8 @@ const UserStorePage = () => {
           relative overflow-hidden px-1 py-2 bg-skin-colorContent bg-opacity-75 
           rounded-xl shadow-sm hover:shadow-md"
       >
-        <div className="flex w-full h-1/2 bg-white rounded-lg overflow-hidden">
-          <img
-            src={productImage}
-            alt={name}
-            className="object-cover w-full h-full"
-          />
+        <div className="flex w-full h-1/2 bg-white justify-center items-center rounded-lg overflow-hidden">
+          <ProductImages productImages={productImage} />
         </div>
         <div className="flex flex-col justify-between mt-1 text-sm">
           <span className="font-semibold truncate">{name}</span>
@@ -99,14 +98,19 @@ const UserStorePage = () => {
         <div
           className="absolute opacity-5 inset-0 h-[90vw] w-full
          bg-gradient-to-r to-white from-transparent z-0"
-        ></div>
+        >
+        </div>
 
         <div className="text-div-bgblur"></div>
 
         <div className="text-div">
           <div className="flex w-full h-[170px] bg-skin-fill-1 bg-opacity-40 relative">
-            <div className="flex bg-skin-colorContent w-full h-[100px]"></div>
-            <div className="absolute top-[50px] left-2 h-[90px] w-[90px] border-2 border-skin-colorBorder1 rounded-full bg-skin-color-back"></div>
+            <div className="flex bg-skin-colorContent w-full h-[100px]">
+              <BannerImage bannerImage={store?.sellerBanner}/>
+            </div>
+            <div className="absolute top-[50px] left-2 h-[90px] w-[90px] overflow-hidden border-2 border-skin-colorBorder1 rounded-full bg-skin-color-back">
+              <StoreImage storeImage={store?.sellerLogo} />
+            </div>
             <div className="absolute top-[140px] left-3 text-skin-color1 text-styleh4">
               {store?.store}
             </div>
@@ -169,7 +173,7 @@ const UserStorePage = () => {
           <div className="text-line w-full items-center justify-center" />
           <div className="flex flex-wrap w-full min-h-[140px] justify-start items-start bg-skin-colorContent gap-2 bg-opacity-10 m-1 p-1">
             {store?.products?.map((product) => (
-              <Link to={`/product/${product._id}`} className="p-1">
+              <Link to={`/product/${product._id}`} className="p-1" key={product._id}>
                 <ProductBox
                   name={product.name}
                   productImage={product.productImage}

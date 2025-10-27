@@ -1,0 +1,19 @@
+<?xml version="1.0" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 20010904//EN" "http://www.w3.org/TR/2001/REC-SVG-20010904/DTD/svg10.dtd">
+<!-- Created using Krita: https://krita.org -->
+<svg xmlns="http://www.w3.org/2000/svg" 
+    xmlns:xlink="http://www.w3.org/1999/xlink"
+    xmlns:krita="http://krita.org/namespaces/svg/krita"
+    xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+    width="240pt"
+    height="100.8pt"
+    viewBox="0 0 240 100.8">
+<defs>
+  <radialGradient id="gradient0" gradientUnits="objectBoundingBox" cx="0" cy="0" fx="0" fy="0" r="1.4142135623731" spreadMethod="repeat">
+   <stop stop-color="#fcfcfc" offset="0" stop-opacity="0.741176470588235"/>
+   <stop stop-color="#fcfcfc" offset="0.5625" stop-opacity="0.188235294117647"/>
+   <stop stop-color="#000000" offset="1" stop-opacity="0"/>
+  </radialGradient>
+ </defs>
+<ellipse id="shape0" transform="matrix(2.66196840449808 2.08166817117217e-16 -1.49537558450955 2.66196840449807 -51.8676134895255 17.7961855494013)" rx="88.0959633772657" ry="37.3027617859569" cx="88.0959633772657" cy="37.3027617859569" fill="url(#gradient0)" fill-rule="evenodd" stroke="#000000" stroke-opacity="0" stroke-width="0" stroke-linecap="square" stroke-linejoin="bevel" krita:marker-fill-method="auto"/><ellipse id="shape01" transform="matrix(2.66196841360374 5.55111512312578e-17 -1.49537558962471 2.66196841360373 -55.9253652048839 25.441137053945)" rx="80.0958147646893" ry="32.875642028867" cx="80.0958147646893" cy="32.875642028867" fill="#000000" fill-rule="evenodd" stroke="#000000" stroke-opacity="0" stroke-width="0" stroke-linecap="square" stroke-linejoin="bevel" krita:marker-fill-method="auto"/><text id="shape0" krita:useRichText="true" transform="matrix(2.40750763539793 0.0780674210788566 -0.0780674210788566 2.40750763539793 -9.68576599476989 143.018516867675)" fill="#f6fdff" stroke="#000000" stroke-opacity="0" stroke-width="0" stroke-linecap="square" stroke-linejoin="bevel" font-family="Cambria Math" font-size="14" font-size-adjust="0.466771" font-stretch="normal" font-style="italic" font-weight="700" letter-spacing="-1" word-spacing="0"><tspan x="0">KOMMERCE</tspan></text><ellipse id="shape1" transform="matrix(1.73888831586889 0 0 1.73888831586889 -68.3290583034354 154.663923638825)" rx="5.88" ry="5.04000000000001" cx="5.88" cy="5.04000000000001" fill="none" stroke="#ffffff" stroke-width="1" stroke-linecap="square" stroke-linejoin="bevel"/><path id="shape1" transform="matrix(1.73888834434198 6.93889390390723e-18 -6.93889390390723e-18 1.73888834434198 -36.6895292925952 155.461706809213)" sodipodi:type="arc" sodipodi:rx="5.88" sodipodi:ry="5.04000000000001" sodipodi:cx="5.88022216489127" sodipodi:cy="5.04037581434304" sodipodi:start="0.00152208776239071" sodipodi:end="6.14137060894258" sodipodi:open="true" d="M11.7012 4.32802C11.2538 1.64202 8.40591 -0.258359 5.25822 0.0286536C2.11053 0.315667 -0.20718 2.68705 0.0146825 5.39362C0.236545 8.10019 2.91835 10.1705 6.08194 10.0774C9.24553 9.98433 11.7554 7.76129 11.7602 5.04805" fill="none" stroke="#ffffff" stroke-width="1" stroke-linecap="square" stroke-linejoin="bevel"/><path id="shape2" transform="matrix(1.73773954513212 0.0631969014219754 -0.0631969014219754 1.73773954513212 -81.6999346501995 76.5562670180286)" fill="#f6fdff" fill-rule="evenodd" stroke="#ffffff" stroke-width="1" stroke-linecap="square" stroke-linejoin="bevel" d="M10.8097 39.2674L36.6909 39.2985L36.6942 36.5561L0 36.773L10.9995 0.148597L38.4223 0L33.8766 4.59523L15.5947 4.6943L11.0986 18.4305L32.5807 18.3141L29.4052 22.9019C24.0775 22.9307 15.0799 22.9795 9.7522 23.0084L6.60241 32.1666L38.192 31.6346L44.5773 13.3176L35.2935 13.3679L37.831 9.12638L45.9828 9.11078L48.2127 4.15673L58.0106 4.10364L56.35 8.68324L50.0529 8.71736L41.5303 36.1871L39.9554 40.7663L10.8187 40.9242"/>
+</svg>

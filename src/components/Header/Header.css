@@ -3,53 +3,52 @@
 @layer components {
   .header-link {
     @apply flex items-center justify-center 
-         w-1/3 min-w-fit px-2 lg:px-4 py-1
-         text-stylep1 text-skin-color1
-         rounded-md transition-all duration-300
-         hover:bg-skin-fill-3 hover:bg-opacity-25 hover:text-skin-colorHigh
-         hover:scale-y-110 
-         hover:rounded-lg hover:shadow-lg;
+        w-1/3 min-w-fit px-2 lg:px-4 py-1
+        text-stylep1 text-skin-color1
+        rounded-md transition-all duration-300
+        hover:bg-skin-fill-3 hover:bg-opacity-25 hover:text-skin-colorHigh
+        hover:scale-y-110 
+        hover:rounded-lg hover:shadow-lg;
   }
   .header-link-icon {
     @apply flex text-styleh4 px-1;
   }
 
   .header-desktop {
-    @apply hidden md:grid grid-cols-[150px_1.5fr_1fr_auto] bg-skin-primary 
-          items-center text-styleh4 md:gap-1 lg:gap-4;
+    @apply hidden lg:grid grid-cols-[190px_1.5fr_1fr_auto] bg-skin-primary 
+        items-center text-styleh4 lg:gap-4;
   }
 
   .header-mobile {
-    @apply flex md:hidden justify-between items-center 
-          flex-col min-w-[355px] text-styleh4 gap-2;
+    @apply flex lg:hidden justify-between items-center 
+        flex-col min-w-[355px] text-styleh4 gap-2;
   }
   .header-signup {
-    @apply flex py-1 bg-skin-buttonColor-2 text-skin-color2 md:text-skin-color1 md:bg-transparent text-stylep2 items-center
-          md:pr-2 md:pl-0 font-bold p-2 bg-opacity-30
-          font-Montserrat hover:text-skin-colorHigh hover:scale-110;
+    @apply flex py-1 bg-skin-buttonColor-2 text-skin-color2 lg:text-skin-color1 lg:bg-transparent text-stylep2 items-center
+        lg:pr-2 lg:pl-0 font-bold p-2 bg-opacity-30
+        font-Montserrat hover:text-skin-colorHigh hover:scale-110;
   }
-  
+
   .header-login {
     @apply flex py-1 px-2 bg-skin-buttonColor-1 border border-skin-colorBorder1 
-          text-skin-color1 rounded-sm my-2 text-stylep2
-          items-center font-Montserrat font-bold hover:border-skin-colorBorder1
-          hover:bg-skin-fill-3 hover:bg-opacity-75 hover:text-skin-colorHigh hover:rounded-2xl
-          transition-all duration-100 hover:scale-x-125 hover:px-4;
+        text-skin-color1 rounded-sm my-2 text-stylep2
+        items-center font-Montserrat font-bold hover:border-skin-colorBorder1
+        hover:bg-skin-fill-3 hover:bg-opacity-75 hover:text-skin-colorHigh hover:rounded-2xl
+        transition-all duration-100 hover:scale-x-125 hover:px-4;
   }
 
   .header-icons {
     @apply flex p-2 text-skin-color1 text-styleh4 bg-skin-buttonColor-1 bg-opacity-5 m-1
-          hover:text-skin-colorHigh hover:scale-110;
-    ;
+        hover:text-skin-colorHigh hover:scale-110;
   }
 
   .header-search {
     @apply flex bg-skin-colorContent rounded-2xl text-stylep1 pl-3 py-2 px-2 gap-2 border border-skin-colorBorder2 w-full min-w-[200px];
   }
   .header-search-input {
-    @apply flex border-l-skin-colorBorder2 flex-1 pb-0 px-1 bg-transparent border-b-2 border-b-skin-colorBorder2 
+    @apply flex border-l-skin-colorBorder2 flex-1 pb-0 px-1 bg-transparent border-b-2 border-b-skin-colorBorder2;
   }
   .header-search-icons {
-    @apply flex bg-transparent p-2 items-center text-stylep1 justify-center text-skin-colorContent
+    @apply flex bg-transparent p-2 items-center text-stylep1 justify-center text-skin-colorContent;
   }
 }

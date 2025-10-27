@@ -21,9 +21,11 @@ import CategoriesPage from "../../pages/CategoriesPage/CategoriesPage.jsx";
 // cart
 import CartOwnerPage from "../../pages/CartPage/CartOwnerPage.jsx";
 
+// errors
+import TokenErrorPage from "../../pages/MiscPage/TokenErrorPage.jsx";
+import ErrorPage from "../../pages/MiscPage/ErrorPage.jsx";
 
-
-import {Routes, Route} from "react-router-dom"
+import {Routes, Route} from "react-router-dom";
 
 const AppRoutes = () => {
   return (
@@ -44,6 +46,10 @@ const AppRoutes = () => {
       {/* products */}
       <Route path="/create-product/:storeId" element={<AddProductPage />} />
       <Route path="/product/:productId" element={<ProductDisplayPage />} />
+      {/* handle errors*/}
+      <Route path="/token-error" element={<TokenErrorPage/>}/>
+      <Route path="*" element={<ErrorPage/>}/>
+      
     </Routes>
   )
 };

@@ -8,6 +8,7 @@ import { createReviewAction } from "../../store/actions/ReviewThunks";
 import { FaCartShopping, FaNoteSticky, FaStore } from "react-icons/fa6";
 
 import ReviewForm from "./components/AddReviewProductForm";
+import ProductGallery from "./components/ProductGalleryComponent";
 
 const ProductDisplayPage = () => {
   const { productId } = useParams();
@@ -17,21 +18,30 @@ const ProductDisplayPage = () => {
   const { token, isPending } = useSelector((state) => state.auth);
 
   const [product, setProduct] = useState({});
+  const [displayImages, setDisplayImages] = useState([]);
+  const [showReviewForm, setShowReviewForm] = useState(false);
+
   const isMounted = useRef(true);
 
   const fetchProduct = useCallback(async () => {
     if (!token) return;
-    console.log("a");
+   
+    //console.log("a");
     try {
       const resultAction = await dispatch(getProductIdAction(productId));
+   
       if (
         getProductIdAction.fulfilled.match(resultAction) &&
         isMounted.current
       ) {
-        setProduct(
-          resultAction.payload?.data || resultAction.payload?.product || {}
-        );
-        console.log(resultAction.payload.data);
+        const data = resultAction.payload?.data || resultAction.payload?.product || {};
+        setProduct(data);
+
+        const imagesArray = [data.productImage, ...(data.images || [])].filter(Boolean);
+        setDisplayImages(imagesArray);
+
+        console.log("Fetched product:", data);
+        console.log("Images:", imagesArray);
       }
     } catch (error) {
       console.log(error);
@@ -52,10 +62,10 @@ const ProductDisplayPage = () => {
     return (
       <div className="page-section">
         <div className="page-body">
-          <p className="text-white p-4">Please login to continue</p>
+          <p className="text-white p-4 w-full h-full">Please login to continue</p>
           <button
             onClick={() => navigate("/login")}
-            className="px-4 py-2 mt-2 bg-blue-500 text-white rounded-md hover:bg-blue-600"
+            className="px-4 py-2 mt-2 bg-green-500 text-white rounded-md hover:bg-blue-600"
           >
             Go to Login
           </button>
@@ -64,7 +74,6 @@ const ProductDisplayPage = () => {
     );
   }
 
-  const [showReviewForm, setShowReviewForm] = useState(false);
 
   const handleSubmitReview = async (reviewData) => {
     console.log("Review submitted:", reviewData);
@@ -78,10 +87,10 @@ const ProductDisplayPage = () => {
     }
   };
 
-  if (isPending) {
+   if (isPending) {
     return (
-      <div className="flex justify-center items-center w-full h-full">
-        Loading...
+      <div className="flex justify-center items-center w-full h-full bg-gray-500 bg-opacity-20">
+        <div className="animate-spin rounded-full h-12 w-12 border-t-4 border-green-500"></div>
       </div>
     );
   }
@@ -96,13 +105,9 @@ const ProductDisplayPage = () => {
 
         <div className="text-div-bgblur"></div>
         <div className="text-div">
-          <div className="flex w-full h-[170px] bg-skin-fill-1 bg-opacity-40 relative">
-            <div className="flex bg-skin-colorContent w-full h-[100px]"></div>
-            <div className="absolute top-[50px] left-2 h-[90px] w-[90px] border-2 border-skin-colorBorder1 rounded-full bg-skin-color-back"></div>
-            <div className="absolute top-[140px] left-3 text-skin-color1 text-styleh4">
-              {product?.productImage}
-            </div>
-          </div>
+          <div className="flex bg-skin-colorContent opacity-10 w-full h-[20px]"></div>
+            
+          <ProductGallery images={displayImages && displayImages.length > 0 ? displayImages : ["A1", "B1", "C1"]} />
 
           <div
             className="grid md:grid-cols-2 grid-cols-1 items-center justify-center w-full bg-skin-colorContent
@@ -123,11 +128,6 @@ const ProductDisplayPage = () => {
               <span>{product?.sku}</span>
             </span>
 
-            <span className="flex flex-row items-center gap-x-2">
-              <span>Desc: </span>
-              <span className="truncate">{product?.description}</span>
-            </span>
-
             <span className="flex flex-row items-center gap-x-2 text-opacity-90">
               <span>Brand: </span>
               <span>{product?.brand}</span>
@@ -141,9 +141,14 @@ const ProductDisplayPage = () => {
                 </span>
                 <span>
                   <span>Stocks: </span>
-                  {product?.stock || ""},
+                  {product?.stock || ""}
                 </span>
               </div>
+            </span>
+
+            <span className="flex flex-col justify-start w-full items-start gap-x-2 col-span-2">
+              <span>Description: </span>
+              <span className="opacity-80">{product?.description}</span>
             </span>
 
             {product?.attributes &&

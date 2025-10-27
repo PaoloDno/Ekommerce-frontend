@@ -35,10 +35,7 @@ export const getUserStoreAction = createAsyncThunk(
           Authorization: `Bearer ${token}`,
         },
       });
-      if (response) {
-        const { token } = response.data;
-        localStorage.setItem("token", token);
-      }
+      
       return response.data;
     } catch (error) {
       console.log(error);

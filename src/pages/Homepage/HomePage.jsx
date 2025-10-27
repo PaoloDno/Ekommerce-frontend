@@ -4,6 +4,8 @@ import { getUserProfileAction } from "../../store/actions/AuthThunks";
 import { Link, useNavigate } from "react-router-dom";
 import ThemeSelectorProfile from "./ThemeSelectorProfile";
 import { useTheme } from "../../context/ThemeContext";
+import ProfileImage from "../../components/ImagesComponent/components/ProfileImageComponent";
+import BannerImage from "../../components/ImagesComponent/components/BannerImageComponent";
 
 const HomePage = () => {
   const dispatch = useDispatch();
@@ -69,6 +71,10 @@ const HomePage = () => {
 
   return (
     <div className="page-section">
+      <div className="absolute inset-0 z-20 w-full h-[40vh] left-0 rounded-b-lg">
+        <BannerImage bannerImage={"B1"} />
+      </div>
+
       <div className="page-body">
         <div
           className="absolute opacity-5 inset-0 h-[90vw] w-full
@@ -76,52 +82,60 @@ const HomePage = () => {
         ></div>
 
         <div className="text-div-bgblur"></div>
+        <div className="flex w-full h-[120px]">
 
-        <div className="text-div">
-          <div className="grid grid-cols-2 md:grid-cols-3">
-            <div className="flex flex-col space-y-3 p-2">
+        </div>
+        <div className="text-div overflow-hidden relative">
+          <div className="grid grid-cols-2 md:grid-cols-3 mt-10">
+            <div className="flex flex-col w-full items-center space-y-3 p-2">
               <div
                 className="inline-block h-[100px] w-[100px]
-             md:h-[150px] md:w-[150px]
-             bg-skin-colorContent rounded-full"
-              ></div>
+                  md:h-[150px] md:w-[150px]
+                  bg-skin-colorContent rounded-full md:rounded-none"
+              >
+                <ProfileImage input={profile?.userAvatar} />
+              </div>
               <span className="text-div-header">
                 Hello {profile?.username || "Guest"}!
               </span>
             </div>
-            <div className="grid md:grid-cols-2 grid-cols-1 md:col-span-2 items-center justify-center w-full bg-skin-colorContent
+            <div
+              className="grid lg:grid-cols-2 grid-cols-1 lg:col-span-2 items-center justify-center w-full bg-skin-colorContent
             text-skin-colorContent p-2 mt-1 text-stylep3 gap-2 rounded-lg"
             >
-              <span className="flex flex-col md:items-start w-full h-full">
-              <h2 className="text-div-header">Profile Detail</h2>
-              <div className="text-line" />
-              <span className="flex flex-col md:grid md:grid-cols-2 w-full justify-between">
-                <span>Firstname: {profile?.firstname || ""}</span>
-                <span>Lastname: {profile?.lastname || ""}</span>
+              <span className="flex flex-col items-start w-full h-full">
+                <h2 className="text-div-header">Profile Detail</h2>
+                <div className="text-line" />
+                <span className="flex flex-col h-full w-full justify-start">
+                  <span>Username: {profile?.username || ""}</span>
+                  <span>Firstname: {profile?.firstname || ""}</span>
+                  <span>Lastname: {profile?.lastname || ""}</span>
+                  <span>Email: {profile?.email || ""}</span>
+                </span>
               </span>
-              </span>
-              <span>
-              <h2 className="text-div-header">Address</h2>
-              <div className="text-line" />
-              <span>{profile?.address?.[0]?.street || ""}</span>
-              <span>
-                {profile?.address?.[0]?.city || ""},{" "}
-                {profile?.address?.[0]?.country || ""} -{" "}
-                {profile?.address?.[0]?.postalCode || ""}
-              </span>
+              <span className="flex flex-col h-full w-full">
+                <h2 className="text-div-header">Address</h2>
+                <div className="text-line" />
+                <span>{profile?.address?.[0]?.street || ""}</span>
+                <span>
+                  {profile?.address?.[0]?.city || ""},{" "}
+                  {profile?.address?.[0]?.country || ""} -{" "}
+                  {profile?.address?.[0]?.postalCode || ""}
+                </span>
               </span>
             </div>
           </div>
+          
         </div>
 
         <div className="text-div">
-          <h2 className="text-div-header">Check Store</h2>
+          <h2 className="text-div-header">User Store</h2>
           <div className="text-line w-full items-center justify-center" />
           <div className="flex flex-col w-full items-center md:ml-3 md:items-start justify-center">
             {profile?.storeName == null ? (
               <>
                 <p>You dont own a store</p>
-                <h2>Get Started...</h2>
+                <h2>Get Started... {profile?.storeName || "Check Store"}</h2>
                 <Link to={`/create-store`} className="link-button">
                   Start Selling
                 </Link>

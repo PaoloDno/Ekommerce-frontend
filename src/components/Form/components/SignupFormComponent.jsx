@@ -6,6 +6,8 @@ import { FaCircleArrowRight } from "react-icons/fa6";
 import AuthLayout from "./AuthLayout";
 import AuthInput from "./AuthInput";
 import AuthVideo from "../videos/Rainy.mp4";
+import BannerImage from "../../ImagesComponent/components/BannerImageComponent";
+import ProfileImage from "../../ImagesComponent/components/ProfileImageComponent";
 
 const SignUpFormComponent = () => {
   const { token, isPending, error } = useSelector((s) => s.auth);
@@ -23,7 +25,13 @@ const SignUpFormComponent = () => {
 
   const [formData, setFormData] = useState({
     user: { username: "", email: "", password: "", confirmPassword: "" },
-    profile: { userAvatar: "A1", firstname: "", lastname: "", middlename: "" },
+    profile: {
+      userAvatar: "A1",
+      userBanner: "B1",
+      firstname: "",
+      lastname: "",
+      middlename: "",
+    },
     address: { street: "", city: "", country: "", postalCode: "" },
   });
 
@@ -119,6 +127,15 @@ const SignUpFormComponent = () => {
     }
   };
 
+  const selectLabel = `text-gray-600 text-stylep2`;
+  const selectOptions = `border-2 border-skin-colorBorder1 rounded-lg
+    w-full px-2 text-stylep3 p-1
+    placeholder-transparent shadow-sm
+    focus:border-green-500 focus:ring focus:ring-green-200
+    focus:outline-none
+    transition-all duration-30 pb-2 mb-1`;
+  const selectOption = `text-gray-500 text-stylep2 py-2 px-4`;
+
   const renderStep = () => (
     <>
       {step === 1 && (
@@ -171,8 +188,60 @@ const SignUpFormComponent = () => {
 
       {step === 2 && (
         <div className="flex flex-col w-full h-full min-h-[520px] justify-between">
+          
           <div className="flex flex-col w-full">
             <div className="auth-title">Profile Info</div>
+
+            <div className="flex flex-col items-center md:grid gap-1 md:grid-cols-[1fr_1.5fr] my-2">
+              <span className="flex w-full h-[120px] relative rounded-lg bg-gray-500 p-4 overflow-hidden">
+          
+                <span className="absolute inset-0 w-full h-[60px]">
+                  <BannerImage bannerImage={formData.profile.userBanner} />
+                </span>
+          
+                <span className="absolute left-2 bottom-0 w-[100px] h-[100px] rounded-full overflow-hidden">
+                  <ProfileImage input={formData.profile.userAvatar} />
+                </span>
+              </span>
+
+              <span className="flex flex-col gap-2">
+               
+                <div className="flex flex-col w-full">
+                  <label htmlFor="userAvatar" className={selectLabel}>
+                    Select Avatar Icon
+                  </label>
+                  <select
+                    className={selectOptions}
+                    name="userAvatar"
+                    id="userAvatar"
+                    value={formData.profile.userAvatar}
+                    onChange={(e) => handleChange("profile", e)}
+                  >
+                    <option className={selectOption} value="A1">ProfileImageA1</option>
+                    <option className={selectOption} value="A2">ProfileImageA2</option>
+                    <option className={selectOption} value="A3">ProfileImageA3</option>
+                  </select>
+                </div>
+
+                <div className="flex flex-col w-full">
+                  <label htmlFor="userBanner" className={selectLabel}>
+                    Select Banner Image
+                  </label>
+                  <select
+                    className={selectOptions}
+                    name="userBanner"
+                    id="userBanner"
+                    value={formData.profile.userBanner}
+                    onChange={(e) => handleChange("profile", e)}
+                  >
+                    <option className={selectOption} value="B1">BannerImageB1</option>
+                    <option className={selectOption} value="B2">BannerImageB2</option>
+                    <option className={selectOption} value="B3">BannerImageB3</option>
+                  </select>
+                </div>
+              </span>
+            </div>
+
             <AuthInput
               label="Firstname"
               name="firstname"
@@ -198,6 +267,7 @@ const SignUpFormComponent = () => {
               helper="required and clean text"
             />
           </div>
+
           <span className="flex flex-row justify-between">
             <button className="auth-button" type="button" onClick={handleBack}>
               Prev

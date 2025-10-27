@@ -5,6 +5,7 @@ import ProductInput from "./ProductFormInput";
 import { useEffect, useState } from "react";
 import { FaHome } from "react-icons/fa";
 import { createProductAction } from "../../../store/actions/ProductThunks";
+import ProductImages from "../../../components/ImagesComponent/components/ProductImageComponent";
 
 const CreateProductFormComponent = ({ storeId }) => {
   const { token, isPending } = useSelector((s) => s.auth);
@@ -30,7 +31,7 @@ const CreateProductFormComponent = ({ storeId }) => {
     },
     displays: {
       productImage: "A1",
-      images: ["B1", "B2"],
+      images: ["B1", "C2"],
       attributes: { color: "Red", size: "M" },
     },
   });
@@ -133,9 +134,9 @@ const CreateProductFormComponent = ({ storeId }) => {
     }
   };
 
-  const selectLabel = `text-gray-800 text-stylep1`;
+  const selectLabel = `text-gray-800 text-stylep3`;
   const selectOptions = `border-2 border-skin-colorBorder1 rounded-lg
-    w-full px-2 py-2 text-stylep2
+    w-full px-2 py-1 text-stylep2
     placeholder-transparent shadow-sm
     focus:border-green-500 focus:ring focus:ring-green-200
     focus:outline-none
@@ -237,11 +238,33 @@ const CreateProductFormComponent = ({ storeId }) => {
         )}
 
         {step === 3 && (
-          <div className="flex flex-col w-full h-full min-h-[520px] justify-between">
-            <div className="flex flex-col w-full space-y-4">
+          <div className="flex flex-col w-full h-full min-h-[520px] justify-between items-center">
+            <div className="flex flex-col w-full space-y-4 justify-center items-center">
               <h2 className="form-title">Product Display</h2>
 
-              {/* Product Image Selector */}
+              {/* Preview */}
+              <div className="flex flex-col items-center justify-center my-2 bg-gray-500 bg-opacity-10 rounded-lg p-1 w-fit">
+                  <span className="flex w-[200px] h-[200px] rounded-sm overflow-hidden">
+                    <ProductImages
+                      productImages={formData.displays.productImage}
+                    />
+                  </span>
+                  <span>
+                  <span className="grid grid-cols-[1fr_1fr] gap-1">
+                    <span className="flex w-[100px] h-[100px] rounded-sm overflow-hidden">
+                      <ProductImages
+                        productImages={formData.displays.images[0]}
+                      />
+                    </span>
+                    <span className="flex w-[100px] h-[100px] rounded-sm overflow-hidden">
+                      <ProductImages
+                        productImages={formData.displays.images[1]}
+                      />
+                    </span>
+                  </span>
+                  </span>
+              </div>
+
               <div className="flex flex-col w-full">
                 <label className={selectLabel} htmlFor="productImage">
                   Choose a Product Image:
@@ -253,41 +276,72 @@ const CreateProductFormComponent = ({ storeId }) => {
                   value={formData.displays.productImage}
                   onChange={(e) => handleChange("displays", e)}
                 >
-                  <option value="A1">Logo A1</option>
-                  <option value="A2">Logo A2</option>
-                  <option value="A3">Logo A3</option>
-                  <option value="A4">Logo A4</option>
+                  <option value="A1" className={selectOptions}>Logo A1</option>
+                  <option value="A2" className={selectOptions}>Logo A2</option>
+                  <option value="A3" className={selectOptions}>Logo A3</option>
+                  <option value="A4" className={selectOptions}>Logo A4</option>
                 </select>
               </div>
 
-              {/* Banner Selector */}
               <div className="flex flex-col w-full">
-                <label className={selectLabel} htmlFor="images">
-                  Choose a Secondary Image:
+                <label className={selectLabel} htmlFor="images1">
+                  Choose a Secondary Image 1:
                 </label>
                 <select
                   className={selectOptions}
-                  name="images"
-                  id="images"
+                  name="images1"
+                  id="images1"
                   value={formData.displays.images[0]}
                   onChange={(e) =>
-                    setFormData((prev) => ({
-                      ...prev,
-                      displays: {
-                        ...prev.displays,
-                        images: [e.target.value],
-                      },
-                    }))
+                    setFormData((prev) => {
+                      const newImages = [...prev.displays.images];
+                      newImages[0] = e.target.value;
+                      return {
+                        ...prev,
+                        displays: {
+                          ...prev.displays,
+                          images: newImages,
+                        },
+                      };
+                    })
                   }
                 >
-                  <option value="B1">Banner B1</option>
-                  <option value="B2">Banner B2</option>
-                  <option value="B3">Banner B3</option>
-                  <option value="B4">Banner B4</option>
+                  <option value="B1" className={selectOptions}>Image B1</option>
+                  <option value="B2" className={selectOptions}>Image B2</option>
+                  <option value="B3" className={selectOptions}>Image B3</option>
                 </select>
               </div>
 
-              {/* Attributes Editor */}
+              <div className="flex flex-col w-full">
+                <label className={selectLabel} htmlFor="images2">
+                  Choose a Secondary Image 2:
+                </label>
+                <select
+                  className={selectOptions}
+                  name="images2"
+                  id="images2"
+                  value={formData.displays.images[1]}
+                  onChange={(e) =>
+                    setFormData((prev) => {
+                      const newImages = [...prev.displays.images];
+                      newImages[1] = e.target.value;
+                      return {
+                        ...prev,
+                        displays: {
+                          ...prev.displays,
+                          images: newImages,
+                        },
+                      };
+                    })
+                  }
+                >
+                  <option value="C1" className={selectOptions}>Image C1</option>
+                  <option value="C2" className={selectOptions}>Image C2</option>
+                  <option value="C3" className={selectOptions}>Image C2</option>
+                </select>
+              </div>
+
+              {/* Attributes Section (unchanged) */}
               <div className="flex flex-col w-full space-y-2">
                 <label className={selectLabel}>Attributes:</label>
 
