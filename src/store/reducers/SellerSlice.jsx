@@ -7,7 +7,7 @@ import {
 const sellerSlice = createSlice({
   name: 'seller',
   initialState: {
-    store: {},
+    store: "",
     isPending: false,
     isRejected: false,
     isSuccess: false,

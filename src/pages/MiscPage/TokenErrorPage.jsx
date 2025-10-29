@@ -14,7 +14,7 @@ const TokenErrorPage = () => {
       setTimeout(() => {
         setLoading(false);
         navigate("/login");
-      }, 2000);
+      }, 3000);
     };
 
     handleLogOut();

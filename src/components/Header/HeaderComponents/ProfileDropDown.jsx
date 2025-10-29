@@ -2,13 +2,20 @@ import { useState, useRef, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { logoutAction } from "../../../store/actions/AuthThunks";
-import { FaEllipsisV, FaHome, FaShoppingCart, FaUser } from "react-icons/fa";
+import {
+  FaEllipsisV,
+  FaShoppingCart,
+  FaStore,
+  FaSignOutAlt,
+} from "react-icons/fa";
+import ProfileImage from "../../ImagesComponent/components/ProfileImageComponent";
 
 const ProfileDropdown = () => {
   const [open, setOpen] = useState(false);
   const dropdownRef = useRef(null);
   const dispatch = useDispatch();
-  const { token } = useSelector((state) => state.auth || {});
+  const { profile } = useSelector((state) => state.auth || {});
+  const { userAvatar } = profile || {};
 
   // Close dropdown when clicking outside
   useEffect(() => {
@@ -40,32 +47,51 @@ const ProfileDropdown = () => {
   };
 
   return (
-    <div className="flex relative" ref={dropdownRef}>
+    <div className="relative flex items-start" ref={dropdownRef}>
       <button
         onClick={() => setOpen((prev) => !prev)}
-        className="header-signup"
+        className="flex items-center justify-center w-10 h-10 rounded-full hover:bg-gray-200 transition-colors duration-200"
       >
-        <FaEllipsisV className="text-stylep2"/>
+        <FaEllipsisV className="text-stylep2" />
       </button>
 
       {open && (
         <div
-          className="absolute right-0 mt-2 min-w-30 w-40 bg-skin-colorContent 
-          border rounded shadow-md text-skin-colorContent z-50"
+          className="absolute right-0 mt-2 w-44 bg-white border border-gray-200 rounded-lg shadow-lg 
+                     z-50 grid grid-rows-auto overflow-hidden"
         >
-          <Link to="/home" className="flex flex-row px-4 pt-1 text-stylep4
-           hover:bg-gray-200 hover:text-black items-center">
-            <FaHome /> <span className="mx-2">Home</span>
+          <Link
+            to="/home"
+            className="grid grid-cols-[2rem_auto] items-center gap-2 px-4 py-2 hover:bg-gray-100 transition-all"
+          >
+            <span className="h-7 w-7 rounded-full overflow-hidden">
+              <ProfileImage profileImage={userAvatar} />
+            </span>
+            <span className="text-sm font-medium text-gray-800">Profile</span>
           </Link>
-          <Link to="/cart" className="flex flex-row px-4 pt-1 text-stylep4
-           hover:bg-gray-200 hover:text-black items-center">
-            <FaShoppingCart /> <span className="mx-2">Cart</span>
+
+          <Link
+            to="/user-store"
+            className="grid grid-cols-[2rem_auto] items-center gap-2 px-4 py-2 hover:bg-gray-100 transition-all"
+          >
+            <FaStore className="text-gray-700" />
+            <span className="text-sm font-medium text-gray-800">My Store</span>
           </Link>
+
+          <Link
+            to="/cart"
+            className="grid grid-cols-[2rem_auto] items-center gap-2 px-4 py-2 hover:bg-gray-100 transition-all"
+          >
+            <FaShoppingCart className="text-gray-700" />
+            <span className="text-sm font-medium text-gray-800">Cart</span>
+          </Link>
+
           <button
             onClick={handleClickLogOutButton}
-            className="flex flex-row w-full text-left px-4 pt-1 text-stylep4"
+            className="grid grid-cols-[2rem_auto] items-center gap-2 px-4 py-2 hover:bg-gray-100 transition-all w-full text-left"
           >
-            <FaUser /> <span className="mx-2">Log Out</span>
+            <FaSignOutAlt className="text-gray-700" />
+            <span className="text-sm font-medium text-gray-800">Log Out</span>
           </button>
         </div>
       )}

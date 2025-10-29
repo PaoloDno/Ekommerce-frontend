@@ -23,11 +23,15 @@ const loadState = () => {
 const saveState = (state) => {
   try {
     const partialState = {
-      auth: state.auth,
+      auth: {
+        username: state.auth.username,
+        profile: state.auth.profile,
+        token: state.auth.token,
+      },
       cart: state.cart,
       theme: state.theme,
       product: state.product,
-      seller: state.seller,
+      seller: state.seller.store,
     };
     const serializedState = JSON.stringify(partialState);
     localStorage.setItem("app_state", serializedState);

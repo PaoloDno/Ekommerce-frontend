@@ -28,6 +28,7 @@ export const getProductIdAction = createAsyncThunk(
           Authorization: `Bearer ${token}`,
         },
       });
+      console.log("data", response.data);
       return response.data;
     } catch (error) {
       console.log(error);

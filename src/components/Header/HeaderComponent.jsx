@@ -1,3 +1,4 @@
+import { useCallback, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useAppContext } from "../../context/AppContext";
 import {
@@ -16,9 +17,11 @@ import SearchBar from "./HeaderComponents/SearchBarComponent";
 
 export default function HeaderComponent() {
   const { user, cartQuantity } = useAppContext();
+  
+  const { token, username } = useSelector((state) => state.auth);
+
   const brandName = "Ekommerce";
 
-  const { token } = useSelector((state) => state.auth);
   const navLinks = [
     { to: "/", label: "Home", icon: <FaHome /> },
     { to: "/stores", label: "Stores", icon: <FaStore /> },
@@ -39,7 +42,7 @@ export default function HeaderComponent() {
       ) : (
         <>
           <Link className="header-signup hover:scale-110" to="/home">
-            Home
+            {username ? username : "Profile"}
           </Link>
           
           <Link className="header-signup hover:scale-110" to="/cart">
@@ -54,7 +57,7 @@ export default function HeaderComponent() {
   );
 
   return (
-    <header className="flex items-center bg-skin-primary w-full p-2 z-50 lg:h-[65px]">
+    <header className="flex items-center bg-skin-primary w-full p-2 z-30 lg:h-[65px]">
       <div className="header-desktop w-full">
         <h1 className="text-skin-color1 font-Merriweather font-semibold text-styleh4 ml-2 h-full overflow-hidden">
           <span className="hidden lg:flex flex-row gap-1 items-center justify-center overflow-hidden">

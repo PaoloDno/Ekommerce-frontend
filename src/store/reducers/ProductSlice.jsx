@@ -10,7 +10,7 @@ import {
 const productSlice = createSlice({
   name: "product",
   initialState: {
-    product: null,
+    product: {},
     products: [],
     isPending: false,
     isRejected: false,
