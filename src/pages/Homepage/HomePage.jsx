@@ -26,6 +26,7 @@ const HomePage = () => {
         isMounted.current
       ) {
         setProfile(resultAction.payload.data);
+        console.log(resultAction.payload.data);
         changeTheme(resultAction.payload.data.userTheme);
       }
     } catch (error) {
