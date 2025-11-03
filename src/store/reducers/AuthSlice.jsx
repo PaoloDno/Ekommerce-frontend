@@ -30,6 +30,7 @@ const authSlice = createSlice({
         state.isRejected = false;
         state.userId = action.payload.userId;
         state.username = action.payload.username || null;
+        state.profile = action.payload;
         state.token = action.payload.token || null;
         state.totalItems = action.payload.cartSummary.totalItems;
       })
@@ -40,6 +41,7 @@ const authSlice = createSlice({
         state.isRejected = false;
         state.userId = action.payload.userId;
         state.username = action.payload.username || null;
+        state.profile = action.payload;
         state.token = action.payload.token || null;
         state.totalItems = action.payload.cartSummary.totalItems;
       })
@@ -50,6 +52,7 @@ const authSlice = createSlice({
         state.isRejected = false;
         state.userId = null;
         state.username = null;
+        state.profile = null;
         state.token = null;
         state.totalItems = null;
       })

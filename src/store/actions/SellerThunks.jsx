@@ -43,3 +43,16 @@ export const getUserStoreAction = createAsyncThunk(
     }
   }
 );
+
+export const getStoreIdAction = createAsyncThunk(
+  "seller/GetStoreIdAction",
+  async (storeId, thunkAPI) => {
+    try {
+      const response = await api.get(`/store/${storeId}`);
+      return response.data;
+    } catch (error) {
+      console.log(error);
+      return thunkAPI.rejectWithValue(error.response?.data.message);
+    }
+  }
+)

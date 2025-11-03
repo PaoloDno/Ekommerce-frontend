@@ -48,7 +48,7 @@ export default function HeaderComponent() {
           <Link className="header-signup hover:scale-110" to="/cart">
             Cart
           </Link>
-           <div className="header-signup hover:scale-110 w-fit">
+           <div className="header-signup hover:scale-110 w-fit z-50">
             <ProfileDropdown />
           </div>
         </>

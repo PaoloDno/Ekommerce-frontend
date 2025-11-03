@@ -20,23 +20,24 @@ const loadState = () => {
   }
 };
 
+const cleanSlice = (slice) => {
+  const { isPending, isRejected, isSuccess, error, ...rest } = slice;
+  return rest;
+};
+
 const saveState = (state) => {
   try {
     const partialState = {
-      auth: {
-        username: state.auth.username,
-        profile: state.auth.profile,
-        token: state.auth.token,
-      },
-      cart: state.cart,
+      auth: cleanSlice(state.auth),
+      cart: cleanSlice(state.cart),
       theme: state.theme,
-      product: state.product,
-      seller: state.seller.store,
+      product: cleanSlice(state.product),
+      seller: cleanSlice(state.seller),
     };
-    const serializedState = JSON.stringify(partialState);
-    localStorage.setItem("app_state", serializedState);
+
+    localStorage.setItem("app_state", JSON.stringify(partialState));
   } catch (err) {
-    console.warn("Failed to save sate: ", err);
+    console.warn("Failed to save state:", err);
   }
 };
 

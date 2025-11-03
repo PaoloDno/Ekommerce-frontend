@@ -119,6 +119,7 @@ const ProductDisplayPage = () => {
 
   const renderStars = (ratingValue) => {
     const stars = [];
+    if(!ratingValue) return <p>No Rating Yet</p>;
     const roundedRating = Math.floor(ratingValue);
     for (let i = 1; i <= 5; i++) {
       stars.push(
@@ -225,7 +226,7 @@ const ProductDisplayPage = () => {
             text-skin-colorContent p-2 mt-1 text-stylep3 gap-2 rounded-lg pb-3 md:pb-2"
           >
             <span
-              className="flex flex-row items-center p-1 justify-center px-3 gap-2 bg-yellow-500 rounded-sm
+              className="flex flex-row items-center p-1 md:py-2 justify-center px-3 gap-2 bg-yellow-500 rounded-sm
               col-span-2"
             >
               <span>
@@ -235,7 +236,7 @@ const ProductDisplayPage = () => {
             </span>
             <span
               onClick={() => setShowReviewForm(true)}
-              className="flex flex-row items-center p-1 justify-center px-3 gap-2 bg-green-400 rounded-sm col-span-2 cursor-pointer hover:bg-green-500 transition"
+              className="flex flex-row items-center py-1 md:py-2 justify-center px-3 gap-2 bg-green-400 rounded-sm col-span-2 cursor-pointer hover:bg-green-500 transition"
             >
               <span>
                 <FaNoteSticky />
@@ -245,14 +246,14 @@ const ProductDisplayPage = () => {
           </div>
           <span className="grid grid-cols-[1fr_1fr] text-stylep2 text-skin-colorDis opacity-95 items-center justify-center bg-skin-colorContent rounded-md p-1 gap-3">
             <Link
-              className="flex flex-row items-center justify-center gap-2 bg-green-600 bg-opacity-35 px-3 rounded-md text-black"
-              to={`/product/${product?.seller?._id}`}
+              className="flex flex-row items-center py-1 md:py-2 justify-center gap-2 bg-green-600 bg-opacity-35 px-3 rounded-md text-black"
+              to={`/store/${product?.seller?._id}`}
             >
               <FaStore /> visit store
             </Link>
             <Link
-              className="flex flex-row items-center justify-center gap-2 bg-red-600 bg-opacity-95 px-3 rounded-md text-white"
-              to={`/product/${product?.seller?._id}`}
+              className="flex flex-row items-center py-1 md:py-2 justify-center gap-2 bg-red-600 bg-opacity-95 px-3 rounded-md text-white"
+              to={`/store/${product?.seller?._id}`}
             >
               <FaCircleExclamation /> report
             </Link>

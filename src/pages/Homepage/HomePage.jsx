@@ -6,6 +6,7 @@ import ThemeSelectorProfile from "./ThemeSelectorProfile";
 import { useTheme } from "../../context/ThemeContext";
 import ProfileImage from "../../components/ImagesComponent/components/ProfileImageComponent";
 import BannerImage from "../../components/ImagesComponent/components/BannerImageComponent";
+import { FaLock, FaStore } from "react-icons/fa";
 
 const HomePage = () => {
   const dispatch = useDispatch();
@@ -83,9 +84,7 @@ const HomePage = () => {
         ></div>
 
         <div className="text-div-bgblur"></div>
-        <div className="flex w-full h-[120px]">
-
-        </div>
+        <div className="flex w-full h-[120px]"></div>
         <div className="text-div overflow-hidden relative">
           <div className="grid grid-cols-2 md:grid-cols-3 mt-10">
             <div className="flex flex-col w-full items-center space-y-3 p-2">
@@ -101,8 +100,8 @@ const HomePage = () => {
               </span>
             </div>
             <div
-              className="grid lg:grid-cols-2 grid-cols-1 lg:col-span-2 items-center justify-center w-full bg-skin-colorContent
-            text-skin-colorContent p-2 mt-1 text-stylep3 gap-2 rounded-lg"
+              className="grid lg:grid-cols-2 grid-cols-1 md:col-span-2 items-center justify-center w-full bg-skin-colorContent
+            text-skin-colorContent p-2 mt-1 text-stylep3 gap-2 rounded-lg "
             >
               <span className="flex flex-col items-start w-full h-full">
                 <h2 className="text-div-header">Profile Detail</h2>
@@ -126,30 +125,54 @@ const HomePage = () => {
               </span>
             </div>
           </div>
-          
         </div>
 
         <div className="text-div">
           <h2 className="text-div-header">User Store</h2>
           <div className="text-line w-full items-center justify-center" />
-          <div className="flex flex-col w-full items-center md:ml-3 md:items-start justify-center">
+
+          <div className="grid grid-cols-2 md:grid-cols-3 w-full my-2 items-center md:items-start justify-center gap-2">
             {profile?.storeName == null ? (
-              <>
-                <p>You dont own a store</p>
-                <h2>Get Started... {profile?.storeName || "Check Store"}</h2>
-                <Link to={`/create-store`} className="link-button">
+              <div className="flex flex-col bg-skin-colorContent bg-opacity-15 rounded-md w-full h-full p-3">
+                <p className="text-skin-color1 mb-1">You don’t own a store yet.</p>
+                <h2 className="font-semibold mb-2">
+                  Get Started...{" "}
+                  <span className="text-skin-accent">
+                    {profile?.storeName || "Your Store Awaits"}
+                  </span>
+                </h2>
+                <Link to="/create-store" className="link-button">
                   Start Selling
                 </Link>
-              </>
+              </div>
             ) : (
-              <>
-                <p>visit your store</p>
-                <h2>Go to Store...</h2>
-                <Link to={`/user-store`} className="link-button">
-                  Go to Store
+              <div className="flex flex-col bg-skin-colorContent bg-opacity-15 rounded-md w-full h-full p-3">
+                <p className="text-skin-color1 mb-1">
+                  Manage your business easily.
+                </p>
+                <h2 className="font-semibold mb-2">Your Store is Live!</h2>
+                <Link to="/user-store" className="link-button mx-auto">
+                  VISIT STORE
                 </Link>
-              </>
+              </div>
             )}
+
+            <div className="grid grid-cols-[1fr_2fr] relative container items-center justify-start gap-3 bg-skin-colorContent bg-opacity-15 rounded-md w-full h-full p-3">
+              <FaStore className="size-8 w-full text-skin-color2" />
+              <span className="text-stylep3 text-skin-color1 leading-tight">
+                “Turn creativity into commerce — your store, your story.” - Ekommerce
+              </span>
+            </div>
+            <div className="grid grid-cols-[1fr_3fr] md:grid-cols-[1fr_1.5fr] col-span-2 md:col-span-1 relative container items-center justify-start gap-3 bg-skin-colorContent bg-opacity-15 rounded-md w-full h-full p-3">
+              <FaLock className="size-8 w-full text-skin-color2" />
+              <span className="text-stylep3 text-skin-color1 leading-tight flex flex-col">
+                Keep your store secure.{" "}
+                <button className="ml-1 px-2 py-1 w-fit text-white bg-gray-500 hover:bg-red-500 rounded-md transition-colors duration-150 my-2">
+                  Learn More
+                </button>
+                We appreciate keeping our community great
+              </span>
+            </div>
           </div>
         </div>
 
