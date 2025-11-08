@@ -8,17 +8,20 @@ import LoginFormComponent from "../Form/components/LoginFormComponent.jsx";
 import SignUpFormComponent from "../Form/components/SignupFormComponent.jsx";
 
 // store
-import StoresPage from "../../pages/StorePage/StoreIdPage.jsx";
+import StorePage from "../../pages/StorePage/StoreIdPage.jsx";
+import StoresPage from "../../pages/StorePage/StoresPage.jsx";
 
 // seller
 import CreateStorePage from "../../pages/SellerPage/CreateStorePage.jsx";
 import UserStorePage from "../../pages/SellerPage/UserStorePage.jsx";
-import StoreIdPage from "../../pages/StorePage/StoreIdPage.jsx";
+
 // products
 import ProductDisplayPage from "../../pages/ProductPage/ProductPageDisplay.jsx";
 import AddProductPage from "../../pages/ProductPage/AddProductPage.jsx";
+
 // category
 import CategoriesPage from "../../pages/CategoriesPage/CategoriesPage.jsx";
+
 // cart
 import CartOwnerPage from "../../pages/CartPage/CartOwnerPage.jsx";
 
@@ -49,7 +52,7 @@ const AppRoutes = () => {
       <Route path="/signup" element={<SignUpFormComponent />} />
       {/* stores */}
       <Route path="/stores" element={<StoresPage />} />
-      <Route path="/store/:storeId" element={<StoresPage />} />
+      <Route path="/store/:storeId" element={<StorePage />} />
       <Route
         path="/create-store"
         element={

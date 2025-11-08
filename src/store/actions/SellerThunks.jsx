@@ -55,4 +55,22 @@ export const getStoreIdAction = createAsyncThunk(
       return thunkAPI.rejectWithValue(error.response?.data.message);
     }
   }
-)
+);
+
+export const getStoresAction = createAsyncThunk(
+  "seller/getStores",
+  async ({ page, limit, sortBy, sortOrder }, thunkAPI) => {
+    try {
+      console.log("GET");
+      const response = await api.get("/store", {
+        params: { page, limit, sortBy, sortOrder }
+      });
+      console.log(response.data);
+      return response.data;  // { stores, pagination }
+    } catch (err) {
+      return thunkAPI.rejectWithValue(
+        err.response?.data?.message || "Failed to fetch stores"
+      );
+    }
+  }
+);
