@@ -134,14 +134,18 @@ const StoresPage = () => {
     } catch (error) {
       console.log(error);
     }
-  }, [dispatch, page, limit, sortBy, sortOrder]); // ✅ correct deps
+  }, [dispatch, page, limit, sortBy, sortOrder]);
 
   useEffect(() => {
     fetchStores();
     return () => {
       isMounted.current = false;
     };
-  }, [fetchStores]);
+  }, [fetchStores, handleFilterChange, handlePageChange]);
+
+  const [filterDropdown, setFilterDropDown] = useState(true);
+
+
 
   return (
     <div className="page-section">
@@ -164,7 +168,6 @@ const StoresPage = () => {
               <option value="isVerified">Verified First</option>
             </select>
 
-            {/* Sort Order */}
             <select
               value={sortOrder}
               onChange={(e) => handleFilterChange("sortOrder", e.target.value)}
@@ -174,20 +177,19 @@ const StoresPage = () => {
               <option value="asc">Ascending</option>
             </select>
           </div>
-
-          {/* Data Grid + Pagination */}
+          
           <CardGrid>
             {stores ? (
-              defaultStores.map((store) => (
+              stores.map((store) => (
                 <StoreCards key={store._id} store={store} />
               ))
             ) : (
-              <span className="w-full h-full flex items-center justify-center">
-                No data to unpack
-              </span>
+               defaultStores.map((store) => (
+                <StoreCards key={store._id} store={store} />
+              ))
             )}
           </CardGrid>
-          <PaginationComponent pagination={defaultPagination || null} />
+          <PaginationComponent pagination={pagination || defaultPagination} onPageCHange={handlePageChange} />
         </div>
       </div>
     </div>
