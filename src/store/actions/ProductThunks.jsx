@@ -88,3 +88,15 @@ export const deleteProductAction = createAsyncThunk(
     }
   }
 );
+
+export const fetchStoresAction = createAsyncThunk(
+  "product/FetchStoresAction",
+  async (params, thunkAPI) => {
+    try {
+      const response = await api.get(`/product`, {params});
+      return response.data;
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error.response?.data.message);
+    }
+  }
+)

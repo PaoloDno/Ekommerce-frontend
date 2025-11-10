@@ -5,9 +5,10 @@ import { useNavigate } from "react-router-dom";
 const ProtectedRoute = ({ children, adminOnly = false}) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const { token } = useSelector(state => state.auth);
-  const { isAdmin } = useSelector(state => state.auth.profile);
-
+  const { token, profile } = useSelector(state => state.auth);
+  
+  const {isAdmin} = profile?.isAdmin;
+  
   useEffect(() => {
     const verifyToken = async () => {
       if (!token) {

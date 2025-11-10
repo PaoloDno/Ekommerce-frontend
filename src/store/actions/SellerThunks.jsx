@@ -59,11 +59,11 @@ export const getStoreIdAction = createAsyncThunk(
 
 export const getStoresAction = createAsyncThunk(
   "seller/getStores",
-  async ({ page, limit, sortBy, sortOrder }, thunkAPI) => {
+  async ( queryParams , thunkAPI) => {
     try {
-      console.log("GET");
-      const response = await api.get("/store", {
-        params: { page, limit, sortBy, sortOrder }
+      console.log("GET:", queryParams);
+      const response = await api.get("/store", { 
+        params: queryParams
       });
       console.log(response.data);
       return response.data;  // { stores, pagination }

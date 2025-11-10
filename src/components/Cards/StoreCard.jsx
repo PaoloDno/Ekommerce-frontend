@@ -32,10 +32,10 @@ const StoreCards = ({ store }) => {
       </div>
 
       <div
-        className="grid grid-cols-[1fr_auto] bg-skin-colorContent text-skin-colorContent
-                   w-full text-stylep2 z-10 gap-3 items-center mt-2"
+        className="flex flex-col md:grid md:grid-cols-[1fr_auto] bg-skin-colorContent text-skin-colorContent
+                   w-full text-stylep2 z-10 gap-3 items-center justify-start mt-2"
       >
-        <div className="flex flex-col gap-1 overflow-hidden">
+        <div className="flex flex-col gap-1 overflow-hidden w-full">
           <div className="flex flex-row gap-1 items-center text-stylep2 truncate">
             {isVerified && <FaCheck className="text-green-400" />}
             <span className="truncate">{storeName}</span>
@@ -47,8 +47,8 @@ const StoreCards = ({ store }) => {
         </div>
 
         {/* Ratings */}
-        <div className="flex items-center gap-1">
-          <FaStar className="text-yellow-400 text-styleh3" />
+        <div className="flex items-center justify-start gap-1 w-full">
+          <FaStar className="text-yellow-400 text-styleh2 p-1 bg-skin-primary shadow-md bg-opacity-5" />
           <span className="text-styleh3">{ratings?.average}</span>
         </div>
       </div>

@@ -4,24 +4,112 @@ import { useDispatch, useSelector } from "react-redux";
 import { getStoresAction } from "../../store/actions/SellerThunks";
 import PaginationComponent from "../../components/Pagination/Pagination";
 import StoreCards from "../../components/Cards/StoreCard";
+import { FaBars, FaFilter, FaHamburger } from "react-icons/fa";
 
 const StoresPage = () => {
   const dispatch = useDispatch();
-  const { stores, isPending, pagination } = useSelector(
-    (state) => state.seller
-  );
+  const { stores, pagination } = useSelector((state) => state.seller);
 
-  // Local pagination state controls sorting, page, limit
-  const [paginationState, setPaginationState] = useState({
+  const [activeFilters, setActiveFilters] = useState({
     page: 1,
     limit: 10,
     sortBy: "createdAt",
     sortOrder: "asc",
+    isVerified: false,
+    storeName: "",
+    city: "",
+    country: "",
+    minrating: "",
   });
 
-  const { page, limit, sortBy, sortOrder } = paginationState;
+  const [draftFilters, setDraftFilters] = useState(activeFilters);
 
-  const isMounted = useRef(true);
+  const [filterDropdown, setFilterDropdown] = useState(false);
+  const toggleDropdown = () => setFilterDropdown((prev) => !prev);
+
+  const isMounted = useRef(false);
+
+  const CLEAN_TEXT_REGEX = /^[^&<>"']*$/;
+
+  const cleanInputs = (filters) => {
+    const cleaned = {};
+
+    console.log(filters);
+
+    for (const key in filters) {
+      let value = filters[key];
+
+      // skip null
+      if (value === null || value === undefined || value === "") continue;
+
+      // skip empty
+      if (typeof value === "string") {
+        value = value.trim();
+
+        if (value.length === 0) continue;
+
+        // clean string
+        if (!CLEAN_TEXT_REGEX.test(value)) {
+          console.warn(`Input rejected for "${key}"`);
+          continue;
+        }
+
+        cleaned[key] = value;
+        continue;
+      }
+
+      if (!isNaN(value) && value !== "") {
+        cleaned[key] = Number(value);
+        continue;
+      }
+
+      cleaned[key] = value;
+    }
+
+    return cleaned;
+  };
+
+  const handleDraftChange = (key, value) => {
+    setDraftFilters((prev) => ({
+      ...prev,
+      [key]: value,
+      page: 1,
+    }));
+  };
+
+  const applyFilters = () => {
+    setActiveFilters(draftFilters);
+  };
+
+  const handlePageChange = (newPage) => {
+    setDraftFilters((prev) => ({
+      ...prev,
+      page: newPage,
+    }));
+    setActiveFilters((prev) => ({
+      ...prev,
+      page: newPage,
+    }));
+  };
+
+  const fetchStores = useCallback(async () => {
+    if (!isMounted.current) return;
+
+    try {
+      console.log("draft params", draftFilters);
+      console.log("active params", activeFilters);
+      const cleaned = cleanInputs(activeFilters);
+      console.log("clean params", cleaned);
+      await dispatch(getStoresAction(cleaned));
+    } catch (err) {
+      console.log(err);
+    }
+  }, [dispatch, activeFilters]);
+
+  useEffect(() => {
+    isMounted.current = true;
+    fetchStores();
+  }, []);
 
   const defaultStores = [
     {
@@ -39,7 +127,6 @@ const StoresPage = () => {
       products: ["prod_11", "prod_12"],
       ratings: { average: 4.2, totalReviews: 37 },
     },
-
     {
       _id: "store_002",
       storeName: "ByteBurger",
@@ -55,7 +142,6 @@ const StoresPage = () => {
       products: [],
       ratings: { average: 3.5, totalReviews: 12 },
     },
-
     {
       _id: "store_003",
       storeName: "SpectraHub",
@@ -71,7 +157,6 @@ const StoresPage = () => {
       products: ["p101", "p102", "p103"],
       ratings: { average: 4.0, totalReviews: 19 },
     },
-
     {
       _id: "store_004",
       storeName: "TerraThreads",
@@ -95,57 +180,15 @@ const StoresPage = () => {
     },
   ];
 
-  const defaultPagination = {
-  currentPage: 1,
-  resultsPerPage: 10,
-  sortBy: "createdAt",
-  sortOrder: "asc",
-  totalCounts: 4,
-  totalPages: 1
-};
+  const fallbackPagination = {
+    currentPage: 1,
+    resultsPerPage: 10,
+    totalCounts: 4,
+    totalPages: 1,
+  };
 
-
-  const handleFilterChange = (key, value) =>
-    setPaginationState((prev) => ({
-      ...prev,
-      [key]: value,
-      page: 1, // reset page when filters change
-    }));
-
-  const handlePageChange = (newPage) =>
-    setPaginationState((prev) => ({
-      ...prev,
-      page: newPage,
-    }));
-
-  const fetchStores = useCallback(async () => {
-    if (!isMounted.current) return;
-
-    try {
-      const result = await dispatch(
-        getStoresAction({
-          page,
-          limit,
-          sortBy,
-          sortOrder,
-        })
-      );
-      console.log(result.payload.data);
-    } catch (error) {
-      console.log(error);
-    }
-  }, [dispatch, page, limit, sortBy, sortOrder]);
-
-  useEffect(() => {
-    fetchStores();
-    return () => {
-      isMounted.current = false;
-    };
-  }, [fetchStores, handleFilterChange, handlePageChange]);
-
-  const [filterDropdown, setFilterDropDown] = useState(true);
-
-
+  const inputStyle =
+    "border px-2 py-1 rounded-md text-black bg-white border-skin-colorBorder1";
 
   return (
     <div className="page-section">
@@ -155,11 +198,11 @@ const StoresPage = () => {
 
         {/* Filters */}
         <div className="text-div">
-          <div className="flex flex-row items-center justify-end gap-3 bg-skin-primary p-2">
-            {/* Sort By */}
+          <div className="flex flex-row items-center justify-end gap-3 bg-skin-primary text-stylep3 p-2">
+            {/* SORT BY */}
             <select
-              value={sortBy}
-              onChange={(e) => handleFilterChange("sortBy", e.target.value)}
+              value={draftFilters.sortBy}
+              onChange={(e) => handleDraftChange("sortBy", e.target.value)}
               className="border rounded-md px-2 py-1 bg-skin-colorContent text-skin-colorContent"
             >
               <option value="createdAt">Newest</option>
@@ -168,28 +211,125 @@ const StoresPage = () => {
               <option value="isVerified">Verified First</option>
             </select>
 
+            {/* ORDER */}
             <select
-              value={sortOrder}
-              onChange={(e) => handleFilterChange("sortOrder", e.target.value)}
+              value={draftFilters.sortOrder}
+              onChange={(e) => handleDraftChange("sortOrder", e.target.value)}
               className="border rounded-md px-2 py-1 bg-skin-colorContent text-skin-colorContent"
             >
               <option value="desc">Descending</option>
               <option value="asc">Ascending</option>
             </select>
+
+            <FaFilter
+              className="border rounded-md box-content px-2 py-2 text-stylep3 bg-skin-colorContent text-skin-colorContent cursor-pointer"
+              onClick={applyFilters}
+            />
+            {/* DROPDOWN BTN */}
+            <FaBars
+              className="border rounded-md box-content px-2 py-2 text-stylep3 bg-skin-colorContent text-skin-colorContent cursor-pointer"
+              onClick={toggleDropdown}
+            />
           </div>
-          
+
+          {/* DROPDOWN CONTENT */}
+          <div
+            className={`flex justify-start origin-top ${
+              filterDropdown ? "scale-y-100 h-fit" : "scale-y-0 h-0"
+            } w-full bg-skin-colorContent text-skin-colorContent overflow-hidden transition-all duration-500 ease-in-out`}
+          >
+            <div className="p-4 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-3 w-full justify-center items-center text-stylep3">
+              {/* STORE NAME */}
+              <div className="grid grid-cols-[1fr_3fr] gap-2 items-center w-full md:w-5/6">
+                <label>NAME OF STORE </label>
+                <input
+                  type="text"
+                  className={inputStyle}
+                  value={draftFilters.storeName}
+                  onChange={(e) =>
+                    handleDraftChange("storeName", e.target.value)
+                  }
+                />
+              </div>
+
+              {/* CITY */}
+              <div className="grid grid-cols-[1fr_3fr] gap-2 items-center w-full md:w-5/6">
+                <label>CITY</label>
+                <input
+                  type="text"
+                  className={inputStyle}
+                  value={draftFilters.city}
+                  onChange={(e) => handleDraftChange("city", e.target.value)}
+                />
+              </div>
+
+              {/* COUNTRY */}
+              <div className="grid grid-cols-[1fr_3fr] gap-2 items-center w-full md:w-5/6">
+                <label>COUNTRY</label>
+                <input
+                  type="text"
+                  className={inputStyle}
+                  value={draftFilters.country}
+                  onChange={(e) => handleDraftChange("country", e.target.value)}
+                />
+              </div>
+
+              {/* VERIFIED */}
+              <div className="grid grid-cols-[1.25fr_3fr] md:grid-cols-[1fr_3fr] gap-2 items-center w-full md:w-5/6">
+                <label>Verified</label>
+                <select
+                  className={inputStyle}
+                  value={draftFilters.isVerified}
+                  onChange={(e) =>
+                    handleDraftChange("isVerified", e.target.value)
+                  }
+                >
+                  <option value="">All</option>
+                  <option value="true">Verified Only</option>
+                </select>
+              </div>
+
+              {/* MIN RATING */}
+              <div className="grid grid-cols-[1fr_3fr] gap-2 items-center w-full md:w-5/6">
+                <label>Min-Rating</label>
+                <select
+                  className={inputStyle}
+                  value={draftFilters.minrating}
+                  onChange={(e) =>
+                    handleDraftChange("minrating", e.target.value)
+                  }
+                >
+                  <option value="">Any</option>
+                  <option value="1">1+</option>
+                  <option value="2">2+</option>
+                  <option value="3">3+</option>
+                  <option value="4">4+</option>
+                  <option value="5">5</option>
+                </select>
+              </div>
+
+              {/* APPLY BTN */}
+              <button
+                onClick={applyFilters}
+                className="flex flex-row px-3 py-2 bg-green-500 gap-2 justify-center text-white rounded-md hover:bg-slate-700 items-center"
+              >
+                SEARCH FILTER <FaFilter />
+              </button>
+            </div>
+          </div>
+
+          {/* STORE GRID */}
           <CardGrid>
-            {stores ? (
-              stores.map((store) => (
-                <StoreCards key={store._id} store={store} />
-              ))
-            ) : (
-               defaultStores.map((store) => (
-                <StoreCards key={store._id} store={store} />
-              ))
-            )}
+            {(stores || defaultStores).map((store) => (
+              <StoreCards key={store._id} store={store} />
+            ))}
           </CardGrid>
-          <PaginationComponent pagination={pagination || defaultPagination} onPageCHange={handlePageChange} />
+
+          {/* PAGINATION */}
+          <PaginationComponent
+            pagination={pagination || fallbackPagination}
+            onPageCHange={handlePageChange}
+          />
         </div>
       </div>
     </div>
