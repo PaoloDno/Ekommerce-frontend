@@ -6,11 +6,12 @@ const  PaginationComponent = ({pagination, onPageCHange}) => {
 
     const {
     currentPage,
+    totalCounts,
     totalPages,
-    
+    resultsPerPage,
   } = pagination;
 
-  const maxPagesToShow = 8;
+  const maxPagesToShow = resultsPerPage;
 
   const pageNumbers = useMemo(() => {
      if (!totalPages) return [];
@@ -31,7 +32,8 @@ const  PaginationComponent = ({pagination, onPageCHange}) => {
   };
 
   return (
-    <div className="flex flex-wrap items-center justify-center space-x-1 text-skin-primary mt-4">
+    <div className="w-full flex-col">
+    <div className="flex flex-wrap items-center justify-center space-x-1 text-skin-primary mt-6">
       {/* Prev button */}
       <button
         onClick={() => handlePageChange(currentPage - 1)}
@@ -62,7 +64,7 @@ const  PaginationComponent = ({pagination, onPageCHange}) => {
           onClick={() => handlePageChange(page)}
           className={`px-3 py-1 border rounded transition ${
             page === currentPage
-              ? "bg-skin-button-secondary text-skin-secondary font-semibold"
+              ? "bg-skin-colorContent text-skin-colorContent font-semibold"
               : "bg-skin-button-primary hover:bg-skin-button-secondary"
           }`}
           aria-current={page === currentPage ? "page" : undefined}
@@ -95,6 +97,10 @@ const  PaginationComponent = ({pagination, onPageCHange}) => {
       >
         Next
       </button>
+    </div>
+    <span className="flex justify-center items-center flex-row text-stylep3 opacity-80">
+      there are total of {totalCounts} items.
+    </span>
     </div>
   );
 };

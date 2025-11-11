@@ -18,6 +18,7 @@ import UserStorePage from "../../pages/SellerPage/UserStorePage.jsx";
 // products
 import ProductDisplayPage from "../../pages/ProductPage/ProductPageDisplay.jsx";
 import AddProductPage from "../../pages/ProductPage/AddProductPage.jsx";
+import ProductsPage from "../../pages/ProductPage/ProductsPage.jsx";
 
 // category
 import CategoriesPage from "../../pages/CategoriesPage/CategoriesPage.jsx";
@@ -69,8 +70,10 @@ const AppRoutes = () => {
           </ProtectedRoute>
         }
       />
+      
       {/* categories */}
       <Route path="/categories" element={<CategoriesPage />} />
+      
       {/* products */}
       <Route
         path="/create-product/:storeId"
@@ -81,6 +84,8 @@ const AppRoutes = () => {
         }
       />
       <Route path="/product/:productId" element={<ProductDisplayPage />} />
+      <Route path="/products" element={<ProductsPage />} />
+      
       {/* handle errors*/}
       <Route path="/token-error" element={<TokenErrorPage />} />
       <Route path="/unauthorize" element={<NotAuthorizedPage />} />

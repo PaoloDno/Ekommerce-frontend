@@ -23,6 +23,7 @@ import ProductImages from "../../components/ImagesComponent/components/ProductIm
 import BannerImage from "../../components/ImagesComponent/components/BannerImageComponent";
 import StoreImage from "../../components/ImagesComponent/components/StoreImageComponent";
 import { FaThumbsUp } from "react-icons/fa6";
+import ProfileImage from "../../components/ImagesComponent/components/ProfileImageComponent";
 
 const StoreIdPage = () => {
   const { storeId } = useParams();
@@ -126,6 +127,70 @@ const StoreIdPage = () => {
       </div>
     );
   };
+
+  const ReviewBox = ({id, comment, product, rating, user}) => {
+    return (
+      <div className="grid h-[90px] w-full grid-cols-[90px_auto] flex-row bg-skin-colorContent text-skin-colorContent rounded-md overflow-hidden gap-4 p-1"
+        key={id}
+        onClick={() => navigate(`/product/${product._id}`)}
+      >
+        <div className="relative w-full h-[90px]">
+          <span className="flex h-full w-full rounded-full overflow-hidden border-2 border-green-600 shadow-md">
+            <ProductImages productImages={product?.productImage} />
+          </span>
+          <span className="absolute right-0 bottom-0 z-10 h-[50px] w-[50px] rounded-full justify-center items-center overflow-hidden">
+            <ProfileImage profileImage={user?.userAvatar} />
+          </span>
+        </div>
+        <div className="flex flex-col justify-start gap-1 items-start">
+            <span className="grid grid-cols-[2fr_1fr_1fr] w-full items-center justify-start p-1 px-2 -mb-2">
+                <span className="flex text-stylep3 font-semibold truncate">{product?.name}</span>
+                <span className="flex justify-end">rating: </span>
+                <span className="flex flex-row items-center justify-center text-stylep1">{rating} <FaStar className="text-yellow-400 shadow-xl"/></span>
+            </span>
+            <span className="flex flex-col bg-skin-colorContent bg-opacity-5">
+            <span className="text-stylep2 font-bold items-start -mt-1 px-2 p-1 w-full ">@{user?.username}:</span>
+            <span className="text-stylep3 text-start px-2 justify-start w-full p-1 -mt-2">
+              {comment}
+            </span>
+            </span>
+        </div>
+      </div>
+    )
+  }
+
+  const ReviewSection = ({ reviews }) => {
+  if (!reviews) return null;
+
+  const { top3 = [], low3 = [] } = reviews;
+
+
+  const combined = [...top3, ...low3];
+
+  const uniqueMap = new Map();
+  combined.forEach(r => {
+    if (!uniqueMap.has(r._id)) uniqueMap.set(r._id, r);
+  });
+
+  const finalReviews = [...uniqueMap.values()].slice(0, 6);
+
+  return (
+    <div className="flex flex-col gap-2 p-2">
+      <h2 className="text-div-header">Reviews</h2>
+
+      {finalReviews.map(r => (
+        <ReviewBox
+          key={r._id}
+          comment={r.comment}
+          rating={r.rating}
+          user={r.user}
+          product={r.product}
+          createdAt={r.createdAt}
+        />
+      ))}
+    </div>
+  );
+};
 
   return (
     <div className="page-section">
@@ -251,7 +316,9 @@ const StoreIdPage = () => {
         </div>
 
         <div className="text-div">
-          <div>//review display</div>
+          <div className="flex flex-col bg-skin-color-back bg-opacity-20">
+            <ReviewSection reviews={store?.reviews} />
+          </div>
         </div>
       </div>
       <div className="page-background"></div>

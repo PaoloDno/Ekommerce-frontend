@@ -7,7 +7,6 @@ const ProtectedRoute = ({ children, adminOnly = false}) => {
   const navigate = useNavigate();
   const { token, profile } = useSelector(state => state.auth);
   
-  const {isAdmin} = profile?.isAdmin;
   
   useEffect(() => {
     const verifyToken = async () => {
@@ -15,15 +14,16 @@ const ProtectedRoute = ({ children, adminOnly = false}) => {
         navigate("/login");
         return;
       }
-
-      if (adminOnly && !isAdmin ) {
+      if(profile) {
+      if (adminOnly && !profile?.isAdmin ) {
         navigate("/unauthorize");
         return;
       }
+    }
     };
 
     verifyToken();
-  }, [token, isAdmin, navigate, dispatch]);
+  }, [token, navigate, dispatch]);
 
   if(!token) return null;
 

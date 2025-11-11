@@ -6,6 +6,7 @@ import {
   FaStore,
   FaTag,
   FaShoppingCart,
+  FaShoppingBag,
 } from "react-icons/fa";
 import { useSelector } from "react-redux";
 
@@ -25,7 +26,7 @@ export default function HeaderComponent() {
   const navLinks = [
     { to: "/", label: "Home", icon: <FaHome /> },
     { to: "/stores", label: "Stores", icon: <FaStore /> },
-    { to: "/categories", label: "Categories", icon: <FaTag /> },
+    { to: "/products", label: "Products", icon: <FaShoppingBag /> },
   ];
 
   const AuthButtons = () => (
@@ -68,7 +69,7 @@ export default function HeaderComponent() {
 
         <SearchBar />
 
-        <nav className="flex">
+        <nav className="flex flex-row w-full overflow-hidden">
           {navLinks.map(({ to, label, icon }) => (
             <Link key={to} to={to} className="header-link space-x-2">
               <span>{icon}</span>

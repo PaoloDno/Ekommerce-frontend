@@ -1,10 +1,10 @@
-import React, { useCallback, useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import CardGrid from "../../components/Pagination/CardGrid";
 import { useDispatch, useSelector } from "react-redux";
 import { getStoresAction } from "../../store/actions/SellerThunks";
 import PaginationComponent from "../../components/Pagination/Pagination";
 import StoreCards from "../../components/Cards/StoreCard";
-import { FaBars, FaFilter, FaHamburger } from "react-icons/fa";
+import { FaBars, FaFilter } from "react-icons/fa";
 
 const StoresPage = () => {
   const dispatch = useDispatch();
@@ -15,7 +15,7 @@ const StoresPage = () => {
     limit: 10,
     sortBy: "createdAt",
     sortOrder: "asc",
-    isVerified: false,
+    isVerified: "",
     storeName: "",
     city: "",
     country: "",
@@ -23,7 +23,6 @@ const StoresPage = () => {
   });
 
   const [draftFilters, setDraftFilters] = useState(activeFilters);
-
   const [filterDropdown, setFilterDropdown] = useState(false);
   const toggleDropdown = () => setFilterDropdown((prev) => !prev);
 
@@ -34,32 +33,20 @@ const StoresPage = () => {
   const cleanInputs = (filters) => {
     const cleaned = {};
 
-    console.log(filters);
-
     for (const key in filters) {
       let value = filters[key];
 
-      // skip null
       if (value === null || value === undefined || value === "") continue;
 
-      // skip empty
       if (typeof value === "string") {
         value = value.trim();
-
-        if (value.length === 0) continue;
-
-        // clean string
-        if (!CLEAN_TEXT_REGEX.test(value)) {
-          console.warn(`Input rejected for "${key}"`);
-          continue;
-        }
-
+        if (!value || !CLEAN_TEXT_REGEX.test(value)) continue;
         cleaned[key] = value;
         continue;
       }
 
-      if (!isNaN(value) && value !== "") {
-        cleaned[key] = Number(value);
+      if (typeof value === "number" && !isNaN(value)) {
+        cleaned[key] = value;
         continue;
       }
 
@@ -69,12 +56,19 @@ const StoresPage = () => {
     return cleaned;
   };
 
+  // auto-apply sort changes
   const handleDraftChange = (key, value) => {
-    setDraftFilters((prev) => ({
-      ...prev,
+    const updated = {
+      ...draftFilters,
       [key]: value,
-      page: 1,
-    }));
+      page: 1
+    };
+
+    setDraftFilters(updated);
+
+    if (key === "sortBy" || key === "sortOrder") {
+      setActiveFilters(updated);
+    }
   };
 
   const applyFilters = () => {
@@ -82,24 +76,15 @@ const StoresPage = () => {
   };
 
   const handlePageChange = (newPage) => {
-    setDraftFilters((prev) => ({
-      ...prev,
-      page: newPage,
-    }));
-    setActiveFilters((prev) => ({
-      ...prev,
-      page: newPage,
-    }));
+    setDraftFilters((prev) => ({ ...prev, page: newPage }));
+    setActiveFilters((prev) => ({ ...prev, page: newPage }));
   };
 
   const fetchStores = useCallback(async () => {
     if (!isMounted.current) return;
 
     try {
-      console.log("draft params", draftFilters);
-      console.log("active params", activeFilters);
       const cleaned = cleanInputs(activeFilters);
-      console.log("clean params", cleaned);
       await dispatch(getStoresAction(cleaned));
     } catch (err) {
       console.log(err);
@@ -109,8 +94,9 @@ const StoresPage = () => {
   useEffect(() => {
     isMounted.current = true;
     fetchStores();
-  }, []);
+  }, [fetchStores]);
 
+  // Default Store Fallbacks
   const defaultStores = [
     {
       _id: "store_001",
@@ -196,10 +182,8 @@ const StoresPage = () => {
         <div className="absolute opacity-5 inset-0 h-[90vw] w-full bg-gradient-to-r to-white from-transparent z-0"></div>
         <div className="text-div-bgblur"></div>
 
-        {/* Filters */}
         <div className="text-div">
           <div className="flex flex-row items-center justify-end gap-3 bg-skin-primary text-stylep3 p-2">
-            {/* SORT BY */}
             <select
               value={draftFilters.sortBy}
               onChange={(e) => handleDraftChange("sortBy", e.target.value)}
@@ -211,7 +195,6 @@ const StoresPage = () => {
               <option value="isVerified">Verified First</option>
             </select>
 
-            {/* ORDER */}
             <select
               value={draftFilters.sortOrder}
               onChange={(e) => handleDraftChange("sortOrder", e.target.value)}
@@ -225,34 +208,31 @@ const StoresPage = () => {
               className="border rounded-md box-content px-2 py-2 text-stylep3 bg-skin-colorContent text-skin-colorContent cursor-pointer"
               onClick={applyFilters}
             />
-            {/* DROPDOWN BTN */}
+
             <FaBars
               className="border rounded-md box-content px-2 py-2 text-stylep3 bg-skin-colorContent text-skin-colorContent cursor-pointer"
               onClick={toggleDropdown}
             />
           </div>
 
-          {/* DROPDOWN CONTENT */}
+          {/* Dropdown Filters */}
           <div
             className={`flex justify-start origin-top ${
               filterDropdown ? "scale-y-100 h-fit" : "scale-y-0 h-0"
             } w-full bg-skin-colorContent text-skin-colorContent overflow-hidden transition-all duration-500 ease-in-out`}
           >
             <div className="p-4 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-3 w-full justify-center items-center text-stylep3">
-              {/* STORE NAME */}
+              
               <div className="grid grid-cols-[1fr_3fr] gap-2 items-center w-full md:w-5/6">
-                <label>NAME OF STORE </label>
+                <label>NAME OF STORE</label>
                 <input
                   type="text"
                   className={inputStyle}
                   value={draftFilters.storeName}
-                  onChange={(e) =>
-                    handleDraftChange("storeName", e.target.value)
-                  }
+                  onChange={(e) => handleDraftChange("storeName", e.target.value)}
                 />
               </div>
 
-              {/* CITY */}
               <div className="grid grid-cols-[1fr_3fr] gap-2 items-center w-full md:w-5/6">
                 <label>CITY</label>
                 <input
@@ -263,7 +243,6 @@ const StoresPage = () => {
                 />
               </div>
 
-              {/* COUNTRY */}
               <div className="grid grid-cols-[1fr_3fr] gap-2 items-center w-full md:w-5/6">
                 <label>COUNTRY</label>
                 <input
@@ -274,30 +253,24 @@ const StoresPage = () => {
                 />
               </div>
 
-              {/* VERIFIED */}
               <div className="grid grid-cols-[1.25fr_3fr] md:grid-cols-[1fr_3fr] gap-2 items-center w-full md:w-5/6">
                 <label>Verified</label>
                 <select
                   className={inputStyle}
                   value={draftFilters.isVerified}
-                  onChange={(e) =>
-                    handleDraftChange("isVerified", e.target.value)
-                  }
+                  onChange={(e) => handleDraftChange("isVerified", e.target.value)}
                 >
                   <option value="">All</option>
                   <option value="true">Verified Only</option>
                 </select>
               </div>
 
-              {/* MIN RATING */}
               <div className="grid grid-cols-[1fr_3fr] gap-2 items-center w-full md:w-5/6">
                 <label>Min-Rating</label>
                 <select
                   className={inputStyle}
                   value={draftFilters.minrating}
-                  onChange={(e) =>
-                    handleDraftChange("minrating", e.target.value)
-                  }
+                  onChange={(e) => handleDraftChange("minrating", e.target.value)}
                 >
                   <option value="">Any</option>
                   <option value="1">1+</option>
@@ -308,7 +281,6 @@ const StoresPage = () => {
                 </select>
               </div>
 
-              {/* APPLY BTN */}
               <button
                 onClick={applyFilters}
                 className="flex flex-row px-3 py-2 bg-green-500 gap-2 justify-center text-white rounded-md hover:bg-slate-700 items-center"
@@ -320,15 +292,15 @@ const StoresPage = () => {
 
           {/* STORE GRID */}
           <CardGrid>
-            {(stores || defaultStores).map((store) => (
-              <StoreCards key={store._id} store={store} />
+            {(stores || defaultStores).map((s) => (
+              <StoreCards key={s._id} store={s} />
             ))}
           </CardGrid>
 
           {/* PAGINATION */}
           <PaginationComponent
             pagination={pagination || fallbackPagination}
-            onPageCHange={handlePageChange}
+            onPageChange={handlePageChange}
           />
         </div>
       </div>

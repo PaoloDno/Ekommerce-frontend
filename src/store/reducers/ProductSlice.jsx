@@ -1,10 +1,10 @@
 import { createSlice, isPending, isRejected } from "@reduxjs/toolkit";
 import {
   createProductAction,
-  getProductsAction,
   getProductIdAction,
   updateProductAction,
   deleteProductAction,
+  fetchProductsAction,
 } from "../actions/ProductThunks";
 
 const productSlice = createSlice({
@@ -12,6 +12,7 @@ const productSlice = createSlice({
   initialState: {
     product: {},
     products: [],
+    pagination: {},
     isPending: false,
     isRejected: false,
     isSuccess: false,
@@ -32,11 +33,12 @@ const productSlice = createSlice({
         state.isRejected = false;
         state.product = action.payload.product;
       })
-      .addCase(getProductsAction.fulfilled, (state, action) => {
+      .addCase(fetchProductsAction.fulfilled, (state, action) => {
         state.isPending = false;
         state.isSuccess = true;
         state.isRejected = false;
         state.products = action.payload.products;
+        state.pagination = action.payload.pagination;
       })
       .addCase(updateProductAction.fulfilled, (state, action) => {
         state.isPending = false;
@@ -53,7 +55,7 @@ const productSlice = createSlice({
       .addMatcher(
         isPending(
           createProductAction,
-          getProductsAction,
+          fetchProductsAction,
           getProductIdAction,
           updateProductAction,
           deleteProductAction
@@ -68,7 +70,7 @@ const productSlice = createSlice({
       .addMatcher(
         isRejected(
           createProductAction,
-          getProductsAction,
+          fetchProductsAction,
           getProductIdAction,
           updateProductAction,
           deleteProductAction

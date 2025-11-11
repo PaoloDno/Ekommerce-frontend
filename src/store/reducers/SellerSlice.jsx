@@ -42,6 +42,7 @@ const sellerSlice = createSlice({
         state.isSuccess = true;
         state.isRejected = false;
         state.stores = action.payload.stores;
+        state.pagination = action.payload.pagination;
       })
 
       .addMatcher(

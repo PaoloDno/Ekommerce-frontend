@@ -1,16 +1,20 @@
-import { useCallback, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { getProductsAction } from "../../store/actions/ProductThunks";
+import { fetchProductsAction } from "../../store/actions/ProductThunks";
 import CardGrid from "../../components/Pagination/CardGrid";
+import { FaBars, FaFilter } from "react-icons/fa";
+import PaginationComponent from "../../components/Pagination/Pagination";
+import ProductCards from "../../components/Cards/ProductCards";
 
-const ProductPage = () => {
+const ProductsPage = () => {
   const dispatch = useDispatch();
-  const { store, pagination } = useSelector((state) => state.product);
+  const { products, pagination } = useSelector((state) => state.product);
 
   const [activeFilters, setActiveFilters] = useState({
     page: 1,
-    limit: 8,
+    limit: 6,
     sortBy: "createdAt",
+    sortOrder: "asc",
     name: "",
     brand: "",
     categoryName: "",
@@ -20,9 +24,6 @@ const ProductPage = () => {
     minRating: 1,
   });
 
-  const { resultsPerPage, currentPage, skipDocuments, sortBy, sortOrder } =
-    req.pagination;
-
   const [draftFilters, setDraftFilters] = useState(activeFilters);
 
   const [filterDropdown, setFilterDropdown] = useState(false);
@@ -30,34 +31,26 @@ const ProductPage = () => {
 
   const isMounted = useRef(false);
 
-  const CLEAN_TEXT_REGEX = /^[^&<>"']*$^/;
+  const CLEAN_TEXT_REGEX = /^[^&<>"']*$/;
 
   const cleanInputs = (filters) => {
     const cleaned = {};
 
-    console.log(filters);
-
-    for (const key of filters) {
+    for (const key in filters) {
       let value = filters[key];
 
       if (value === null || value === undefined || value === "") continue;
+
       if (typeof value === "string") {
         value = value.trim();
-
-        if (value.length === 0) continue;
-
-        // clean string
-        if (!CLEAN_TEXT_REGEX.test(value)) {
-          console.warn(`Input rejected for "${key}"`);
-          continue;
-        }
-
+        if (!value) continue;
+        if (!CLEAN_TEXT_REGEX.test(value)) continue;
         cleaned[key] = value;
         continue;
       }
 
-      if (!isNaN(value) && value !== "") {
-        cleaned[key] = Number(value);
+      if (typeof value === "number" && !isNaN(value)) {
+        cleaned[key] = value;
         continue;
       }
 
@@ -68,12 +61,17 @@ const ProductPage = () => {
   };
 
   const handleDraftChange = (key, value) => {
-    setDraftFilters((prev) => ({
-      ...prev,
-      [key]: value,
-      page: 1,
-    }));
+  const updated = {
+    ...draftFilters,
+    [key]: value,
+    page: 1
   };
+
+  setDraftFilters(updated);
+  if (key === "sortBy" || key === "sortOrder") {
+    setActiveFilters(updated);
+  }
+};
 
   const applyFilters = () => {
     setActiveFilters(draftFilters);
@@ -95,7 +93,7 @@ const ProductPage = () => {
 
     try {
       const cleaned = cleanInputs(activeFilters);
-      await dispatch(getProductsAction(cleaned));
+      await dispatch(fetchProductsAction(cleaned));
     } catch (error) {
       console.log(error);
     }
@@ -103,29 +101,17 @@ const ProductPage = () => {
 
   useEffect(() => {
     isMounted.current = true;
-    fetchStores();
-  }, []);
+    fetchProducts();
+  }, [fetchProducts]);
 
   const inputStyle =
     "border px-2 py-1 rounded-md text-black bg-white border-skin-colorBorder1";
 
-  /*
-    const allowedSorts = [
-      "createdAt",
-      "price",
-      "stock",
-      "averageRating",
-      "numOfReviews",
-      "storeName",
-      "categoryName",
-    ];
-    */
-
   return (
     <div className="page-section">
       <div className="page-body">
-        <div className="absolute opacity-5 inset-0 h-[90vw] w-full bg-gradient-to-r to-white from-transparent z-0"></div>
-        <div className="text-div-bgblur"></div>
+        <div className="absolute opacity-5 inset-0 h-[90vw] w-full bg-gradient-to-r to-white from-transparent -z-10"></div>
+        <div className="text-div-bgblur -z-10"></div>
 
         <div className="text-div">
           <div className="flex flex-row items-center justify-end gap-3 bg-skin-primary text-stylep3 p-2">
@@ -169,7 +155,7 @@ const ProductPage = () => {
               filterDropdown ? "scale-y-100 h-fit" : "scale-y-0 h-0"
             } w-full bg-skin-colorContent text-skin-colorContent overflow-hidden transition-all duration-500 ease-in-out`}
           >
-            <div className="p-4 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-3 w-full justify-center items-center text-stylep3">
+            <div className="p-4 flex flex-col md:grid-cols-2 lg:grid-cols-4 gap-3 w-full justify-center items-center text-stylep3">
               {/* Product NAME */}
               <div className="grid grid-cols-[1fr_3fr] gap-2 items-center w-full md:w-5/6">
                 <label>NAME OF PRODUCT </label>
@@ -180,7 +166,6 @@ const ProductPage = () => {
                   onChange={(e) => handleDraftChange("name", e.target.value)}
                 />
               </div>
-            </div>
 
             <div className="grid grid-cols-[1fr_3fr] gap-2 items-center w-full md:w-5/6">
               <label>BRAND</label>
@@ -213,7 +198,7 @@ const ProductPage = () => {
                 }
               />
             </div>
-            <div className="col-span-2 w-full items-center flex flex-row">
+            <div className="col-span-1 md:col-span-2 w-full items-center flex flex-row">
               <div className="grid grid-cols-[1fr_3fr] gap-2 items-center w-full md:w-5/6">
                 <label>Min-Price</label>
                 <input
@@ -242,8 +227,8 @@ const ProductPage = () => {
               <label>Min-Rating</label>
               <select
                 className={inputStyle}
-                value={draftFilters.minrating}
-                onChange={(e) => handleDraftChange("minrating", e.target.value)}
+                value={draftFilters.minRating}
+                onChange={(e) => handleDraftChange("minRating", e.target.value)}
               >
                 <option value="">Any</option>
                 <option value="1">1+</option>
@@ -259,13 +244,22 @@ const ProductPage = () => {
             >
               SEARCH FILTER <FaFilter />
             </button>
+            
+            </div>
           </div>
-        </div>
 
         <CardGrid>
-          
+          {products.map((p) => (
+            <ProductCards key={p._id} product={p} />
+          ))}
         </CardGrid>
-      </div>
+        <PaginationComponent
+          pagination={pagination}
+          onPageCHange={handlePageChange}
+        />
+      </div></div>
     </div>
   );
 };
+
+export default ProductsPage;

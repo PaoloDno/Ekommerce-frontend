@@ -93,7 +93,7 @@ const HomePage = () => {
                   md:h-[150px] md:w-[150px]
                   bg-skin-colorContent rounded-full md:rounded-none"
               >
-                <ProfileImage input={profile?.userAvatar} />
+                <ProfileImage profileImage={profile?.userAvatar} />
               </div>
               <span className="text-div-header">
                 Hello {profile?.username || "Guest"}!
