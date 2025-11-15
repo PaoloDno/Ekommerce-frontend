@@ -17,6 +17,7 @@ import {
 import ReviewForm from "./components/AddReviewProductForm";
 import ProductGallery from "./components/ProductGalleryComponent";
 import ProductReviewCardComponent from "./components/ProductReviewCard";
+import AddCartForm from "./components/AddCartProductFrom";
 
 const ProductDisplayPage = () => {
   const { productId } = useParams();
@@ -229,6 +230,7 @@ const ProductDisplayPage = () => {
             <span
               className="flex flex-row items-center p-1 md:py-2 justify-center px-3 gap-2 bg-yellow-500 rounded-sm
               col-span-2"
+              onClick={() => setShowAddCartForm(true)}
             >
               <span>
                 <FaCartShopping />
@@ -316,7 +318,10 @@ const ProductDisplayPage = () => {
       )}
       {
         showAddCartForm && (
-          <></>
+          <AddCartForm 
+            onClose={() => setShowAddCartForm(false)}
+            product={product}
+          />
         )}
       <div className="page-background"></div>
     </div>
