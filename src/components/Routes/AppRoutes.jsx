@@ -71,8 +71,8 @@ const AppRoutes = () => {
         }
       />
       
-      {/* categories */}
-      <Route path="/categories" element={<CategoriesPage />} />
+      {/* cart 
+      // <Route path="/cart" element={<CategoriesPage />} /> */}
       
       {/* products */}
       <Route

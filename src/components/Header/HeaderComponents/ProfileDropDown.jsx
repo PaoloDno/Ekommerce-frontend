@@ -79,7 +79,7 @@ const ProfileDropdown = () => {
           </Link>
 
           <Link
-            to="/cart"
+            to="/cart-user"
             className="grid grid-cols-[2rem_auto] items-center gap-2 px-4 py-2 hover:bg-gray-100 transition-all"
           >
             <FaShoppingCart className="text-gray-700" />

@@ -49,24 +49,38 @@ const ReviewForm = ({ onClose, onSubmit, productId }) => {
         <h2 className="text-styleh3 font-semibold mb-3 text-center text-gray-800">
           Leave a Review
         </h2>
-        <form onSubmit={handleSubmit} className="flex flex-col gap-3 text-stylep1">
+        <form
+          onSubmit={handleSubmit}
+          className="flex flex-col gap-3 text-stylep1"
+        >
           <div>
-            <label htmlFor="rating" className="block text-skin-colorContent mb-1">
+            <label
+              htmlFor="rating"
+              className="block text-skin-colorContent mb-1"
+            >
               Rating (1–5):
             </label>
-            <input
+            <select
+              name="rating"
               id="rating"
-              type="number"
-              min="1"
-              max="5"
               value={rating}
               onChange={(e) => setRating(e.target.value)}
               className="border border-skin-colorBorder1 rounded-md w-full p-2 shadow-md"
-            />
+            >
+              <option value="">Select rating</option>
+              <option value={1}>1 star - very poor quality</option>
+              <option value={2}>2 stars - poor quality</option>
+              <option value={3}>3 stars - average quality</option>
+              <option value={4}>4 stars - good quality</option>
+              <option value={5}>5 stars - excellent quality</option>
+            </select>
           </div>
 
           <div>
-            <label htmlFor="comment" className="block text-skin-colorContent mb-1">
+            <label
+              htmlFor="comment"
+              className="block text-skin-colorContent mb-1"
+            >
               Comment:
             </label>
             <textarea

@@ -28,6 +28,7 @@ const ProductDisplayPage = () => {
   const [product, setProduct] = useState({});
   const [displayImages, setDisplayImages] = useState([]);
   const [showReviewForm, setShowReviewForm] = useState(false);
+  const [showAddCartForm, setShowAddCartForm] = useState(false);
 
   const [currentPage, setCurrentPage] = useState(0);
   const reviewsPerPage = 3;
@@ -313,6 +314,10 @@ const ProductDisplayPage = () => {
           productId={productId}
         />
       )}
+      {
+        showAddCartForm && (
+          <></>
+        )}
       <div className="page-background"></div>
     </div>
   );

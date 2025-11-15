@@ -1,6 +1,7 @@
 import React, { useEffect, useRef, useState, useCallback } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getUserProfileAction } from "../../store/actions/AuthThunks";
+import { getCartAction } from "../../store/actions/CartThunks";
 import { Link, useNavigate } from "react-router-dom";
 import ThemeSelectorProfile from "./ThemeSelectorProfile";
 import { useTheme } from "../../context/ThemeContext";
@@ -28,6 +29,7 @@ const HomePage = () => {
       ) {
         setProfile(resultAction.payload.data);
         console.log(resultAction.payload.data);
+
         changeTheme(resultAction.payload.data.userTheme);
       }
     } catch (error) {
@@ -36,6 +38,12 @@ const HomePage = () => {
 
     console.log(profile);
   }, [dispatch, token]);
+
+  useEffect(() => {
+    if(token) {
+      dispatch(getCartAction());
+    }
+  }, [dispatch, token])
 
   useEffect(() => {
     isMounted.current = true;
@@ -74,7 +82,7 @@ const HomePage = () => {
   return (
     <div className="page-section">
       <div className="absolute inset-0 z-20 w-full h-[40vh] left-0 rounded-b-lg">
-        <BannerImage bannerImage={"B1"} />
+        <BannerImage bannerImage={profile?.userBanner || "B2"} />
       </div>
 
       <div className="page-body">

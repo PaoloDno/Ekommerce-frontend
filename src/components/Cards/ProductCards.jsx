@@ -21,7 +21,7 @@ const ProductCards = ({ product }) => {
     <div
       className="flex flex-col rounded-xl bg-white shadow-sm 
                  hover:shadow-md transition cursor-pointer
-                 p-3 w-full min-h-[250px] max-h-[330px] overflow-hidden"
+                 p-3 w-full min-h-[320px] max-h-[380px] overflow-hidden"
       onClick={() => navigate(`/product/${product._id}`)}
     >
       {/* Image */}
@@ -37,11 +37,12 @@ const ProductCards = ({ product }) => {
         </span>
 
         {/* Rating Row */}
-        <span className="flex items-center gap-1 text-stylep3">
-          <span>{averageRating || 0}</span>
+        <span className="grid grid-cols-[1fr_2fr_2fr] items-center gap-1 text-stylep3">
+          <span className="flex flex-row items-center justify-start">{averageRating || 0}
           <FaStar className="text-yellow-400 w-3 h-3" />
+          </span>
           <span className="text-gray-500 text-[0.75rem]">
-            ({numOfReviews || 0})
+            ({numOfReviews || 0}) reviews
           </span>
         </span>
 
@@ -51,8 +52,13 @@ const ProductCards = ({ product }) => {
         </span>
 
         {/* Store + Category */}
-        <span className="truncate text-stylep3 text-gray-500">
+        <span className="truncate text-stylep3 text-gray-600">
           {seller?.storeName} • {category?.name}
+        </span>
+
+        
+        <span className="truncate text-stylep3 text-gray-700">
+          In stocks - {stock}
         </span>
       </div>
     </div>
