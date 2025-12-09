@@ -8,36 +8,43 @@ const CartOwnerPage = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const { token, isPending } = useSelector((state) => state.auth);
+  const cartStateItems = useSelector((state) => state.cart.items) || [];
+  const totalItems = cartStateItems.length;
 
-  const [cart, setCart] = useState({});
+  const totalSumsOfItems = cartStateItems.reduce(
+    (total, item) => total + item.price * item.quantity,
+    0
+  );
+  // i could use redux but my head spinning
 
+  const [cartItems, setCartItems] = useState({});
   const isMounted = useRef(true);
 
   const fetchCart = useCallback(async () => {
     if (!token) return;
 
-    console.log("Aasdasd");
-
     try {
       const resultAction = await dispatch(getCartAction());
+
       if (getCartAction.fulfilled.match(resultAction) && isMounted.current) {
-        setCart(resultAction.payload.data);
-        console.log(resultAction.payload.data);
+        setCartItems(resultAction.payload?.cart);
+        console.log(resultAction.payload.cart);
       }
     } catch (error) {
       console.log(error);
     }
-
-    console.log(cart);
   }, [dispatch, token]);
 
   useEffect(() => {
     isMounted.current = true;
+
     if (token) {
       fetchCart();
     }
+
     return () => {
       isMounted.current = false;
+      console.log(cartItems);
     };
   }, [fetchCart, token]);
 
@@ -65,35 +72,58 @@ const CartOwnerPage = () => {
     );
   }
 
-  return (
-    <div className="page-section">
-      <div className="page-body">
-        <div
-          className="absolute opacity-5 inset-0 h-[90vw] w-full
-         bg-gradient-to-r to-white from-transparent z-0"
-        ></div>
+  {
+    return (
+      <div className="page-section">
+        <div className="page-body">
+          <div className="absolute opacity-5 inset-0 h-[90vw] w-full bg-gradient-to-r to-white from-transparent z-0"></div>
 
-        <div className="text-div-bgblur"></div>
-        <div className="flex w-full h-[10px]"></div>
-        <div className="text-div overflow-hidden relative">
-          <span
-            className="flex flex-col md:grid md:grid-cols-2 
-          lg:grid-cols-3 text-stylep2
-          w-full h-screen"
-          >
-            { !cart?.items ? 
-            <CartCardComponent item={cart?.items} /> 
-            : 
-            <div>
-              <span>No Cart Items</span>
-              <button>refresh</button>
-            </div>}
-          </span>
+          <div className="text-div-bgblur"></div>
+          <div className="flex w-full h-[10px]"></div>
+
+          <div className="text-div overflow-hidden relative py-4">
+            <div
+              className="flex flex-col lg:grid lg:grid-cols-[2fr_1fr] gap-2
+                          text-stylep2 w-full py-2 px-1"
+            >
+              <div
+                className="grid grid-cols-1 md:grid-cols-2 
+                            justify-start items-start w-full gap-2"
+              >
+                {cartItems?.items && cartItems.items.length > 0 ? (
+                  cartItems.items.map((cart, index) => (
+                    <CartCardComponent key={index} item={cart} fetchCart={fetchCart} />
+                  ))
+                ) : (
+                  <div>
+                    <span>No Cart Items</span>
+                    <button onClick={fetchCart}>refresh</button>
+                  </div>
+                )}
+              </div>
+
+              <div
+                className="w-full grid grid-cols-2 justify-evenly min-h-[100px] p-2 rounded-md 
+                             bg-skin-colorContent text-skin-colorContent"
+              >
+                <div className="flex flex-col w-full text-stylep1 justify-center items-center">
+                  <span>TOTAL PRICE:</span>
+                  <span>₱ {totalSumsOfItems.toFixed(2)}</span>
+                </div>
+                <div className="flex w-full justify-center items-center">
+                <button className="bg-green-500 p-2 text-white rounded-lg">
+                  Go To Check OUT
+                </button>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
+
+        <div className="page-background"></div>
       </div>
-      <div className="page-background"></div>
-    </div>
-  );
+    );
+  }
 };
 
 export default CartOwnerPage;

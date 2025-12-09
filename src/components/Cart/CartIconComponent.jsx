@@ -1,11 +1,25 @@
 import React, { useEffect, useRef, useState } from "react";
 import { FaShoppingCart } from "react-icons/fa";
 import CartHeaderCard from "../Cards/CartHeaderCards";
+import { useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
 
-const CartIconComponent = ({ cart }) => {
+const CartIconComponent = () => {
   const [showDropDown, setShowDropDown] = useState(false);
   const dropdownRef = useRef(null);
+  const navigate = useNavigate();
+  // ---- GET CART FROM REDUX ----
+  const cartItems = useSelector((state) => state.cart.items) || [];
+  console.log("cartItems:", cartItems);
+  // ---- TOTALS ----
+  const totalItems = cartItems.length;
 
+  const totalSumsOfItems = cartItems.reduce(
+    (total, item) => total + item.price * item.quantity,
+    0
+  );
+
+  // ---- CLOSE WHEN CLICK OUTSIDE ----
   useEffect(() => {
     const handleClickOutside = (e) => {
       if (dropdownRef.current && !dropdownRef.current.contains(e.target)) {
@@ -15,15 +29,6 @@ const CartIconComponent = ({ cart }) => {
     document.addEventListener("mousedown", handleClickOutside);
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
-
-  const totalItems =
-    cart?.items?.reduce((total, item) => total + item.quantity, 0) || 0;
-
-  const totalPrice =
-    cart?.items?.reduce(
-      (total, item) => total + item.product.price * item.quantity,
-      0
-    ) || 0;
 
   return (
     <div
@@ -56,13 +61,12 @@ const CartIconComponent = ({ cart }) => {
       </div>
 
       {showDropDown && (
-        <div
-          className="absolute right-0 mt-2 w-72 bg-white shadow-xl rounded-lg border border-gray-100 z-50"
-        >
+        <div className="absolute -right-10 h-[420px] w-[300px] pt-6 -mt-3
+         bg-white shadow-xl rounded-lg border border-gray-100 z-50 justify-between">
           <div className="p-3 max-h-64 overflow-y-auto">
-            {cart?.items?.length > 0 ? (
-              cart.items.map((item) => (
-                <CartHeaderCard key={item.product._id} item={item} />
+            {cartItems.length > 0 ? (
+              cartItems.map((item) => (
+                <CartHeaderCard item={item} />
               ))
             ) : (
               <p className="text-gray-500 text-sm text-center py-6">
@@ -71,14 +75,16 @@ const CartIconComponent = ({ cart }) => {
             )}
           </div>
 
-          {cart?.items?.length > 0 && (
+          {cartItems.length > 0 && (
             <div className="border-t p-3">
               <p className="flex justify-between font-semibold text-gray-800">
-                <span>Total:</span> <span>₱{totalPrice.toFixed(2)}</span>
+                <span>Total:</span>
+                <span>₱{totalSumsOfItems.toFixed(2)}</span>
               </p>
+
               <div className="mt-3 flex gap-2">
-                <button
-                  className="flex-1 bg-gray-100 hover:bg-gray-200 text-gray-800 py-1.5 rounded-lg text-sm font-medium transition"
+                <button className="flex-1 bg-gray-100 hover:bg-gray-200 text-gray-800 py-1.5 rounded-lg text-sm font-medium transition"
+                  onClick={()=> navigate("/cart-user")}
                 >
                   View Cart
                 </button>

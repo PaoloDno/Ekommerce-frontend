@@ -1,11 +1,12 @@
 import { useDispatch } from "react-redux";
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import ProductImages from "../../../components/ImagesComponent/components/ProductImageComponent";
 import { addToCartAction } from "../../../store/actions/CartThunks";
 
 const AddCartForm = ({ onClose, product }) => {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const [quantity, setQuantity] = useState(1);
 
   const {
@@ -38,6 +39,7 @@ const AddCartForm = ({ onClose, product }) => {
 
   } finally {
     onClose();
+    navigate("/cart-user");
   }
 };
 

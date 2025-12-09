@@ -18,12 +18,12 @@ const StoreCards = ({ store }) => {
   return (
     <div
       className="flex flex-col rounded-xl bg-skin-colorContent shadow-sm p-2 
-                 w-full min-h-[210px] max-h-[320px] cursor-pointer
+                 w-full min-h-[320px] max-h-[380px] cursor-pointer
                  transition hover:shadow-md overflow-hidden relative"
       onClick={() => navigate(`/store/${store._id}`)}
     >
       {/* Banner Area */}
-      <div className="flex w-full h-[100px] -mt-1 bg-yellow-200 justify-center items-center overflow-hidden relative">
+      <div className="flex w-full h-[150px]  -mt-1 bg-yellow-200 justify-center items-center overflow-hidden relative">
         <BannerImage bannerImage={sellerBanner} />
 
         <span className="absolute left-0 top-3 rounded-sm md:rounded-full w-[100px] h-[100px] overflow-hidden z-20">
