@@ -44,7 +44,6 @@ const ProductDisplayPage = () => {
   const isMounted = useRef(true);
 
   const fetchProduct = useCallback(async () => {
-    if (!token) return;
 
     console.log("a");
     try {
@@ -100,6 +99,8 @@ const ProductDisplayPage = () => {
   }
 
   const handleSubmitReview = async (reviewData) => {
+    if(!token) return;
+    
     console.log("Review submitted:", reviewData);
 
     const resultAction = await dispatch(createReviewAction(reviewData));

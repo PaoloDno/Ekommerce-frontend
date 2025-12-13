@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { getCartAction } from "../../store/actions/CartThunks";
 import CartCardComponent from "../../components/Cards/CartCards";
+import ShowOrderFormComponent from "./component/ShowOrderFormComponent";
 
 const CartOwnerPage = () => {
   const dispatch = useDispatch();
@@ -19,6 +20,7 @@ const CartOwnerPage = () => {
 
   const [cartItems, setCartItems] = useState({});
   const isMounted = useRef(true);
+  const [showOrderForm, setShowOrderForm] = useState(false);
 
   const fetchCart = useCallback(async () => {
     if (!token) return;
@@ -28,7 +30,8 @@ const CartOwnerPage = () => {
 
       if (getCartAction.fulfilled.match(resultAction) && isMounted.current) {
         setCartItems(resultAction.payload?.cart);
-        console.log(resultAction.payload.cart);
+        console.log("Cart: ", resultAction.payload.cart);
+        return resultAction.payload.cart;
       }
     } catch (error) {
       console.log(error);
@@ -92,7 +95,11 @@ const CartOwnerPage = () => {
               >
                 {cartItems?.items && cartItems.items.length > 0 ? (
                   cartItems.items.map((cart, index) => (
-                    <CartCardComponent key={index} item={cart} fetchCart={fetchCart} />
+                    <CartCardComponent
+                      key={index}
+                      item={cart}
+                      fetchCart={fetchCart}
+                    />
                   ))
                 ) : (
                   <div>
@@ -111,14 +118,27 @@ const CartOwnerPage = () => {
                   <span>₱ {totalSumsOfItems.toFixed(2)}</span>
                 </div>
                 <div className="flex w-full justify-center items-center">
-                <button className="bg-green-500 p-2 text-white rounded-lg">
-                  Go To Check OUT
-                </button>
+                  <button
+                    className="bg-green-500 p-2 text-white rounded-lg disabled:bg-gray-500"
+                    onClick={() => setShowOrderForm(true)}
+                    disabled={totalSumsOfItems <= 0}
+                  >
+                    {totalSumsOfItems <= 0 ? "Cart is empty" : "Go To Checkout"}
+                  </button>
                 </div>
               </div>
             </div>
           </div>
         </div>
+
+        {showOrderForm && (
+          <ShowOrderFormComponent
+            onClose={() => setShowOrderForm(false)}
+            onInitFetchCart={fetchCart}
+            cartId={cartItems?._id}
+            onSubmitOrder={() => console.log("Hello Order PRocessed")}
+          />
+        )}
 
         <div className="page-background"></div>
       </div>

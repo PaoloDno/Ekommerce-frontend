@@ -44,7 +44,7 @@ const StoreIdPage = () => {
       const resultAction = await dispatch(getStoreIdAction(storeId));
       if (getStoreIdAction.fulfilled.match(resultAction) && isMounted.current) {
         setStore(resultAction.payload.data);
-        console.log(resultAction.payload.data);
+        console.log("Store: ", resultAction.payload.data);
       }
     } catch (error) {
       console.error(error);

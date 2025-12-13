@@ -86,6 +86,14 @@ const ProfileDropdown = () => {
             <span className="text-sm font-medium text-gray-800">Cart</span>
           </Link>
 
+          <Link
+            to="/order-user"
+            className="grid grid-cols-[2rem_auto] items-center gap-2 px-4 py-2 hover:bg-gray-100 transition-all"
+          >
+            <FaShoppingCart className="text-gray-700" />
+            <span className="text-sm font-medium text-gray-800">Order</span>
+          </Link>
+
           <button
             onClick={handleClickLogOutButton}
             className="grid grid-cols-[2rem_auto] items-center gap-2 px-4 py-2 hover:bg-gray-100 transition-all w-full text-left"

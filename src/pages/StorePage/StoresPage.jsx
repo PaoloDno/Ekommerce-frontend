@@ -86,6 +86,7 @@ const StoresPage = () => {
     try {
       const cleaned = cleanInputs(activeFilters);
       await dispatch(getStoresAction(cleaned));
+      console.log("Stores: ", stores);
     } catch (err) {
       console.log(err);
     }

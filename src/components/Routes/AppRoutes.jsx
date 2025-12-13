@@ -31,6 +31,10 @@ import TokenErrorPage from "../../pages/MiscPage/TokenErrorPage.jsx";
 import NotAuthorizedPage from "../../pages/MiscPage/NotAuthorizePage.jsx";
 import ErrorPage from "../../pages/MiscPage/ErrorPage.jsx";
 
+// orders
+import CreateOrdersPage from "../../pages/OrderPage/CreateOrdersPage.jsx";
+import UsersOrderPage from "../../pages/OrderPage/UsersOrderPage.jsx";
+
 import { Routes, Route } from "react-router-dom";
 import ProtectedRoute from "./ProtectedRoutes.jsx";
 
@@ -85,6 +89,10 @@ const AppRoutes = () => {
       />
       <Route path="/product/:productId" element={<ProductDisplayPage />} />
       <Route path="/products" element={<ProductsPage />} />
+      
+      {/* orders */}
+      <Route path="/order" element={<CreateOrdersPage />} />
+      <Route path="/order-user" element={<UsersOrderPage />} />
       
       {/* handle errors*/}
       <Route path="/token-error" element={<TokenErrorPage />} />

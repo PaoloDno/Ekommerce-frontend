@@ -38,7 +38,7 @@ const UserStorePage = () => {
         isMounted.current
       ) {
         setStore(resultAction.payload.data);
-        console.log(resultAction.payload.data);
+        console.log("Stores:", resultAction.payload.data);
       }
     } catch (error) {
       console.error(error);

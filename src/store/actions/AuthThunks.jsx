@@ -13,6 +13,7 @@ export const loginAction = createAsyncThunk(
         const { token } = response.data;
         localStorage.setItem("token", token);
       }
+      console.log("auth: ", response.data);
       return response.data;
     } catch (error) {
       console.log(error);
@@ -31,6 +32,7 @@ export const signUpAction = createAsyncThunk(
         localStorage.setItem("token", response.data.token);
       }
 
+      console.log("auth-sign: ", response.data);
       return response.data;
     } catch (error) {
       console.error(error);
@@ -53,6 +55,7 @@ export const getUserProfileAction = createAsyncThunk(
           Authorization: `Bearer ${token}`,
         },
       });
+      console.log("auth-profile: ", response.data);
       return response.data;
     } catch (error) {
       console.log(error);
