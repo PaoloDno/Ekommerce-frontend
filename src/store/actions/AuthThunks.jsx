@@ -61,6 +61,20 @@ export const getUserProfileAction = createAsyncThunk(
       console.log(error);
       return thunkAPI.rejectWithValue(error.response?.data.message);
     }
+  }, {
+    condition: (_, { getState }) => {
+      const { lastProfileFetchedAt } = getState().auth;
+
+      // ⛔ block if fetched within last 5 minutes
+      if (
+        lastProfileFetchedAt &&
+        Date.now() - lastProfileFetchedAt < 5 * 60 * 1000
+      ) {
+        return false; // thunk will NOT run
+      }
+
+      return true;
+    },
   }
 );
 

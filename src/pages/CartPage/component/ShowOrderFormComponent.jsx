@@ -33,6 +33,7 @@ const ShowOrderFormComponent = ({ onClose, onInitFetchCart, cartId, onSubmitOrde
 
     try {
       await onSubmitOrder(cartId);  // dispatch or API call
+      
       handleClose();               // close modal after success
     } catch (err) {
       console.error(err);

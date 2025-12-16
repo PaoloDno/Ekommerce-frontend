@@ -4,10 +4,11 @@ import { api } from "../features/api";
 
 export const createOrderAction = createAsyncThunk(
   "order/CreateOrderAction",
-  async (orderData, thunkAPI) => {
+  async ( orderData , thunkAPI) => {
     try {
       const token = thunkAPI.getState().auth.token;
-      const response = await api.post(`/`, orderData, {
+      console.log("ORDERDATA", orderData);
+      const response = await api.post(`/order/`, orderData, {
         headers: {
           Authorization: `Bearer ${token}`,
         },

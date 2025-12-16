@@ -8,6 +8,9 @@ import errorReducer from "./reducers/ErrorSlice.jsx";
 import themeReducer from "./reducers/ThemeSlice.jsx";
 import sellerReducer from "./reducers/SellerSlice.jsx";
 import reviewReducer from "./reducers/reviewSlice.jsx";
+import orderReducer from "./reducers/OrderSlice.jsx";
+import notifReducer from "./reducers/NotifSlice.jsx";
+
 
 const loadState = () => {
   try {
@@ -55,6 +58,8 @@ const store = configureStore({
     product: productReducer,
     seller: sellerReducer,
     review: reviewReducer,
+    order: orderReducer,
+    notif: notifReducer,
   },
   preloadedState: persistedState,
 });

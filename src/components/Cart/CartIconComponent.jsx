@@ -56,7 +56,7 @@ const CartIconComponent = () => {
             text-[10px] flex items-center justify-center
           "
         >
-          {totalItems > 0 ? totalItems : "!"}
+          {totalItems > 0 ? totalItems : "0"}
         </span>
       </div>
 

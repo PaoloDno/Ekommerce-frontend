@@ -8,15 +8,21 @@ import { useTheme } from "../../context/ThemeContext";
 import ProfileImage from "../../components/ImagesComponent/components/ProfileImageComponent";
 import BannerImage from "../../components/ImagesComponent/components/BannerImageComponent";
 import { FaLock, FaStore } from "react-icons/fa";
+import { getUserNotificationsAction } from "../../store/actions/NotificationThunks";
 
 const HomePage = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const { token, isPending } = useSelector((state) => state.auth);
+  const { notifications, unreadCount } = useSelector((state) => state.notif);
 
   const { current, changeTheme } = useTheme();
   const [profile, setProfile] = useState({});
   const isMounted = useRef(true);
+
+  const sellerNotif = notifications.filter((n) => n.role === "seller");
+
+  const userNotif = notifications.filter((n) => n.role === "user");
 
   const fetchProfile = useCallback(async () => {
     if (!token) return; // just exit, handle UI separately
@@ -28,7 +34,7 @@ const HomePage = () => {
         isMounted.current
       ) {
         setProfile(resultAction.payload.data);
-        console.log(resultAction.payload.data);
+        console.log("Profile: ", resultAction.payload.data);
 
         changeTheme(resultAction.payload.data.userTheme);
       }
@@ -36,14 +42,26 @@ const HomePage = () => {
       console.error(error);
     }
 
-    console.log(profile);
+    console.log("PROFILE: ", profile);
+    console.log("NTIF NOTIF:", notifications, unreadCount);
+    console.log("seller not", sellerNotif);
+    console.log("user not: ", userNotif);
   }, [dispatch, token]);
 
   useEffect(() => {
-    if(token) {
+    if (token) {
       dispatch(getCartAction());
     }
-  }, [dispatch, token])
+  }, []);
+
+  useEffect(() => {
+    if (token) {
+      dispatch(getUserNotificationsAction());
+    }
+    console.log("NTIF NOTIF:", notifications, unreadCount);
+    console.log("seller not", sellerNotif);
+    console.log("user not: ", userNotif);
+  }, [token, dispatch]);
 
   useEffect(() => {
     isMounted.current = true;
@@ -142,7 +160,9 @@ const HomePage = () => {
           <div className="grid grid-cols-2 md:grid-cols-3 w-full my-2 items-center md:items-start justify-center gap-2">
             {profile?.storeName == null ? (
               <div className="flex flex-col bg-skin-colorContent bg-opacity-15 rounded-md w-full h-full p-3">
-                <p className="text-skin-color1 mb-1">You don’t own a store yet.</p>
+                <p className="text-skin-color1 mb-1">
+                  You don’t own a store yet.
+                </p>
                 <h2 className="font-semibold mb-2">
                   Get Started...{" "}
                   <span className="text-skin-accent">
@@ -168,7 +188,8 @@ const HomePage = () => {
             <div className="grid grid-cols-[1fr_2fr] relative container items-center justify-start gap-3 bg-skin-colorContent bg-opacity-15 rounded-md w-full h-full p-3">
               <FaStore className="size-8 w-full text-skin-color2" />
               <span className="text-stylep3 text-skin-color1 leading-tight">
-                “Turn creativity into commerce — your store, your story.” - Ekommerce
+                “Turn creativity into commerce — your store, your story.” -
+                Ekommerce
               </span>
             </div>
             <div className="grid grid-cols-[1fr_3fr] md:grid-cols-[1fr_1.5fr] col-span-2 md:col-span-1 relative container items-center justify-start gap-3 bg-skin-colorContent bg-opacity-15 rounded-md w-full h-full p-3">

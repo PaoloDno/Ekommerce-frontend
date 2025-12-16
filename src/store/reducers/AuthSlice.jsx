@@ -14,12 +14,12 @@ const authSlice = createSlice({
     profile: null,
     username: "",
     theme: null,
-    totalItems: 0,
     token: localStorage.getItem("token") || null,
     isPending: false,
     isRejected: false,
     isSuccess: false,
     error: null,
+    lastProfileFetchedAt: null,
   },
   reducers: {},
   extraReducers: (builder) => {
@@ -32,7 +32,6 @@ const authSlice = createSlice({
         state.username = action.payload.username || null;
         state.profile = action.payload;
         state.token = action.payload.token || null;
-        state.totalItems = action.payload.cartSummary.totalItems;
       })
 
       .addCase(signUpAction.fulfilled, (state, action) => {
@@ -43,7 +42,6 @@ const authSlice = createSlice({
         state.username = action.payload.username || null;
         state.profile = action.payload;
         state.token = action.payload.token || null;
-        state.totalItems = action.payload.cartSummary.totalItems;
       })
 
       .addCase(logoutAction.fulfilled, (state) => {
@@ -54,7 +52,7 @@ const authSlice = createSlice({
         state.username = null;
         state.profile = null;
         state.token = null;
-        state.totalItems = null;
+        state.lastProfileFetchedAt = Date.now();
       })
 
       .addCase(getUserProfileAction.fulfilled, (state, action) => {
@@ -74,7 +72,12 @@ const authSlice = createSlice({
 
       .addMatcher(
         isPending(
-          loginAction, signUpAction, logoutAction, getUserProfileAction, themeToggleAction),
+          loginAction,
+          signUpAction,
+          logoutAction,
+          getUserProfileAction,
+          themeToggleAction
+        ),
         (state) => {
           state.isPending = true;
           state.isRejected = false;
@@ -85,7 +88,12 @@ const authSlice = createSlice({
 
       .addMatcher(
         isRejected(
-          loginAction, signUpAction, logoutAction, getUserProfileAction, themeToggleAction),
+          loginAction,
+          signUpAction,
+          logoutAction,
+          getUserProfileAction,
+          themeToggleAction
+        ),
         (state, action) => {
           state.isPending = false;
           state.isRejected = true;

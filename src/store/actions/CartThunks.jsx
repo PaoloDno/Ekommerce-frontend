@@ -12,7 +12,7 @@ export const getCartAction = createAsyncThunk(
           Authorization: `Bearer ${token}`,
         },
       });
-      console.log(response.data);
+      console.log("CARTthunks: ", response.data);
       return response.data;
     } catch (error) {
       console.log(error);

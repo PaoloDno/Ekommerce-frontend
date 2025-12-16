@@ -136,7 +136,7 @@ const CartOwnerPage = () => {
             onClose={() => setShowOrderForm(false)}
             onInitFetchCart={fetchCart}
             cartId={cartItems?._id}
-            onSubmitOrder={() => console.log("Hello Order PRocessed")}
+            onSubmitOrder={() => navigate("/order")}
           />
         )}
 
