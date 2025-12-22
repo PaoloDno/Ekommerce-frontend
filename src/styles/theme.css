@@ -1,157 +1,170 @@
 @layer base {
-  /* ========== Base (Default) Theme ========== */
-  :root {
+  :root,
+  .theme-default {
+    /* Brand */
+    --color-primary: 30, 70, 139;
+    --color-secondary: 31, 96, 189;
+
+    /* Buttons */
+    --color-button: 240, 245, 255;
+    --color-button-1: 25, 55, 115;
+    --color-button-2: 12, 30, 70;
+    --btn-grad-start: 5, 21, 49;
+    --btn-grad-end: 24, 78, 153;
+
+    /* Text */
+    --color-text1: 255, 255, 255;
+    --color-text2: 220, 226, 231;
+    --color-text3: 5, 12, 20;
+    --color-contrast: 80, 220, 238;
+    --color-disable: 73, 67, 67;
+
+    /* Surfaces */
+    --color-fill-1: 22, 61, 124;
+    --color-fill-2: 9, 49, 109;
+    --color-fill-3: 8, 20, 45;
+    --color-fill-4: 3, 10, 20;
+
+    /* Background */
+    --color-back: 155, 190, 230;
+
+    /* Borders */
+    --color-border1: 10, 30, 55;
+    --color-border2: 141, 235, 235;
+
+    /* Content areas */
+    --color-content-text: 20, 20, 20;
+    --color-content-bg: 226, 236, 236;
+
+    /* Shadow */
+    --color-shadow: 77, 88, 100;
+  }
+
+  .theme-coffee {
+    --color-primary: 241, 207, 137;
+    --color-secondary: 241, 177, 108;
+
+    --color-button: 167, 101, 16;
+    --color-button-1: 73, 57, 32;
+    --color-button-2: 156, 111, 42;
+    --btn-grad-start: 241, 202, 158;
+    --btn-grad-end: 235, 200, 131;
+
+    --color-text1: 31, 28, 20;
+    --color-text2: 70, 60, 51;
+    --color-text3: 243, 212, 187;
+    --color-contrast: 245, 229, 210;
+    --color-disable: 110, 96, 81;
+
+    --color-fill-1: 40, 24, 10;
+    --color-fill-2: 58, 35, 14;
+    --color-fill-3: 214, 169, 126;
+    --color-fill-4: 230, 206, 159;
+
+    --color-back: 45, 30, 10;
+
+    --color-border1: 248, 177, 106;
+    --color-border2: 78, 48, 19;
+
+    --color-content-text: 230, 225, 210;
+    --color-content-bg: 55, 28, 15;
+
+    --color-shadow: 255, 228, 93;
+  }
+
+  .theme-dark {
+    --color-primary: 20, 20, 20;
+    --color-secondary: 45, 45, 45;
+
+    --color-button: 70, 70, 70;
+    --color-button-1: 90, 90, 90;
+    --color-button-2: 50, 50, 50;
+    --btn-grad-start: 35, 35, 35;
+    --btn-grad-end: 65, 65, 65;
+
+    --color-text1: 235, 235, 235;
+    --color-text2: 175, 175, 175;
+    --color-text3: 15, 15, 15;
+    --color-contrast: 85, 137, 235;
+    --color-disable: 90, 90, 90;
+
+    --color-fill-1: 35, 35, 35;
+    --color-fill-2: 25, 25, 25;
+    --color-fill-3: 45, 45, 45;
+    --color-fill-4: 15, 15, 15;
+
+    --color-back: 15, 15, 15;
+
+    --color-border1: 60, 60, 60;
+    --color-border2: 140, 140, 140;
+
+    --color-content-text: 15, 15, 15;
+    --color-content-bg: 215, 218, 220;
+
     --color-shadow: 0, 0, 0;
   }
-  .theme-default {
-  --color-primary: 30, 70, 140;
-  --color-secondary: 55, 115, 200;
-  --color-button: 240, 245, 255;
 
-  --color-text1: 255, 255, 255;
-  --color-text2: 210, 225, 240;
-  --color-contrast: 0, 255, 90;
-  --color-disable: 60, 60, 60;
+  .theme-sakura {
+    --color-primary: 245, 206, 220;
+    --color-secondary: 223, 98, 150;
 
-  --color-fill-1: 32, 82, 160;
-  --color-fill-2: 15, 55, 115;
-  --color-fill-3: 8, 20, 45;
-  --color-fill-4: 85, 100, 124;
+    --color-button: 85, 12, 36;
+    --color-button-1: 235, 150, 210;
+    --color-button-2: 210, 100, 180;
+    --btn-grad-start: 223, 194, 208;
+    --btn-grad-end: 224, 113, 152;
 
-  --color-button-1: 25, 55, 115;
-  --color-button-2: 12, 30, 70;
+    --color-text1: 80, 20, 40;
+    --color-text2: 120, 60, 90;
+    --color-text3: 248, 215, 226;
+    --color-contrast: 39, 95, 37;
+    --color-disable: 236, 170, 203;
 
-  --color-back: 155, 190, 230;
-  --color-border1: 210, 220, 230;
-  --color-border2: 10, 30, 55;
+    --color-fill-1: 55, 25, 30;
+    --color-fill-2: 112, 71, 89;
+    --color-fill-3: 250, 215, 230;
+    --color-fill-4: 255, 235, 245;
 
-  --color-content-text: 20, 20, 20;
-  --color-content-bg: 225, 230, 245;
+    --color-back: 63, 8, 45;
 
-  --color-shadow: 255, 160, 70;
-}
+    --color-border1: 224, 119, 172;
+    --color-border2: 94, 43, 62;
 
-/* =========================================================
-   Coffee Theme
-   ========================================================= */
-.theme-coffee {
-  --color-primary: 230, 200, 140;
-  --color-secondary: 210, 150, 85;
-  --color-button: 165, 120, 60;
+    --color-content-text: 245, 230, 235;
+    --color-content-bg: 60, 20, 25;
 
-  --color-text1: 50, 28, 10;
-  --color-text2: 65, 50, 40;
-  --color-contrast: 120, 70, 10;
-  --color-disable: 130, 110, 95;
+    --color-shadow: 247, 116, 169;
+  }
 
-  --color-fill-1: 215, 170, 140;
-  --color-fill-2: 225, 210, 180;
-  --color-fill-3: 170, 150, 60;
-  --color-fill-4: 245, 235, 225;
+  .theme-dark2 {
+    --color-primary: 5, 15, 43;
+    --color-secondary: 16, 36, 65;
 
-  --color-button-1: 200, 150, 40;
-  --color-button-2: 80, 28, 4;
+    --color-button: 232, 239, 250;
+    --color-button-1: 152, 130, 243;
+    --color-button-2: 80, 63, 167;
+    --btn-grad-start: 30, 49, 97;
+    --btn-grad-end: 6, 11, 27;
 
-  --color-back: 45, 30, 10;
-  --color-border1: 135, 78, 20;
-  --color-border2: 40, 30, 18;
+    --color-text1: 238, 244, 253;
+    --color-text2: 180, 200, 230;
+    --color-text3: 10, 15, 25;
+    --color-contrast: 150, 255, 80;
+    --color-disable: 80, 90, 110;
 
-  --color-content-text: 230, 225, 210;
-  --color-content-bg: 55, 28, 15;
+    --color-fill-1: 42, 87, 64;
+    --color-fill-2: 42, 61, 18;
+    --color-fill-3: 13, 18, 54;
+    --color-fill-4: 0, 1, 2;
 
-  --color-shadow: 255, 230, 100;
-}
+    --color-back: 255, 255, 255;
 
-/* =========================================================
-   Dark Theme
-   ========================================================= */
-.theme-dark {
-  --color-primary: 20, 20, 20;
-  --color-secondary: 45, 45, 45;
-  --color-button: 70, 70, 70;
+    --color-border1: 18, 38, 80;
+    --color-border2: 160, 235, 79;
 
-  --color-text1: 235, 235, 235;
-  --color-text2: 175, 175, 175;
-  --color-contrast: 140, 210, 240;
-  --color-disable: 40, 40, 40;
+    --color-content-text: 24, 56, 50;
+    --color-content-bg: 208, 229, 243;
 
-  --color-fill-1: 25, 25, 25;
-  --color-fill-2: 35, 35, 35;
-  --color-fill-3: 140, 200, 220;
-  --color-fill-4: 65, 65, 65;
-
-  --color-button-1: 25, 50, 45;
-  --color-button-2: 40, 15, 45;
-
-  --color-back: 15, 15, 15;
-  --color-border1: 190, 200, 205;
-  --color-border2: 145, 200, 225;
-
-  --color-content-text: 0, 0, 0;
-  --color-content-bg: 215, 218, 220;
-
-  --color-shadow: 110, 130, 150;
-}
-
-/* =========================================================
-   Sakura Theme
-   ========================================================= */
-.theme-sakura {
-  --color-primary: 240, 185, 205;
-  --color-secondary: 220, 135, 170;
-  --color-button: 225, 195, 230;
-
-  --color-text1: 80, 20, 40;
-  --color-text2: 90, 40, 60;
-  --color-contrast: 30, 20, 20;
-  --color-disable: 120, 60, 70;
-
-  --color-fill-1: 255, 235, 245;
-  --color-fill-2: 250, 215, 230;
-  --color-fill-3: 120, 235, 165;
-  --color-fill-4: 55, 25, 30;
-
-  --color-button-1: 235, 150, 210;
-  --color-button-2: 210, 100, 180;
-
-  --color-back: 235, 205, 225;
-  --color-border1: 50, 20, 25;
-  --color-border2: 100, 15, 40;
-
-  --color-content-text: 245, 230, 235;
-  --color-content-bg: 60, 20, 25;
-
-  --color-shadow: 35, 200, 80;
-}
-
-/* =========================================================
-   Dark2 Theme
-   ========================================================= */
-.theme-dark2 {
-  --color-primary: 12, 24, 58;
-  --color-secondary: 40, 52, 70;
-  --color-button: 70, 55, 125;
-
-  --color-text1: 215, 230, 255;
-  --color-text2: 220, 220, 160;
-  --color-contrast: 150, 255, 80;
-  --color-disable: 50, 55, 60;
-
-  --color-fill-1: 18, 20, 26;
-  --color-fill-2: 18, 34, 60;
-  --color-fill-3: 10, 15, 60;
-  --color-fill-4: 45, 52, 60;
-
-  --color-button-1: 18, 35, 22;
-  --color-button-2: 0, 0, 0;
-
-  --color-back: 5, 14, 28;
-  --color-border1: 230, 235, 60;
-  --color-border2: 150, 235, 60;
-
-  --color-content-text: 20, 45, 40;
-  --color-content-bg: 215, 230, 240;
-
-  --color-shadow: 30, 180, 70;
-}
+    --color-shadow: 78, 189, 143;
+  }
 }

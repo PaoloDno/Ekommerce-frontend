@@ -1,0 +1,11 @@
+/*
+refactored component styles
+*/
+
+@tailwind components;
+
+@layer components{
+  .page-body-section {
+    @apply relative flex;
+  }
+};

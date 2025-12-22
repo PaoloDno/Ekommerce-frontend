@@ -10,6 +10,7 @@ import sellerReducer from "./reducers/SellerSlice.jsx";
 import reviewReducer from "./reducers/reviewSlice.jsx";
 import orderReducer from "./reducers/OrderSlice.jsx";
 import notifReducer from "./reducers/NotifSlice.jsx";
+import adminReducer from "./reducers/AdminSlice.jsx";
 
 
 const loadState = () => {
@@ -60,6 +61,7 @@ const store = configureStore({
     review: reviewReducer,
     order: orderReducer,
     notif: notifReducer,
+    admin: adminReducer,
   },
   preloadedState: persistedState,
 });

@@ -1,5 +1,4 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
-
 import { api } from "../features/api";
 
 export const loginAction = createAsyncThunk(

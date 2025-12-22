@@ -12,14 +12,6 @@ export default {
   theme: {
     extend: {
       fontSize: {
-        // Paragraphs
-        stylep1: ["clamp(0.95rem, 1vw, 1.125rem)", { lineHeight: "1.75rem" }],
-        stylep2: ["clamp(0.875rem, 0.9vw, 1rem)", { lineHeight: "1.5rem" }],
-        stylep3: [
-          "clamp(0.75rem, 0.75vw, 0.875rem)",
-          { lineHeight: "1.25rem" },
-        ],
-
         // Headings
         styleh1: ["clamp(2rem, 3vw, 2.75rem)", { lineHeight: "3.25rem" }],
         styleh2: ["clamp(1.75rem, 2.5vw, 2.25rem)", { lineHeight: "2.75rem" }],
@@ -28,11 +20,20 @@ export default {
           "clamp(1.125rem, 1.5vw, 1.375rem)",
           { lineHeight: "1.75rem" },
         ],
+        // Paragraphs
+        stylep1: ["clamp(1rem, 1.2vw, 1.25rem)", { lineHeight: "1.75rem" }],
+        stylep2: ["clamp(0.95rem, 1vw, 1.125rem)", { lineHeight: "1.75rem" }],
+        stylep3: ["clamp(0.875rem, 0.9vw, 1rem)", { lineHeight: "1.5rem" }],
+        stylep4: [
+          "clamp(0.75rem, 0.75vw, 0.875rem)",
+          { lineHeight: "1.25rem" },
+        ],
       },
       textColor: {
         skin: {
           color1: withOpacity("--color-text1"),
           color2: withOpacity("--color-text2"),
+          color3: withOpacity("--color-text3"),
           colorHigh: withOpacity("--color-contrast"),
           colorDis: withOpacity("--color-disable"),
           colorContent: withOpacity("--color-content-text"),
@@ -64,28 +65,18 @@ export default {
           end: withOpacity("--color-content-bg"),
           start: withOpacity("--color-fill-3"),
         },
-      },
-      boxShadow: {
-        skin: {
-          light: "0 2px 4px rgba(var(--color-shadow), 0.1)",
-          medium: "0 4px 6px rgba(var(--color-shadow), 0.15)",
-          heavy: "0 10px 15px rgba(var(--color-shadow), 0.25)",
-          inner: "inset 0 2px 4px rgba(var(--color-shadow), 0.2)",
+        button: {
+          start: withOpacity("--btn-grad-start"),
+          end: withOpacity("--btn-grad-end"),
         },
       },
-      dropShadow: {
-        skin: {
-          soft: "0 1px 2px rgba(var(--color-shadow), 0.25)",
-          glow: "0 0 8px rgba(var(--color-shadow), 0.5)",
-          strong: "0 2px 6px rgba(var(--color-shadow), 0.35)",
-        },
-      },
-
       fontFamily: {
-        Montserrat: ["Montserrat", "sans-serif"],
-        Merriweather: ["Merriweather", "serif"],
-        Oswald: ["Oswald", "sans-serif"],
-        Opensans: ["Open Sans", "sansa-serif"],
+        sans: ["Inter", "sans-serif"],
+        display: ["Vend Sans", "serif"],
+        accent: ["Fraunces", "sans-serif"],
+        Oswals: ["Inter", "sans-serif"],
+        Opensans: ["Inter", "sans-serif"],
+        Montserrat: ["Inter", "sans-serif"],
       },
     },
   },

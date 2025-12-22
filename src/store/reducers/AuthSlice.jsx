@@ -52,7 +52,7 @@ const authSlice = createSlice({
         state.username = null;
         state.profile = null;
         state.token = null;
-        state.lastProfileFetchedAt = Date.now();
+        state.lastProfileFetchedAt = null;
       })
 
       .addCase(getUserProfileAction.fulfilled, (state, action) => {
@@ -61,6 +61,7 @@ const authSlice = createSlice({
         state.isRejected = false;
         state.profile = action.payload.data;
         state.theme = action.payload.data.userTheme;
+        state.lastProfileFetchedAt = Date.now();
       })
 
       .addCase(themeToggleAction.fulfilled, (state, action) => {

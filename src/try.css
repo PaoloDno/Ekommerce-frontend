@@ -1,155 +1,183 @@
 /* =========================================================
-   Base / Default Theme (Refined)
+   Base / Default Theme (REFERENCE PATTERN)
    ========================================================= */
 :root,
 .theme-default {
-  --color-primary: rgb(30, 70, 140);
-  --color-secondary: rgb(55, 115, 200);
+  /* Brand */
+  --color-primary: rgb(30, 70, 139);
+  --color-secondary: rgb(31, 96, 189);
+
+  /* Buttons */
   --color-button: rgb(240, 245, 255);
-
-  --color-text1: rgb(255, 255, 255);
-  --color-text2: rgb(210, 225, 240);
-  --color-contrast: rgb(0, 255, 90);
-  --color-disable: rgb(60, 60, 60);
-
-  --color-fill-1: rgb(32, 82, 160);
-  --color-fill-2: rgb(15, 55, 115);
-  --color-fill-3: rgb(8, 20, 45);
-  --color-fill-4: rgb(85, 100, 124);
-
   --color-button-1: rgb(25, 55, 115);
   --color-button-2: rgb(12, 30, 70);
+  --btn-grad-start: rgb(5, 21, 49);
+  --btn-grad-end: rgb(24, 78, 153);
 
+  /* Text */
+  --color-text1: rgb(255, 255, 255);   /* on dark */
+  --color-text2: rgb(220, 226, 231);   /* muted */
+  --color-text3: rgb(5, 12, 20);        /* on light */
+  --color-contrast: rgb(80, 220, 238);
+  --color-disable: rgb(73, 67, 67);
+
+  /* Surfaces */
+  --color-fill-1: rgb(22, 61, 124);
+  --color-fill-2: rgb(9, 49, 109);
+  --color-fill-3: rgb(8, 20, 45);
+  --color-fill-4: rgb(3, 10, 20);
+
+  /* Background */
   --color-back: rgb(155, 190, 230);
-  --color-border1: rgb(210, 220, 230);
-  --color-border2: rgb(10, 30, 55);
 
+  /* Borders */
+  --color-border1: rgb(10, 30, 55);
+  --color-border2: rgb(141, 235, 235);
+
+  /* Content areas */
   --color-content-text: rgb(20, 20, 20);
-  --color-content-bg: rgb(225, 230, 245);
+  --color-content-bg: rgb(226, 236, 236);
 
-  --color-shadow: rgba(255, 160, 70, 0.6);
+  /* Shadow */
+  --color-shadow: rgb(77, 88, 100);
 }
 
 /* =========================================================
-   Coffee Theme (Refined — warmer, darker, softer)
+   Coffee Theme (same structure, warm identity)
    ========================================================= */
 .theme-coffee {
-  --color-primary: rgb(230, 200, 140);
-  --color-secondary: rgb(210, 150, 85);
-  --color-button: rgb(165, 120, 60);
+  --color-primary: rgb(241, 207, 137);
+  --color-secondary: rgb(241, 177, 108);
 
-  --color-text1: rgb(50, 28, 10);
-  --color-text2: rgb(65, 50, 40);
-  --color-contrast: rgb(120, 70, 10);
-  --color-disable: rgb(130, 110, 95);
+  --color-button: rgb(167, 101, 16);
+  --color-button-1: rgb(73, 57, 32);
+  --color-button-2: rgb(156, 111, 42);
+  --btn-grad-start: rgb(241, 202, 158);
+  --btn-grad-end: rgb(235, 200, 131);
 
-  --color-fill-1: rgb(215, 170, 140);
-  --color-fill-2: rgb(225, 210, 180);
-  --color-fill-3: rgb(170, 150, 60); /* softened */
-  --color-fill-4: rgb(245, 235, 225);
+  --color-text1: rgb(31, 28, 20);
+  --color-text2: rgb(70, 60, 51);
+  --color-text3: rgb(243, 212, 187);
+  --color-contrast: rgb(245, 229, 210);
+  --color-disable: rgb(110, 96, 81);
 
-  --color-button-1: rgb(200, 150, 40);
-  --color-button-2: rgb(80, 28, 4);
+  --color-fill-1: rgb(40, 24, 10);
+  --color-fill-2: rgb(58, 35, 14);
+  --color-fill-3: rgb(214, 169, 126);
+  --color-fill-4: rgb(230, 206, 159);
 
   --color-back: rgb(45, 30, 10);
-  --color-border1: rgb(135, 78, 20);
-  --color-border2: rgb(40, 30, 18);
+
+  --color-border1: rgb(248, 177, 106);
+  --color-border2: rgb(78, 48, 19);
 
   --color-content-text: rgb(230, 225, 210);
   --color-content-bg: rgb(55, 28, 15);
 
-  --color-shadow: rgba(255, 230, 100, 0.4);
+  --color-shadow: rgb(255, 228, 93);
 }
 
 /* =========================================================
-   Dark Theme (Refined — more contrast, less harsh)
+   Dark Theme (neutral, balanced)
    ========================================================= */
 .theme-dark {
   --color-primary: rgb(20, 20, 20);
   --color-secondary: rgb(45, 45, 45);
+
   --color-button: rgb(70, 70, 70);
+  --color-button-1: rgb(90, 90, 90);
+  --color-button-2: rgb(50, 50, 50);
+  --btn-grad-start: rgb(35, 35, 35);
+  --btn-grad-end: rgb(65, 65, 65);
 
   --color-text1: rgb(235, 235, 235);
   --color-text2: rgb(175, 175, 175);
-  --color-contrast: rgb(140, 210, 240);
-  --color-disable: rgb(40, 40, 40);
+  --color-text3: rgb(15, 15, 15);
+  --color-contrast: rgb(85, 137, 235);
+  --color-disable: rgb(90, 90, 90);
 
-  --color-fill-1: rgb(25, 25, 25);
-  --color-fill-2: rgb(35, 35, 35);
-  --color-fill-3: rgb(140, 200, 220);
-  --color-fill-4: rgb(65, 65, 65);
-
-  --color-button-1: rgb(25, 50, 45);
-  --color-button-2: rgb(40, 15, 45);
+  --color-fill-1: rgb(35, 35, 35);
+  --color-fill-2: rgb(25, 25, 25);
+  --color-fill-3: rgb(45, 45, 45);
+  --color-fill-4: rgb(15, 15, 15);
 
   --color-back: rgb(15, 15, 15);
-  --color-border1: rgb(190, 200, 205);
-  --color-border2: rgb(145, 200, 225);
 
-  --color-content-text: rgb(0, 0, 0);
+  --color-border1: rgb(60, 60, 60);
+  --color-border2: rgb(140, 140, 140);
+
+  --color-content-text: rgb(15, 15, 15);
   --color-content-bg: rgb(215, 218, 220);
 
-  --color-shadow: rgba(110, 130, 150, 0.4);
+  --color-shadow: rgba(0, 0, 0, 0.6);
 }
 
 /* =========================================================
-   Sakura Theme (Refined — softer, elegant, darker base)
+   Sakura Theme (soft, elegant)
    ========================================================= */
 .theme-sakura {
-  --color-primary: rgb(240, 185, 205);
-  --color-secondary: rgb(220, 135, 170);
-  --color-button: rgb(225, 195, 230);
+  --color-primary: rgb(245, 206, 220);
+  --color-secondary: rgb(223, 98, 150);
 
-  --color-text1: rgb(80, 20, 40);
-  --color-text2: rgb(90, 40, 60);
-  --color-contrast: rgb(30, 20, 20);
-  --color-disable: rgb(120, 60, 70);
-
-  --color-fill-1: rgb(255, 235, 245);
-  --color-fill-2: rgb(250, 215, 230);
-  --color-fill-3: rgb(120, 235, 165); /* tone down green */
-  --color-fill-4: rgb(55, 25, 30);
-
+  --color-button: rgb(85, 12, 36);
   --color-button-1: rgb(235, 150, 210);
   --color-button-2: rgb(210, 100, 180);
+  --btn-grad-start: rgb(223, 194, 208);
+  --btn-grad-end: rgb(224, 113, 152);
 
-  --color-back: rgb(235, 205, 225);
-  --color-border1: rgb(50, 20, 25);
-  --color-border2: rgb(100, 15, 40);
+  --color-text1: rgb(80, 20, 40);
+  --color-text2: rgb(120, 60, 90);
+  --color-text3: rgb(248, 215, 226);
+  --color-contrast: rgb(39, 95, 37);
+  --color-disable: rgb(236, 170, 203);
+  
+  --color-fill-1: rgb(55, 25, 30);
+  --color-fill-2: rgb(112, 71, 89);
+  --color-fill-3: rgb(250, 215, 230);
+  --color-fill-4: rgb(255, 235, 245);
+
+  --color-back: rgb(63, 8, 45);
+
+  --color-border1: rgb(224, 119, 172);
+  --color-border2: rgb(94, 43, 62);
 
   --color-content-text: rgb(245, 230, 235);
   --color-content-bg: rgb(60, 20, 25);
 
-  --color-shadow: rgba(35, 200, 80, 0.4);
+  --color-shadow: rgb(247, 116, 169);
 }
 
 /* =========================================================
-   Dark2 Theme (Refined — more uniform, deep navy)
+   Dark2 Theme (deep navy)
    ========================================================= */
 .theme-dark2 {
-  --color-primary: rgb(12, 24, 58);
-  --color-secondary: rgb(40, 52, 70);
-  --color-button: rgb(70, 55, 125);
+  --color-primary: rgb(5, 15, 43);
+  --color-secondary: rgb(16, 36, 65);
 
-  --color-text1: rgb(215, 230, 255);
-  --color-text2: rgb(220, 220, 160);
+  --color-button: rgb(232, 239, 250);
+  --color-button-1: rgb(152, 130, 243);
+  --color-button-2: rgb(80, 63, 167);
+  --btn-grad-start: rgb(30, 49, 97);
+  --btn-grad-end: rgb(6, 11, 27);
+
+  --color-text1: rgb(238, 244, 253);
+  --color-text2: rgb(180, 200, 230);
+  --color-text3: rgb(10, 15, 25);
   --color-contrast: rgb(150, 255, 80);
-  --color-disable: rgb(50, 55, 60);
+  --color-disable: rgb(80, 90, 110);
 
-  --color-fill-1: rgb(18, 20, 26);
-  --color-fill-2: rgb(18, 34, 60);
-  --color-fill-3: rgb(10, 15, 60);
-  --color-fill-4: rgb(45, 52, 60);
+  --color-fill-1: rgb(42, 87, 64);
+  --color-fill-2: rgb(42, 61, 18);
+  --color-fill-3: rgb(13, 18, 54);
+  --color-fill-4: rgb(0, 1, 2);
 
-  --color-button-1: rgb(18, 35, 22);
-  --color-button-2: rgb(0, 0, 0);
+  --color-back: rgb(255, 255, 255);
 
-  --color-back: rgb(5, 14, 28);
-  --color-border1: rgb(230, 235, 60);
-  --color-border2: rgb(150, 235, 60);
+  --color-border1: rgb(18, 38, 80);
+  --color-border2: rgb(160, 235, 79);
 
-  --color-content-text: rgb(20, 45, 40);
-  --color-content-bg: rgb(215, 230, 240);
+  --color-content-text: rgb(24, 56, 50);
+  --color-content-bg: rgb(208, 229, 243);
 
-  --color-shadow: rgba(30, 180, 70, 0.4);
+  --color-shadow: rgb(78, 189, 143);
 }

@@ -38,7 +38,7 @@
   }
 
   .text-div-header{
-    @apply font-Oswald text-styleh4 p-1 leading-10;
+    @apply font-sans text-styleh4 p-1 leading-10;
   }
   .text-div-button {
     @apply flex w-fit min-w-[50px] px-2 items-center justify-center 

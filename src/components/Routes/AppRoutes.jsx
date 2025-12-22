@@ -37,6 +37,7 @@ import UsersOrderPage from "../../pages/OrderPage/UsersOrderPage.jsx";
 
 import { Routes, Route } from "react-router-dom";
 import ProtectedRoute from "./ProtectedRoutes.jsx";
+import AdminPage from "../../pages/AdminPage/AdminPage.jsx";
 
 const AppRoutes = () => {
   return (
@@ -46,7 +47,7 @@ const AppRoutes = () => {
       <Route
         path="/home"
         element={
-          <ProtectedRoute>
+          <ProtectedRoute toAdmin >
             <HomePage />
           </ProtectedRoute>
         }
@@ -93,11 +94,15 @@ const AppRoutes = () => {
       {/* orders */}
       <Route path="/order" element={<CreateOrdersPage />} />
       <Route path="/order-user" element={<UsersOrderPage />} />
-      
+
+      {/* orders */}
+      <Route path="/admin" element={<AdminPage />} />
+
       {/* handle errors*/}
       <Route path="/token-error" element={<TokenErrorPage />} />
       <Route path="/unauthorize" element={<NotAuthorizedPage />} />
       <Route path="*" element={<ErrorPage />} />
+
     </Routes>
   );
 };
