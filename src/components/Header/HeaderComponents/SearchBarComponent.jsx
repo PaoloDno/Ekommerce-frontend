@@ -1,62 +1,91 @@
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { FaSearch } from "react-icons/fa";
+import { FaCross, FaSearch } from "react-icons/fa";
+import { FaCrosshairs, FaXmark } from "react-icons/fa6";
 
 function SearchBar() {
   const [query, setQuery] = useState("");
   const [filter, setFilter] = useState("product");
   const navigate = useNavigate();
 
+  /* handle search */
   const santiizeSearchInput = (input) => {
     let query = input.trim();
     query = query.replace(/<[^>]*>/g, "");
     query = query.replace(/[^a-zA-Z0-9\s\-'\&]/g, "");
     query = query.replace(/\s+/g, " ");
 
-      return query;
-    };
-  
+    return query;
+  };
 
   const handleSearch = () => {
-    const safeQuery = santiizeSearchInput(query)
-    
+    const safeQuery = santiizeSearchInput(query);
+
     if (safeQuery) {
-    navigate(`/search?type=${filter}&query=${encodeURIComponent(safeQuery)}`);
+      navigate(`/search?type=${filter}&query=${encodeURIComponent(safeQuery)}`);
     }
   };
 
+  /* handle open */
+  const [open, setOpen] = useState(false);
+  const dropdownRef = useRef(null);
+
+  
+
+  useEffect(() => {
+    const handleClickOutside = (evernt) => {
+      if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+        setOpen(false);
+      }
+    };
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, []);
+
   return (
-    <div className="header-search">
-      {/* Dropdown */}
-      <select
-        value={filter}
-        onChange={(e) => setFilter(e.target.value)}
-        className="bg-skin-colorContent border border-b-skin-colorBorder1 shadow-md text-skin-colorContent rounded-md px-2 py-1 text-sm focus:outline-none focus:ring-2 focus:ring-skin-color1 transition-colors overflow-hidden"
-      >
-        <option value="product">Product</option>
-        <option value="category">Category</option>
-        <option value="store">Store</option>
-      </select>
-
-      {/* Search Input */}
-      <input
-        type="text"
-        placeholder={`Search ${filter}...`}
-        className="header-search-input"
-        value={query}
-        onChange={(e) => setQuery(e.target.value)}
-        onKeyDown={(e) => e.key === "Enter" && handleSearch()}
-      />
-
-      {/* Search Button */}
-      <button
-        className="header-search-icons"
-        onClick={handleSearch}
-      >
+    <div className="header-component-search" ref={dropdownRef}>
+      <button onClick={() => setOpen((prev) => !prev)} className="text-skin-color1 cursor-pointer bg-opacity-10 
+      bg-skin-fill-3 ml-2 p-3 relative opacity-80 hover:opacity-100">
         <FaSearch />
       </button>
+      {/* Dropdown */}
+
+      {open && (
+        <div className={`header-component-search-bar animate-grow-in`}>
+          <select
+            value={filter}
+            onChange={(e) => setFilter(e.target.value)}
+            className="flex border text-skin-colorContent bg-skin-colorContent text-stylep2 rounded-md px-2 py-1 shadow-lg"
+          >
+            <option value="product">Product</option>
+            <option value="category">Category</option>
+            <option value="store">Store</option>
+          </select>
+
+          {/* Search Input */}
+          <input
+            type="text"
+            placeholder={`Search ${filter}...`}
+            className="header-component-search-input"
+            value={query}
+            onChange={(e) => setQuery(e.target.value)}
+            onKeyDown={(e) => e.key === "Enter" && handleSearch()}
+          />
+
+          {/* Search Button */}
+          <button className="header-component-search-icon" onClick={handleSearch}>
+            <FaSearch />
+          </button>
+          <button className="header-component-search-icon" onClick={() => setOpen(false)}>
+            <FaXmark />
+          </button>
+          
+        </div>
+      )}
     </div>
-  )
-};
+  );
+}
 
 export default SearchBar;

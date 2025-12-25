@@ -2,10 +2,53 @@
 refactored component styles
 */
 
+/* KEYFRAMES */
+@keyframes growIn {
+  from {
+    transform: scaleX(0);
+    opacity: 0;
+  }
+  to {
+    transform: scaleX(1);
+    opacity: 1;
+  }
+}
+
 @tailwind components;
 
-@layer components{
+@layer components {
+
+  .animate-grow-in {
+    transform-origin: left;
+    animation: growIn 0.25s ease-out forwards;
+  }
+
+  .pointer-none {
+    pointer-events: none;
+  }
+
   .page-body-section {
     @apply relative flex;
   }
-};
+
+  .in-center {
+    @apply items-center justify-center;
+  }
+
+  .in-right {
+    @apply items-center justify-end;
+  }
+
+  /* color */
+  .bg-content-style {
+    @apply bg-skin-primary text-skin-colorContent;
+  }
+
+  .bg-grad-custom-1 {
+    @apply bg-gradient-to-l to-button-start from-button-end;
+  }
+
+  .bg-grad-custom-2 {
+    @apply bg-gradient-to-r to-skin-start from-skin-end;
+  }
+}

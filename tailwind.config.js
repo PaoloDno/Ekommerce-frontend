@@ -54,6 +54,16 @@ export default {
           colorContent: withOpacity("--color-content-bg"),
         },
       },
+      backgroundImage: {
+        "gradient-primary-buttons-130":
+          "linear-gradient(130deg, rgb(var(--btn-grad-start-1)) 0%, rgb(var(--btn-grad-end-1)) 35%, rgb(var(--color-primary)) 100%)",
+        "gradient-primary-buttons-85":
+          "linear-gradient(85deg, rgb(var(--btn-grad-start-1)) 0%, rgb(var(--btn-grad-end-1)) 45%, rgb(var(--color-primary)) 100%)",
+        "gradient-primary-buttons-110":
+          "linear-gradient(110deg, rgb(var(--btn-grad-start-1)) 0%, rgb(var(--btn-grad-end-1)) 95%, rgb(var(--color-primary)) 100%)",
+        "gradient-primary-buttons-95":
+          "linear-gradient(95deg, rgb(var(--btn-grad-start-1)) 0%, rgb(var(--btn-grad-end-1)) 95%, rgb(var(--color-primary)) 100%)",
+      },
       borderColor: {
         skin: {
           colorBorder1: withOpacity("--color-border1"),
@@ -77,6 +87,7 @@ export default {
         Oswals: ["Inter", "sans-serif"],
         Opensans: ["Inter", "sans-serif"],
         Montserrat: ["Inter", "sans-serif"],
+        Receipt: ["Inconsolata", "sans-serif"],
       },
     },
   },

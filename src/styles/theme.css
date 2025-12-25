@@ -1,90 +1,107 @@
 @layer base {
-  :root,
+  :root {
+    --color-shadow: 0, 0, 0;
+  }
+
   .theme-default {
     /* Brand */
     --color-primary: 30, 70, 139;
     --color-secondary: 31, 96, 189;
 
     /* Buttons */
-    --color-button: 240, 245, 255;
-    --color-button-1: 25, 55, 115;
-    --color-button-2: 12, 30, 70;
-    --btn-grad-start: 5, 21, 49;
-    --btn-grad-end: 24, 78, 153;
+    --color-button-1: 0, 0, 0;
+    --color-button-2: 32, 73, 155;
+    --color-button-3: 227, 233, 247;
+
+    --btn-grad-start-1: 97, 145, 235;
+    --btn-grad-end-1: 30, 71, 128;
+    --btn-grad-start-2: 19, 23, 31;
+    --btn-grad-end-2: 226, 236, 236;
 
     /* Text */
     --color-text1: 255, 255, 255;
     --color-text2: 220, 226, 231;
     --color-text3: 5, 12, 20;
+
     --color-contrast: 80, 220, 238;
-    --color-disable: 73, 67, 67;
+    --color-disable: 52, 69, 119;
 
     /* Surfaces */
     --color-fill-1: 22, 61, 124;
     --color-fill-2: 9, 49, 109;
-    --color-fill-3: 8, 20, 45;
-    --color-fill-4: 3, 10, 20;
+    --color-fill-3: 242, 243, 245;
+    --color-fill-4: 8, 2, 87;
+    --color-fill-5: 58, 74, 95;
 
     /* Background */
-    --color-back: 155, 190, 230;
+    --color-back: 228, 252, 255;
 
     /* Borders */
-    --color-border1: 10, 30, 55;
+    --color-border1: 5, 18, 32;
     --color-border2: 141, 235, 235;
 
-    /* Content areas */
+    /* Content */
     --color-content-text: 20, 20, 20;
-    --color-content-bg: 226, 236, 236;
+    --color-content-bg: 233, 235, 255;
 
     /* Shadow */
     --color-shadow: 77, 88, 100;
   }
 
   .theme-coffee {
-    --color-primary: 241, 207, 137;
-    --color-secondary: 241, 177, 108;
+    --color-primary: 252, 205, 130;
+    --color-secondary: 238, 145, 45;
 
-    --color-button: 167, 101, 16;
-    --color-button-1: 73, 57, 32;
-    --color-button-2: 156, 111, 42;
-    --btn-grad-start: 241, 202, 158;
-    --btn-grad-end: 235, 200, 131;
+    --color-button-1: 207, 167, 104;
+    --color-button-2: 115, 73, 10;
+    --color-button-3: 237, 209, 173;
 
-    --color-text1: 31, 28, 20;
-    --color-text2: 70, 60, 51;
-    --color-text3: 243, 212, 187;
-    --color-contrast: 245, 229, 210;
-    --color-disable: 110, 96, 81;
+    --btn-grad-start-1: 241, 202, 158;
+    --btn-grad-end-1: 235, 200, 131;
+    --btn-grad-start-2: 45, 28, 15;
+    --btn-grad-end-2: 207, 167, 104;
 
-    --color-fill-1: 40, 24, 10;
-    --color-fill-2: 58, 35, 14;
+    --color-text1: 45, 30, 20;
+  --color-text2: 90, 70, 55;
+  --color-text3: 25, 15, 10;
+
+    --color-contrast: 207, 82, 78;
+    --color-disable: 160, 135, 110;
+
+    --color-fill-1: 55, 32, 16;
+    --color-fill-2: 40, 24, 10;
     --color-fill-3: 214, 169, 126;
     --color-fill-4: 230, 206, 159;
+    --color-fill-5: 30, 18, 10;
 
-    --color-back: 45, 30, 10;
+    --color-back: 35, 20, 10;
 
     --color-border1: 248, 177, 106;
     --color-border2: 78, 48, 19;
 
     --color-content-text: 230, 225, 210;
-    --color-content-bg: 55, 28, 15;
+  --color-content-bg: 55, 28, 15;
 
-    --color-shadow: 255, 228, 93;
+    --color-shadow: 180, 140, 90;
   }
 
   .theme-dark {
     --color-primary: 20, 20, 20;
     --color-secondary: 45, 45, 45;
 
-    --color-button: 70, 70, 70;
-    --color-button-1: 90, 90, 90;
-    --color-button-2: 50, 50, 50;
-    --btn-grad-start: 35, 35, 35;
-    --btn-grad-end: 65, 65, 65;
+    --color-button-1: 49, 50, 73;
+    --color-button-2: 227, 238, 255;
+    --color-button-3: 67, 57, 57;
+
+    --btn-grad-start-1: 35, 35, 35;
+    --btn-grad-end-1: 65, 65, 65;
+    --btn-grad-start-2: 20, 20, 20;
+    --btn-grad-end-2: 45, 45, 45;
 
     --color-text1: 235, 235, 235;
     --color-text2: 175, 175, 175;
     --color-text3: 15, 15, 15;
+
     --color-contrast: 85, 137, 235;
     --color-disable: 90, 90, 90;
 
@@ -92,14 +109,15 @@
     --color-fill-2: 25, 25, 25;
     --color-fill-3: 45, 45, 45;
     --color-fill-4: 15, 15, 15;
+    --color-fill-5: 10, 10, 10;
 
     --color-back: 15, 15, 15;
 
     --color-border1: 60, 60, 60;
     --color-border2: 140, 140, 140;
 
-    --color-content-text: 15, 15, 15;
-    --color-content-bg: 215, 218, 220;
+    --color-content-text: 215, 218, 220;
+    --color-content-bg: 25, 25, 25;
 
     --color-shadow: 0, 0, 0;
   }
@@ -108,15 +126,19 @@
     --color-primary: 245, 206, 220;
     --color-secondary: 223, 98, 150;
 
-    --color-button: 85, 12, 36;
-    --color-button-1: 235, 150, 210;
-    --color-button-2: 210, 100, 180;
-    --btn-grad-start: 223, 194, 208;
-    --btn-grad-end: 224, 113, 152;
+    --color-button-1: 245, 120, 182;
+    --color-button-2: 87, 16, 68;
+    --color-button-3: 247, 47, 114;
 
-    --color-text1: 80, 20, 40;
-    --color-text2: 120, 60, 90;
-    --color-text3: 248, 215, 226;
+    --btn-grad-start-1: 223, 194, 208;
+    --btn-grad-end-1: 224, 113, 152;
+    --btn-grad-start-2: 245, 206, 220;
+    --btn-grad-end-2: 223, 98, 150;
+
+    --color-text1: 60, 20, 40;
+  --color-text2: 110, 60, 80;
+  --color-text3: 40, 10, 25;
+
     --color-contrast: 39, 95, 37;
     --color-disable: 236, 170, 203;
 
@@ -124,14 +146,15 @@
     --color-fill-2: 112, 71, 89;
     --color-fill-3: 250, 215, 230;
     --color-fill-4: 255, 235, 245;
+    --color-fill-5: 60, 20, 25;
 
     --color-back: 63, 8, 45;
 
     --color-border1: 224, 119, 172;
     --color-border2: 94, 43, 62;
 
-    --color-content-text: 245, 230, 235;
-    --color-content-bg: 60, 20, 25;
+      --color-content-text: 245, 230, 235;
+  --color-content-bg: 60, 20, 25;
 
     --color-shadow: 247, 116, 169;
   }
@@ -140,15 +163,19 @@
     --color-primary: 5, 15, 43;
     --color-secondary: 16, 36, 65;
 
-    --color-button: 232, 239, 250;
-    --color-button-1: 152, 130, 243;
-    --color-button-2: 80, 63, 167;
-    --btn-grad-start: 30, 49, 97;
-    --btn-grad-end: 6, 11, 27;
+    --color-button-1: 102, 111, 58;
+    --color-button-2: 227, 247, 237;
+    --color-button-3: 22, 41, 71;
+
+    --btn-grad-start-1: 30, 49, 97;
+    --btn-grad-end-1: 6, 11, 27;
+    --btn-grad-start-2: 5, 15, 43;
+    --btn-grad-end-2: 16, 36, 65;
 
     --color-text1: 238, 244, 253;
     --color-text2: 180, 200, 230;
     --color-text3: 10, 15, 25;
+
     --color-contrast: 150, 255, 80;
     --color-disable: 80, 90, 110;
 
@@ -156,15 +183,53 @@
     --color-fill-2: 42, 61, 18;
     --color-fill-3: 13, 18, 54;
     --color-fill-4: 0, 1, 2;
+    --color-fill-5: 5, 10, 15;
 
-    --color-back: 255, 255, 255;
+    --color-back: 6, 11, 27;
 
     --color-border1: 18, 38, 80;
     --color-border2: 160, 235, 79;
 
-    --color-content-text: 24, 56, 50;
-    --color-content-bg: 208, 229, 243;
+    --color-content-text: 208, 229, 243;
+    --color-content-bg: 13, 18, 54;
 
     --color-shadow: 78, 189, 143;
+  }
+
+  .theme-forest {
+    --color-primary: 34, 85, 34;
+    --color-secondary: 60, 120, 60;
+
+    --color-button-1: 25, 55, 25;
+    --color-button-2: 50, 100, 50;
+    --color-button-3: 200, 240, 200;
+
+    --btn-grad-start-1: 60, 120, 60;
+    --btn-grad-end-1: 20, 60, 20;
+    --btn-grad-start-2: 10, 30, 10;
+    --btn-grad-end-2: 180, 220, 180;
+
+    --color-text1: 240, 255, 240;
+    --color-text2: 200, 230, 200;
+    --color-text3: 10, 40, 10;
+
+    --color-contrast: 120, 255, 120;
+    --color-disable: 50, 80, 50;
+
+    --color-fill-1: 20, 60, 20;
+    --color-fill-2: 10, 50, 10;
+    --color-fill-3: 230, 245, 230;
+    --color-fill-4: 15, 35, 15;
+    --color-fill-5: 5, 15, 5;
+
+    --color-back: 18, 40, 18;
+
+    --color-border1: 15, 40, 15;
+    --color-border2: 150, 230, 150;
+
+    --color-content-text: 20, 50, 20;
+    --color-content-bg: 200, 230, 200;
+
+    --color-shadow: 50, 90, 50;
   }
 }

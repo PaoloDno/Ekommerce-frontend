@@ -8,24 +8,27 @@ const CartHeaderCard = ({item}) => {
   const navigate = useNavigate();
 
   return (
-    <div key={item._id} className="flex flex-col items-center justify-between my-2"
+    <div key={item._id} className="header-cart-card"
       onClick={()=>{ navigate(`/product/${item.product._id}`) }}
     >
-      <div className="grid grid-cols-3 gap-2 space-x-2 bg-skin-primary text-skin-color1 rounded-xl overflow-hidden">
-        <span className="flex items-center w-24 h-24 rounded-md overflow-hidden">
+      <div className="relative grid grid-cols-[1fr_1fr_1.2fr] gap-1 space-x-2 w-full h-[75px] bg-skin-colorContent bg-opacity-75 text-skin-colorContent rounded-xl overflow-hidden in-center px-2">
+        <div className="absolute w-full h-full bg-gradient-primary-buttons-95 blur-sm -z-10"></div>
+        <span className="flex items-center w-[56px] h-[56px] rounded-md overflow-hidden in-center py-1">
           <ProductImages productImages={item.product.productImages} />
         </span>
-        <span className="flex flex-col col-span-2 px-2">
-          <span className="flex flex-row text-stylep2 items-start font-medium truncate">
+        <span className="flex flex-col px-2 ">
+          <span className="flex flex-row text-stylep4 items-start font-medium truncate">
             {item.name}
           </span>
-          <span  className="flex flex-row text-stylep2 gap-3 items-center justify-start">
+          <span  className="flex flex-row text-stylep4 gap-3 items-center justify-start">
             {item.product.averageRating} <FaStar />
           </span>
-          <span className="flex flex-row text-stylep3 items-center justify-start">
-            <span> PRICE: ₱ {item.price} </span>   
+        </span>
+        <span className="flex flex-col px-2">
+          <span className="flex flex-row text-stylep4 items-center justify-start">
+            <span>₱ {item.price} </span>   
           </span>
-          <span className="flex flex-row text-stylep3 items-center justify-start">
+          <span className="flex flex-row text-stylep4 items-center justify-start">
             <span> QTY: {item.quantity} </span>
           </span>
         </span>

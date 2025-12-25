@@ -7,15 +7,18 @@ import {
   FaShoppingCart,
   FaStore,
   FaSignOutAlt,
+  FaArrowAltCircleDown,
 } from "react-icons/fa";
 import ProfileImage from "../../ImagesComponent/components/ProfileImageComponent";
+
+/* headerStyles.css */
 
 const ProfileDropdown = () => {
   const [open, setOpen] = useState(false);
   const dropdownRef = useRef(null);
   const dispatch = useDispatch();
   const { profile } = useSelector((state) => state.auth || {});
-  const { userAvatar } = profile || {};
+  const { userAvatar, username } = profile || {};
 
   // Close dropdown when clicking outside
   useEffect(() => {
@@ -47,35 +50,43 @@ const ProfileDropdown = () => {
   };
 
   return (
-    <div className="relative flex items-start" ref={dropdownRef}>
+    <div
+      className="relative header-component-call-to-action-buttons-cart-component in-center"
+      ref={dropdownRef}
+    >
       <button
         onClick={() => setOpen((prev) => !prev)}
-        className="flex items-center justify-center w-10 h-10 rounded-full hover:bg-gray-200 transition-colors duration-200"
+        className="header-component-call-to-action-buttons-cart-icon in-center relative"
       >
-        <FaEllipsisV className="text-stylep2" />
+        <span className="flex w-[32px] h-[32px] rounded-full overflow-hidden bg-opacity-15">
+          <ProfileImage profileImage={userAvatar} />
+        </span>
+        <span className="header-component-call-to-action-buttons-cart-arrowdown">
+          <FaEllipsisV />{" "}
+        </span>
       </button>
 
       {open && (
-        <div
-          className="absolute right-0 mt-2 w-44 bg-white border border-gray-200 rounded-lg shadow-lg 
-                     z-50 grid grid-rows-auto overflow-hidden"
-        >
+        <div className="header-dropdowns relative">
           <Link
             to="/home"
-            className="grid grid-cols-[2rem_auto] items-center gap-2 px-4 py-2 hover:bg-gray-100 transition-all"
+            className="flex flex-col hover:bg-gray-100 items-center shadow-md justify-center border-2 border-skin-colorBorder1 border-opacity-25 rounded-xl p-1"
           >
+            <span className="flex text-stylep2 -mb-2"> Visit Profile </span>
+            <span className="grid grid-cols-[2rem_auto] items-center gap-2 px-4 py-2 -mb-1  transition-all">
             <span className="h-7 w-7 rounded-full overflow-hidden">
               <ProfileImage profileImage={userAvatar} />
             </span>
-            <span className="text-sm font-medium text-gray-800">Profile</span>
+            <span className="text-stylep3 font-medium text-gray-800">{username}</span>
+            </span>
           </Link>
 
           <Link
             to="/user-store"
-            className="grid grid-cols-[2rem_auto] items-center gap-2 px-4 py-2 hover:bg-gray-100 transition-all"
+            className="grid grid-cols-[2rem_auto] items-center gap-2 px-4 py-2 hover:bg-gray-100 transition-all text-stylep3"
           >
             <FaStore className="text-gray-700" />
-            <span className="text-sm font-medium text-gray-800">My Store</span>
+            <span className="text-stylep3 font-medium text-gray-800">My Store</span>
           </Link>
 
           <Link
@@ -96,10 +107,11 @@ const ProfileDropdown = () => {
 
           <button
             onClick={handleClickLogOutButton}
-            className="grid grid-cols-[2rem_auto] items-center gap-2 px-4 py-2 hover:bg-gray-100 transition-all w-full text-left"
+            className="absolute left-0 right-0 bottom-2 w-full flex-row flex items-center gap-2 px-3 py-2 justify-center bg-skin-primary bg-opacity-10 hover:bg-gray-400 transition-all"
           >
-            <FaSignOutAlt className="text-gray-700" />
-            <span className="text-sm font-medium text-gray-800">Log Out</span>
+            <span className="flex flex-row w-full text-stylep3 items-center justify-center font-medium text-gray-800">
+              Log Out <FaSignOutAlt className="text-gray-700 mx-2" />
+            </span>
           </button>
         </div>
       )}
