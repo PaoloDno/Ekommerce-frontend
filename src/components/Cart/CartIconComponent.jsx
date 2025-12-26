@@ -44,7 +44,7 @@ const CartIconComponent = () => {
         onClick={() => setOpen((prev) => !prev)}
         className="header-component-call-to-action-buttons-cart-icon in-center relative"
       >
-        <FaShoppingCart className="text-stylep2 box-content p-1 w-[32px] h-[32px]" />
+        <FaShoppingCart className="text-stylep2 box-content p-1" />
         <span className="header-component-call-to-action-buttons-cart-number">
           {totalItems > 0 ? totalItems : "0"}
         </span>
@@ -56,7 +56,7 @@ const CartIconComponent = () => {
           className="header-dropdowns"
         >
           {/* ITEMS */}
-          <div className="px-3 h-[245px] max-h-[245px] space-y-2 overflow-y-auto">
+          <div className="px-3 h-[320px] max-h-[320px] md:h-[245px] md:max-h-[245px] space-y-2 overflow-y-auto">
             {cartItems.length > 0 ? (
               cartItems.map((item) => (
                 <CartHeaderCard key={item._id || item.id} item={item} />

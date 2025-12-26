@@ -47,8 +47,8 @@ function SearchBar() {
   return (
     <div className="header-component-search" ref={dropdownRef}>
       <button onClick={() => setOpen((prev) => !prev)} className="text-skin-color1 cursor-pointer bg-opacity-10 
-      bg-skin-fill-3 ml-2 p-3 relative opacity-80 hover:opacity-100">
-        <FaSearch />
+      bg-skin-fill-3 ml-2 p-3 relative opacity-100 md:opacity-80 hover:opacity-100 text-stylep2">
+        <FaSearch className="text-stylep2"/>
       </button>
       {/* Dropdown */}
 
@@ -57,7 +57,7 @@ function SearchBar() {
           <select
             value={filter}
             onChange={(e) => setFilter(e.target.value)}
-            className="flex border text-skin-colorContent bg-skin-colorContent text-stylep2 rounded-md px-2 py-1 shadow-lg"
+            className="flex border text-skin-colorContent bg-skin-colorContent text-stylep3 rounded-md px-2 py-1 shadow-lg"
           >
             <option value="product">Product</option>
             <option value="category">Category</option>

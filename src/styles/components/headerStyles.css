@@ -1,29 +1,28 @@
 @tailwind components;
 
 @layer components {
-  
   /* header */
   .page-header-section {
-    @apply flex relative bg-skin-primary w-full z-20
+    @apply flex relative bg-skin-primary w-full z-20;
   }
 
   .page-header-section-4-desktop {
     @apply hidden relative md:grid w-4/5 md:w-[720px] lg:w-[1200px] justify-center 
     items-center h-[55px] grid-cols-[1fr_0.5fr_1.5fr_0.75fr] 
-    lg:grid-cols-[1fr_1fr_1fr_0.75fr] lg:space-x-4 
+    lg:grid-cols-[1fr_1fr_1fr_0.75fr] lg:space-x-4;
   }
   /* header 1 of 4 */
   .header-component-logo-section {
     @apply flex flex-row 
-    text-skin-color1 font-sans font-semibold text-styleh4 ml-2 h-full
+    text-skin-color1 font-sans font-semibold text-styleh4 ml-2 h-full;
   }
   .header-component-icon-logo {
     @apply h-[32px] w-[32px] bg-cover mx-2;
   }
-  
+
   /* header 2 of 4 */
   .header-component-search {
-    @apply flex; 
+    @apply flex;
   }
 
   .header-component-search-bar {
@@ -38,11 +37,7 @@
   .header-component-search-input {
     @apply flex w-full text-stylep3 border-b-skin-colorBorder1 px-1 pb-0 pt-1 bg-skin-colorContent text-skin-colorContent flex-1
     focus:bg-white focus:text-black transition-all duration-300 ease-in-out;
-    ;
   }
-
-
-
 
   /* header 3 of 4 */
   .header-component-navigation {
@@ -50,24 +45,19 @@
   }
   .header-component-navigation-link {
     @apply flex justify-center items-center w-1/3 bg-skin-primary 
-    text-skin-color1 opacity-90 hover:opacity-100 ease-in-out
+    text-skin-color1 md:opacity-90 hover:opacity-100 ease-in-out
     underline-offset-4 underline
-    hover:text-skin-color2
-    ;
+    hover:text-skin-color2;
   }
-  
-  
-  
 
-  
   /* header 4 of 4 */
-  .header-component-call-to-action{
+  .header-component-call-to-action {
     @apply flex flex-row px-1 gap-1 w-full;
   }
 
   .header-component-call-to-action-buttons {
-    @apply flex rounded-md py-1 px-1 text-stylep3 border-skin-colorBorder1 text-skin-color1 w-[90px]
-    opacity-80 hover:opacity-100 transition-all duration-300 ease-in-out;
+    @apply flex rounded-md py-1 px-1 text-stylep3 border-skin-colorBorder1 border-opacity-30 text-skin-color1 w-[75px]
+    md:opacity-90 hover:opacity-100 transition-all duration-300 ease-in-out border-r-2 border-b-2;
   }
 
   /* cart icon */
@@ -76,7 +66,7 @@
   }
   .header-component-call-to-action-buttons-cart-icon {
     @apply flex flex-row p-1 px-0 relative text-skin-color1 text-stylep1 
-    opacity-80 hover:opacity-100 transition-all duration-300 ease-in-out
+    md:opacity-80 hover:opacity-100 transition-all duration-300 ease-in-out
     w-[30px] h-[27px] bg-gray-200 bg-opacity-5 
     box-content;
   }
@@ -94,23 +84,41 @@
     flex items-center justify-center;
   }
   .header-dropdowns {
-    @apply absolute right-2 top-8 mt-2 w-[240px] h-[360px] bg-white border border-gray-200 rounded-lg shadow-lg 
-      z-30 overflow-hidden text-slate-900 p-2;
+    @apply /* MOBILE (below md) */
+    fixed right-2 top-16
+    w-80 h-[70vh]
+
+    /* DESKTOP (md and up) */
+    md:absolute md:right-2 md:top-8 md:mt-2
+    md:w-[240px] md:h-[360px]
+
+    bg-white  rounded-lg shadow-lg
+    z-30 overflow-hidden text-slate-900 p-2 border border-opacity-55 
+    border-skin-colorBorder2;
   }
 
   /* cart header card*/
   .header-cart-card {
-    @apply flex flex-col font-Receipt items-center justify-between my-2 w-full h-[75px] overflow-hidden;
+    @apply flex flex-col font-Receipt items-center w-full h-[75px] 
+    overflow-hidden ;
   }
 
   /* mobile header design */
   .page-header-section-4-mobile {
-    @apply grid grid-cols-[1fr_2fr_2fr] md:hidden w-full relative text-skin-color1 font-sans;
+    @apply flex items-center justify-between md:hidden h-[40px] pt-[3%] 
+    py-3 box-content w-full relative text-skin-color1 font-sans;
   }
 
   .bottom-navigation-4-mobile {
-    @apply fixed bottom-2 left-1/2 -translate-x-1/2 z-50 
-  bg-white bg-opacity-80 border rounded-xl overflow-hidden h-[56px] w-[90%] shadow-lg grid-cols-4
+    @apply fixed md:hidden bottom-2 left-1/2 -translate-x-1/2 z-50 
+    bg-skin-primary bg-opacity-80 border rounded-xl overflow-hidden 
+    h-[56px] w-[90%] shadow-lg grid-cols-4;
   }
 
+  .mobile-action-button {
+    @apply flex rounded-md py-1 px-1 text-stylep4 border-skin-colorBorder1 
+    border-opacity-30 text-skin-color1 w-fit
+    opacity-90 hover:opacity-100 transition-all duration-300 ease-in-out 
+    border-r-2 border-b-2 gap-2;
+  }
 }

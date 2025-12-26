@@ -1,6 +1,12 @@
 import { Link, useNavigate } from "react-router-dom";
 import { useAppContext } from "../../context/AppContext";
-import { FaHome, FaStore, FaShoppingBag, FaSearch } from "react-icons/fa";
+import {
+  FaHome,
+  FaStore,
+  FaShoppingBag,
+  FaSearch,
+  FaUser,
+} from "react-icons/fa";
 import { useSelector } from "react-redux";
 
 import logoB from "./HeaderComponents/images/EkommerceLogo.png";
@@ -83,43 +89,44 @@ export default function HeaderComponent() {
         </div>
       </div>
 
-      <div className="page-header-section-4-mobile in-center px-2">
+      <div className="page-header-section-4-mobile er px-2">
         <h1
           className="flex flex-row in-center text-skin-color1 
-          font-bold text-stylep2 gap-1"
+          font-bold text-stylep2 gap-1 "
         >
-          <span className="flex in-center w-[32px] h-[32px]">
+          <span className="flex h-[38px] w-[38px] mx-1 in-center">
             <img
               src={logoB}
               alt="Ekommerce title logo"
-              className="h-[38px] w-[38px] mx-2"
+              className="flex h-[38px] w-[38px]"
             />
           </span>
-          <span className="flex mx-2">{brandName}</span>
+          <span className="flex">{brandName}</span>
         </h1>
+        <span className="hidden md:flex">
         <SearchBar />
-        {/** 
-        <nav className="flex justify-around relative text-skin-color1 text-stylep1 mt-2">
-          {navLinks.map(({ to, label, icon }) => (
-            <Link key={to} to={to} className="header-link space-x-2">
-              <span>{icon}</span>
-              <span>{label}</span>
-            </Link>
-          ))}
-        </nav>
-        */}
+        </span>
+        <div className="mobile-action-button  mx-2">
+          {!token ? (
+            <>
+              <SearchBar />
+            </>
+          ) : (
+            <>
+              <CartIconComponent cart={items} />
 
-        <AuthButtons />
+              <div className="flex in-center py-1 px-2 text-skin-color1 text-stylep2">
+                <ProfileDropdown />
+              </div>
+            </>
+          )}
+        </div>
       </div>
 
-      <div
-        className="bottom-navigation-4-mobile"
-      >
+      <div className="bottom-navigation-4-mobile">
         <div className="absolute inset-0 w-full h-full bg-gradient-primary-buttons-85 p-2 -z-10 bg-opacity-80 backdrop-blur-md"></div>
         <ul className="flex h-full items-center justify-around text-skin-colorContent bg-skin-colorContent bg-opacity-75">
-          <Link className="flex flex-col items-center text-xs"
-            to="/"
-          >
+          <Link className="flex flex-col items-center text-xs" to="/">
             <FaHome />
             <span>Home</span>
           </Link>
@@ -131,11 +138,24 @@ export default function HeaderComponent() {
             <FaShoppingBag />
             <span>Products</span>
           </Link>
-          <Link className="flex flex-col items-center text-xs w-[42px] h-[42px]
-           rounded-full overflow-hidden" to="/home">
-            <ProfileImage size="sm" />
+          
+          {token ? 
+          <Link
+            className="flex flex-col items-center text-xs"
+            to="/home"
+          >
+            <FaUser />
             <span>Profile</span>
           </Link>
+          : 
+          <Link
+            className="flex flex-col items-center text-xs"
+            to="/login"
+          >
+            <FaUser />
+            <span>LOGIN</span>
+          </Link>
+          }
         </ul>
       </div>
     </header>
