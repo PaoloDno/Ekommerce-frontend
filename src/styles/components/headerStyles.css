@@ -94,7 +94,7 @@
 
     bg-white  rounded-lg shadow-lg
     z-30 overflow-hidden text-slate-900 p-2 border border-opacity-55 
-    border-skin-colorBorder2;
+    border-skin-colorBorder2 justify-between;
   }
 
   /* cart header card*/
@@ -111,8 +111,8 @@
 
   .bottom-navigation-4-mobile {
     @apply fixed md:hidden bottom-2 left-1/2 -translate-x-1/2 z-50 
-    bg-skin-primary bg-opacity-80 border rounded-xl overflow-hidden 
-    h-[56px] w-[90%] shadow-lg grid-cols-4;
+    bg-skin-primary bg-opacity-80 border-2 border-b-4 border-r-4 rounded-xl overflow-hidden
+    h-[10vh] w-[90%] shadow-lg grid-cols-4;
   }
 
   .mobile-action-button {

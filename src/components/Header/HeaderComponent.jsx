@@ -113,6 +113,7 @@ export default function HeaderComponent() {
             </>
           ) : (
             <>
+              <SearchBar />
               <CartIconComponent cart={items} />
 
               <div className="flex in-center py-1 px-2 text-skin-color1 text-stylep2">
@@ -127,15 +128,15 @@ export default function HeaderComponent() {
         <div className="absolute inset-0 w-full h-full bg-gradient-primary-buttons-85 p-2 -z-10 bg-opacity-80 backdrop-blur-md"></div>
         <ul className="flex h-full items-center justify-around text-skin-colorContent bg-skin-colorContent bg-opacity-75">
           <Link className="flex flex-col items-center text-xs" to="/">
-            <FaHome />
+            <FaHome size={17}/>
             <span>Home</span>
           </Link>
           <Link className="flex flex-col items-center text-xs" to="/stores">
-            <FaStore />
+            <FaStore size={17}/>
             <span>Stores</span>
           </Link>
           <Link className="flex flex-col items-center text-xs" to="products">
-            <FaShoppingBag />
+            <FaShoppingBag size={17}/>
             <span>Products</span>
           </Link>
           
@@ -144,7 +145,7 @@ export default function HeaderComponent() {
             className="flex flex-col items-center text-xs"
             to="/home"
           >
-            <FaUser />
+            <FaUser size={17}/>
             <span>Profile</span>
           </Link>
           : 
@@ -152,7 +153,7 @@ export default function HeaderComponent() {
             className="flex flex-col items-center text-xs"
             to="/login"
           >
-            <FaUser />
+            <FaUser size={17} />
             <span>LOGIN</span>
           </Link>
           }

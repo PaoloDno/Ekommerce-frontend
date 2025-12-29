@@ -40,6 +40,12 @@ export default function ThemeSwitcher() {
         >
           <FaPalette className="mr-1" />
         </button>
+        <button
+          onClick={() => changeTheme("forest")}
+          className="theme-forest themes-buttons"
+        >
+          <FaPalette className="mr-1" />
+        </button>
       </div>
       <span className="flex text-styleh4 text-skin-color1">{current}</span>
     </div>

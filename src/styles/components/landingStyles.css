@@ -1,0 +1,20 @@
+@tailwind components;
+
+@layer components {
+  
+  .landing-page-section-mobile {
+    @apply flex flex-col w-full  z-0 min-h-screen md:hidden;
+  }
+  
+  .landing-hero-section-mobile {
+    @apply flex flex-row w-full h-[75vh] relative
+    text-skin-color1 text-styleh3 font-accent;
+  }
+
+  .landing-hero-slide-button {
+    @apply absolute flex px-3 py-10 bg-slate-200 bg-opacity-20 top-1/2 
+    -translate-y-1/2 opacity-10 z-40 
+    text-skin-color1 w-[100px];
+  }
+
+}

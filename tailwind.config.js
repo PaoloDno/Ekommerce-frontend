@@ -63,6 +63,8 @@ export default {
           "linear-gradient(110deg, rgb(var(--btn-grad-start-1)) 0%, rgb(var(--btn-grad-end-1)) 95%, rgb(var(--color-primary)) 100%)",
         "gradient-primary-buttons-95":
           "linear-gradient(95deg, rgb(var(--btn-grad-start-1)) 0%, rgb(var(--btn-grad-end-1)) 95%, rgb(var(--color-primary)) 100%)",
+        "gradient-back-transparent":
+          "linear-gradient(0deg, rgb(var(--color-back), 0.8 ) 0%, transparent 50%, rgb(var(--color-primary), 0.5) 100%)",
       },
       borderColor: {
         skin: {

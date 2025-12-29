@@ -70,7 +70,7 @@ const CartIconComponent = () => {
 
           {/* TOTAL + ACTIONS */}
           {cartItems.length > 0 && (
-            <div className="flex flex-col w-full p-4 bg-skin-colorContent text-skin-colorContent rounded-lg 
+            <div className="flex flex-col mt-auto w-full p-4 bg-skin-colorContent text-skin-colorContent rounded-lg 
               border border-skin-colorBorder1 shadow-lg bg-opacity-80 relative">
               <div className="absolute inset-0 w-full h-full bg-skin-colorContent bg-opacity-35 -z-10 blur-md"></div>
               <p className="flex justify-between font-semibold text-skin-colorContent ">
