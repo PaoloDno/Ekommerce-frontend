@@ -71,16 +71,12 @@ const LandingHeroComponent = ({ tagline, caption }) => {
     <div className="landing-hero-section-mobile relative">
       <div className="absolute inset-0 bottom-0 h-[30vh] bg-gradient-back-transparent w-full  -z-10" />
 
-      <div className="relative top-2 w-full h-[55vh] z-10">
+      <div className="relative top-2 w-full h-[53vh] z-10 ">
         <LandingHeroCarouselComponent
           items={heroItems}
           itemsPerView={1}
         />
 
-        {/* gradient overlay */}
-        <div className="flex text-black relative w-full h-[40vh] items-center justify-center -z-10 bg-yellow-200">
-          feature post sadasda
-        </div>
       </div>
     </div>
   );

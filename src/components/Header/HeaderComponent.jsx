@@ -26,6 +26,8 @@ export default function HeaderComponent() {
 
   const brandName = "Ekommerce";
 
+  const navigate = useNavigate();
+
   const navLinks = [
     { to: "/", label: "Home", icon: <FaHome /> },
     { to: "/stores", label: "Stores", icon: <FaStore /> },
@@ -92,7 +94,7 @@ export default function HeaderComponent() {
       <div className="page-header-section-4-mobile er px-2">
         <h1
           className="flex flex-row in-center text-skin-color1 
-          font-bold text-stylep2 gap-1 "
+          font-bold text-stylep2 gap-1 cursor-pointer" onClick={() => navigate("/")}
         >
           <span className="flex h-[38px] w-[38px] mx-1 in-center">
             <img
@@ -101,10 +103,10 @@ export default function HeaderComponent() {
               className="flex h-[38px] w-[38px]"
             />
           </span>
-          <span className="flex">{brandName}</span>
+          <span className="flex font-sans">{brandName}</span>
         </h1>
         <span className="hidden md:flex">
-        <SearchBar />
+          <SearchBar />
         </span>
         <div className="mobile-action-button  mx-2">
           {!token ? (
@@ -128,35 +130,29 @@ export default function HeaderComponent() {
         <div className="absolute inset-0 w-full h-full bg-gradient-primary-buttons-85 p-2 -z-10 bg-opacity-80 backdrop-blur-md"></div>
         <ul className="flex h-full items-center justify-around text-skin-colorContent bg-skin-colorContent bg-opacity-75">
           <Link className="flex flex-col items-center text-xs" to="/">
-            <FaHome size={17}/>
+            <FaHome size={17} />
             <span>Home</span>
           </Link>
           <Link className="flex flex-col items-center text-xs" to="/stores">
-            <FaStore size={17}/>
+            <FaStore size={17} />
             <span>Stores</span>
           </Link>
           <Link className="flex flex-col items-center text-xs" to="products">
-            <FaShoppingBag size={17}/>
+            <FaShoppingBag size={17} />
             <span>Products</span>
           </Link>
-          
-          {token ? 
-          <Link
-            className="flex flex-col items-center text-xs"
-            to="/home"
-          >
-            <FaUser size={17}/>
-            <span>Profile</span>
-          </Link>
-          : 
-          <Link
-            className="flex flex-col items-center text-xs"
-            to="/login"
-          >
-            <FaUser size={17} />
-            <span>LOGIN</span>
-          </Link>
-          }
+
+          {token ? (
+            <Link className="flex flex-col items-center text-xs" to="/home">
+              <FaUser size={17} />
+              <span>Profile</span>
+            </Link>
+          ) : (
+            <Link className="flex flex-col items-center text-xs" to="/login">
+              <FaUser size={17} />
+              <span>LOGIN</span>
+            </Link>
+          )}
         </ul>
       </div>
     </header>

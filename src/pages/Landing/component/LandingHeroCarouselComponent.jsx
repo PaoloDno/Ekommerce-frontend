@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import { FaArrowCircleLeft, FaArrowCircleRight } from "react-icons/fa";
 import { useTheme } from "../../../context/ThemeContext";
 import { useSelector } from "react-redux";
@@ -10,6 +10,8 @@ const LandingHeroCarouselComponent = ({
   interval = 10500,
 }) => {
   const [currentIndex, setCurrentIndex] = useState(0);
+  const carouselRef = useRef(null);
+  const [isVisible, setIsVisible] = useState(false);
 
   const totalItems = items.length;
   const maxIndex = Math.max(0, totalItems - itemsPerView);
@@ -27,26 +29,49 @@ const LandingHeroCarouselComponent = ({
   };
 
   useEffect(() => {
-    if (totalItems <= 1) return;
+    if (!carouselRef.current) return;
 
-    const timer = setInterval(nextSlide, interval);
-    return () => clearInterval(timer);
-  }, [interval, totalItems, maxIndex]);
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        setIsVisible(entry.isIntersecting);
+      },
+      {
+        root: null,
+        rootMargin: "0px 0px -20% 0px", // activates earlier
+        threshold: 0.2, // LESS strict
+      }
+    );
+
+    observer.observe(carouselRef.current);
+
+    return () => observer.disconnect();
+  }, []);
 
   useEffect(() => {
+    if (!isVisible || totalItems <= 1) return;
+
+    const timer = setInterval(() => {
+      setCurrentIndex((index) => (index === maxIndex ? 0 : index + 1));
+    }, interval);
+
+    return () => clearInterval(timer);
+  }, [interval, totalItems, maxIndex, isVisible]);
+
+  useEffect(() => {
+    if (!isVisible) return;
+
     const activeItem = items[currentIndex];
     if (activeItem?.theme) {
       changeTheme(activeItem.theme);
-      console.log("Theme changed to:", activeItem.theme);
     }
-  }, [currentIndex, items, changeTheme]);
+  }, [currentIndex, items, changeTheme, isVisible]);
 
   if (!totalItems) return null;
 
   const activeItem = items[currentIndex];
 
   return (
-    <div className="relative w-full h-full overflow-hidden">
+    <div className="relative w-full h-full overflow-hidden" ref={carouselRef}>
       {/* ARROWS */}
       <button onClick={prevSlide} className="landing-hero-slide-button left-1">
         <FaArrowCircleLeft size={28} />
@@ -116,7 +141,8 @@ const LandingHeroCarouselComponent = ({
       <div className="w-full text-stylep4 h-[10vh] p-2 flex flex-row justify-center px-4">
         {!token ? (
           <span className="flex flex-col in-center text-sm text-skin-color1 opacity-90">
-            <Link className="bg-skin-fill-3 rounded-3xl text-skin-colorHigh p-2 px-4 "
+            <Link
+              className="bg-skin-fill-3 rounded-3xl text-skin-colorHigh p-2 px-4 "
               to="/login"
             >
               Sign in

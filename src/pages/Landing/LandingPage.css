@@ -8,6 +8,7 @@
       bg-opacity-15 md:-mt-5 -mt-8;
   }
 
+ /*
   .feature-card {
     @apply relative flex flex-col p-3 md:p-5 pb-5 md:pb-8 w-full min-h-[40vh]
       bg-skin-colorContent text-skin-colorContent shadow-xl
@@ -36,4 +37,5 @@
       hover:shadow-md hover:bg-skin-fill-3 transition-all duration-500
       hover:bg-opacity-90 hover:scale-x-110 p-2 rounded-lg;
   }
+      */
 }

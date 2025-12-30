@@ -1,3 +1,4 @@
+import LandingFeatureComponent from "./component/LandingFeatures";
 import LandingHeroComponent from "./component/LandingHeroComponent";
 
 const LandingPage = () => {
@@ -7,11 +8,9 @@ const LandingPage = () => {
       <div className="page-body-section in-center">        
         <div className="landing-page-section-mobile">
           <LandingHeroComponent />
+          <LandingFeatureComponent />
         </div>
       </div>
-      {/*
-      <div className="page-background"></div>
-      */}
     </div>
   );
 };

@@ -1,7 +1,7 @@
 import React from "react";
 import img from "./LandingImage/carousel.jpg";
 
-const LandingFeatureComponent = () => {
+const LandingPageFeatureComponent = () => {
   return (
     <div className="feature-page-content text-skin-colorDis pb-10">
       <div className="feature-card">
@@ -62,4 +62,4 @@ const LandingFeatureComponent = () => {
   );
 };
 
-export default LandingFeatureComponent;
+export default LandingPageFeatureComponent;

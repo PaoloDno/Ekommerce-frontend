@@ -7,7 +7,7 @@
   }
   
   .landing-hero-section-mobile {
-    @apply flex flex-row w-full h-[75vh] relative
+    @apply flex flex-row w-full h-[65vh] relative
     text-skin-color1 text-styleh3 font-accent;
   }
 
@@ -17,4 +17,28 @@
     text-skin-color1 w-[100px];
   }
 
+  .landing-feature-page-content {
+    @apply flex flex-col md:grid md:grid-cols-2 gap-2;
+  }
+
+  .landing-feature-card {
+    @apply relative flex flex-col py-2 px-3 pb-4 md:pb-6 w-full h-[42vh]
+    bg-skin-colorContent text-skin-colorContent shadow-2xl rounded-xl md:rounded-md
+    items-center overflow-hidden justify-evenly font-sans;
+  }
+
+  .landing-feature-card-image {
+    @apply flex relative justify-center items-center w-full h-4/5
+    overflow-hidden rounded-md;
+  }
+
+  .landing-feature-gradient {
+    @apply absolute bottom-0 bg-gradient-back-transparent opacity-70 w-full h-full;
+  }
+
+  .landing-feature-link {
+    @apply flex flex-row px-2 py-1 items-center justify-center 
+    text-stylep3 bg-skin-fill-3 text-skin-colorHigh rounded-xl
+    border-b-2 border-r-2;
+  }
 }

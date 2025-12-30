@@ -17,6 +17,28 @@ refactored component styles
   }
 }
 
+@keyframes slideFadeIn {
+  from {
+    transform: translateX(-24px);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+@keyframes slideFadeOut {
+  from {
+    transform: translateX(0);
+    opacity: 1;
+  }
+  to {
+    transform: translateX(24px);
+    opacity: 0;
+  }
+}
+
 @tailwind components;
 
 @layer components {
@@ -58,4 +80,21 @@ refactored component styles
   .bg-grad-custom-2 {
     @apply bg-gradient-to-r to-skin-start from-skin-end;
   }
+
+
+  /** ANIMATE */
+
+  .animate-slide-fade-in {
+    animation: slideFadeIn 0.45s ease-out forwards;
+  }
+
+  .animate-slide-fade-out {
+    animation: slideFadeOut 0.35s ease-in forwards;
+  }
+
+  /* Optional stagger helpers */
+  .delay-1 { animation-delay: 80ms; }
+  .delay-2 { animation-delay: 160ms; }
+  .delay-3 { animation-delay: 240ms; }
+  .delay-4 { animation-delay: 320ms; }
 }
