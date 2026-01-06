@@ -52,6 +52,9 @@ export default {
           "fill-4": withOpacity("--color-fill-4"),
           "color-back": withOpacity("--color-back"),
           colorContent: withOpacity("--color-content-bg"),
+          green: withOpacity("--color-green"),
+          red: withOpacity("--color-red"),
+          cart: withOpacity("--color-cart"),
         },
       },
       backgroundImage: {

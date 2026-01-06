@@ -1,4 +1,4 @@
-import LandingFeatureComponent from "./component/LandingFeatures";
+import LandingFeatureRows from "./component/LandingFeatureDesktop";
 import LandingHeroComponent from "./component/LandingHeroComponent";
 
 const LandingPage = () => {
@@ -6,9 +6,9 @@ const LandingPage = () => {
   return (
     <div className="page-body-background in-center">
       <div className="page-body-section in-center">        
-        <div className="landing-page-section-mobile">
+        <div className="flex flex-col w-full  z-0 min-h-screen">
           <LandingHeroComponent />
-          <LandingFeatureComponent />
+          <LandingFeatureRows />
         </div>
       </div>
     </div>

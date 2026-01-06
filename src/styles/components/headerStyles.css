@@ -86,11 +86,11 @@
   .header-dropdowns {
     @apply /* MOBILE (below md) */
     fixed right-2 top-16
-    w-80 h-[70vh]
+    w-80 h-[75vh]
 
     /* DESKTOP (md and up) */
     md:absolute md:right-2 md:top-8 md:mt-2
-    md:w-[240px] md:h-[360px]
+    md:w-[340px] md:h-[560px] md:max-h-[70vh]
 
     bg-white  rounded-lg shadow-lg
     z-30 overflow-hidden text-slate-900 p-2 border border-opacity-55 
@@ -99,7 +99,7 @@
 
   /* cart header card*/
   .header-cart-card {
-    @apply flex flex-col font-Receipt items-center w-full h-[75px] 
+    @apply flex flex-col font-Receipt items-center w-full h-[15vh] 
     overflow-hidden ;
   }
 

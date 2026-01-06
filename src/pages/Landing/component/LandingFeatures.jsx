@@ -10,9 +10,11 @@ const LandingFeatureComponent = () => {
     return FEATURE_CONFIG[current] || FEATURE_CONFIG.default;
   }, [current]);
 
-  const FeatureCard = ({ title, image, link }) => {
+  const FeatureCard = ({ title, image, link, index}) => {
+    console.log("index: ", index);
+    
     return (
-      <div className="landing-feature-card">
+      <div className={`landing-feature-card`}>
         <div className="landing-feature-card-image in-center">
           <img src={image} alt={title} className="bg-cover object-cover" />
           <div className="landing-feature-gradient z-20" />
@@ -29,10 +31,11 @@ const LandingFeatureComponent = () => {
   };
 
   return (
-    <div className="flex flex-col md:grid md:grid-cols-2 space-y-3 gap-2 ">
+    <div className="landing-feature-page-content">
       {features.map((item, index) => (
         <FeatureCard
           key={index}
+          index={index}
           title={item.title}
           image={item.image}
           link={item.link}

@@ -56,13 +56,13 @@ const CartIconComponent = () => {
           className="header-dropdowns"
         >
           {/* ITEMS */}
-          <div className="px-3 h-[320px] max-h-[320px] md:h-[245px] md:max-h-[245px] space-y-2 overflow-y-auto">
+          <div className="px-3 h-[55vh] md:h-[375px] space-y-1 overflow-y-auto bg-yellow-200 bg-opacity-25">
             {cartItems.length > 0 ? (
               cartItems.map((item) => (
                 <CartHeaderCard key={item._id || item.id} item={item} />
               ))
             ) : (
-              <p className="text-gray-500 text-sm text-center py-6">
+              <p className="text-gray-500 text-sm text-center in-center py-1">
                 Your cart is empty.
               </p>
             )}
@@ -70,10 +70,11 @@ const CartIconComponent = () => {
 
           {/* TOTAL + ACTIONS */}
           {cartItems.length > 0 && (
-            <div className="flex flex-col mt-auto w-full p-4 bg-skin-colorContent text-skin-colorContent rounded-lg 
+            <div className="flex flex-col mt-auto w-full h-[18vh] md:h-[90px] px-2 p-1 bg-skin-colorContent 
+              text-skin-colorContent rounded-lg 
               border border-skin-colorBorder1 shadow-lg bg-opacity-80 relative">
-              <div className="absolute inset-0 w-full h-full bg-skin-colorContent bg-opacity-35 -z-10 blur-md"></div>
-              <p className="flex justify-between font-semibold text-skin-colorContent ">
+              <div className="absolute inset-0 w-full h-full bg-skin-colorContent bg-opacity-35 -z-10 blur-md" />
+              <p className="flex flex-row justify-between font-semibold text-skin-colorContent ">
                 <span>Total:</span>
                 <span>₱{totalSumsOfItems.toFixed(2)}</span>
               </p>

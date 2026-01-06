@@ -66,7 +66,7 @@ export default function HeaderComponent() {
   return (
     <header className="in-center page-header-section style-primary">
       <div className="page-header-section-4-desktop in-center">
-        <div className="header-component-logo-section in-center style-primary">
+        <div className="header-component-logo-section in-center style-primary cursor-pointer" onClick={() => navigate("/")}>
           <span className="flex flex-row cursor-pointer gap-1 items-center justify-center overflow-hidden">
             <img
               src={logoB}

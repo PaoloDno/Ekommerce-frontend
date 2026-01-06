@@ -19,46 +19,46 @@ const ProductCards = ({ product }) => {
 
   return (
     <div
-      className="flex flex-col rounded-xl bg-white shadow-sm 
-                 hover:shadow-md transition cursor-pointer
-                 p-3 w-full min-h-[320px] max-h-[380px] overflow-hidden"
+      className="flex flex-col rounded-xl bg-skin-colorContent shadow-sm text-skin-colorContent font-display
+                 transition cursor-pointer pt-0 px-0 pb-2 w-full min-h-[320px] max-h-[380px] overflow-hidden"
       onClick={() => navigate(`/product/${product._id}`)}
     >
       {/* Image */}
-      <div className="w-full h-[140px] flex justify-center items-center overflow-hidden">
+      <div className="w-full h-[212px] flex justify-center items-center overflow-hidden">
         <ProductImages productImages={productImage} />
       </div>
 
       {/* Content */}
-      <div className="mt-2 space-y-1 flex flex-col gap-1 text-gray-800">
+      <div className="flex flex-col gap-1 px-2 h-[105px] overflow-hidden">
         {/* Product Name */}
-        <span className="truncate font-semibold text-stylep2 leading-tight">
+        <span className="truncate font-semibold text-stylep3 leading-tight">
           {name}
         </span>
 
         {/* Rating Row */}
-        <span className="grid grid-cols-[1fr_2fr_2fr] items-center gap-1 text-stylep3">
-          <span className="flex flex-row items-center justify-start">{averageRating || 0}
-          <FaStar className="text-yellow-400 w-3 h-3" />
+        <span className="grid grid-cols-[1fr_1.5fr] items-center space-x-1 text-stylep3 w-full px-1">
+          <span className="flex flex-row items-center justify-start w-full">
+            {averageRating || 0}
+            <FaStar className="text-yellow-400 w-3 h-3" />
           </span>
-          <span className="text-gray-500 text-[0.75rem]">
+          <span className="flex flex-row text-[0.75rem] items-center justify-end w-full text-end">
             ({numOfReviews || 0}) reviews
           </span>
         </span>
 
-        {/* Price */}
-        <span className="text-skin-colorContent text-stylep2 font-bold">
-          ₱{price}
+        <span className="grid grid-cols-[2fr_1fr] items-center space-x-1 text-stylep3 px-1">
+          {/* Price */}
+          <span className="text-skin-colorContent text-stylep3 font-bold w-full font-accent">
+            ₱{price}
+          </span>
+          <span className="truncate text-stylep4 w-full justify-center items-center text-end">{category?.name}</span>
         </span>
 
-        {/* Store + Category */}
-        <span className="truncate text-stylep3 text-gray-600">
-          {seller?.storeName} • {category?.name}
-        </span>
+        <span className="grid grid-cols-2 items-center space-x-1 text-stylep3 px-1">
+          {/* Store + Category */}
+          <span className="truncate text-stylep4 w-full">{seller?.storeName}</span>
 
-        
-        <span className="truncate text-stylep3 text-gray-700">
-          In stocks - {stock}
+          <span className="truncate text-stylep4 w-full text-end">{stock} -stocks</span>
         </span>
       </div>
     </div>

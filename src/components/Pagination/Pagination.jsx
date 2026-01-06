@@ -32,8 +32,8 @@ const  PaginationComponent = ({pagination, onPageCHange}) => {
   };
 
   return (
-    <div className="w-full flex-col">
-    <div className="flex flex-wrap items-center justify-center space-x-1 text-skin-primary mt-6">
+    <div className="w-full flex-col my-2 lg:flex lg:col-span-2">
+    <div className="flex flex-wrap items-center justify-center space-x-1 text-skin-primary mt-6 mb-2 text-skin-color1">
       {/* Prev button */}
       <button
         onClick={() => handlePageChange(currentPage - 1)}
@@ -49,7 +49,7 @@ const  PaginationComponent = ({pagination, onPageCHange}) => {
         <>
           <button
             onClick={() => handlePageChange(1)}
-            className="px-3 py-1 border rounded bg-skin-button-primary hover:bg-skin-button-secondary transition"
+            className="px-3 py-1 border rounded bg-skin-button-primary hover:bg-skin-button-secondary transition text-skin-color1"
           >
             1
           </button>
@@ -81,7 +81,7 @@ const  PaginationComponent = ({pagination, onPageCHange}) => {
           )}
           <button
             onClick={() => handlePageChange(totalPages)}
-            className="px-3 py-1 border rounded bg-skin-button-primary hover:bg-skin-button-secondary transition"
+            className="px-3 py-1 border rounded bg-skin-button-primary text-skin-color1 hover:bg-skin-button-secondary transition"
           >
             {totalPages}
           </button>
@@ -92,13 +92,13 @@ const  PaginationComponent = ({pagination, onPageCHange}) => {
       <button
         onClick={() => handlePageChange(currentPage + 1)}
         disabled={currentPage === totalPages}
-        className="px-3 py-1 border rounded bg-skin-button-primary disabled:opacity-50 hover:bg-skin-button-secondary transition"
+        className="px-3 py-1 border rounded bg-skin-button-primary text-skin-color1 disabled:opacity-50 hover:bg-skin-button-secondary transition"
         aria-label="Next page"
       >
         Next
       </button>
     </div>
-    <span className="flex justify-center items-center flex-row text-stylep3 opacity-80">
+    <span className="flex justify-center items-center flex-row text-stylep3 text-skin-color1 opacity-80">
       there are total of {totalCounts} items.
     </span>
     </div>

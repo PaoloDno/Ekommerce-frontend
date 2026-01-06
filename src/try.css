@@ -1,81 +1,90 @@
 @layer base {
   :root {
-    --shadow-color: rgb(0, 0, 0);
+    --color-shadow: rgb(0, 0, 0);
   }
 
   /* ===================== DEFAULT ===================== */
   .theme-default {
-    --color-primary: rgb(30, 70, 139);
-    --color-secondary: rgb(31, 96, 189);
+  --color-primary: rgb(52, 94, 168);
+  --color-secondary: rgb(66, 133, 244);
 
-    --color-button-1: rgb(0, 0, 0);
-    --color-button-2: rgb(32, 73, 155);
-    --color-button-3: rgb(227, 233, 247);
+  --color-button-1: rgb(28, 55, 110);
+  --color-button-2: rgb(66, 133, 244);
+  --color-button-3: rgb(235, 240, 250);
 
-    --btn-grad-start-1: rgb(97, 145, 235);
-    --btn-grad-end-1: rgb(30, 71, 128);
-    --btn-grad-start-2: rgb(19, 23, 31);
-    --btn-grad-end-2: rgb(226, 236, 236);
+  --btn-grad-start-1: rgb(96, 150, 245);
+  --btn-grad-end-1: rgb(52, 94, 168);
+  --btn-grad-start-2: rgb(66, 133, 244);
+  --btn-grad-end-2: rgb(42, 110, 200);
 
-    --color-text1: rgb(255, 255, 255);
-    --color-text2: rgb(220, 226, 231);
-    --color-text3: rgb(5, 12, 20);
+  --color-text1: rgb(255, 255, 255);
+  --color-text2: rgb(230, 235, 245);
+  --color-text3: rgb(20, 30, 55);
 
-    --color-contrast: rgb(80, 220, 238);
-    --color-disable: rgb(52, 69, 119);
+  --color-contrast: rgb(120, 210, 255);
+  --color-disable: rgb(120, 140, 180);
 
-    --color-fill-1: rgb(22, 61, 124);
-    --color-fill-2: rgb(9, 49, 109);
-    --color-fill-3: rgb(242, 243, 245);
-    --color-fill-4: rgb(8, 2, 87);
-    --color-fill-5: rgb(58, 74, 95);
+  --color-fill-1: rgb(30, 55, 105);
+  --color-fill-2: rgb(45, 85, 150);
+  --color-fill-3: rgb(245, 248, 255);
+  --color-fill-4: rgb(55, 70, 110);
+  --color-fill-5: rgb(80, 100, 145);
 
-    --color-back: rgb(17, 16, 40);
+  --color-back: rgb(36, 76, 140);
 
-    --color-border1: rgb(196, 224, 252);
-    --color-border2: rgb(7, 13, 41);
+  --color-border1: rgb(240, 246, 255);
+  --color-border2: rgb(6, 60, 153);
 
-    --color-content-text: rgb(20, 20, 20);
-    --color-content-bg: rgb(205, 245, 252);
+  --color-content-text: rgb(255, 255, 255);
+  --color-content-bg: rgb(25, 51, 104);
 
-    --color-shadow: rgb(77, 88, 100);
-  }
+  --color-green: rgb(66, 183, 42);
+  --color-red: rgb(220, 60, 60);
+  --color-cart: rgb(245, 130, 45);
 
-  /* ===================== COFFEE (LIGHT) ===================== */
+  --color-shadow: rgb(90, 110, 150);
+}
+
+
+  /* ===================== COFFEE ===================== */
   .theme-coffee {
-    --color-primary: rgb(252, 205, 130);
-    --color-secondary: rgb(238, 145, 45);
+    --color-primary: rgb(248, 193, 105);
+    --color-secondary: rgb(245, 175, 100);
 
-    --color-button-1: rgb(207, 167, 104);
-    --color-button-2: rgb(115, 73, 10);
-    --color-button-3: rgb(237, 209, 173);
+    --color-button-1: rgb(247, 208, 146);
+    --color-button-2: rgb(134, 90, 24);
+    --color-button-3: rgb(56, 33, 1);
 
     --btn-grad-start-1: rgb(241, 202, 158);
-    --btn-grad-end-1: rgb(235, 200, 131);
-    --btn-grad-start-2: rgb(45, 28, 15);
-    --btn-grad-end-2: rgb(207, 167, 104);
+    --btn-grad-end-1: rgb(248, 193, 105);
+    --btn-grad-start-2: rgb(240, 76, 71);
+    --btn-grad-end-2: rgb(245, 175, 100);
 
     --color-text1: rgb(45, 30, 20);
     --color-text2: rgb(90, 70, 55);
-    --color-text3: rgb(25, 15, 10);
+    --color-text3: rgb(230, 225, 210);
 
-    --color-contrast: rgb(207, 82, 78);
+    --color-contrast: rgb(131, 26, 22);
     --color-disable: rgb(160, 135, 110);
 
-    --color-fill-1: rgb(55, 32, 16);
-    --color-fill-2: rgb(40, 24, 10);
-    --color-fill-3: rgb(214, 169, 126);
-    --color-fill-4: rgb(230, 206, 159);
-    --color-fill-5: rgb(30, 18, 10);
+    --color-fill-1: rgb(248, 177, 62);
+    --color-fill-2: rgb(214, 145, 34);
+    --color-fill-3: rgb(53, 29, 7);
+    --color-fill-4: rgb(248, 205, 87);
+    --color-fill-5: rgb(40, 24, 10);
 
-    --color-back: rgb(35, 20, 10);
+    --color-back: rgb(250, 219, 198);
 
-    --color-border1: rgb(248, 177, 106);
-    --color-border2: rgb(78, 48, 19);
+    --color-border1: rgb(32, 20, 9);
+    --color-border2: rgb(226, 176, 130);
 
     --color-content-text: rgb(230, 225, 210);
     --color-content-bg: rgb(55, 28, 15);
 
+    --color-green: rgb(212, 221, 82);
+    --color-red: rgb(231, 97, 97);
+    --color-cart: rgb(230, 146, 78);
+    
     --color-shadow: rgb(180, 140, 90);
   }
 
@@ -84,13 +93,13 @@
     --color-primary: rgb(20, 20, 20);
     --color-secondary: rgb(45, 45, 45);
 
-    --color-button-1: rgb(49, 50, 73);
-    --color-button-2: rgb(227, 238, 255);
-    --color-button-3: rgb(67, 57, 57);
+    --color-button-1: rgb(4, 4, 10);
+    --color-button-2: rgb(25, 32, 41);
+    --color-button-3: rgb(164, 183, 182);
 
     --btn-grad-start-1: rgb(35, 35, 35);
-    --btn-grad-end-1: rgb(65, 65, 65);
-    --btn-grad-start-2: rgb(20, 20, 20);
+    --btn-grad-end-1: rgb(20, 20, 20);
+    --btn-grad-start-2: rgb(77, 119, 197);
     --btn-grad-end-2: rgb(45, 45, 45);
 
     --color-text1: rgb(235, 235, 235);
@@ -100,11 +109,11 @@
     --color-contrast: rgb(85, 137, 235);
     --color-disable: rgb(90, 90, 90);
 
-    --color-fill-1: rgb(35, 35, 35);
-    --color-fill-2: rgb(25, 25, 25);
-    --color-fill-3: rgb(252, 235, 235);
-    --color-fill-4: rgb(15, 15, 15);
-    --color-fill-5: rgb(10, 10, 10);
+    --color-fill-1: rgb(10, 10, 10);
+    --color-fill-2: rgb(20, 20, 20);
+    --color-fill-3: rgb(180, 173, 173);
+    --color-fill-4: rgb(68, 50, 50);
+    --color-fill-5: rgb(25, 25, 25);
 
     --color-back: rgb(15, 15, 15);
 
@@ -114,86 +123,101 @@
     --color-content-text: rgb(215, 218, 220);
     --color-content-bg: rgb(25, 25, 25);
 
+    --color-green: rgb(46, 100, 25);
+    --color-red: rgb(102, 17, 17);
+    --color-cart: rgb(158, 72, 2);
+
+
     --color-shadow: rgb(0, 0, 0);
   }
 
-  /* ===================== SAKURA (LIGHT) ===================== */
+  /* ===================== SAKURA ===================== */
   .theme-sakura {
-    --color-primary: rgb(245, 206, 220);
+    --color-primary: rgb(243, 159, 190);
     --color-secondary: rgb(223, 98, 150);
 
-    --color-button-1: rgb(245, 120, 182);
-    --color-button-2: rgb(87, 16, 68);
-    --color-button-3: rgb(247, 47, 114);
+    --color-button-1: rgb(248, 194, 221);
+    --color-button-2: rgb(174, 79, 149);
+    --color-button-3: rgb(42, 13, 25);
 
-    --btn-grad-start-1: rgb(223, 194, 208);
-    --btn-grad-end-1: rgb(224, 113, 152);
-    --btn-grad-start-2: rgb(245, 206, 220);
-    --btn-grad-end-2: rgb(223, 98, 150);
+    --btn-grad-start-1: rgb(245, 206, 220);
+    --btn-grad-end-1: rgb(243, 159, 190);
+    --btn-grad-start-2: rgb(134, 233, 130);
+    --btn-grad-end-2: rgb(245, 120, 182);
 
     --color-text1: rgb(60, 20, 40);
     --color-text2: rgb(110, 60, 80);
-    --color-text3: rgb(40, 10, 25);
+    --color-text3: rgb(245, 230, 235);
 
     --color-contrast: rgb(39, 95, 37);
     --color-disable: rgb(236, 170, 203);
 
-    --color-fill-1: rgb(55, 25, 30);
-    --color-fill-2: rgb(112, 71, 89);
-    --color-fill-3: rgb(250, 215, 230);
-    --color-fill-4: rgb(255, 235, 245);
-    --color-fill-5: rgb(60, 20, 25);
+    --color-fill-1: rgb(245, 183, 193);
+    --color-fill-2: rgb(168, 71, 113);
+    --color-fill-3: rgb(56, 3, 26);
+    --color-fill-4: rgb(255, 154, 204);
+    --color-fill-5: rgb(39, 4, 9);
 
-    --color-back: rgb(63, 8, 45);
+    --color-back: rgb(231, 177, 197);
 
     --color-border1: rgb(224, 119, 172);
     --color-border2: rgb(94, 43, 62);
 
     --color-content-text: rgb(245, 230, 235);
-    --color-content-bg: rgb(60, 20, 25);
+    --color-content-bg: rgb(211, 69, 116);
+
+    --color-green: rgb(127, 214, 93);
+    --color-red: rgb(241, 78, 146);
+    --color-cart: rgb(216, 200, 111);
 
     --color-shadow: rgb(247, 116, 169);
   }
 
   /* ===================== DARK 2 ===================== */
   .theme-dark2 {
-    --color-primary: rgb(5, 15, 43);
+    --color-primary: rgb(9, 18, 43);
     --color-secondary: rgb(16, 36, 65);
 
-    --color-button-1: rgb(102, 111, 58);
-    --color-button-2: rgb(227, 247, 237);
-    --color-button-3: rgb(22, 41, 71);
+    --color-button-1: rgb(76, 87, 23);
+    --color-button-2: rgb(6, 78, 42);
+    --color-button-3: rgb(210, 224, 145);
 
-    --btn-grad-start-1: rgb(30, 49, 97);
+    --btn-grad-start-1: rgb(13, 42, 114);
     --btn-grad-end-1: rgb(6, 11, 27);
     --btn-grad-start-2: rgb(5, 15, 43);
     --btn-grad-end-2: rgb(16, 36, 65);
 
-    --color-text1: rgb(238, 244, 253);
-    --color-text2: rgb(180, 200, 230);
-    --color-text3: rgb(10, 15, 25);
+    --color-text1: rgb(250, 239, 209);
+    --color-text2: rgb(172, 198, 238);
+    --color-text3: rgb(19, 10, 25);
 
-    --color-contrast: rgb(150, 255, 80);
+    --color-contrast: rgb(255, 238, 80);
     --color-disable: rgb(80, 90, 110);
 
-    --color-fill-1: rgb(42, 87, 64);
-    --color-fill-2: rgb(42, 61, 18);
-    --color-fill-3: rgb(13, 18, 54);
-    --color-fill-4: rgb(0, 1, 2);
-    --color-fill-5: rgb(5, 10, 15);
+    --color-fill-1: rgb(5, 10, 15);
+    --color-fill-2: rgb(13, 18, 54);
+    --color-fill-3: rgb(30, 49, 97);
+    --color-fill-4: rgb(5, 83, 43);
+    --color-fill-5: rgb(0, 1, 2);
 
-    --color-back: rgb(6, 11, 27);
+    --color-back: rgb(18, 31, 12);
 
-    --color-border1: rgb(18, 38, 80);
-    --color-border2: rgb(160, 235, 79);
+    --color-border1: rgb(179, 240, 123);
+    --color-border2: rgb(61, 68, 83);
 
-    --color-content-text: rgb(208, 229, 243);
-    --color-content-bg: rgb(13, 18, 54);
+    --color-content-text: rgb(238, 222, 191);
+    --color-content-bg: rgb(0, 98, 143);
+
+    
+    --color-green: rgb(60, 170, 17);
+    --color-red: rgb(163, 24, 24);
+    --color-cart: rgb(189, 94, 17);
+
 
     --color-shadow: rgb(78, 189, 143);
   }
 
-  /* ===================== FOREST (LIGHT) ===================== */
+  /* ===================== FOREST ===================== */
   .theme-forest {
     --color-primary: rgb(34, 85, 34);
     --color-secondary: rgb(60, 120, 60);
@@ -203,7 +227,7 @@
     --color-button-3: rgb(200, 240, 200);
 
     --btn-grad-start-1: rgb(60, 120, 60);
-    --btn-grad-end-1: rgb(20, 60, 20);
+    --btn-grad-end-1: rgb(30, 85, 30);
     --btn-grad-start-2: rgb(10, 30, 10);
     --btn-grad-end-2: rgb(180, 220, 180);
 
@@ -211,22 +235,27 @@
     --color-text2: rgb(200, 230, 200);
     --color-text3: rgb(10, 40, 10);
 
-    --color-contrast: rgb(120, 255, 120);
+    --color-contrast: rgb(108, 255, 108);
     --color-disable: rgb(50, 80, 50);
 
-    --color-fill-1: rgb(20, 60, 20);
-    --color-fill-2: rgb(10, 50, 10);
+    --color-fill-1: rgb(5, 15, 5);
+    --color-fill-2: rgb(20, 60, 20);
     --color-fill-3: rgb(230, 245, 230);
     --color-fill-4: rgb(15, 35, 15);
-    --color-fill-5: rgb(5, 15, 5);
+    --color-fill-5: rgb(10, 50, 10);
 
-    --color-back: rgb(18, 40, 18);
+    --color-back: rgb(12, 46, 12);
 
     --color-border1: rgb(15, 40, 15);
     --color-border2: rgb(150, 230, 150);
 
     --color-content-text: rgb(20, 50, 20);
     --color-content-bg: rgb(200, 230, 200);
+
+    --color-green: rgb(53, 173, 6);
+    --color-red: rgb(3, 34, 8);
+    --color-cart: rgb(16, 201, 72);
+
 
     --color-shadow: rgb(50, 90, 50);
   }
