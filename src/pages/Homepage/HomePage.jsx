@@ -7,80 +7,81 @@ import ThemeSelectorProfile from "./ThemeSelectorProfile";
 import { useTheme } from "../../context/ThemeContext";
 import ProfileImage from "../../components/ImagesComponent/components/ProfileImageComponent";
 import BannerImage from "../../components/ImagesComponent/components/BannerImageComponent";
-import { FaLock, FaStore } from "react-icons/fa";
+import { FaBell, FaLock, FaShoppingCart, FaStore, FaUser } from "react-icons/fa";
 import { getUserNotificationsAction } from "../../store/actions/NotificationThunks";
+import { FaBoxArchive, FaPencil } from "react-icons/fa6";
+import UserHomePageSectionComponent from "./components/UserHomePageSectionComponent";
+import StoreHomepageSectionComponent from "./components/StoreHomePageSectionComponent";
+import CartHomePageSectionComponent from "./components/CartHomePageSectionComponent";
+import { getUserOrdersAction } from "../../store/actions/OrderThunks";
 
 const HomePage = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const { token, isPending } = useSelector((state) => state.auth);
+
+  const { token } = useSelector((state) => state.auth);
   const { notifications, unreadCount } = useSelector((state) => state.notif);
 
-  const { current, changeTheme } = useTheme();
-  const [profile, setProfile] = useState({});
-  const isMounted = useRef(true);
+  const { changeTheme } = useTheme();
 
+  const {profile} = useSelector((state) => state.auth);
+  const { items, totalQuantity, totalPrice } = useSelector((state) => state.cart);
+  const { orders } = useSelector((state) => state.order);
+
+  const [activeSection, setActiveSection] = useState("profile");
+
+  /* ---------------- DERIVED STATE ---------------- */
   const sellerNotif = notifications.filter((n) => n.role === "seller");
-
   const userNotif = notifications.filter((n) => n.role === "user");
 
-  const fetchProfile = useCallback(async () => {
-    if (!token) return; // just exit, handle UI separately
+  /* ---------------- FETCH ALL USER DATA ---------------- */
+  useEffect(() => {
+    if (!token) return;
 
-    try {
-      const resultAction = await dispatch(getUserProfileAction());
-      if (
-        getUserProfileAction.fulfilled.match(resultAction) &&
-        isMounted.current
-      ) {
-        setProfile(resultAction.payload.data);
-        console.log("Profile: ", resultAction.payload.data);
-
-        changeTheme(resultAction.payload.data.userTheme);
+    dispatch(getUserProfileAction()).then((res) => {
+      if (getUserProfileAction.fulfilled.match(res)) {
+        
+        console.log("payload", res.payload);
+        console.log("profile", profile);
       }
-    } catch (error) {
-      console.error(error);
-    }
+    });
 
-    console.log("PROFILE: ", profile);
-    console.log("NTIF NOTIF:", notifications, unreadCount);
-    console.log("seller not", sellerNotif);
-    console.log("user not: ", userNotif);
+    dispatch(getCartAction());
+    dispatch(getUserOrdersAction());
+    dispatch(getUserNotificationsAction());
+    console.log("profile", profile);
   }, [dispatch, token]);
 
+  /* ---------------- APPLY USER THEME ---------------- */
   useEffect(() => {
-    if (token) {
-      dispatch(getCartAction());
+    if (profile?.userTheme) {
+      changeTheme(profile.userTheme);
     }
-  }, []);
+  }, [profile?.userTheme, changeTheme]);
 
+  /* ---------------- DEBUG (SAFE) ---------------- */
   useEffect(() => {
-    if (token) {
-      dispatch(getUserNotificationsAction());
-    }
-    console.log("NTIF NOTIF:", notifications, unreadCount);
-    console.log("seller not", sellerNotif);
-    console.log("user not: ", userNotif);
-  }, [token, dispatch]);
+    console.log("Notifications:", notifications);
+    console.log("Unread:", unreadCount);
+    console.log("Seller notif:", sellerNotif);
+    console.log("User notif:", userNotif);
+    console.log("Profile", profile);
+    console.log("Cart", items);
+    console.log("quantity", totalPrice, totalQuantity);
+    console.log("Order", orders);
+  }, [notifications, unreadCount, sellerNotif, userNotif]);
 
-  useEffect(() => {
-    isMounted.current = true;
-    if (token) {
-      fetchProfile();
-    }
-    return () => {
-      isMounted.current = false;
-    };
-  }, [fetchProfile, token]);
-
+  /* ---------------- AUTH GUARD ---------------- */
   if (!token) {
     return (
-      <div className="page-section">
-        <div className="page-body">
-          <p className="text-white p-4">Please login to continue</p>
+      <div className="page-body-background in-center">
+        <div className="page-body-section in-center">
+          <p className="text-skin-color1 text-styleh4">
+            Please login to continue
+          </p>
           <button
             onClick={() => navigate("/login")}
-            className="px-4 py-2 mt-2 bg-blue-500 text-white rounded-md hover:bg-blue-600"
+            className="px-4 py-2 mt-2 w-[300px] rounded-md bg-skin-green"
           >
             Go to Login
           </button>
@@ -89,38 +90,96 @@ const HomePage = () => {
     );
   }
 
-  if (isPending) {
+  {/** 
+  
+    if (isPending) {
     return (
-      <div className="flex justify-center items-center w-full h-full">
+      <div className="flex bg-skin-primary text-skin-color1 justify-center items-center w-full min-h-screen">
         Loading...
       </div>
     );
   }
+  
+  **/}
 
   return (
-    <div className="page-section">
-      <div className="absolute inset-0 z-20 w-full h-[40vh] left-0 rounded-b-lg">
+    <div className="page-body-background in-center relative">
+      <div className="absolute inset-0 z-0 w-full h-[30vh]">
         <BannerImage bannerImage={profile?.userBanner || "B2"} />
+        <div className="absolute w-full h-1/2 bottom-0 left-0 bg-gradient-to-t to-transparent from-skin-start opacity-35 z-10" />
       </div>
+      <div
+        className="absolute opacity-15 inset-0 min-h-screem w-full
+         bg-gradient-to-r to-white from-transparent z-10"
+      ></div>
 
-      <div className="page-body">
+      <div className="page-body-section in-center z-20">
+        <div className="flex flex-col relative in-center w-full h-[20vh] bg-opacity-40">
+          <div className="absolute flex-row left-2 md:left-4 -bottom-1/2 h-[150px] w-[150px] rounded-full overflow-hidden">
+            <ProfileImage profileImage={profile?.userAvatar} />
+          </div>
+        </div>
         <div
-          className="absolute opacity-5 inset-0 h-[90vw] w-full
-         bg-gradient-to-r to-white from-transparent z-0"
-        ></div>
+          className="flex flex-row relative -z-10 items-center justify-center
+            w-full h-[12vh] bg-skin-primary text-skin-color1"
+        >
+          <div className="flex flex-col  w-1/5 h-full" />
+          <div className="flex w-4/5 flex-col h-full items-end px-2 justify-center text-stylep3">
+            <span>{profile?.username || "Guest"}</span>
+            <span className="text-stylep4 opacity-80">
+              {profile?.email || "gmail@gmail.com"}
+            </span>
+          </div>
+        </div>
 
-        <div className="text-div-bgblur"></div>
-        <div className="flex w-full h-[120px]"></div>
-        <div className="text-div overflow-hidden relative">
+        <div className="grid grid-cols-4 w-full pb-2 lg:pb-4 gap-4 px-2 py-1  bg-skin-primary">
+          {[
+            { key: "profile", label: "Profile", icon: <FaUser size={14}/> },
+            { key: "store", label: "Store", icon: <FaStore size={14}/> },
+            { key: "cart", label: "Cart", icon: <FaShoppingCart size={14}/> },
+            { key: "orders", label: "Orders", icon: <FaBoxArchive size={14}/> },
+            
+          ].map((item) => (
+            <button
+              key={item.key}
+              onClick={() => setActiveSection(item.key)}
+              className={`grid grid-cols-[1fr_2.5fr] items-center justify-center bg-skin-buttonColor-1
+                 bg-opacity-15 space-y-1 md:space-x-3 px-3 py-2 text-stylep4 md:text-stylep3
+                transition-colors
+              ${
+                activeSection === item.key
+                  ? "bg-skin-fill-4 text-skin-colorHigh text-skin-accent"
+                  : "text-skin-color1 hover:text-skin-color2"
+              }
+            `}
+                  >
+                    <span>{item.icon}</span><span>{item.label}</span> 
+                  </button>
+                ))}
+        </div>
+
+        <div className="flex w-full min-h-[60vh] bg-skin-color-back p-2">
+            {activeSection === "profile" && (
+                <UserHomePageSectionComponent profile={profile} />
+              )}
+            
+            {activeSection === "store" && (
+                <StoreHomepageSectionComponent profile={profile} storeNotif={sellerNotif} />
+              )}
+            
+            {activeSection === "cart" && (
+                <CartHomePageSectionComponent profile={profile} />
+              )}
+        </div>
+
+
+
+        <div className="">header</div>
+        <div>dynamically change display depending on the header clicked</div>
+
+        <div className="text-div overflow-hidden relative z-20">
           <div className="grid grid-cols-2 md:grid-cols-3 mt-10">
             <div className="flex flex-col w-full items-center space-y-3 p-2">
-              <div
-                className="inline-block h-[100px] w-[100px]
-                  md:h-[150px] md:w-[150px]
-                  bg-skin-colorContent rounded-full md:rounded-none"
-              >
-                <ProfileImage profileImage={profile?.userAvatar} />
-              </div>
               <span className="text-div-header">
                 Hello {profile?.username || "Guest"}!
               </span>
@@ -222,8 +281,6 @@ const HomePage = () => {
           <span>Reviews</span>
         </div>
       </div>
-
-      <div className="page-background"></div>
     </div>
   );
 };

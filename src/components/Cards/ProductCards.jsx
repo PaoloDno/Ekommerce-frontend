@@ -29,7 +29,7 @@ const ProductCards = ({ product }) => {
       </div>
 
       {/* Content */}
-      <div className="flex flex-col gap-1 px-2 h-[105px] overflow-hidden">
+      <div className="flex flex-col gap-1 px-2 pt-1 h-[105px] overflow-hidden">
         {/* Product Name */}
         <span className="truncate font-semibold text-stylep3 leading-tight">
           {name}

@@ -74,14 +74,14 @@ const CartIconComponent = () => {
               text-skin-colorContent rounded-lg 
               border border-skin-colorBorder1 shadow-lg bg-opacity-80 relative">
               <div className="absolute inset-0 w-full h-full bg-skin-colorContent bg-opacity-35 -z-10 blur-md" />
-              <p className="flex flex-row justify-between font-semibold text-skin-colorContent ">
+              <p className="flex flex-row justify-between font-semibold text-skin-colorContent pt-1 px-1">
                 <span>Total:</span>
                 <span>₱{totalSumsOfItems.toFixed(2)}</span>
               </p>
 
               <div className="mt-3 flex gap-2">
                 <button
-                  className="flex-1 border-skin-colorBorder1 border-2 bg-gray-100 hover:bg-gray-200 text-gray-800 py-1.5 rounded-lg text-sm font-medium transition"
+                  className="flex-1 border-skin-colorBorder1 border-2 bg-skin-cart text-skin-color1  hover:bg-gray-200 hover:text-gray-800 py-1.5 rounded-lg text-sm font-medium transition"
                   onClick={() => {
                     navigate("/cart-user");
                     setOpen(false);
@@ -91,7 +91,7 @@ const CartIconComponent = () => {
                 </button>
 
                 <button
-                  className="flex-1 border-skin-colorBorder2 border-2 bg-black hover:bg-gray-800 text-white py-1.5 rounded-lg text-sm font-medium transition"
+                  className="flex-1 border-skin-colorBorder1 border-2 bg-skin-green hover:bg-gray-800 hover:text-slate-200 text-skin-color1 py-1.5 rounded-lg text-sm font-medium transition"
                 >
                   Checkout
                 </button>

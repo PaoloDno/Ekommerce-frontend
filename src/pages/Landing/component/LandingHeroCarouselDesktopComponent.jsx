@@ -95,23 +95,26 @@ const LandingHeroCarouselDesktopComponent = ({
         ))}
       </div>
 
-      <div className="absolute top-0 left-0 z-10 w-full h-1/2 bg-gradient-back-transparent blur-md opacity-25" />
-      <div className="absolute top-0 left-0 z-10 w-[45%] lg:w-[50%] h-full bg-skin-color-back bg-opacity-25" />
+      <div className="absolute bottom-0 left-0 z-10 w-full h-1/2 bg-gradient-back-transparent blur-md opacity-25" />
+      <div className="absolute top-0 left-0 z-10 w-[45%] lg:w-[50%] h-full bg-skin-color-back bg-opacity-15 rounded-r-full pr-20" />
 
       {activeItem && (
-        <div className="absolute top-1/3 flex-shrink-0 items-start justify-start w-[45%] lg:w-[50%] h-[20vh] flex flex-col gap-2 bg-skin-primary bg-opacity-35 backdrop-blur-sm z-30 overflow-hidden pl-4 md:pl-10 lg:pl-2">
-          <h1 className="font-display w-full text-styleh4 p-2 bg-skin-primary bg-opacity-70">
+        <div className="absolute p-3 top-1/4 left-5 flex-shrink-0 items-start justify-start
+          w-[45%] lg:w-[40%] h-[24vh] flex flex-col gap-2 bg-skin-colorContent text-skin-colorContent rounded-3xl
+          bg-opacity-75 backdrop-blur-sm z-30 overflow-hidden pl-4 md:pl-10 lg:pl-2">
+          <h1 className="font-display w-full text-styleh3 p-2 truncate">
             {activeItem.title}
           </h1>
-          <p className="font-Receipt w-full text-stylep3 p-2 bg-skin-primary bg-opacity-65">
+          <p className="font-Receipt w-full text-stylep3 p-2">
             {activeItem.description}
           </p>
         </div>
       )}
 
-      <div className="absolute bottom-10 w-[45%] lg:w-[50%] in-center z-30 text-stylep4 min-h-[10vh] py-1 flex flex-row justify-center bg-skin-primary bg-opacity-25 backdrop-blur-sm pl-4 md:pl-10 lg:pl-2">
+      <div className="absolute bottom-20 left-5 w-[45%] lg:w-[40%] in-center z-30 text-stylep4 min-h-[10vh] 
+        py-1 flex flex-row justify-center bg-skin-primary bg-opacity-5 backdrop-blur-sm pl-4 md:pl-10 lg:pl-2">
         {!token ? (
-          <span className="flex flex-col w-full in-center text-sm text-skin-color1 opacity-90 py-2">
+          <span className="flex flex-col w-full in-center text-sm text-skin-colorContent opacity-90 py-2">
             <Link className="bg-skin-fill-3 rounded-3xl text-skin-colorHigh py-2 m-2 px-4" to="/login">
               Sign in
             </Link>
@@ -120,7 +123,7 @@ const LandingHeroCarouselDesktopComponent = ({
             </span>
           </span>
         ) : (
-          <span className="text-stylep3 w-full text-skin-color1 bg-skin-primary px-2 bg-opacity-70 p-1">
+          <span className="text-stylep3 w-full text-skin-colorContent bg-skin-colorContent rounded-full bg-opacity-70 p-2 px-3">
             Welcome back — happy browsing
           </span>
         )}

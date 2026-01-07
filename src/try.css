@@ -35,8 +35,8 @@
   --color-border1: rgb(240, 246, 255);
   --color-border2: rgb(6, 60, 153);
 
-  --color-content-text: rgb(255, 255, 255);
-  --color-content-bg: rgb(25, 51, 104);
+  --color-content-text: rgb(186, 245, 255);
+  --color-content-bg: rgb(8, 100, 161);
 
   --color-green: rgb(66, 183, 42);
   --color-red: rgb(220, 60, 60);
@@ -209,9 +209,9 @@
     --color-content-bg: rgb(0, 98, 143);
 
     
-    --color-green: rgb(60, 170, 17);
-    --color-red: rgb(163, 24, 24);
-    --color-cart: rgb(189, 94, 17);
+    --color-green: rgb(59, 184, 10);
+    --color-red: rgb(199, 3, 3);
+    --color-cart: rgb(212, 96, 0);
 
 
     --color-shadow: rgb(78, 189, 143);

@@ -34,8 +34,8 @@
   --color-border1: 210, 225, 245;
   --color-border2: 40, 70, 120;
 
-  --color-content-text: 255, 255, 255;
-  --color-content-bg: 25, 51, 104;
+  --color-content-text: 216, 255, 255;
+  --color-content-bg: 8, 100, 161;
 
   --color-green: 66, 183, 42;
   --color-red: 220, 60, 60;
@@ -120,9 +120,9 @@
     --color-content-text: 215, 218, 220;
     --color-content-bg: 25, 25, 25;
 
-    --color-green: 46, 100, 25;
-    --color-red: 102, 17, 17;
-    --color-cart: 158, 72, 2;
+    --color-green: 42, 141, 2;
+    --color-red: 199, 3, 3;
+    --color-cart: 212, 96, 0;
 
     --color-shadow: 0, 0, 0;
   }
@@ -161,9 +161,9 @@
     --color-content-text: 245, 230, 235;
     --color-content-bg: 211, 69, 116;
 
-    --color-green: 127, 214, 93;
-    --color-red: 241, 78, 146;
-    --color-cart: 216, 200, 111;
+    --color-green: 93, 247, 55;
+    --color-red: 11, 235, 243;
+    --color-cart: 252, 255, 67;
 
     --color-shadow: 247, 116, 169;
   }

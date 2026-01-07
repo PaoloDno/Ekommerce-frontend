@@ -32,7 +32,7 @@ export const getUserOrdersAction = createAsyncThunk(
           Authorization: `Bearer ${token}`,
         },
       });
-      console.log("data", response.data);
+      console.log("data orders", response.data);
       return response.data;
     } catch (error) {
       console.log(error);

@@ -105,8 +105,6 @@ const ProductsPage = () => {
     fetchProducts();
   }, [fetchProducts]);
 
-  const inputStyle =
-    "border px-2 py-1 rounded-md text-black bg-white border-skin-colorBorder1";
 
   return (
     <div className="page-body-background in-center">
@@ -282,7 +280,7 @@ const ProductsPage = () => {
           bg-opacity-80 text-stylep4 p-2 gap-2"
           >
             <span className="flex flex-row px-2 py-1 text-stylep2 w-full">
-              <span className="w-3/5">FILTER STORES</span>
+              <span className="w-3/5">FILTER PRODUCTS</span>
               <span
                 className="flex in-center w-2/5 border rounded-md box-content 
               px-2 py-2 text-stylep3 

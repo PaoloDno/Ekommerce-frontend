@@ -45,8 +45,8 @@
   }
   .header-component-navigation-link {
     @apply flex justify-center items-center w-1/3 bg-skin-primary 
-    text-skin-color1 md:opacity-90 hover:opacity-100 ease-in-out
-    underline-offset-4 underline
+    text-skin-color1 md:opacity-80 ease-in-out
+    underline-offset-4 underline 
     hover:text-skin-color2;
   }
 
@@ -73,7 +73,7 @@
   /* cart icon number */
   .header-component-call-to-action-buttons-cart-number {
     @apply absolute -right-3 -top-1 text-stylep4
-    bg-red-600 text-slate-100 font-bold
+    bg-skin-red text-skin-color1 font-bold
     w-[22px] h-[21px] rounded-full box-content
     flex items-center justify-center;
   }

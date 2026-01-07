@@ -79,9 +79,9 @@ export default function HeaderComponent() {
         <SearchBar />
         <nav className="header-component-navigation">
           {navLinks.map(({ to, label, icon }) => (
-            <Link key={to} to={to} className="header-component-navigation-link">
-              <span className="px-1 hidden lg:flex">{icon}</span>
-              <span className="text-stylep4">{label}</span>
+            <Link key={to} to={to} className="header-component-navigation-link group">
+              <span className="px-1 hidden lg:flex group-hover:scale-y-110 group-hover:text-skin-colorHigh">{icon}</span>
+              <span className="text-stylep4 group-hover:scale-y-110">{label}</span>
             </Link>
           ))}
         </nav>

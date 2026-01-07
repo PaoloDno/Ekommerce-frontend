@@ -296,12 +296,12 @@ const StoresPage = () => {
             </button>
           </div>
 
-          {/** header*/}
+          {/** header mobile **/}
           <div className="flex flex-row lg:hidden items-center justify-end gap-1 md:gap-3 bg-skin-primary bg-opacity-50 text-stylep4 p-2 w-full">
             <select
               value={draftFilters.sortBy}
               onChange={(e) => handleDraftChange("sortBy", e.target.value)}
-              className="border rounded-md px-2 py-1 bg-skin-colorContent text-skin-colorContent bg-opacity-80"
+              className="border rounded-md px-2 py-1 bg-skin-colorContent text-skin-colorContent bg-opacity-90 w-1/3"
             >
               <option value="createdAt">Newest</option>
               <option value="storeName">Store Name</option>
@@ -312,7 +312,7 @@ const StoresPage = () => {
             <select
               value={draftFilters.sortOrder}
               onChange={(e) => handleDraftChange("sortOrder", e.target.value)}
-              className="border rounded-md px-2 py-1 bg-skin-colorContent text-skin-colorContent bg-opacity-80"
+              className="border rounded-md px-2 py-1 bg-skin-colorContent text-skin-colorContent bg-opacity-90 w-1/3"
             >
               <option value="desc">Descending</option>
               <option value="asc">Ascending</option>

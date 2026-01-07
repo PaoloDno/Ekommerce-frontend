@@ -17,7 +17,7 @@ const StoreCards = ({ store }) => {
 
   return (
     <div
-      className="flex flex-col rounded-xl shadow-sm p-2 
+      className="flex flex-col rounded-xl shadow-sm pb-2 
                  w-full min-h-[320px] max-h-[380px] cursor-pointer
                  transition hover:shadow-md overflow-hidden relative bg-skin-colorContent"
       onClick={() => navigate(`/store/${store._id}`)}
@@ -26,14 +26,14 @@ const StoreCards = ({ store }) => {
       <div className="flex w-full h-[250px] md:h-[230px] -mt-1 justify-center items-center relative">
         <BannerImage bannerImage={sellerBanner} />
 
-        <span className="absolute -left-0 -bottom-5 w-full h-[220px] rounded-none overflow-hidden z-20">
+        <span className="absolute -left-0 -bottom-0 w-full h-[220px] rounded-none overflow-hidden z-20">
           <StoreImage storeImage={sellerLogo} />
         </span>
       </div>
 
       <div
         className="flex flex-col md:grid md:grid-cols-[1fr_auto] bg-skin-colorContent min-h-[30%] text-skin-colorContent
-                   w-full text-stylep4 z-10 gap-3 items-center justify-start mt-2 lg:mt-5"
+                   w-full text-stylep4 z-10 gap-3 items-center justify-start mt-2 lg:mt-5 px-2 pt-1"
       >
         <div className="flex flex-col gap-1 overflow-hidden w-full">
           <div className="flex flex-row gap-1 items-center text-stylep3 truncate">
