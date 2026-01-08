@@ -4,10 +4,12 @@ import AppRoutes from "./components/Routes/AppRoutes";
 //components
 import HeaderComponent from "./components/Header/HeaderComponent";
 import FooterComponent from "./components/Footer/Footer";
+import ScrollToTop from "./components/Routes/ScrollToTop";
 
 function App() {
   return (
     <Router>
+      <ScrollToTop />
       <main className="flex flex-col px-0 items-center overflow-x-hidden min-h-screen w-full">
       <HeaderComponent />
       <AppRoutes />

@@ -46,8 +46,8 @@ function SearchBar() {
 
   return (
     <div className="header-component-search" ref={dropdownRef}>
-      <button onClick={() => setOpen((prev) => !prev)} className="text-skin-color1 cursor-pointer bg-opacity-10 
-      bg-skin-fill-3 ml-2 p-3 relative opacity-100 md:opacity-80 hover:opacity-100 text-stylep2">
+      <button onClick={() => setOpen((prev) => !prev)} className="flex text-stylep2 text-skin-color1 cursor-pointer bg-opacity-10 
+      bg-skin-fill-2 ml-2 p-3 relative opacity-100 md:opacity-80 hover:opacity-100 in-center">
         <FaSearch className="text-stylep2"/>
       </button>
       {/* Dropdown */}

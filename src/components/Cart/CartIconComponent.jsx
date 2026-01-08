@@ -3,6 +3,7 @@ import { FaShoppingCart } from "react-icons/fa";
 import CartHeaderCard from "../Cards/CartHeaderCards";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import { FaCircleXmark } from "react-icons/fa6";
 
 /* headerStyles.css */
 
@@ -10,6 +11,8 @@ const CartIconComponent = () => {
   const [open, setOpen] = useState(false);
   const dropdownRef = useRef(null);
   const navigate = useNavigate();
+
+  const closeDropdown = () => setOpen(false);
 
   // ---- GET CART FROM REDUX ----
   const cartItems = useSelector((state) => state.cart.items) || [];
@@ -30,8 +33,7 @@ const CartIconComponent = () => {
     };
 
     document.addEventListener("mousedown", handleClickOutside);
-    return () =>
-      document.removeEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
 
   return (
@@ -52,27 +54,34 @@ const CartIconComponent = () => {
 
       {/* DROPDOWN */}
       {open && (
-        <div
-          className="header-dropdowns"
-        >
+        <div className="header-dropdowns">
           {/* ITEMS */}
-          <div className="px-3 h-[55vh] md:h-[375px] space-y-1 overflow-y-auto bg-yellow-200 bg-opacity-25">
+          <div className="px-3 h-[55vh] md:h-[375px] space-y-1 overflow-y-auto bg-yellow-200 bg-opacity-5">
             {cartItems.length > 0 ? (
               cartItems.map((item) => (
-                <CartHeaderCard key={item._id || item.id} item={item} />
+                <CartHeaderCard
+                  key={item._id || item.id}
+                  item={item}
+                  onClose={closeDropdown}
+                />
               ))
             ) : (
-              <p className="text-gray-500 text-sm text-center in-center py-1">
+              <p className="text-skin-color1 text-stylep2 w-full h-full text-center in-center py-1"
+              onClick={closeDropdown}
+              >
                 Your cart is empty.
+                <FaCircleXmark className="w-full h-full opacity-15" />
               </p>
             )}
           </div>
 
           {/* TOTAL + ACTIONS */}
           {cartItems.length > 0 && (
-            <div className="flex flex-col mt-auto w-full h-[18vh] md:h-[90px] px-2 p-1 bg-skin-colorContent 
+            <div
+              className="flex flex-col mt-auto w-full h-[18vh] md:h-[90px] px-2 p-1 bg-skin-colorContent 
               text-skin-colorContent rounded-lg 
-              border border-skin-colorBorder1 shadow-lg bg-opacity-80 relative">
+              border border-skin-colorBorder1 shadow-lg bg-opacity-80 relative"
+            >
               <div className="absolute inset-0 w-full h-full bg-skin-colorContent bg-opacity-35 -z-10 blur-md" />
               <p className="flex flex-row justify-between font-semibold text-skin-colorContent pt-1 px-1">
                 <span>Total:</span>
@@ -90,9 +99,7 @@ const CartIconComponent = () => {
                   View Cart
                 </button>
 
-                <button
-                  className="flex-1 border-skin-colorBorder1 border-2 bg-skin-green hover:bg-gray-800 hover:text-slate-200 text-skin-color1 py-1.5 rounded-lg text-sm font-medium transition"
-                >
+                <button className="flex-1 border-skin-colorBorder1 border-2 bg-skin-green hover:bg-gray-800 hover:text-slate-200 text-skin-color1 py-1.5 rounded-lg text-sm font-medium transition">
                   Checkout
                 </button>
               </div>

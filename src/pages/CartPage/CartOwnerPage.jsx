@@ -4,6 +4,8 @@ import { useNavigate } from "react-router-dom";
 import { getCartAction } from "../../store/actions/CartThunks";
 import CartCardComponent from "../../components/Cards/CartCards";
 import ShowOrderFormComponent from "./component/ShowOrderFormComponent";
+import { FaArrowRight } from "react-icons/fa6";
+import { FaArrowCircleRight } from "react-icons/fa";
 
 const CartOwnerPage = () => {
   const dispatch = useDispatch();
@@ -53,8 +55,8 @@ const CartOwnerPage = () => {
 
   if (!token) {
     return (
-      <div className="page-section">
-        <div className="page-body">
+      <div className="page-body-background in-center">
+        <div className="page-body-section in-center">
           <p className="text-white p-4">Please login to continue</p>
           <button
             onClick={() => navigate("/login")}
@@ -77,70 +79,63 @@ const CartOwnerPage = () => {
 
   {
     return (
-      <div className="page-section">
-        <div className="page-body">
-          <div className="absolute opacity-5 inset-0 h-[90vw] w-full bg-gradient-to-r to-white from-transparent z-0"></div>
-
-          <div className="text-div-bgblur"></div>
-          <div className="flex w-full h-[10px]"></div>
-
-          <div className="text-div overflow-hidden relative py-4">
+      <div className="page-body-background in-center">
+        <div className="page-body-section in-center">
+          <div className="flex flex-col w-full min-h-screen overflow-x-hidden relative py-2 px-1 space-y-2">
             <div
-              className="flex flex-col lg:grid lg:grid-cols-[2fr_1fr] gap-2
-                          text-stylep2 w-full py-2 px-1"
+              className="text-stylep3 w-full grid grid-cols-2 justify-evenly min-h-[10vh] p-2 rounded-md 
+                             bg-skin-colorContent text-skin-colorContent px-2"
             >
-              <div
-                className="grid grid-cols-1 md:grid-cols-2 
-                            justify-start items-start w-full gap-2"
-              >
-                {cartItems?.items && cartItems.items.length > 0 ? (
-                  cartItems.items.map((cart, index) => (
+              <div className="flex flex-col w-full text-stylep4 justify-center items-start">
+                <span>TOTAL PRICE:</span>
+                <span className="text-styleh4">
+                  ₱ {totalSumsOfItems.toFixed(2)}
+                </span>
+              </div>
+              <div className="flex flex-row w-full justify-center items-center ">
+                <button
+                  className="flex flex-row rounded-lg items-center justify-center px-3 py-1 space-x-1 text-skin-color1 bg-skin-cart disabled:bg-skin-fill-5 disabled:text-skin-colorDis"
+                  onClick={() => setShowOrderForm(true)}
+                  disabled={totalSumsOfItems <= 0}
+                >
+                  <span>
+                    {totalSumsOfItems <= 0 ? "Cart is empty" : "Go To Checkout"}
+                  </span>
+                  <FaArrowCircleRight />
+                </button>
+              </div>
+            </div>
+            <div className="flex flex-col text-stylep2 w-full h-[68vh] bg-skin-fill-2 lg:h-[68vh] py-2 px-2">
+              {cartItems?.items && cartItems.items.length > 0 ? (
+                <div className="flex flex-col overflow-x-hidden items-start 
+                  justify-start overflow-y-auto min-h-full min-w-full
+                  md:grid md:grid-cols-2 lg:grid-cols-3 gap-1 p-2">
+                  {cartItems.items.map((cart, index) => (
                     <CartCardComponent
                       key={index}
                       item={cart}
                       fetchCart={fetchCart}
                     />
-                  ))
-                ) : (
-                  <div>
-                    <span>No Cart Items</span>
-                    <button onClick={fetchCart}>refresh</button>
-                  </div>
-                )}
-              </div>
-
-              <div
-                className="w-full grid grid-cols-2 justify-evenly min-h-[100px] p-2 rounded-md 
-                             bg-skin-colorContent text-skin-colorContent"
-              >
-                <div className="flex flex-col w-full text-stylep1 justify-center items-center">
-                  <span>TOTAL PRICE:</span>
-                  <span>₱ {totalSumsOfItems.toFixed(2)}</span>
+                  ))}
                 </div>
-                <div className="flex w-full justify-center items-center">
-                  <button
-                    className="bg-green-500 p-2 text-white rounded-lg disabled:bg-gray-500"
-                    onClick={() => setShowOrderForm(true)}
-                    disabled={totalSumsOfItems <= 0}
-                  >
-                    {totalSumsOfItems <= 0 ? "Cart is empty" : "Go To Checkout"}
-                  </button>
+              ) : (
+                <div className="flex flex-col w-full h-full in-center text-skin-colorContent">
+                  <span>No Cart Items</span>
+                  <button onClick={fetchCart}>refresh</button>
                 </div>
-              </div>
+              )}
             </div>
           </div>
+
+          {showOrderForm && (
+            <ShowOrderFormComponent
+              onClose={() => setShowOrderForm(false)}
+              onInitFetchCart={fetchCart}
+              cartId={cartItems?._id}
+              onSubmitOrder={() => navigate("/order")}
+            />
+          )}
         </div>
-
-        {showOrderForm && (
-          <ShowOrderFormComponent
-            onClose={() => setShowOrderForm(false)}
-            onInitFetchCart={fetchCart}
-            cartId={cartItems?._id}
-            onSubmitOrder={() => navigate("/order")}
-          />
-        )}
-
-        <div className="page-background"></div>
       </div>
     );
   }

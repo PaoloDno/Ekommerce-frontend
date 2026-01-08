@@ -50,6 +50,7 @@ export default {
           "fill-2": withOpacity("--color-fill-2"),
           "fill-3": withOpacity("--color-fill-3"),
           "fill-4": withOpacity("--color-fill-4"),
+          "fill-5": withOpacity("--color-fill-5"),
           "color-back": withOpacity("--color-back"),
           colorContent: withOpacity("--color-content-bg"),
           green: withOpacity("--color-green"),

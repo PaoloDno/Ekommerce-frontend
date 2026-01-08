@@ -51,8 +51,8 @@ const ProductImages = ({ productImages }) => {
 
 
   return (
-    <div className="w-full h-full flex justify-center items-center">
-      <img src={productSrc} alt="product-avatar" className="w-full h-full object-cover" />
+    <div className="w-full h-full flex flex-row justify-center items-center object-cover">
+      <img src={productSrc} alt="product-avatar" className="flex w-full h-full bg-cover object-cover in-center" />
     </div>
   )
 }

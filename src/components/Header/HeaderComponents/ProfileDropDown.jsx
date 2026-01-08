@@ -7,110 +7,127 @@ import {
   FaShoppingCart,
   FaStore,
   FaSignOutAlt,
-  FaArrowAltCircleDown,
 } from "react-icons/fa";
+import { FaBoxArchive } from "react-icons/fa6";
 import ProfileImage from "../../ImagesComponent/components/ProfileImageComponent";
-
-/* headerStyles.css */
 
 const ProfileDropdown = () => {
   const [open, setOpen] = useState(false);
   const dropdownRef = useRef(null);
   const dispatch = useDispatch();
+
   const { profile } = useSelector((state) => state.auth || {});
   const { userAvatar, username } = profile || {};
 
-  // Close dropdown when clicking outside
+  const closeDropdown = () => setOpen(false);
+
+  // Close when clicking outside
   useEffect(() => {
-    const handleClickOutside = (event) => {
-      if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
-        setOpen(false);
+    const handleClickOutside = (e) => {
+      if (dropdownRef.current && !dropdownRef.current.contains(e.target)) {
+        closeDropdown();
       }
     };
+
     document.addEventListener("mousedown", handleClickOutside);
-    return () => {
-      document.removeEventListener("mousedown", handleClickOutside);
-    };
+    return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
 
-  // Handle logout
-  const handleClickLogOutButton = async () => {
+  // Logout
+  const handleLogout = async () => {
     try {
-      const resultAction = await dispatch(logoutAction());
-      if (logoutAction.fulfilled.match(resultAction)) {
-        console.log("Logged out successfully");
-      } else {
+      const result = await dispatch(logoutAction());
+      if (!logoutAction.fulfilled.match(result)) {
         console.error("Logout failed");
       }
-    } catch (error) {
-      console.error("Error logging out:", error);
+    } catch (err) {
+      console.error("Error logging out:", err);
     } finally {
-      setOpen(false);
+      closeDropdown();
     }
   };
 
   return (
     <div
-      className="relative header-component-call-to-action-buttons-cart-component in-center"
       ref={dropdownRef}
+      className="relative header-component-call-to-action-buttons-cart-component in-center"
     >
       <button
         onClick={() => setOpen((prev) => !prev)}
         className="header-component-call-to-action-buttons-cart-icon in-center relative"
       >
-        <span className="flex w-[32px] h-[32px] rounded-full overflow-hidden bg-opacity-15">
+        <span className="flex w-[32px] h-[32px] rounded-full overflow-hidden">
           <ProfileImage profileImage={userAvatar} />
         </span>
         <span className="header-component-call-to-action-buttons-cart-arrowdown">
-          <FaEllipsisV />{" "}
+          <FaEllipsisV />
         </span>
       </button>
 
       {open && (
         <div className="header-dropdowns relative">
+          {/* Profile */}
           <Link
             to="/home"
-            className="flex flex-col hover:bg-gray-100 items-center shadow-md justify-center border-2 border-skin-colorBorder1 border-opacity-25 rounded-xl p-1"
+            onClick={closeDropdown}
+            className="flex flex-col items-center justify-center p-1 rounded-xl border-2
+            border-skin-colorBorder1 border-opacity-25 shadow-md
+            hover:bg-skin-fill-4 hover:text-skin-colorHigh"
           >
-            <span className="flex text-stylep2 -mb-2"> Visit Profile </span>
-            <span className="grid grid-cols-[2rem_auto] items-center gap-2 px-4 py-2 -mb-1  transition-all">
-            <span className="h-7 w-7 rounded-full overflow-hidden">
-              <ProfileImage profileImage={userAvatar} />
-            </span>
-            <span className="text-stylep3 font-medium text-gray-800">{username}</span>
+            <span className="text-stylep2 -mb-2">Visit Profile</span>
+
+            <span className="grid grid-cols-[2rem_auto] items-center gap-2 px-4 py-2 -mb-1">
+              <span className="h-7 w-7 rounded-full overflow-hidden">
+                <ProfileImage profileImage={userAvatar} />
+              </span>
+              <span className="text-stylep3 font-medium text-skin-color1">
+                {username}
+              </span>
             </span>
           </Link>
 
+          {/* Store */}
           <Link
             to="/user-store"
-            className="grid grid-cols-[2rem_auto] items-center gap-2 px-4 py-2 hover:bg-gray-100 transition-all text-stylep3"
+            onClick={closeDropdown}
+            className="grid grid-cols-[2rem_auto] items-center gap-2 px-4 py-2
+            hover:bg-skin-fill-4 hover:text-skin-colorHigh transition-all"
           >
-            <FaStore className="text-gray-700" />
-            <span className="text-stylep3 font-medium text-gray-800">My Store</span>
+            <FaStore size={16} />
+            <span className="text-stylep3 font-medium">My Store</span>
           </Link>
 
+          {/* Cart */}
           <Link
             to="/cart-user"
-            className="grid grid-cols-[2rem_auto] items-center gap-2 px-4 py-2 hover:bg-gray-100 transition-all"
+            onClick={closeDropdown}
+            className="grid grid-cols-[2rem_auto] items-center gap-2 px-4 py-2
+            hover:bg-skin-fill-4 hover:text-skin-colorHigh transition-all"
           >
-            <FaShoppingCart className="text-gray-700" />
-            <span className="text-sm font-medium text-gray-800">Cart</span>
+            <FaShoppingCart />
+            <span className="text-sm font-medium">Cart</span>
           </Link>
 
+          {/* Orders */}
           <Link
             to="/order-user"
-            className="grid grid-cols-[2rem_auto] items-center gap-2 px-4 py-2 hover:bg-gray-100 transition-all"
+            onClick={closeDropdown}
+            className="grid grid-cols-[2rem_auto] items-center gap-2 px-4 py-2
+            hover:bg-skin-fill-4 hover:text-skin-colorHigh transition-all"
           >
-            <FaShoppingCart className="text-gray-700" />
-            <span className="text-sm font-medium text-gray-800">Order</span>
+            <FaBoxArchive />
+            <span className="text-sm font-medium">Order</span>
           </Link>
 
+          {/* Logout */}
           <button
-            onClick={handleClickLogOutButton}
-            className="absolute left-0 right-0 bottom-2 w-full flex-row flex items-center gap-2 px-3 py-2 justify-center bg-skin-primary bg-opacity-10 hover:bg-gray-400 transition-all"
+            onClick={handleLogout}
+            className="absolute left-0 right-0 bottom-2 w-full flex items-center justify-center gap-2
+            px-3 py-2 bg-skin-primary bg-opacity-10
+            hover:bg-skin-fill-4 hover:text-skin-colorHigh transition-all"
           >
-            <span className="flex flex-row w-full text-stylep3 items-center justify-center font-medium text-gray-800">
-              Log Out <FaSignOutAlt className="text-gray-700 mx-2" />
+            <span className="flex items-center text-stylep3 font-medium">
+              Log Out <FaSignOutAlt className="mx-2" />
             </span>
           </button>
         </div>

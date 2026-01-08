@@ -14,6 +14,7 @@ import UserHomePageSectionComponent from "./components/UserHomePageSectionCompon
 import StoreHomepageSectionComponent from "./components/StoreHomePageSectionComponent";
 import CartHomePageSectionComponent from "./components/CartHomePageSectionComponent";
 import { getUserOrdersAction } from "../../store/actions/OrderThunks";
+import OrderHomePageSectionComponent from "./components/OrderHomePageSectionComponent";
 
 const HomePage = () => {
   const dispatch = useDispatch();
@@ -104,16 +105,17 @@ const HomePage = () => {
 
   return (
     <div className="page-body-background in-center relative">
-      <div className="absolute inset-0 z-0 w-full h-[30vh]">
-        <BannerImage bannerImage={profile?.userBanner || "B2"} />
-        <div className="absolute w-full h-1/2 bottom-0 left-0 bg-gradient-to-t to-transparent from-skin-start opacity-35 z-10" />
-      </div>
+      
       <div
         className="absolute opacity-15 inset-0 min-h-screem w-full
          bg-gradient-to-r to-white from-transparent z-10"
       ></div>
 
       <div className="page-body-section in-center z-20">
+        <div className="absolute inset-0 -z-10 w-full h-[30vh]">
+        <BannerImage bannerImage={profile?.userBanner || "B2"} />
+        <div className="absolute w-full h-1/2 bottom-0 left-0 bg-gradient-to-t to-transparent from-skin-start opacity-35 z-10" />
+      </div>
         <div className="flex flex-col relative in-center w-full h-[20vh] bg-opacity-40">
           <div className="absolute flex-row left-2 md:left-4 -bottom-1/2 h-[150px] w-[150px] rounded-full overflow-hidden">
             <ProfileImage profileImage={profile?.userAvatar} />
@@ -132,33 +134,38 @@ const HomePage = () => {
           </div>
         </div>
 
-        <div className="grid grid-cols-4 w-full pb-2 lg:pb-4 gap-4 px-2 py-1  bg-skin-primary">
+        <div className="grid grid-cols-4 w-full pb-2 lg:pb-4 gap-4 px-3 py-1  bg-skin-primary">
           {[
-            { key: "profile", label: "Profile", icon: <FaUser size={14}/> },
-            { key: "store", label: "Store", icon: <FaStore size={14}/> },
-            { key: "cart", label: "Cart", icon: <FaShoppingCart size={14}/> },
-            { key: "orders", label: "Orders", icon: <FaBoxArchive size={14}/> },
+            { key: "profile", count: 0, label: "Profile", icon: <FaUser size={14}/> },
+            { key: "store", count: sellerNotif.length, label: "Store", icon: <FaStore size={14}/> },
+            { key: "cart", count: items.length , label: "Cart", icon: <FaShoppingCart size={14}/> },
+            { key: "orders", count: orders.length , label: "Orders", icon: <FaBoxArchive size={14}/> },
             
           ].map((item) => (
             <button
               key={item.key}
               onClick={() => setActiveSection(item.key)}
-              className={`grid grid-cols-[1fr_2.5fr] items-center justify-center bg-skin-buttonColor-1
-                 bg-opacity-15 space-y-1 md:space-x-3 px-3 py-2 text-stylep4 md:text-stylep3
-                transition-colors
+              className={`grid grid-cols-[1fr_2.5fr] sm:flex sm:flex-col items-center justify-center bg-skin-buttonColor-1
+                 bg-opacity-75 space-y-1 space-x-1 px-3 py-2 text-stylep4 md:text-stylep3
+                transition-colors relative border-2 border-skin-colorBorder1 border-opacity-15 shadow-md
               ${
                 activeSection === item.key
-                  ? "bg-skin-fill-4 text-skin-colorHigh text-skin-accent"
+                  ? "bg-skin-fill-1 text-skin-colorHigh text-skin-accent"
                   : "text-skin-color1 hover:text-skin-color2"
               }
             `}
                   >
-                    <span>{item.icon}</span><span>{item.label}</span> 
+                    <span>{item.icon}</span><span>{item.label}</span>
+                    { item.count > 0 &&
+                    <span className="absolute -top-2 md:-top-3 -right-2 md:right-0 bg-skin-red font-bold
+                    w-[22px] h-[22px] rounded-full items-center justify-center text-stylep4"
+                    >{item.count}</span>
+                    } 
                   </button>
                 ))}
         </div>
 
-        <div className="flex w-full min-h-[60vh] bg-skin-color-back p-2">
+        <div className="flex w-full min-h-[60vh] bg-skin-primary p-2 lg:px-3">
             {activeSection === "profile" && (
                 <UserHomePageSectionComponent profile={profile} />
               )}
@@ -170,115 +177,10 @@ const HomePage = () => {
             {activeSection === "cart" && (
                 <CartHomePageSectionComponent profile={profile} />
               )}
-        </div>
 
-
-
-        <div className="">header</div>
-        <div>dynamically change display depending on the header clicked</div>
-
-        <div className="text-div overflow-hidden relative z-20">
-          <div className="grid grid-cols-2 md:grid-cols-3 mt-10">
-            <div className="flex flex-col w-full items-center space-y-3 p-2">
-              <span className="text-div-header">
-                Hello {profile?.username || "Guest"}!
-              </span>
-            </div>
-            <div
-              className="grid lg:grid-cols-2 grid-cols-1 md:col-span-2 items-center justify-center w-full bg-skin-colorContent
-            text-skin-colorContent p-2 mt-1 text-stylep3 gap-2 rounded-lg "
-            >
-              <span className="flex flex-col items-start w-full h-full">
-                <h2 className="text-div-header">Profile Detail</h2>
-                <div className="text-line" />
-                <span className="flex flex-col h-full w-full justify-start">
-                  <span>Username: {profile?.username || ""}</span>
-                  <span>Firstname: {profile?.firstname || ""}</span>
-                  <span>Lastname: {profile?.lastname || ""}</span>
-                  <span>Email: {profile?.email || ""}</span>
-                </span>
-              </span>
-              <span className="flex flex-col h-full w-full">
-                <h2 className="text-div-header">Address</h2>
-                <div className="text-line" />
-                <span>{profile?.address?.[0]?.street || ""}</span>
-                <span>
-                  {profile?.address?.[0]?.city || ""},{" "}
-                  {profile?.address?.[0]?.country || ""} -{" "}
-                  {profile?.address?.[0]?.postalCode || ""}
-                </span>
-              </span>
-            </div>
-          </div>
-        </div>
-
-        <div className="text-div">
-          <h2 className="text-div-header">User Store</h2>
-          <div className="text-line w-full items-center justify-center" />
-
-          <div className="grid grid-cols-2 md:grid-cols-3 w-full my-2 items-center md:items-start justify-center gap-2">
-            {profile?.storeName == null ? (
-              <div className="flex flex-col bg-skin-colorContent bg-opacity-15 rounded-md w-full h-full p-3">
-                <p className="text-skin-color1 mb-1">
-                  You don’t own a store yet.
-                </p>
-                <h2 className="font-semibold mb-2">
-                  Get Started...{" "}
-                  <span className="text-skin-accent">
-                    {profile?.storeName || "Your Store Awaits"}
-                  </span>
-                </h2>
-                <Link to="/create-store" className="link-button">
-                  Start Selling
-                </Link>
-              </div>
-            ) : (
-              <div className="flex flex-col bg-skin-colorContent bg-opacity-15 rounded-md w-full h-full p-3">
-                <p className="text-skin-color1 mb-1">
-                  Manage your business easily.
-                </p>
-                <h2 className="font-semibold mb-2">Your Store is Live!</h2>
-                <Link to="/user-store" className="link-button mx-auto">
-                  VISIT STORE
-                </Link>
-              </div>
-            )}
-
-            <div className="grid grid-cols-[1fr_2fr] relative container items-center justify-start gap-3 bg-skin-colorContent bg-opacity-15 rounded-md w-full h-full p-3">
-              <FaStore className="size-8 w-full text-skin-color2" />
-              <span className="text-stylep3 text-skin-color1 leading-tight">
-                “Turn creativity into commerce — your store, your story.” -
-                Ekommerce
-              </span>
-            </div>
-            <div className="grid grid-cols-[1fr_3fr] md:grid-cols-[1fr_1.5fr] col-span-2 md:col-span-1 relative container items-center justify-start gap-3 bg-skin-colorContent bg-opacity-15 rounded-md w-full h-full p-3">
-              <FaLock className="size-8 w-full text-skin-color2" />
-              <span className="text-stylep3 text-skin-color1 leading-tight flex flex-col">
-                Keep your store secure.{" "}
-                <button className="ml-1 px-2 py-1 w-fit text-white bg-gray-500 hover:bg-red-500 rounded-md transition-colors duration-150 my-2">
-                  Learn More
-                </button>
-                We appreciate keeping our community great
-              </span>
-            </div>
-          </div>
-        </div>
-
-        <div className="text-div">
-          <span>Cart Items: {profile?.cart?.length || 0}</span>
-        </div>
-
-        <div className="text-div">
-          <h2 className="text-div-header">Theme</h2>
-          <ThemeSelectorProfile />
-        </div>
-
-        <div className="text-div">
-          <span>Order</span>
-        </div>
-
-        <div className="text-div">
-          <span>Reviews</span>
+             {activeSection === "orders" && (
+                <OrderHomePageSectionComponent orders={orders} />
+              )}
         </div>
       </div>
     </div>

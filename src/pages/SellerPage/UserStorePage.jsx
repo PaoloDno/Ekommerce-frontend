@@ -122,9 +122,59 @@ const UserStorePage = () => {
   };
 
   return (
-    <div className="page-section">
-      <div className="page-body">
+    <div className="page-body-background in-center">
+      <div className="page-body-section in-center relative">
         {/* Store Header */}
+        <div className="absolute inset-0 flex bg-skin-colorContent w-full h-[100px] z-0">
+          <BannerImage bannerImage={store?.sellerBanner} />
+        </div>
+        <div className="flex w-full min-h-[100px] z-20 relative">
+          <div
+            className="absolute rounded-full overflow-hidden in-center -bottom-1/2 left-4 md:left-[40px]
+           bg-skin-colorContent w-[120px] h-[120px] z-20 border-2 border-skin-colorBorder1 border-opacity-60"
+          >
+            <StoreImage storeImage={store?.sellerLogo} />
+          </div>
+        </div>
+        <div className="flex flex-row w-full min-h-[85vh] in-center gap-2 z-10 px-1">
+          <div
+            className="hidden md:flex flex-col rounded-lg p-3 w-1/3 h-full min-h-[82vh]
+          items-start justify-start bg-skin-primary"
+          ></div>
+          <div
+            className="flex flex-col rounded-lg w-full md:w-2/3 h-full p-2 min-h-[82vh]
+          items-start justify-start bg-skin-primary"
+          >
+            <div className="flex flex-row w-full px-2 items-end justify-end text-skin-color1 font-display text-stylep4">
+              <div className="flex flex-col w-1/3 bg-skin-fill-4 bg-opacity-15 h-[20vh] items-baseline justify-end">
+                <span className="flex flex-row w-full in-center">reviews - {store?.ratings.totalReviews}</span>
+                <span className="flex text-styleh2 w-full in-center items-baseline justify-center">
+                  {store?.ratings.average}
+                </span>
+                <span className="flex flex-row w-full in-center">
+                  {renderStars(store?.ratings?.average)}
+                </span>
+              </div>
+              <div className="flex flex-col w-2/3 items-end justify-end">
+              <span className="flex flex-row gap-x-2 w-2/3 items-center justify-end">
+                <span className="text-styleh3">{store?.storeName}</span>
+              </span>
+              <span className="flex flex-row gap-x-2 w-2/3 items-center justify-end">
+                <span>{store?.email}</span> <FaRegEnvelope size={14} />
+              </span>
+
+              <span className="flex flex-row gap-x-2 w-2/3 items-center justify-end">
+                <span>{store?.phone}</span> <FaPhone size={14} />
+              </span>
+
+              <span className="flex flex-row gap-x-2 w-2/3 items-center justify-end">
+                <span>{store?.description}</span> <MdDescription size={14} />
+              </span>
+              </div>
+            </div>
+          </div>
+        </div>
+
         <div className="flex w-full h-[170px] bg-skin-fill-1 bg-opacity-40 relative">
           <div className="flex bg-skin-colorContent w-full h-[100px]">
             <BannerImage bannerImage={store?.sellerBanner} />
@@ -255,7 +305,6 @@ const UserStorePage = () => {
           </div>
         </div>
       </div>
-      <div className="page-background"></div>
     </div>
   );
 };

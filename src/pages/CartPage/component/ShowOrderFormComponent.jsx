@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { FaXmark } from "react-icons/fa6";
 
 const ShowOrderFormComponent = ({ onClose, onInitFetchCart, cartId, onSubmitOrder }) => {
   const [order, setOrder] = useState({});
@@ -42,49 +43,48 @@ const ShowOrderFormComponent = ({ onClose, onInitFetchCart, cartId, onSubmitOrde
   };
 
   return (
-    <div className="fixed w-full h-full inset-0 flex items-center justify-center bg-black bg-opacity-40 z-50">
-      <div className="bg-skin-colorContent text-skin-colorContent w-[90%] md:w-[400px] shadow-lg relative p-5">
+    <div className="fixed w-full h-full inset-0 flex items-center justify-center bg-black bg-opacity-70 z-50">
+      <div className="flex flex-col h-[70vh] bg-skin-colorContent text-skin-colorContent w-[90%] md:w-[400px] shadow-lg relative p-5">
 
         {/* CLOSE BUTTON */}
         {!processingOrder && (
           <button
             onClick={handleClose}
-            className="absolute top-2 right-2 text-xl text-red-600"
+            className="absolute flex top-2 text-skin-color1 right-2 t p-2 w-[30px] h-[30px] bg-skin-red in-center rounded-full overflow-hidden z-20"
           >
-            ✕
+            <FaXmark size={15} />
           </button>
         )}
 
-        {/* ====================================== */}
-        {/* IF PROCESSING → SHOW ONLY THIS SCREEN */}
-        {/* ====================================== */}
         {processingOrder ? (
-          <div className="flex flex-col items-center justify-center py-10 gap-3">
+          <div className="flex flex-col w-full h-full items-center justify-center py-10 gap-3 z-10">
             <div className="animate-spin w-10 h-10 border-4 border-gray-300 border-t-green-600 rounded-full"></div>
             <p className="text-lg font-semibold">Processing your order...</p>
           </div>
         ) : (
-          <>
-            <h2 className="text-xl font-bold mb-4">Order Summary</h2>
+          <div className="flex flex-col w-full h-full font-Receipt">
+            <h2 className="text-styleh4 font-semibold mb-2">ORDER SUMMARY</h2>
 
-            <div className="flex flex-col gap-3 text-stylep1">
+            <div className="flex flex-col w-full h-[65%] text-stylep3">
               {order?.items?.length > 0 ? (
-                <>
+                <div className="flex flex-col gap-1 w-full h-[90%] overflow-x-hidden overflow-y-auto">
                   {order.items.map((item, i) => (
-                    <div key={i} className="flex justify-between border-b pb-2">
+                    <div key={i} className="flex flex-row items-center justify-between border-b border-skin-colorBorder1 
+                    pb-2 border-opacity-15 text-stylep2">
                       <span>{item.name}</span>
                       <span>₱ {item.price} × {item.quantity}</span>
                     </div>
                   ))}
-
-                  <div className="flex justify-between font-bold text-lg pt-3">
-                    <span>Total:</span>
-                    <span>₱ {total.toFixed(2)}</span>
-                  </div>
-                </>
+                </div>
               ) : (
                 <span>No items loaded...</span>
               )}
+              
+
+                  <div className="flex justify-between h-[15%] font-bold text-lg pt-3">
+                    <span>Total:</span>
+                    <span>₱ {total.toFixed(2)}</span>
+                  </div>
             </div>
 
             <div className="p-3 flex flex-col justify-center items-center bg-gray-400 mt-5 hover:bg-white">
@@ -95,7 +95,7 @@ const ShowOrderFormComponent = ({ onClose, onInitFetchCart, cartId, onSubmitOrde
                 PROCEED TO ORDER
               </button>
             </div>
-          </>
+          </div>
         )}
       </div>
     </div>
