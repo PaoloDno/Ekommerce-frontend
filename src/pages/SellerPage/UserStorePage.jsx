@@ -3,9 +3,11 @@ import {
   FaLock,
   FaMapMarkerAlt,
   FaPhone,
+  FaPlusCircle,
   FaRegEnvelope,
   FaRegStar,
   FaStar,
+  FaStore,
   FaThumbsDown,
   FaThumbsUp,
   FaUser,
@@ -90,9 +92,15 @@ const UserStorePage = () => {
     for (let i = 1; i <= 5; i++) {
       stars.push(
         i <= roundedRating ? (
-          <FaStar key={i} className="text-yellow-400" />
+          <FaStar
+            key={i}
+            className="text-yellow-400 bg-skin-cart bg-opacity-10"
+          />
         ) : (
-          <FaRegStar key={i} className="text-gray-300" />
+          <FaRegStar
+            key={i}
+            className="text-gray-400 bg-skin-cart bg-opacity-10"
+          />
         )
       );
     }
@@ -102,29 +110,148 @@ const UserStorePage = () => {
   const ProductBox = ({ name, productImage, price, stock, averageStar }) => {
     return (
       <div
-        className="flex-none flex flex-col w-[150px] h-[200px] md:w-[150px] md:h-[220px]
-      relative overflow-hidden px-1 py-2 bg-skin-colorContent bg-opacity-75 items-center 
+        className="flex-none flex flex-col w-[140px] h-[180px]
+      relative overflow-hidden bg-skin-colorContent bg-opacity-75 items-center 
       rounded-xl shadow-sm hover:shadow-md"
       >
-        <div className="flex w-[135px] h-[170px] bg-white justify-center items-center rounded-lg overflow-hidden">
+        <div className="flex w-full min-h-[135px] h-[135px] bg-white justify-center items-center rounded-lg overflow-hidden">
           <ProductImages productImages={productImage} />
         </div>
-        <div className="flex flex-col justify-between mt-1 text-stylep2 w-full text-skin-colorContent">
+        <div className="grid grid-cols-2 px-2 justify-between mt-1 text-stylep4 w-full text-skin-colorContent">
           <span className="font-semibold truncate">{name}</span>
-          <span className="flex flex-row items-center">
+          <span className="flex flex-row items-center w-full px-2 py-1 bg-opacity-20 bg-black rounded-full">
             {renderStars(averageStar)}
           </span>
-          <span className="text-stylep3 opacity-90">₱{price}</span>
-          <span className="text-stylep3 opacity-90">Stock: {stock}</span>
+          <span className="text-stylep4 opacity-90 truncate">₱{price}</span>
+          <span className="text-stylep4 opacity-90 truncate">
+            Stock: {stock}
+          </span>
         </div>
       </div>
     );
   };
 
+  // Desktop Review Pagination
+const ReviewPaginationDesktop = ({ reviews }) => {
+  const [reviewPage, setReviewPage] = useState(0);
+  const REVIEWS_PER_PAGE = 4; // 2x2 grid
+
+  const totalPages = Math.ceil(reviews.length / REVIEWS_PER_PAGE);
+  const pagedReviews = reviews.slice(
+    reviewPage * REVIEWS_PER_PAGE,
+    reviewPage * REVIEWS_PER_PAGE + REVIEWS_PER_PAGE
+  );
+
+  return (
+    <div className="hidden md:flex flex-col w-full bg-skin-fill-2 bg-opacity-25 rounded-lg p-2">
+      <div className="flex justify-between items-center mb-2">
+        <span className="text-skin-color1 text-styleh4 font-display">REVIEWS</span>
+        <div className="flex gap-2">
+          <button
+            onClick={() => setReviewPage((p) => Math.max(0, p - 1))}
+            className="px-2 py-1 bg-skin-colorContent rounded"
+            disabled={reviewPage === 0}
+          >
+            ‹
+          </button>
+          <button
+            onClick={() => setReviewPage((p) => Math.min(totalPages - 1, p + 1))}
+            className="px-2 py-1 bg-skin-colorContent rounded"
+            disabled={reviewPage >= totalPages - 1}
+          >
+            ›
+          </button>
+        </div>
+      </div>
+
+      <div className="grid grid-cols-2 gap-3">
+        {pagedReviews.map((review,index) => (
+          <div
+            key={`${index}${review._id}`}
+            className="bg-skin-colorContent rounded-xl p-3 flex flex-col shadow-md"
+          >
+            <span className="font-bold text-stylep2">
+              {review?.user?.username || "Anonymous"}
+            </span>
+            <div className="flex justify-center my-1">{renderStars(review.rating)}</div>
+            <p className="text-stylep4 line-clamp-3 flex-grow text-center">“{review.comment}”</p>
+            <div className="flex items-center gap-2 mt-2 pt-2 border-t border-skin-border1">
+              <div className="w-8 h-8 rounded-full overflow-hidden">
+                <ProductImages productImages={review.product.productImage} />
+              </div>
+              <span className="text-[10px] truncate opacity-70">{review.product.name}</span>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+};
+
+// Desktop Product Pagination
+const ProductPaginationDesktop = ({ products, storeId }) => {
+  const [productPage, setProductPage] = useState(0);
+  const PRODUCTS_PER_PAGE = 6; // 3x2 grid
+
+  const totalPages = Math.ceil(products.length / PRODUCTS_PER_PAGE);
+  const pagedProducts = products.slice(
+    productPage * PRODUCTS_PER_PAGE,
+    productPage * PRODUCTS_PER_PAGE + PRODUCTS_PER_PAGE
+  );
+
+  return (
+    <div className="hidden md:flex flex-col w-full bg-skin-fill-2 bg-opacity-25 rounded-lg p-2">
+      <div className="flex justify-between items-center mb-2">
+        <span className="text-skin-color1 text-styleh4 font-display">PRODUCTS</span>
+        <div className="flex gap-2">
+          <button
+            onClick={() => setProductPage((p) => Math.max(0, p - 1))}
+            className="px-2 py-1 bg-skin-colorContent rounded"
+            disabled={productPage === 0}
+          >
+            ‹
+          </button>
+          <button
+            onClick={() => setProductPage((p) => Math.min(totalPages - 1, p + 1))}
+            className="px-2 py-1 bg-skin-colorContent rounded"
+            disabled={productPage >= totalPages - 1}
+          >
+            ›
+          </button>
+        </div>
+      </div>
+
+      <div className="grid grid-cols-3 gap-3">
+        <div
+          onClick={() => navigate(`/create-product/${storeId}`)}
+          className="flex flex-col h-[180px] min-w-[136px] in-center bg-skin-colorContent bg-opacity-25 rounded-xl border-4 border-skin-colorBorder1 text-skin-color1"
+        >
+          <FaPlusCircle size={26} />
+          <span className="text-stylep2 font-display capitalize">Add A Product</span>
+        </div>
+
+        {pagedProducts.map((product, index) => (
+          <Link to={`/product/${product._id}`} key={`${index}${product._id}`}>
+            <ProductBox
+              name={product.name}
+              productImage={product.productImage}
+              price={product.price}
+              stock={product.stock}
+              averageStar={product.averageRating}
+            />
+          </Link>
+        ))}
+      </div>
+    </div>
+  );
+};
+
+
+
   return (
     <div className="page-body-background in-center">
       <div className="page-body-section in-center relative">
-        {/* Store Header */}
+        {/* Store Banner */}
         <div className="absolute inset-0 flex bg-skin-colorContent w-full h-[100px] z-0">
           <BannerImage bannerImage={store?.sellerBanner} />
         </div>
@@ -136,172 +263,294 @@ const UserStorePage = () => {
             <StoreImage storeImage={store?.sellerLogo} />
           </div>
         </div>
+
+        {/* Store Header */}
         <div className="flex flex-row w-full min-h-[85vh] in-center gap-2 z-10 px-1">
+          {/** DESKTOP sidebar */}
           <div
             className="hidden md:flex flex-col rounded-lg p-3 w-1/3 h-full min-h-[82vh]
           items-start justify-start bg-skin-primary"
-          ></div>
-          <div
-            className="flex flex-col rounded-lg w-full md:w-2/3 h-full p-2 min-h-[82vh]
-          items-start justify-start bg-skin-primary"
           >
-            <div className="flex flex-row w-full px-2 items-end justify-end text-skin-color1 font-display text-stylep4">
-              <div className="flex flex-col w-1/3 bg-skin-fill-4 bg-opacity-15 h-[20vh] items-baseline justify-end">
-                <span className="flex flex-row w-full in-center">reviews - {store?.ratings.totalReviews}</span>
+            <div className="flex flex-col w-full bg-opacity-15 p-2 min-h-[18vh] bg-skin-fill-4 items-baseline justify-end">
+              <div className="flex w-full h-[30px] "></div>
+
+              <span className="flex flex-row w-full in-center text-stylep2">
+                reviews - {store?.ratings.totalReviews}
+              </span>
+              <span className="flex text-styleh2 w-full in-center items-baseline justify-center">
+                {store?.ratings.average}
+              </span>
+              <span className="flex flex-row items-center mx-auto w-fit px-2 py-1 bg-opacity-60 bg-black rounded-full in-center">
+                {renderStars(store?.ratings?.average)}
+              </span>
+            </div>
+            {/** sidebar basic info */}
+            <span className="flex flex-row gap-x-2 w-full items-center justify-start text-stylep3 truncate">
+              <FaStore size={14} /><span className="text-stylep1">{store?.storeName}</span>
+            </span>
+            <span className="flex flex-row gap-x-2 w-full items-center justify-start text-stylep3">
+              <FaRegEnvelope size={14} /><span>{store?.email}</span> 
+            </span>
+
+            <span className="flex flex-row gap-x-2 w-full items-center justify-start text-stylep3">
+               <FaPhone size={14} /><span>{store?.phone}</span>
+            </span>
+
+            <span className="flex flex-row gap-x-2 w-full items-center justify-start text-stylep3 truncate">
+              <MdDescription size={14} /><span>{store?.description}</span> 
+            </span>
+
+            <div className="flex flex-col min-h-[25vh] w-full bg-skin-fill-2 bg-opacity-40 p-2 text-stylep4">
+              <span className="text-skin-color1 text-styleh4 font-display">
+                METRICS
+              </span>
+
+              <div className="w-full bg-skin-colorContent bg-opacity-60 text-skin-colorContent rounded-xl overflow-hidden">
+                {/* Orders */}
+                <details className="border-b border-skin-border1">
+                  <summary className="cursor-pointer px-1 py-2 font-bold select-none">
+                    Orders
+                  </summary>
+                  <div className="flex flex-col gap-1 px-3">
+                    <span>
+                      Total Orders: {store?.metrics?.orders?.totalOrders}
+                    </span>
+                  </div>
+                </details>
+
+                {/* Products */}
+                <details className="border-b border-skin-border1">
+                  <summary className="cursor-pointer px-1 py-2 font-bold select-none">
+                    Products
+                  </summary>
+                  <div className="flex flex-col gap-1 px-3 ">
+                    <span>
+                      Total Products: {store?.metrics?.products?.totalProducts}
+                    </span>
+                    <span>
+                      Low Stock: {store?.metrics?.products?.lowStockProducts}
+                    </span>
+                    <span>
+                      Out of Stock:{" "}
+                      {store?.metrics?.products?.outOfStockProducts}
+                    </span>
+                  </div>
+                </details>
+
+                {/* Revenue */}
+                <details>
+                  <summary className="cursor-pointer px-1 py-2 font-bold select-none">
+                    Revenue
+                  </summary>
+                  <div className="flex flex-col gap-1 px-3">
+                    <span>
+                      Total Revenue: {store?.metrics?.revenue?.totalRevenue}
+                    </span>
+                    <span>
+                      Monthly Revenue: {store?.metrics?.revenue?.monthlyRevenue}
+                    </span>
+                    <span>
+                      Daily Revenue: {store?.metrics?.revenue?.dailyRevenue}
+                    </span>
+                    <span>
+                      Avg Order Value:{" "}
+                      {store?.metrics?.revenue?.averageOrderValue}
+                    </span>
+                  </div>
+                </details>
+              </div>
+            </div>
+          </div>
+
+          {/** desktop 1/3  */}
+          <div
+            className="md:flex md:flex-col hidden rounded-lg w-full h-full p-2 min-h-[82vh]
+          items-start justify-start bg-skin-primary space-y-1"
+          >
+            <ReviewPaginationDesktop reviews={[...(store?.reviews?.low3 || []),
+                ...(store?.reviews?.top3 || []),] || []}/>
+            <ProductPaginationDesktop products={store.products} />
+          </div>
+
+          {/** mobile  */}
+          <div
+            className="flex flex-col md:hidden rounded-lg w-full h-full p-2 min-h-[82vh]
+          items-start justify-start bg-skin-primary space-y-1"
+          >
+            <div className="flex flex-row md:hidden w-full px-2 items-end justify-end text-skin-color1 font-display text-stylep4">
+              <div className="flex flex-col w-1/3 bg-skin-fill-4 bg-opacity-15 p-2 h-[20vh] items-baseline justify-end">
+                <span className="flex flex-row w-full in-center text-stylep2">
+                  reviews - {store?.ratings.totalReviews}
+                </span>
                 <span className="flex text-styleh2 w-full in-center items-baseline justify-center">
                   {store?.ratings.average}
                 </span>
-                <span className="flex flex-row w-full in-center">
+                <span className="flex flex-row items-center mx-auto w-fit px-2 py-1 bg-opacity-60 bg-black rounded-full in-center">
                   {renderStars(store?.ratings?.average)}
                 </span>
               </div>
               <div className="flex flex-col w-2/3 items-end justify-end">
-              <span className="flex flex-row gap-x-2 w-2/3 items-center justify-end">
-                <span className="text-styleh3">{store?.storeName}</span>
-              </span>
-              <span className="flex flex-row gap-x-2 w-2/3 items-center justify-end">
-                <span>{store?.email}</span> <FaRegEnvelope size={14} />
-              </span>
+                <span className="flex flex-row gap-x-2 w-2/3 items-center justify-end">
+                  <span className="text-styleh3">{store?.storeName}</span>
+                </span>
+                <span className="flex flex-row gap-x-2 w-2/3 items-center justify-end">
+                  <span>{store?.email}</span> <FaRegEnvelope size={14} />
+                </span>
 
-              <span className="flex flex-row gap-x-2 w-2/3 items-center justify-end">
-                <span>{store?.phone}</span> <FaPhone size={14} />
-              </span>
+                <span className="flex flex-row gap-x-2 w-2/3 items-center justify-end">
+                  <span>{store?.phone}</span> <FaPhone size={14} />
+                </span>
 
-              <span className="flex flex-row gap-x-2 w-2/3 items-center justify-end">
-                <span>{store?.description}</span> <MdDescription size={14} />
-              </span>
+                <span className="flex flex-row gap-x-2 w-2/3 items-center justify-end">
+                  <span>{store?.description}</span> <MdDescription size={14} />
+                </span>
               </div>
             </div>
-          </div>
-        </div>
+            {/** dispaly reviews */}
+            <span className="text-skin-color1 text-styleh4 font-display">
+              REVIEWS
+            </span>
+            <div
+              className="flex flex-row w-full h-[30vh] min-h-[30vh] relative bg-skin-fill-2 p-2 rounded-lg bg-opacity-25 
+                overflow-hidden overflow-x-auto items-center justify-start gap-3
+                text-skin-colorContent text-stylep3"
+            >
+              {[
+                ...(store?.reviews?.low3 || []),
+                ...(store?.reviews?.top3 || []),
+              ].map((review, index) => (
+                <div
+                  key={`${review._id}${index}`}
+                  onClick={() => navigate(`/product/${review.product._id}`)}
+                  className="min-w-[140px] h-full bg-skin-colorContent text-skin-colorContent rounded-xl p-3 flex flex-col shadow-md"
+                >
+                  {/* Rating */}
+                  <div className="flex flex-col items-center gap-1">
+                    <span className="font-bold text-stylep2 truncate">
+                      {review?.user?.username || "Anonymous"}
+                    </span>
+                    <span className="flex flex-row items-center justify-center w-full px-2 py-1 bg-opacity-20 bg-black rounded-full">
+                      {renderStars(review?.rating)}
+                    </span>
+                  </div>
 
-        <div className="flex w-full h-[170px] bg-skin-fill-1 bg-opacity-40 relative">
-          <div className="flex bg-skin-colorContent w-full h-[100px]">
-            <BannerImage bannerImage={store?.sellerBanner} />
-          </div>
-          <div className="absolute top-[50px] left-2 h-[90px] w-[90px] overflow-hidden border-2 border-skin-colorBorder1 rounded-full bg-skin-color-back">
-            <StoreImage storeImage={store?.sellerLogo} />
-          </div>
-          <div className="absolute top-[140px] left-3 text-skin-color1 text-styleh4">
-            {store?.store}
-          </div>
-        </div>
+                  {/* Comment (main focus) */}
+                  <p className="text-stylep4 line-clamp-4 mt-2 flex-grow text-center">
+                    “{review.comment}”
+                  </p>
 
-        {/* Store Info */}
-        <div
-          className="grid md:grid-cols-2 grid-cols-1 items-center justify-center w-full bg-skin-colorContent
-          text-skin-colorContent p-2 mt-1 text-stylep3 gap-2 rounded-lg"
-        >
-          <span className="flex flex-row items-center gap-x-2">
-            <FaRegEnvelope />
-            <span>{store?.email}</span>
-          </span>
-
-          <span className="flex flex-row items-center gap-x-2">
-            <FaPhone />
-            <span>{store?.phone}</span>
-          </span>
-
-          <span className="flex flex-row items-center gap-x-2 col-span-2 text-opacity-90">
-            <MdDescription />
-            <span>{store?.description}</span>
-          </span>
-
-          <span className="flex flex-row items-start gap-x-2 col-span-2">
-            <FaMapMarkerAlt className="mt-1" />
-            <div className="flex flex-col">
-              <span>
-                {store?.address?.street || ""}, {store?.address?.city || ""}
-              </span>
-              <span>
-                {store?.address?.country || ""},{" "}
-                {store?.address?.postalCode || ""}
-              </span>
+                  {/* Product row (small, bottom) */}
+                  <div className="flex flex-row items-center gap-2 mt-2 pt-2 border-t border-skin-border1">
+                    <div className="w-8 h-8 rounded-full overflow-hidden flex-shrink-0">
+                      <ProductImages
+                        productImages={review.product.productImage}
+                      />
+                    </div>
+                    <span className="text-[10px] truncate opacity-70">
+                      {review.product.name}
+                    </span>
+                  </div>
+                </div>
+              ))}
             </div>
-          </span>
-        </div>
 
-        {/* Products Section */}
-        <div className="text-div">
-          <h2 className="text-div-header">Products</h2>
-          <div className="text-line w-full" />
-          <div className="grid grid-cols-2 md:grid-cols-3 w-full my-2 items-center md:items-start justify-center gap-2">
-            {/* Product Section */}
-            <div className="flex flex-col bg-skin-colorContent bg-opacity-15 text-stylep3 rounded-md w-full h-full p-3">
-              {store?.products?.length === 0 ? (
-                <>
-                  <p className="text-skin-color1 mb-1">
-                    You don't own any products yet.
-                  </p>
-                  <h2 className="font-semibold mb-2 text-skin-color1">
-                    Get Started!
-                  </h2>
-                </>
-              ) : (
-                <>
-                  <p className="text-skin-color1 mb-1">
-                    Continue adding products to build your STORE
-                  </p>
-                </>
-              )}
-              <Link
-                to={`/create-product/${store?._id}`}
-                className="bg-green-500 text-white mt-2 p-2 text-stylep2 flex w-full items-center justify-center rounded-md"
+            {/* store metrics accordion */}
+            <div className="flex flex-col md:hidden min-h-[25vh] w-full bg-skin-fill-2 bg-opacity-40 p-2 text-stylep4">
+              <span className="text-skin-color1 text-styleh4 font-display">
+                METRICS
+              </span>
+
+              <div className="w-full bg-skin-colorContent bg-opacity-60 text-skin-colorContent rounded-xl overflow-hidden">
+                {/* Orders */}
+                <details className="border-b border-skin-border1">
+                  <summary className="cursor-pointer px-1 py-2 font-bold select-none">
+                    Orders
+                  </summary>
+                  <div className="flex flex-col gap-1 px-3">
+                    <span>
+                      Total Orders: {store?.metrics?.orders?.totalOrders}
+                    </span>
+                  </div>
+                </details>
+
+                {/* Products */}
+                <details className="border-b border-skin-border1">
+                  <summary className="cursor-pointer px-1 py-2 font-bold select-none">
+                    Products
+                  </summary>
+                  <div className="flex flex-col gap-1 px-3 ">
+                    <span>
+                      Total Products: {store?.metrics?.products?.totalProducts}
+                    </span>
+                    <span>
+                      Low Stock: {store?.metrics?.products?.lowStockProducts}
+                    </span>
+                    <span>
+                      Out of Stock:{" "}
+                      {store?.metrics?.products?.outOfStockProducts}
+                    </span>
+                  </div>
+                </details>
+
+                {/* Revenue */}
+                <details>
+                  <summary className="cursor-pointer px-1 py-2 font-bold select-none">
+                    Revenue
+                  </summary>
+                  <div className="flex flex-col gap-1 px-3">
+                    <span>
+                      Total Revenue: {store?.metrics?.revenue?.totalRevenue}
+                    </span>
+                    <span>
+                      Monthly Revenue: {store?.metrics?.revenue?.monthlyRevenue}
+                    </span>
+                    <span>
+                      Daily Revenue: {store?.metrics?.revenue?.dailyRevenue}
+                    </span>
+                    <span>
+                      Avg Order Value:{" "}
+                      {store?.metrics?.revenue?.averageOrderValue}
+                    </span>
+                  </div>
+                </details>
+              </div>
+            </div>
+
+            {/** add product or display */}
+            <span className="text-skin-color1 text-styleh4 font-display">
+              PRODUCTS
+            </span>
+            <div
+              className="flex flex-row w-full h-[30vh] relative bg-skin-fill-2 p-2 rounded-lg bg-opacity-25 
+                overflow-hidden overflow-x-auto items-center justify-start
+                text-skin-colorContent text-stylep3"
+            >
+              <div
+                onClick={() => navigate(`/create-product/${store?._id}`)}
+                className="flex flex-col h-[180px] min-w-[136px] in-center bg-skin-colorContent bg-opacity-25 rounded-xl border-4 border-skin-colorBorder1 text-skin-color1"
               >
-                ADD A PRODUCT
-              </Link>
-            </div>
-
-            {/* Rating Section */}
-            <div className="grid grid-cols-[1fr_3fr] md:grid-cols-[1fr_1.5fr] col-span-1 relative container items-center justify-start gap-3 bg-skin-colorContent bg-opacity-15 rounded-md w-full h-full p-3">
-              {store?.ratings?.average > 2 ? (
-                <FaThumbsUp className="size-8 w-full text-skin-color2" />
-              ) : (
-                <FaThumbsDown className="size-8 w-full text-skin-color2" />
-              )}
-              <span className="text-stylep3 text-skin-color1 leading-tight flex flex-col">
-                <h3 className="font-semibold mb-1">Store Rating</h3>
-                <span className="flex flex-row">
-                  {renderStars(store?.ratings?.average)}
+                <FaPlusCircle size={26} />
+                <span className="text-stylep2 font-display capitalize">
+                  Add A Product
                 </span>
-                <p className="flex flex-row my-2">According to:</p>
-                <p className="flex flex-row gap-2">
-                  {" "}
-                  {store?.ratings?.totalReviews} <FaUser />
-                </p>
-              </span>
-            </div>
+              </div>
 
-            {/* Security Section */}
-            <div className="grid grid-cols-[1fr_3fr] md:grid-cols-[1fr_1.5fr] col-span-2 md:col-span-1 relative container items-center justify-start gap-3 bg-skin-colorContent bg-opacity-15 rounded-md w-full h-full p-3">
-              <FaLock className="size-8 w-full text-skin-color2" />
-              <span className="text-stylep3 text-skin-color1 leading-tight flex flex-col">
-                Keep your store secure.
-                <button className="ml-1 px-2 py-1 w-fit text-white bg-gray-500 hover:bg-red-500 rounded-md transition-colors duration-150 my-2">
-                  Learn More
-                </button>
-                We appreciate keeping our community great
-              </span>
+              {store?.products?.map((product) => (
+                <Link
+                  to={`/product/${product._id}`}
+                  className="p-1"
+                  key={product._id}
+                >
+                  <ProductBox
+                    name={product.name}
+                    productImage={product.productImage}
+                    price={product.price}
+                    stock={product.stock}
+                    averageStar={product.averageRating}
+                  />
+                </Link>
+              ))}
             </div>
-          </div>
-
-          <div className="text-line w-full" />
-          <div className="flex flex-wrap w-full min-h-[140px] justify-start items-start bg-skin-colorContent gap-2 bg-opacity-10 m-1 p-1">
-            {store?.products?.map((product) => (
-              <Link
-                to={`/product/${product._id}`}
-                className="p-1"
-                key={product._id}
-              >
-                <ProductBox
-                  name={product.name}
-                  productImage={product.productImage}
-                  price={product.price}
-                  stock={product.stock}
-                  averageStar={product.averageRating}
-                />
-              </Link>
-            ))}
           </div>
         </div>
       </div>

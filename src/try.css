@@ -175,43 +175,43 @@
 
   /* ===================== DARK 2 ===================== */
   .theme-dark2 {
-    --color-primary: rgb(9, 18, 43);
-    --color-secondary: rgb(16, 36, 65);
+    --color-primary: rgb(231, 46, 46);
+    --color-secondary: rgb(255, 197, 91);
 
-    --color-button-1: rgb(76, 87, 23);
-    --color-button-2: rgb(6, 78, 42);
-    --color-button-3: rgb(210, 224, 145);
+    --color-button-1: rgb(69, 245, 46);
+    --color-button-2: rgb(28, 179, 48);
+    --color-button-3: rgb(28, 82, 17);
 
     --btn-grad-start-1: rgb(13, 42, 114);
     --btn-grad-end-1: rgb(6, 11, 27);
     --btn-grad-start-2: rgb(5, 15, 43);
     --btn-grad-end-2: rgb(16, 36, 65);
 
-    --color-text1: rgb(250, 239, 209);
-    --color-text2: rgb(172, 198, 238);
-    --color-text3: rgb(19, 10, 25);
+    --color-text1: rgb(247, 68, 253);
+    --color-text2: rgb(194, 36, 181);
+    --color-text3: rgb(109, 20, 90);
 
-    --color-contrast: rgb(255, 238, 80);
-    --color-disable: rgb(80, 90, 110);
+    --color-contrast: rgb(245, 238, 175);
+    --color-disable: rgb(66, 71, 80);
 
-    --color-fill-1: rgb(5, 10, 15);
-    --color-fill-2: rgb(13, 18, 54);
-    --color-fill-3: rgb(30, 49, 97);
-    --color-fill-4: rgb(5, 83, 43);
-    --color-fill-5: rgb(0, 1, 2);
+    --color-fill-1: rgb(206, 231, 255);
+    --color-fill-2: rgb(122, 165, 221);
+    --color-fill-3: rgb(52, 99, 219);
+    --color-fill-4: rgb(16, 75, 185);
+    --color-fill-5: rgb(3, 22, 85);
 
-    --color-back: rgb(18, 31, 12);
+    --color-back: rgb(0, 0, 0);
 
-    --color-border1: rgb(179, 240, 123);
-    --color-border2: rgb(61, 68, 83);
+    --color-border1: rgb(216, 97, 0);
+    --color-border2: rgb(168, 124, 4);
 
     --color-content-text: rgb(238, 222, 191);
-    --color-content-bg: rgb(0, 98, 143);
+    --color-content-bg: rgb(214, 183, 7);
 
     
-    --color-green: rgb(59, 184, 10);
-    --color-red: rgb(199, 3, 3);
-    --color-cart: rgb(212, 96, 0);
+    --color-green: rgb(95, 247, 35);
+    --color-red: rgb(233, 47, 47);
+    --color-cart: rgb(228, 121, 33);
 
 
     --color-shadow: rgb(78, 189, 143);
