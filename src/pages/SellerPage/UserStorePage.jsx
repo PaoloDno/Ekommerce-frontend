@@ -1,4 +1,10 @@
-import React, { useCallback, useEffect, useRef, useState } from "react";
+import React, {
+  useCallback,
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+} from "react";
 import {
   FaLock,
   FaMapMarkerAlt,
@@ -132,121 +138,145 @@ const UserStorePage = () => {
   };
 
   // Desktop Review Pagination
-const ReviewPaginationDesktop = ({ reviews }) => {
-  const [reviewPage, setReviewPage] = useState(0);
-  const REVIEWS_PER_PAGE = 4; // 2x2 grid
+  const ReviewPaginationDesktop = ({ reviews }) => {
+    const [reviewPage, setReviewPage] = useState(0);
+    const REVIEWS_PER_PAGE = 6; // 3x2 grid
 
-  const totalPages = Math.ceil(reviews.length / REVIEWS_PER_PAGE);
-  const pagedReviews = reviews.slice(
-    reviewPage * REVIEWS_PER_PAGE,
-    reviewPage * REVIEWS_PER_PAGE + REVIEWS_PER_PAGE
-  );
+    const uniqueReviews = useMemo(() => {
+      return Array.from(new Map(reviews.map((r) => [r._id, r])).values());
+    }, [reviews]);
 
-  return (
-    <div className="hidden md:flex flex-col w-full bg-skin-fill-2 bg-opacity-25 rounded-lg p-2">
-      <div className="flex justify-between items-center mb-2">
-        <span className="text-skin-color1 text-styleh4 font-display">REVIEWS</span>
-        <div className="flex gap-2">
-          <button
-            onClick={() => setReviewPage((p) => Math.max(0, p - 1))}
-            className="px-2 py-1 bg-skin-colorContent rounded"
-            disabled={reviewPage === 0}
-          >
-            ‹
-          </button>
-          <button
-            onClick={() => setReviewPage((p) => Math.min(totalPages - 1, p + 1))}
-            className="px-2 py-1 bg-skin-colorContent rounded"
-            disabled={reviewPage >= totalPages - 1}
-          >
-            ›
-          </button>
-        </div>
-      </div>
+    const totalPages = Math.ceil(uniqueReviews.length / REVIEWS_PER_PAGE);
 
-      <div className="grid grid-cols-2 gap-3">
-        {pagedReviews.map((review,index) => (
-          <div
-            key={`${index}${review._id}`}
-            className="bg-skin-colorContent rounded-xl p-3 flex flex-col shadow-md"
-          >
-            <span className="font-bold text-stylep2">
-              {review?.user?.username || "Anonymous"}
-            </span>
-            <div className="flex justify-center my-1">{renderStars(review.rating)}</div>
-            <p className="text-stylep4 line-clamp-3 flex-grow text-center">“{review.comment}”</p>
-            <div className="flex items-center gap-2 mt-2 pt-2 border-t border-skin-border1">
-              <div className="w-8 h-8 rounded-full overflow-hidden">
-                <ProductImages productImages={review.product.productImage} />
-              </div>
-              <span className="text-[10px] truncate opacity-70">{review.product.name}</span>
-            </div>
+    const pagedReviews = uniqueReviews.slice(
+      reviewPage * REVIEWS_PER_PAGE,
+      reviewPage * REVIEWS_PER_PAGE + REVIEWS_PER_PAGE
+    );
+
+    return (
+      <div className="hidden md:flex flex-col w-full min-h-[40vh] bg-skin-fill-2 bg-opacity-25 rounded-lg p-2">
+        <div className="flex justify-between items-center mb-2">
+          <span className="text-skin-color1 text-styleh4 font-display">
+            REVIEWS - {uniqueReviews.length}
+          </span>
+          <div className="flex gap-2 ">
+            <button
+              onClick={() => setReviewPage((p) => Math.max(0, p - 1))}
+              className="px-2 py-1 bg-skin-fill-3 text-skin-colorContent rounded w-[130px]"
+              disabled={reviewPage === 0}
+            >
+              ‹
+            </button>
+            <button
+              onClick={() =>
+                setReviewPage((p) => Math.min(totalPages - 1, p + 1))
+              }
+              className="px-2 py-1 bg-skin-fill-3 text-skin-colorContent rounded w-[130px]"
+              disabled={reviewPage >= totalPages - 1}
+            >
+              ›
+            </button>
           </div>
-        ))}
-      </div>
-    </div>
-  );
-};
-
-// Desktop Product Pagination
-const ProductPaginationDesktop = ({ products, storeId }) => {
-  const [productPage, setProductPage] = useState(0);
-  const PRODUCTS_PER_PAGE = 6; // 3x2 grid
-
-  const totalPages = Math.ceil(products.length / PRODUCTS_PER_PAGE);
-  const pagedProducts = products.slice(
-    productPage * PRODUCTS_PER_PAGE,
-    productPage * PRODUCTS_PER_PAGE + PRODUCTS_PER_PAGE
-  );
-
-  return (
-    <div className="hidden md:flex flex-col w-full bg-skin-fill-2 bg-opacity-25 rounded-lg p-2">
-      <div className="flex justify-between items-center mb-2">
-        <span className="text-skin-color1 text-styleh4 font-display">PRODUCTS</span>
-        <div className="flex gap-2">
-          <button
-            onClick={() => setProductPage((p) => Math.max(0, p - 1))}
-            className="px-2 py-1 bg-skin-colorContent rounded"
-            disabled={productPage === 0}
-          >
-            ‹
-          </button>
-          <button
-            onClick={() => setProductPage((p) => Math.min(totalPages - 1, p + 1))}
-            className="px-2 py-1 bg-skin-colorContent rounded"
-            disabled={productPage >= totalPages - 1}
-          >
-            ›
-          </button>
-        </div>
-      </div>
-
-      <div className="grid grid-cols-3 gap-3">
-        <div
-          onClick={() => navigate(`/create-product/${storeId}`)}
-          className="flex flex-col h-[180px] min-w-[136px] in-center bg-skin-colorContent bg-opacity-25 rounded-xl border-4 border-skin-colorBorder1 text-skin-color1"
-        >
-          <FaPlusCircle size={26} />
-          <span className="text-stylep2 font-display capitalize">Add A Product</span>
         </div>
 
-        {pagedProducts.map((product, index) => (
-          <Link to={`/product/${product._id}`} key={`${index}${product._id}`}>
-            <ProductBox
-              name={product.name}
-              productImage={product.productImage}
-              price={product.price}
-              stock={product.stock}
-              averageStar={product.averageRating}
-            />
-          </Link>
-        ))}
+        <div className="grid grid-cols-3 gap-3 items-start justify-start">
+          {pagedReviews.map((review, index) => (
+            <div
+              onClick={() => navigate(`/product/${review?.product._id}`)}
+              key={`${index}${review._id}`}
+              className="bg-skin-colorContent text-skin-colorContent rounded-xl px-3 py-1 flex flex-col shadow-md text-stylep4 items-start justify-start h-[120px]"
+            >
+              {" "}
+              <span className="grid grid-cols-[1.25fr_7.5fr] in-center w-full">
+                <span className="font-bold text-stylep3">
+                  {review?.user?.username || "Anonymous"}
+                </span>
+                <div className="flex items-center justify-end my-1">
+                  {renderStars(review.rating)}
+                </div>
+              </span>
+              <p className="text-stylep4 line-clamp-2 flex-grow text-center">
+                “{review.comment}”
+              </p>
+              <div className="flex w-full items-center gap-2 mt-2 pt-2 border-t border-skin-border1">
+                <div className="w-8 h-8 rounded-full overflow-hidden">
+                  <ProductImages productImages={review.product.productImage} />
+                </div>
+                <span className="text-[10px] truncate opacity-70">
+                  {review.product.name}
+                </span>
+              </div>
+            </div>
+          ))}
+        </div>
       </div>
-    </div>
-  );
-};
+    );
+  };
 
+  // Desktop Product Pagination
+  const ProductPaginationDesktop = ({ products, storeId }) => {
+    const [productPage, setProductPage] = useState(0);
+    const PRODUCTS_PER_PAGE = 3; // 3x2 grid
 
+    const totalPages = Math.ceil(products.length / PRODUCTS_PER_PAGE);
+    const pagedProducts = products.slice(
+      productPage * PRODUCTS_PER_PAGE,
+      productPage * PRODUCTS_PER_PAGE + PRODUCTS_PER_PAGE
+    );
+
+    return (
+      <div className="hidden md:flex flex-col w-full bg-skin-fill-2 min-h-[40vh] bg-opacity-25 rounded-lg px-2">
+        <div className="flex justify-between items-center mb-2">
+          <span className="text-skin-color1 text-styleh4 font-display">
+            PRODUCTS - {products.length}
+          </span>
+          <div className="flex gap-2">
+            <button
+              onClick={() => setProductPage((p) => Math.max(0, p - 1))}
+              className="px-2 py-1 bg-skin-fill-3 text-skin-colorContent rounded w-[130px]"
+              disabled={productPage === 0}
+            >
+              ‹
+            </button>
+            <button
+              onClick={() =>
+                setProductPage((p) => Math.min(totalPages - 1, p + 1))
+              }
+              className="px-2 py-1 bg-skin-fill-3 text-skin-colorContent rounded w-[130px]"
+              disabled={productPage >= totalPages - 1}
+            >
+              ›
+            </button>
+          </div>
+        </div>
+
+        <div className="grid grid-cols-4 items-start justify-start w-full h-[40vh] gap-1">
+          <div
+            onClick={() => navigate(`/create-product/${storeId}`)}
+            className="flex flex-col h-[180px] w-[140px] in-center bg-skin-colorContent bg-opacity-25
+         rounded-xl border-4 border-skin-colorBorder1 text-skin-colorContent"
+          >
+            <FaPlusCircle size={26} />
+            <span className="text-stylep2 font-display capitalize ">
+              Add A Product
+            </span>
+          </div>
+
+          {pagedProducts.map((product, index) => (
+            <Link to={`/product/${product._id}`} key={`${index}${product._id}`}>
+              <ProductBox
+                name={product.name}
+                productImage={product.productImage}
+                price={product.price}
+                stock={product.stock}
+                averageStar={product.averageRating}
+              />
+            </Link>
+          ))}
+        </div>
+      </div>
+    );
+  };
 
   return (
     <div className="page-body-background in-center">
@@ -265,11 +295,11 @@ const ProductPaginationDesktop = ({ products, storeId }) => {
         </div>
 
         {/* Store Header */}
-        <div className="flex flex-row w-full min-h-[85vh] in-center gap-2 z-10 px-1">
+        <div className="flex flex-row w-full min-h-[85vh] items-start justify-start gap-2 z-10 px-1 bg-skin-fill-2">
           {/** DESKTOP sidebar */}
           <div
-            className="hidden md:flex flex-col rounded-lg p-3 w-1/3 h-full min-h-[82vh]
-          items-start justify-start bg-skin-primary"
+            className="hidden md:flex flex-col rounded-lg p-3 w-1/3 h-[82vh] min-h-[82vh]
+          items-start justify-start bg-skin-primary text-skin-color1"
           >
             <div className="flex flex-col w-full bg-opacity-15 p-2 min-h-[18vh] bg-skin-fill-4 items-baseline justify-end">
               <div className="flex w-full h-[30px] "></div>
@@ -286,43 +316,47 @@ const ProductPaginationDesktop = ({ products, storeId }) => {
             </div>
             {/** sidebar basic info */}
             <span className="flex flex-row gap-x-2 w-full items-center justify-start text-stylep3 truncate">
-              <FaStore size={14} /><span className="text-stylep1">{store?.storeName}</span>
+              <FaStore size={14} />
+              <span className="text-stylep1">{store?.storeName}</span>
             </span>
             <span className="flex flex-row gap-x-2 w-full items-center justify-start text-stylep3">
-              <FaRegEnvelope size={14} /><span>{store?.email}</span> 
+              <FaRegEnvelope size={14} />
+              <span>{store?.email}</span>
             </span>
 
             <span className="flex flex-row gap-x-2 w-full items-center justify-start text-stylep3">
-               <FaPhone size={14} /><span>{store?.phone}</span>
+              <FaPhone size={14} />
+              <span>{store?.phone}</span>
             </span>
 
             <span className="flex flex-row gap-x-2 w-full items-center justify-start text-stylep3 truncate">
-              <MdDescription size={14} /><span>{store?.description}</span> 
+              <MdDescription size={14} />
+              <span>{store?.description}</span>
             </span>
 
-            <div className="flex flex-col min-h-[25vh] w-full bg-skin-fill-2 bg-opacity-40 p-2 text-stylep4">
+            <div className="flex flex-col min-h-[25vh] w-full  p-2 text-stylep4">
               <span className="text-skin-color1 text-styleh4 font-display">
                 METRICS
               </span>
 
-              <div className="w-full bg-skin-colorContent bg-opacity-60 text-skin-colorContent rounded-xl overflow-hidden">
+              <div className="w-full bg-skin-colorContent bg-opacity-60 text-skin-colorContent rounded-md py-2 px-1">
                 {/* Orders */}
-                <details className="border-b border-skin-border1">
-                  <summary className="cursor-pointer px-1 py-2 font-bold select-none">
+                <div className="border-b border-skin-border1">
+                  <span className="cursor-pointer px-1 py-2 font-bold select-none">
                     Orders
-                  </summary>
+                  </span>
                   <div className="flex flex-col gap-1 px-3">
                     <span>
                       Total Orders: {store?.metrics?.orders?.totalOrders}
                     </span>
                   </div>
-                </details>
+                </div>
 
                 {/* Products */}
-                <details className="border-b border-skin-border1">
-                  <summary className="cursor-pointer px-1 py-2 font-bold select-none">
+                <div className="border-b border-skin-border1">
+                  <span className="cursor-pointer px-1 py-2 font-bold select-none">
                     Products
-                  </summary>
+                  </span>
                   <div className="flex flex-col gap-1 px-3 ">
                     <span>
                       Total Products: {store?.metrics?.products?.totalProducts}
@@ -335,13 +369,13 @@ const ProductPaginationDesktop = ({ products, storeId }) => {
                       {store?.metrics?.products?.outOfStockProducts}
                     </span>
                   </div>
-                </details>
+                </div>
 
                 {/* Revenue */}
-                <details>
-                  <summary className="cursor-pointer px-1 py-2 font-bold select-none">
+                <div>
+                  <span className="cursor-pointer px-1 py-2 font-bold select-none">
                     Revenue
-                  </summary>
+                  </span>
                   <div className="flex flex-col gap-1 px-3">
                     <span>
                       Total Revenue: {store?.metrics?.revenue?.totalRevenue}
@@ -357,7 +391,7 @@ const ProductPaginationDesktop = ({ products, storeId }) => {
                       {store?.metrics?.revenue?.averageOrderValue}
                     </span>
                   </div>
-                </details>
+                </div>
               </div>
             </div>
           </div>
@@ -367,8 +401,9 @@ const ProductPaginationDesktop = ({ products, storeId }) => {
             className="md:flex md:flex-col hidden rounded-lg w-full h-full p-2 min-h-[82vh]
           items-start justify-start bg-skin-primary space-y-1"
           >
-            <ReviewPaginationDesktop reviews={[...(store?.reviews?.low3 || []),
-                ...(store?.reviews?.top3 || []),] || []}/>
+            <ReviewPaginationDesktop
+              reviews={[...store?.reviews?.low3, ...store?.reviews?.top3] || []}
+            />
             <ProductPaginationDesktop products={store.products} />
           </div>
 
@@ -415,12 +450,16 @@ const ProductPaginationDesktop = ({ products, storeId }) => {
                 overflow-hidden overflow-x-auto items-center justify-start gap-3
                 text-skin-colorContent text-stylep3"
             >
-              {[
-                ...(store?.reviews?.low3 || []),
-                ...(store?.reviews?.top3 || []),
-              ].map((review, index) => (
+              {Array.from(
+                new Map(
+                  [
+                    ...(store?.reviews?.low3 || []),
+                    ...(store?.reviews?.top3 || []),
+                  ].map((r) => [r._id, r])
+                ).values()
+              ).map((review) => (
                 <div
-                  key={`${review._id}${index}`}
+                  key={review._id}
                   onClick={() => navigate(`/product/${review.product._id}`)}
                   className="min-w-[140px] h-full bg-skin-colorContent text-skin-colorContent rounded-xl p-3 flex flex-col shadow-md"
                 >
@@ -434,12 +473,12 @@ const ProductPaginationDesktop = ({ products, storeId }) => {
                     </span>
                   </div>
 
-                  {/* Comment (main focus) */}
+                  {/* Comment */}
                   <p className="text-stylep4 line-clamp-4 mt-2 flex-grow text-center">
                     “{review.comment}”
                   </p>
 
-                  {/* Product row (small, bottom) */}
+                  {/* Product row */}
                   <div className="flex flex-row items-center gap-2 mt-2 pt-2 border-t border-skin-border1">
                     <div className="w-8 h-8 rounded-full overflow-hidden flex-shrink-0">
                       <ProductImages
