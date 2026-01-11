@@ -3,7 +3,7 @@ import { FaRegStar, FaStar } from "react-icons/fa";
 import ProductImages from "../ImagesComponent/components/ProductImageComponent";
 import { useNavigate } from "react-router-dom";
 
-const CartHeaderCard = ({ item }) => {
+const CartHeaderCard = ({ item, onClose }) => {
   console.log("cart header item", item);
   const navigate = useNavigate();
 

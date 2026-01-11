@@ -1,4 +1,4 @@
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import ProductImages from "../../../components/ImagesComponent/components/ProductImageComponent";
@@ -7,148 +7,110 @@ import { addToCartAction } from "../../../store/actions/CartThunks";
 const AddCartForm = ({ onClose, product }) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const { token } = useSelector((state) => state.auth);
   const [quantity, setQuantity] = useState(1);
 
   const {
-    _id,
+    _id: productId,
     name,
     productImage,
     stock,
     seller,
-    averageRating,
     description,
     price,
-  } = product;
+  } = product || {};
 
-  const { storeName } = seller || " - ";
+  const handleClose = () => {
+    setQuantity(1);
+    onClose();
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    let productId = _id;
-    try {
-    const resultAction = await dispatch(addToCartAction({productId, quantity}));
-     if (addToCartAction.fulfilled.match(resultAction)) {
-      console.log("Add to cart successful!", resultAction.payload);
-    } else {
-      console.log("Add to cart failed:", resultAction.error);
-      return; 
+
+    if (!token) {
+      navigate("/login");
+      return;
     }
 
-  } catch (error) {
-    console.error("Unexpected error:", error);
+    try {
+      const result = await dispatch(addToCartAction({ productId, quantity }));
+      if (addToCartAction.fulfilled.match(result)) {
+        navigate("/cart-user");
+      }
+    } catch (err) {
+      console.error("Add to cart failed:", err);
+    } finally {
+      handleClose();
+    }
+  };
 
-  } finally {
-    onClose();
-    navigate("/cart-user");
-  }
+  const changeQty = (delta) => {
+  if (!stock) return;
+  setQuantity((q) => {
+    const next = q + delta;
+    if (next < 1) return 1;
+    if (next > stock) return stock;
+    return next;
+  });
 };
 
-  const AddQuantity = () => {
-    if (quantity < stock) {
-      setQuantity((prev) => prev + 1);
-    }
-  };
+const handleInput = (e) => {
+  if (!stock) return;
 
-  const SubsQuantity = () => {
-    if (quantity > 1) {
-      setQuantity((prev) => prev - 1);
-    }
-  };
+  let val = Number(e.target.value);
 
-  const validateQuantityInput = (value, stock) => {
-    let val = Number(value);
+  if (isNaN(val) || val < 1) val = 1;
+  if (val > stock) val = stock;
 
-    if (value === "") return "";
-    if (isNaN(val)) return 1;
-
-    if (val > stock) return stock;
-    if (val < 1) return 1;
-
-    return val;
-  };
+  setQuantity(val);
+};
 
   return (
-    <div className="fixed font-Montserrat inset-0 flex items-center justify-center bg-black bg-opacity-40 z-50">
-      <div className="bg-skin-colorContent text-skin-colorContent rounded-lg p-5 w-[90%] md:w-[400px] shadow-lg relative">
-        <h2 className="text-styleh3 font-semibold mb-3 text-center text-skin-colorContent">
+    <div className="fixed inset-0 flex items-center justify-center bg-black/60 z-40 font-display w-full h-full">
+      <div className="flex flex-col bg-skin-colorContent text-skin-colorContent items-start justify-start rounded-lg p-5 w-[90%] max-w-[400px] shadow-lg">
+        <h2 className="text-styleh4 font-semibold text-center mb-3 w-full">
           Add Product to Cart
         </h2>
 
-        <div className="flex flex-col gap-4">
-       
-          <div className="flex gap-3 items-center border p-3 rounded-lg bg-white shadow">
-            <span className="h-[150px] w-[150px]">
-              <ProductImages
-                productImage={productImage}
-              />
-            </span>
-            <div className="flex flex-col h-full text-stylep3">
-              <p className="font-semibold text-stylep2">{name}</p>
-              <p className="font-semibold opacity-90">{description}</p>
-              <p className="font-semibold opacity-90">₱ {price}</p>
-              <p className="font-semibold opacity-90">Stock: {stock}</p>
+          <div className="flex flex-row gap-1 items-center border h-[120px] py-2 px-1 rounded-lg bg-skin-buttonColor-1 text-skin-color1 w-full">
+            <div className="w-[120px] h-[120px]">
+              <ProductImages productImage={productImage} />
+            </div>
+            <div className="flex flex-col text-stylep4">
+              <p className="font-semibold">{name}</p>
+              <p className="opacity-90 line-clamp-2">{description}</p>
+              <p className="opacity-90">₱ {price}</p>
+              <p className="opacity-90">Stock: {stock}</p>
             </div>
           </div>
 
-          <form
-            onSubmit={handleSubmit}
-            className="flex flex-col gap-3 text-stylep2"
-          >
-            <div className="flex items-center justify-center gap-4">
-              <button
-                type="button"
-                onClick={SubsQuantity}
-                className="px-3 py-1 bg-skin-primary w-10 h-10 border-2 text-stylep1
-                 border-skin-colorBorder1 text-skin-color1 rounded hover:bg-gray-300 hover:text-black hover:border-green-600"
-              >
-                -
-              </button>
-
+          <form onSubmit={handleSubmit} className="flex flex-col gap-3 w-full py-2">
+            <div className="flex justify-center items-center gap-3 text-stylep2">
+              <button type="button" onClick={() => changeQty(-1)} className="bg-skin-buttonColor-1 text-skin-color1 in-center w-[20px] h-[20px] p-2 box-content">−</button>
               <input
                 type="number"
-                className="w-16 text-center border rounded border-black py-1 text-stylep1"
                 value={quantity}
-                onChange={(e) => {
-                  const newValue = validateQuantityInput(e.target.value, stock);
-                  setQuantity(newValue);
-                }}
+                onChange={handleInput}
+                className="w-[90px] text-center border rounded py-1 bg-skin-fill-4 text-skin-colorHigh"
               />
-
-              <button
-                type="button"
-                onClick={AddQuantity}
-                className="px-3 py-1 bg-skin-primary w-10 h-10 border-2 text-stylep1
-                 border-skin-colorBorder1 text-skin-color1 rounded hover:bg-gray-300 hover:text-black hover:border-green-600"
-              >
-                +
-              </button>
+              <button type="button" onClick={() => changeQty(1)} className="bg-skin-buttonColor-1 text-skin-color1 in-center w-[20px] h-[20px] p-2 box-content">+</button>
             </div>
 
-            <button
-              type="submit"
-              className="bg-blue-600 text-white py-2 rounded-md hover:bg-blue-700 mt-2"
-            >
+            <button type="submit" className="bg-skin-cart text-skin-color1 py-2 rounded-md">
               ADD TO CART
             </button>
           </form>
 
-          <span className="flex w-full items-center">
-         
-            <button
-              onClick={onClose}
-              className="text-gray-600 mt-2 hover:text-gray-800 mx-auto text-sm"
-            >
+          <div className="flex flex-row in-center text-stylep3 w-full gap-2">
+            <button onClick={handleClose} className="opacity-70 hover:opacity-100 bg-skin-red text-skin-color1 min-w-[110px]">
               CANCEL
             </button>
-            <Link
-              to={`/store/${seller._id}`}
-              className="text-gray-600 mt-2 hover:text-gray-800 mx-auto text-sm truncate"
-            >
+            <Link to={`/store/${seller?._id}`} className="opacity-70 hover:opacity-100 bg-skin-fill-3 text-skin-colorContent truncate min-w-[110px]">
               VISIT STORE
             </Link>
-          </span>
+          </div>
         </div>
-      </div>
     </div>
   );
 };

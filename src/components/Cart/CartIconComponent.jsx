@@ -99,7 +99,12 @@ const CartIconComponent = () => {
                   View Cart
                 </button>
 
-                <button className="flex-1 border-skin-colorBorder1 border-2 bg-skin-green hover:bg-gray-800 hover:text-slate-200 text-skin-color1 py-1.5 rounded-lg text-sm font-medium transition">
+                <button className="flex-1 border-skin-colorBorder1 border-2 bg-skin-green hover:bg-gray-800 hover:text-slate-200 text-skin-color1 py-1.5 rounded-lg text-sm font-medium transition"
+                   onClick={() => {
+                    navigate("/cart-user");
+                    setOpen(false);
+                  }}
+                >
                   Checkout
                 </button>
               </div>

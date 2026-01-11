@@ -1,39 +1,30 @@
 import React, { useState } from "react";
-import { useDispatch } from "react-redux";
 
 const ReviewForm = ({ onClose, onSubmit, productId }) => {
-  const dispatch = useDispatch();
   const [rating, setRating] = useState("");
   const [comment, setComment] = useState("");
   const [error, setError] = useState("");
 
   const CLEAN_TEXT = /^[^&<>"'/]*$/;
-  const validateInput = () => CLEAN_TEXT.test(comment.trim());
 
   const handleSubmit = (e) => {
     e.preventDefault();
 
     if (!rating || !comment.trim()) {
-      setError("Please fill out all fields.");
-      return;
+      return setError("Please fill out all fields.");
     }
 
     const numericRating = Number(rating);
     if (numericRating < 1 || numericRating > 5) {
-      setError("Rating must be between 1 and 5.");
-      return;
+      return setError("Rating must be between 1 and 5.");
     }
 
-    if (!validateInput()) {
-      setError("Invalid characters detected.");
-      return;
+    if (!CLEAN_TEXT.test(comment.trim())) {
+      return setError("Invalid characters detected.");
     }
 
-    onSubmit({ productId, rating: numericRating, comment });
-    setRating("");
-    setComment("");
-    setError("");
-    onClose();
+    onSubmit({ productId, rating: numericRating, comment: comment.trim() });
+    handleClose();
   };
 
   const handleClose = () => {
@@ -44,66 +35,51 @@ const ReviewForm = ({ onClose, onSubmit, productId }) => {
   };
 
   return (
-    <div className="fixed font-Montserrat inset-0 flex items-center justify-center bg-black bg-opacity-40 z-50">
-      <div className="bg-skin-colorContent rounded-lg p-5 w-[90%] md:w-[400px] shadow-lg relative">
-        <h2 className="text-styleh3 font-semibold mb-3 text-center text-gray-800">
+    <div className="fixed inset-0 flex items-center justify-center bg-black/50 z-50 font-display">
+      <div className="bg-skin-colorContent text-skin-colorContent rounded-lg p-4 w-[90%] max-w-[400px] shadow-lg">
+        <h2 className="text-styleh4 font-semibold text-center mb-2">
           Leave a Review
         </h2>
-        <form
-          onSubmit={handleSubmit}
-          className="flex flex-col gap-3 text-stylep1"
-        >
+
+        <form onSubmit={handleSubmit} className="flex flex-col gap-2 text-stylep2">
           <div>
-            <label
-              htmlFor="rating"
-              className="block text-skin-colorContent mb-1"
-            >
-              Rating (1–5):
-            </label>
+            <label className="block mb-1">Rating</label>
             <select
-              name="rating"
-              id="rating"
               value={rating}
               onChange={(e) => setRating(e.target.value)}
-              className="border border-skin-colorBorder1 rounded-md w-full p-2 shadow-md"
+              className="w-full p-2 rounded-md border bg-skin-buttonColor-1 text-skin-color1"
             >
               <option value="">Select rating</option>
-              <option value={1}>1 star - very poor quality</option>
-              <option value={2}>2 stars - poor quality</option>
-              <option value={3}>3 stars - average quality</option>
-              <option value={4}>4 stars - good quality</option>
-              <option value={5}>5 stars - excellent quality</option>
+              <option value="1">1 - Very poor</option>
+              <option value="2">2 - Poor</option>
+              <option value="3">3 - Average</option>
+              <option value="4">4 - Good</option>
+              <option value="5">5 - Excellent</option>
             </select>
           </div>
 
           <div>
-            <label
-              htmlFor="comment"
-              className="block text-skin-colorContent mb-1"
-            >
-              Comment:
-            </label>
+            <label className="block mb-1">Comment</label>
             <textarea
-              id="comment"
               value={comment}
               onChange={(e) => setComment(e.target.value)}
-              className="border border-skin-colorBorder1 rounded-md w-full p-2 h-24 shadow-md resize-none"
+              className="w-full h-24 p-2 rounded-md border bg-skin-buttonColor-1 text-skin-color1 resize-none"
             />
           </div>
 
-          {error && <p className="text-red-500 text-sm mt-1">{error}</p>}
+          {error && <p className="text-red-500 text-sm">{error}</p>}
 
           <div className="flex justify-end gap-2 mt-2">
             <button
               type="button"
               onClick={handleClose}
-              className="px-3 py-1 bg-gray-300 rounded-md hover:bg-gray-400"
+              className="px-3 py-1 rounded-md bg-skin-red w-[120px]"
             >
               Cancel
             </button>
             <button
               type="submit"
-              className="px-3 py-1 bg-green-500 text-white rounded-md hover:bg-green-600"
+              className="px-3 py-1 rounded-md bg-skin-green w-[120px]"
             >
               Submit
             </button>

@@ -21,7 +21,6 @@ import AddCartForm from "./components/AddCartProductFrom";
 
 const ProductDisplayPage = () => {
   const { productId } = useParams();
-
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const { token, isPending } = useSelector((state) => state.auth);
@@ -44,15 +43,10 @@ const ProductDisplayPage = () => {
   const isMounted = useRef(true);
 
   const fetchProduct = useCallback(async () => {
-
-    console.log("a");
     try {
       const resultAction = await dispatch(getProductIdAction(productId));
 
-      if (
-        getProductIdAction.fulfilled.match(resultAction) &&
-        isMounted.current
-      ) {
+      if (getProductIdAction.fulfilled.match(resultAction) && isMounted.current) {
         const data =
           resultAction.payload?.data || resultAction.payload?.product || {};
         setProduct(data);
@@ -61,53 +55,28 @@ const ProductDisplayPage = () => {
           Boolean
         );
         setDisplayImages(imagesArray);
-
-        console.log("Fetched product:", data);
-        console.log("Images:", imagesArray);
       }
     } catch (error) {
       console.log(error);
     }
-  }, [dispatch, productId, token]);
+  }, [dispatch, productId]);
 
   useEffect(() => {
     isMounted.current = true;
-    if (token) {
-      fetchProduct();
-    }
+    if (token) fetchProduct();
     return () => {
       isMounted.current = false;
     };
   }, [fetchProduct, token]);
 
-  if (!token) {
-    return (
-      <div className="page-section">
-        <div className="page-body">
-          <p className="text-white p-4 w-full h-full">
-            Please login to continue
-          </p>
-          <button
-            onClick={() => navigate("/login")}
-            className="px-4 py-2 mt-2 bg-green-500 text-white rounded-md hover:bg-blue-600"
-          >
-            Go to Login
-          </button>
-        </div>
-      </div>
-    );
-  }
-
   const handleSubmitReview = async (reviewData) => {
-    if(!token) return;
-    
-    console.log("Review submitted:", reviewData);
+    if (!token) {
+      navigate("/login");
+      return;
+    }
 
     const resultAction = await dispatch(createReviewAction(reviewData));
-
-    if (createReviewAction.fulfilled.match(resultAction)) {
-      console.log("subnmission success");
-    } else {
+    if (!createReviewAction.fulfilled.match(resultAction)) {
       console.log("Submission failed");
     }
   };
@@ -121,180 +90,159 @@ const ProductDisplayPage = () => {
   }
 
   const renderStars = (ratingValue) => {
-    const stars = [];
-    if(!ratingValue) return <p>No Rating Yet</p>;
+    if (!ratingValue) return <p>No Rating Yet</p>;
     const roundedRating = Math.floor(ratingValue);
-    for (let i = 1; i <= 5; i++) {
-      stars.push(
-        i <= roundedRating ? (
-          <FaStar key={i} className="text-yellow-400" />
-        ) : (
-          <FaRegStar key={i} className="text-gray-300" />
-        )
-      );
-    }
-    return stars;
+    return Array.from({ length: 5 }, (_, i) =>
+      i + 1 <= roundedRating ? (
+        <FaStar key={i} className="text-yellow-400" />
+      ) : (
+        <FaRegStar key={i} className="text-gray-300" />
+      )
+    );
   };
 
   return (
-    <div className="page-section">
-      <div className="page-body">
-        <div
-          className="absolute opacity-5 inset-0 h-[90vw] w-full
-         bg-gradient-to-r to-white from-transparent z-0"
-        ></div>
+    <div className="page-body-background in-center">
+      <div className="page-body-section in-center pb-4">
 
-        <div className="text-div-bgblur"></div>
-        <div className="text-div">
-          <div className="flex bg-skin-colorContent opacity-10 w-full h-[20px]"></div>
+        {/* HERO ROW */}
+        <div className="flex w-full h-[52vh] md:h-[65vh] lg:h-[75vh] px-2 gap-3">
 
-          <ProductGallery
-            images={
-              displayImages && displayImages.length > 0
-                ? displayImages
-                : ["A1", "B1", "C1"]
-            }
-          />
-
-          <div
-            className="grid md:grid-cols-2 grid-cols-1 items-center justify-center w-full bg-skin-colorContent
-            text-skin-colorContent py-2 md:py-5 mt-1 text-stylep3 gap-2 rounded-lg
-            font-medium md:px-4 px-3"
-          >
-            <span className="col-span-2">
-              <h2 className="text-div-header">Product</h2>
-              <div className="text-line w-full items-center justify-center" />
-            </span>
-            <span className="flex flex-row items-center gap-x-2">
-              <span>Name: </span>
-              <span>{product?.name}</span>
-            </span>
-
-            <span className="flex flex-row items-center gap-x-2">
-              <span>Sku: </span>
-              <span>{product?.sku}</span>
-            </span>
-
-            <span className="flex flex-row items-center gap-x-2 text-opacity-90">
-              <span>Brand: </span>
-              <span>{product?.brand}</span>
-            </span>
-
-            <span className="flex flex-row items-center gap-x-2 text-opacity-90">
-              <span>Rating: </span>
-              <span className="flex flex-row">
-                {renderStars(product?.averageRating)}
-              </span>
-            </span>
-
-            <span className="flex flex-row items-start gap-x-2 col-span-2">
-              <div className="flex flex-col pl-2">
-                <span>
-                  <span>Price: </span>
-                  {product?.price || ""}
-                </span>
-                <span>
-                  <span>Stocks: </span>
-                  {product?.stock || ""}
-                </span>
-              </div>
-            </span>
-
-            <span className="flex flex-col justify-start w-full items-start gap-x-2 col-span-2">
-              <span>Description: </span>
-              <span className="opacity-80">{product?.description}</span>
-            </span>
-
-            {product?.attributes &&
-              Object.keys(product.attributes).length > 0 && (
-                <div className="flex flex-col col-span-2 mt-2 border-t border-skin-colorBorder2 pt-2">
-                  <span className="font-semibold text-skin-colorContent mb-1">
-                    Attributes:
-                  </span>
-                  <div className="grid grid-cols-2 sm:grid-cols-3 gap-1 text-stylep3">
-                    {Object.entries(product.attributes).map(([key, value]) => (
-                      <span key={key} className="flex flex-row gap-x-1">
-                        <span className="font-medium capitalize">{key}:</span>
-                        <span>{value}</span>
-                      </span>
-                    ))}
-                  </div>
-                </div>
-              )}
+          {/* GALLERY */}
+          <div className="w-[50%] md:w-[33.333%] h-full">
+            <ProductGallery
+              images={displayImages.length ? displayImages : ["A1", "B1", "C1"]}
+            />
           </div>
-        </div>
-        <div className="text-div justify-evenly">
-          <div
-            className="grid sm:grid-cols-2 grid-cols-1 items-center justify-center w-full bg-skin-colorContent
-            text-skin-colorContent p-2 mt-1 text-stylep3 gap-2 rounded-lg pb-3 md:pb-2"
-          >
-            <span
-              className="flex flex-row items-center p-1 md:py-2 justify-center px-3 gap-2 bg-yellow-500 rounded-sm
-              col-span-2"
-              onClick={() => setShowAddCartForm(true)}
-            >
-              <span>
-                <FaCartShopping />
-              </span>
-              <span>Add to Cart</span>
-            </span>
-            <span
-              onClick={() => setShowReviewForm(true)}
-              className="flex flex-row items-center py-1 md:py-2 justify-center px-3 gap-2 bg-green-400 rounded-sm col-span-2 cursor-pointer hover:bg-green-500 transition"
-            >
-              <span>
-                <FaNoteSticky />
-              </span>
-              <span>Leave A Review</span>
-            </span>
-          </div>
-          <span className="grid grid-cols-[1fr_1fr] text-stylep2 text-skin-colorDis opacity-95 items-center justify-center bg-skin-colorContent rounded-md p-1 gap-3">
-            <Link
-              className="flex flex-row items-center py-1 md:py-2 justify-center gap-2 bg-green-600 bg-opacity-35 px-3 rounded-md text-black"
-              to={`/store/${product?.seller?._id}`}
-            >
-              <FaStore /> visit store
-            </Link>
-            <Link
-              className="flex flex-row items-center py-1 md:py-2 justify-center gap-2 bg-red-600 bg-opacity-95 px-3 rounded-md text-white"
-              to={`/store/${product?.seller?._id}`}
-            >
-              <FaCircleExclamation /> report
-            </Link>
-          </span>
-        </div>
-        <div className="text-div">
-          <div className="flex flex-col w-full items-start gap-4 p-2">
-            {/* Header with navigation */}
-            <div className="flex justify-between items-center w-full mb-2">
-              <h2 className="text-div-header">Reviews</h2>
-              {product.reviews && product.reviews.length > 3 && (
-                <div className="flex gap-2">
-                  <button
-                    onClick={() =>
-                      setCurrentPage((prev) => Math.max(prev - 1, 0))
-                    }
-                    className="px-3 py-1 rounded-md bg-gray-200 hover:bg-gray-300 transition"
-                  >
-                    ‹ Prev
-                  </button>
-                  <button
-                    onClick={() =>
-                      setCurrentPage((prev) =>
-                        (prev + 1) * reviewsPerPage < product.reviews.length
-                          ? prev + 1
-                          : prev
-                      )
-                    }
-                    className="px-3 py-1 rounded-md bg-gray-200 hover:bg-gray-300 transition"
-                  >
-                    Next ›
-                  </button>
-                </div>
-              )}
+
+          {/* DESKTOP ACTIONS + REVIEWS */}
+          <div className="hidden md:flex flex-col w-[33.333%] h-full gap-2">
+            <div className="grid gap-2 bg-skin-colorContent p-2 rounded-lg text-skin-color1">
+              <button
+                onClick={() => setShowAddCartForm(true)}
+                className="flex items-center justify-start px-2 gap-2 bg-skin-cart text-skin-color1 py-2 rounded-sm md:rounded-lg lg:text-styleh3"
+              >
+                <FaCartShopping /> Add to Cart
+              </button>
+
+              <button
+                onClick={() => setShowReviewForm(true)}
+                className="flex items-center justify-start px-2 gap-2 bg-skin-buttonColor-2 rounded-lg"
+              >
+                <FaNoteSticky /> Leave A Review
+              </button>
+
+              <Link
+                to={`/store/${product?.seller?._id}`}
+                className="flex items-center justify-start px-2 gap-2 bg-skin-buttonColor-2 bg-opacity-35 rounded-lg py-1"
+              >
+                <FaStore /> Visit Store
+              </Link>
+
+              <Link
+                to={`/store/${product?.seller?._id}`}
+                className="flex items-center justify-center gap-2 bg-skin-red text-skin-color1 rounded-lg py-1"
+              >
+                <FaCircleExclamation /> Report
+              </Link>
             </div>
 
-            {currentReviews && currentReviews.length > 0 ? (
+            {/* DESKTOP REVIEWS */}
+            <div className="flex flex-col h-full bg-skin-primary text-skin-color1 px-2 py-2 rounded-lg">
+              <h2 className="text-styleh4 mb-2">Reviews - {product?.averageRating} <span className="opacity-65">{"("}{product?.numOfReviews}{")"}</span></h2>
+              <div className="flex flex-col gap-1 overflow-y-auto h-full">
+                {currentReviews.length ? (
+                  currentReviews.map((review) => (
+                    <ProductReviewCardComponent
+                      key={review._id}
+                      reviewId={review._id}
+                      comment={review.comment}
+                      rating={review.rating}
+                      user={review.user}
+                    />
+                  ))
+                ) : (
+                  <p className="opacity-70 text-sm">No reviews yet.</p>
+                )}
+              </div>
+            </div>
+
+          </div>
+
+            {/* INFO */}
+          <div className="w-[50%] md:w-[33.333%] h-full grid grid-cols-2 gap-0 bg-skin-colorContent text-start items-start justify-start
+             text-skin-colorContent font-Receipt px-2 py-2 rounded-lg overflow-y-auto text-stylep3">
+            <div className="col-span-2">
+              <h2 className="text-styleh3 px-2 py-1 bg-skin-fill-4 text-skin-colorHigh">
+                Price: ₱ {product?.price}
+              </h2>
+              <div className="border-b w-full" />
+            </div>
+
+            <div className="col-span-2">P.Name: {product?.name}</div>
+            <div>SKU: {product?.sku}</div>
+            <div >Brand: {product?.brand}</div>
+            <div className="col-span-2 flex items-center gap-1">
+              Rating: {renderStars(product?.averageRating)}
+            </div>
+            <div className="col-span-2">Stocks: {product?.stock}</div>
+            <div className="col-span-2">
+              Description:
+              <p className="opacity-80 line-clamp-3">{product?.description}</p>
+            </div>
+
+            {product?.attributes && (
+              <div className="col-span-2 mt-2 border-t pt-2">
+                <span className="font-semibold">Attributes:</span>
+                <div className="grid grid-cols-2 sm:grid-cols-3 gap-1">
+                  {Object.entries(product.attributes).map(([key, value]) => (
+                    <div key={key}>
+                      <span className="font-medium capitalize">{key}:</span>{" "}
+                      {value}
+                    </div>
+                  ))}
+                </div>
+              </div>
+            )}
+          </div>
+        </div>
+
+        {/* MOBILE ACTIONS */}
+        <div className="md:hidden w-full mt-3 grid grid-cols-2 gap-2 bg-skin-colorContent text-skin-colorContent p-2 rounded-lg">
+          <button
+            onClick={() => setShowAddCartForm(true)}
+            className="flex justify-center gap-2 bg-skin-cart py-1 rounded-sm"
+          >
+            <FaCartShopping /> Add to Cart
+          </button>
+
+          <button
+            onClick={() => setShowReviewForm(true)}
+            className="flex justify-center gap-2 bg-skin-buttonColor-2 py-1 rounded-sm"
+          >
+            <FaNoteSticky /> Review
+          </button>
+
+          <Link
+            to={`/store/${product?.seller?._id}`}
+            className="flex justify-center gap-2 bg-skin-buttonColor-2 bg-opacity-35 py-1 rounded-md"
+          >
+            <FaStore /> Store
+          </Link>
+
+          <Link
+            to={`/store/${product?.seller?._id}`}
+            className="flex justify-center gap-2 bg-skin-red text-skin-color1 py-1 rounded-sm"
+          >
+            <FaCircleExclamation /> Report
+          </Link>
+        </div>
+
+        {/* MOBILE REVIEWS */}
+        <div className="md:hidden w-full mt-3 bg-skin-primary text-skin-color1 p-2 rounded-lg">
+          <h2 className="text-styleh4 mb-2">Reviews - {product?.averageRating}</h2>
+          <div className="flex flex-col gap-1 max-h-[26vh] overflow-y-auto">
+            {currentReviews.length ? (
               currentReviews.map((review) => (
                 <ProductReviewCardComponent
                   key={review._id}
@@ -305,11 +253,12 @@ const ProductDisplayPage = () => {
                 />
               ))
             ) : (
-              <p className="text-gray-500 text-sm">No reviews yet.</p>
+              <p className="opacity-70 text-sm">No reviews yet.</p>
             )}
           </div>
         </div>
       </div>
+
       {showReviewForm && (
         <ReviewForm
           onClose={() => setShowReviewForm(false)}
@@ -317,14 +266,13 @@ const ProductDisplayPage = () => {
           productId={productId}
         />
       )}
-      {
-        showAddCartForm && (
-          <AddCartForm 
-            onClose={() => setShowAddCartForm(false)}
-            product={product}
-          />
-        )}
-      <div className="page-background"></div>
+
+      {showAddCartForm && (
+        <AddCartForm
+          onClose={() => setShowAddCartForm(false)}
+          product={product}
+        />
+      )}
     </div>
   );
 };

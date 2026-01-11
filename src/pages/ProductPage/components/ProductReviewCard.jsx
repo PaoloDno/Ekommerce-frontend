@@ -21,21 +21,23 @@ const ProductReviewCardComponent = ({ reviewId, comment, rating, user }) => {
   return (
     <div
       key={reviewId}
-      className="flex flex-col w-full p-4 bg-white border rounded-lg shadow-sm hover:shadow-md transition"
+      className="flex flex-col w-full px-2 py-1 bg-skin-colorContent 
+      text-skin-colorContent text-stylep4 rounded-lg border-opacity-40 opacity-90
+      border shadow-sm hover:shadow-md transition"
     >
+      
+      {/* Comment */}
+      <p className="text-skin-colorContent text-stylep4 line-clamp-2 justify-start items-start min-h-[5vh]">{comment}</p>
       {/* User Info + Rating */}
-      <div className="flex items-center flex-row gap-4 mb-2 text-skin-colorContent">
-        <div className="h-[50px] w-[50px] rounded-full overflow-hidden">
+      <div className="flex items-start justify-start flex-row gap-1 opacity-95">
+        <div className="h-[30px] w-[30px] rounded-full overflow-hidden">
           <ProfileImage profileImage={user?.userAvatar || "A1"} />
         </div>
-        <div className="flex flex-col">
-          <span className="font-semibold text-skin-colorContent">{user?.username || "Anonymous"}</span>
-          <div className="flex items-center">{renderStars(rating)}</div>
-        </div>
+          <span className="font-semibold text-stylep3 text-skin-colorContent">{user?.username || "Anonymous"}</span>
+          <div className="flex ml-auto items-center bg-black bg-opacity-50 px-2 py-1 rounded-full">{renderStars(rating)}</div>
       </div>
 
-      {/* Comment */}
-      <p className="text-gray-700 text-sm border-t pt-2">{comment}</p>
+      
     </div>
   );
 };

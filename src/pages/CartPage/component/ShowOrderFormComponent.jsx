@@ -87,15 +87,13 @@ const ShowOrderFormComponent = ({ onClose, onInitFetchCart, cartId, onSubmitOrde
                   </div>
             </div>
 
-            <div className="p-3 flex flex-col justify-center items-center bg-gray-400 mt-5 hover:bg-white">
-              <button
-                onClick={handleProceed}
-                className="hover:bg-green-500 hover:text-white p-5 items-center justify-center rounded-2xl"
+           
+              <button onClick={handleProceed}
+                className="text-styleh3 p-5 items-center justify-center rounded-2xl w-full h-[10vh] bg-skin-green text-skin-color1 my-auto"
               >
                 PROCEED TO ORDER
               </button>
-            </div>
-          </div>
+           </div>
         )}
       </div>
     </div>
