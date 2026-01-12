@@ -5,11 +5,11 @@
 
   /* ===================== DEFAULT ===================== */
   .theme-default {
-  --color-primary: rgb(52, 94, 168);
-  --color-secondary: rgb(66, 133, 244);
+  --color-primary: rgb(43, 90, 170);
+  --color-secondary: rgb(39, 104, 207);
 
-  --color-button-1: rgb(28, 55, 110);
-  --color-button-2: rgb(66, 133, 244);
+  --color-button-1: rgb(18, 46, 100);
+  --color-button-2: rgb(12, 46, 100);
   --color-button-3: rgb(235, 240, 250);
 
   --btn-grad-start-1: rgb(96, 150, 245);
@@ -21,25 +21,25 @@
   --color-text2: rgb(230, 235, 245);
   --color-text3: rgb(20, 30, 55);
 
-  --color-contrast: rgb(120, 210, 255);
-  --color-disable: rgb(120, 140, 180);
+  --color-contrast: rgb(54, 208, 219);
+  --color-disable: rgb(104, 132, 189);
 
   --color-fill-1: rgb(30, 55, 105);
   --color-fill-2: rgb(45, 85, 150);
   --color-fill-3: rgb(245, 248, 255);
-  --color-fill-4: rgb(55, 70, 110);
-  --color-fill-5: rgb(80, 100, 145);
+  --color-fill-4: rgb(10, 18, 39);
+  --color-fill-5: rgb(37, 48, 73);
 
-  --color-back: rgb(36, 76, 140);
+  --color-back: rgb(28, 54, 99);
 
-  --color-border1: rgb(240, 246, 255);
-  --color-border2: rgb(6, 60, 153);
+  --color-border1: rgb(192, 213, 245);
+  --color-border2: rgb(19, 62, 136);
 
-  --color-content-text: rgb(186, 245, 255);
-  --color-content-bg: rgb(8, 100, 161);
+  --color-content-text: rgb(18, 20, 20);
+  --color-content-bg: rgb(218, 238, 252);
 
-  --color-green: rgb(66, 183, 42);
-  --color-red: rgb(220, 60, 60);
+  --color-green: rgb(29, 145, 6);
+  --color-red: rgb(184, 31, 31);
   --color-cart: rgb(245, 130, 45);
 
   --color-shadow: rgb(90, 110, 150);
@@ -48,11 +48,11 @@
 
   /* ===================== COFFEE ===================== */
   .theme-coffee {
-    --color-primary: rgb(248, 193, 105);
-    --color-secondary: rgb(245, 175, 100);
+    --color-primary: rgb(201, 156, 99);
+    --color-secondary: rgb(228, 164, 95);
 
     --color-button-1: rgb(247, 208, 146);
-    --color-button-2: rgb(134, 90, 24);
+    --color-button-2: rgb(248, 190, 104);
     --color-button-3: rgb(56, 33, 1);
 
     --btn-grad-start-1: rgb(241, 202, 158);
@@ -60,22 +60,22 @@
     --btn-grad-start-2: rgb(240, 76, 71);
     --btn-grad-end-2: rgb(245, 175, 100);
 
-    --color-text1: rgb(45, 30, 20);
-    --color-text2: rgb(90, 70, 55);
+    --color-text1: rgb(56, 35, 21);
+    --color-text2: rgb(78, 56, 38);
     --color-text3: rgb(230, 225, 210);
 
-    --color-contrast: rgb(131, 26, 22);
-    --color-disable: rgb(160, 135, 110);
+    --color-contrast: rgb(66, 5, 5);
+    --color-disable: rgb(63, 40, 18);
 
-    --color-fill-1: rgb(248, 177, 62);
-    --color-fill-2: rgb(214, 145, 34);
-    --color-fill-3: rgb(53, 29, 7);
-    --color-fill-4: rgb(248, 205, 87);
-    --color-fill-5: rgb(40, 24, 10);
+    --color-fill-1: rgb(238, 208, 159);
+    --color-fill-2: rgb(221, 184, 126);
+    --color-fill-3: rgb(61, 42, 23);
+    --color-fill-4: rgb(212, 158, 57);
+    --color-fill-5: rgb(87, 49, 16);
 
     --color-back: rgb(250, 219, 198);
 
-    --color-border1: rgb(32, 20, 9);
+    --color-border1: rgb(48, 31, 15);
     --color-border2: rgb(226, 176, 130);
 
     --color-content-text: rgb(230, 225, 210);
@@ -106,14 +106,14 @@
     --color-text2: rgb(175, 175, 175);
     --color-text3: rgb(15, 15, 15);
 
-    --color-contrast: rgb(85, 137, 235);
+    --color-contrast: rgb(118, 160, 236);
     --color-disable: rgb(90, 90, 90);
 
     --color-fill-1: rgb(10, 10, 10);
     --color-fill-2: rgb(20, 20, 20);
     --color-fill-3: rgb(180, 173, 173);
     --color-fill-4: rgb(68, 50, 50);
-    --color-fill-5: rgb(25, 25, 25);
+    --color-fill-5: rgb(61, 56, 56);
 
     --color-back: rgb(15, 15, 15);
 
@@ -149,7 +149,7 @@
     --color-text2: rgb(110, 60, 80);
     --color-text3: rgb(245, 230, 235);
 
-    --color-contrast: rgb(39, 95, 37);
+    --color-contrast: rgb(14, 73, 12);
     --color-disable: rgb(236, 170, 203);
 
     --color-fill-1: rgb(245, 183, 193);
@@ -164,11 +164,11 @@
     --color-border2: rgb(94, 43, 62);
 
     --color-content-text: rgb(245, 230, 235);
-    --color-content-bg: rgb(211, 69, 116);
+    --color-content-bg: rgb(116, 38, 64);
 
-    --color-green: rgb(127, 214, 93);
-    --color-red: rgb(241, 78, 146);
-    --color-cart: rgb(216, 200, 111);
+    --color-green: rgb(146, 207, 122);
+    --color-red: rgb(228, 147, 181);
+    --color-cart: rgb(241, 231, 169);
 
     --color-shadow: rgb(247, 116, 169);
   }

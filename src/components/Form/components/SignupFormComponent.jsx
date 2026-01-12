@@ -14,14 +14,20 @@ const SignUpFormComponent = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  const [isLoading, setIsLoading] = useState(true);
-
   const USER_REGEX = /^[A-Za-z][A-Za-z0-9-_]{3,23}$/;
-  const PWD_REGEX = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%]).{8,24}$/;
+  const PWD_REGEX = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%]).{8,24}$/;
   const EMAIL_REGEX = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,24}$/;
   const CLEAN_TEXT_REGEX = /^[^&<>"'/]*$/;
 
+  const helpers = {
+    username: "4–24 chars, starts with a letter, letters/numbers/_/- only",
+    password:
+      "8–24 chars, 1 uppercase, 1 lowercase, 1 number, 1 symbol (!@#$%)",
+    email: "Valid email format (example@domain.com)",
+  };
+
   const [step, setStep] = useState(1);
+  const [isLoading, setIsLoading] = useState(true);
 
   const [formData, setFormData] = useState({
     user: { username: "", email: "", password: "", confirmPassword: "" },
@@ -45,51 +51,42 @@ const SignUpFormComponent = () => {
     const { name, value } = e.target;
     setFormData((prev) => ({
       ...prev,
-      [section]: {
-        ...prev[section],
-        [name]: value,
-      },
+      [section]: { ...prev[section], [name]: value },
     }));
     setErrors((prev) => ({
       ...prev,
-      [section]: {
-        ...prev[section],
-        [name]: "",
-      },
+      [section]: { ...prev[section], [name]: "" },
     }));
   };
 
-  const validateField = (section, field, value) => {
+  const validateField = (field, value, compareValue = null) => {
+    if (!value || value.trim() === "") return "This field is required.";
     switch (field) {
       case "username":
-        return USER_REGEX.test(value)
-          ? ""
-          : "Username must be 3-23 characters, alphanumeric.";
+        return USER_REGEX.test(value) ? "" : helpers.username;
       case "email":
-        return EMAIL_REGEX.test(value) ? "" : "Invalid email format.";
+        return EMAIL_REGEX.test(value) ? "" : helpers.email;
       case "password":
-        return PWD_REGEX.test(value)
-          ? ""
-          : "Password must be 8-24 characters, include uppercase, lowercase, number, and symbol.";
+        return PWD_REGEX.test(value) ? "" : helpers.password;
       case "confirmPassword":
-        return value === formData.user.password
-          ? ""
-          : "Passwords do not match.";
+        return value === compareValue ? "" : "Passwords do not match.";
       default:
-        return CLEAN_TEXT_REGEX.test(value) && value
-          ? ""
-          : "No special characters allowed.";
+        return CLEAN_TEXT_REGEX.test(value) ? "" : "Invalid characters.";
     }
   };
 
   const validateStep = () => {
     const section = step === 1 ? "user" : step === 2 ? "profile" : "address";
-    const fields = formData[section];
+    const data = formData[section];
     let stepErrors = {};
-    for (const field in fields) {
-      const error = validateField(section, field, fields[field]);
+    Object.keys(data).forEach((field) => {
+      const error = validateField(
+        field,
+        data[field],
+        field === "confirmPassword" ? formData.user.password : null
+      );
       if (error) stepErrors[field] = error;
-    }
+    });
     if (Object.keys(stepErrors).length) {
       setErrors((prev) => ({ ...prev, [section]: stepErrors }));
       return false;
@@ -104,266 +101,222 @@ const SignUpFormComponent = () => {
 
   const handleBack = () => setStep((prev) => Math.max(prev - 1, 1));
 
-  useEffect(() => {
-    if (isLoading) {
-      const timer = setTimeout(() => setIsLoading(false), 1500);
-      return () => clearTimeout(timer);
-    }
-  }, [isLoading]);
-
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (validateStep()) {
       const { user, profile, address } = formData;
       const resultAction = await dispatch(
-        signUpAction({ ...user, ...profile, address: { ...address } })
+        signUpAction({ ...user, ...profile, address })
       );
       if (signUpAction.fulfilled.match(resultAction)) {
-        const timeoutId = setTimeout(() => {
-          navigate("/home");
-        }, 1000);
-        return () => clearTimeout(timeoutId);
+        setTimeout(() => navigate("/home"), 1000);
       }
     }
   };
 
-  const selectLabel = `text-gray-600 text-stylep2`;
-  const selectOptions = `border-2 border-skin-colorBorder1 rounded-lg
-    w-full px-2 text-stylep3 p-1
-    placeholder-transparent shadow-sm
-    focus:border-green-500 focus:ring focus:ring-green-200
-    focus:outline-none
-    transition-all duration-30 pb-2 mb-1`;
-  const selectOption = `text-gray-500 text-stylep2 py-2 px-4`;
+  useEffect(() => {
+    if (isLoading) {
+      const timer = setTimeout(() => setIsLoading(false), 500);
+      return () => clearTimeout(timer);
+    }
+  }, [isLoading]);
 
   const renderStep = () => (
     <>
       {step === 1 && (
-        <div className="flex flex-col w-full h-full min-h-[520px] justify-between">
-          <div className="flex flex-col w-full">
-            <div className="auth-title">Sign Up</div>
-            <AuthInput
-              label="Username"
-              name="username"
-              value={formData.user.username}
-              onChange={(e) => handleChange("user", e)}
-              error={errors.user.username}
-              helper="Username must be 3-23 characters, alphanumeric."
-            />
-            <AuthInput
-              type="email"
-              label="Email"
-              name="email"
-              value={formData.user.email}
-              onChange={(e) => handleChange("user", e)}
-              error={errors.user.email}
-              helper="email format"
-            />
-            <AuthInput
-              type="password"
-              label="Password"
-              name="password"
-              value={formData.user.password}
-              onChange={(e) => handleChange("user", e)}
-              error={errors.user.password}
-              helper="Password must be 8-24 characters, include uppercase, lowercase, number, and symbol."
-            />
-            <AuthInput
-              type="password"
-              label="Repeat Password"
-              name="confirmPassword"
-              value={formData.user.confirmPassword}
-              onChange={(e) => handleChange("user", e)}
-              error={errors.user.confirmPassword}
-              helper="repeat the password"
-            />
-          </div>
-          <span className="flex flex-row justify-between">
-            <button className="auth-button" type="button" onClick={handleNext}>
-              Next
-            </button>
-          </span>
+        <div className="grid grid-cols-2 w-full">
+          <AuthInput
+            label="Username"
+            name="username"
+            value={formData.user.username}
+            onChange={(e) => handleChange("user", e)}
+            error={errors.user.username}
+            helper={helpers.username}
+          />
+          <AuthInput
+            type="email"
+            label="Email"
+            name="email"
+            value={formData.user.email}
+            onChange={(e) => handleChange("user", e)}
+            error={errors.user.email}
+            helper={helpers.email}
+          />
+          <AuthInput
+            type="password"
+            label="Password"
+            name="password"
+            value={formData.user.password}
+            onChange={(e) => handleChange("user", e)}
+            error={errors.user.password}
+            helper={helpers.password}
+          />
+          <AuthInput
+            type="password"
+            label="Repeat Password"
+            name="confirmPassword"
+            value={formData.user.confirmPassword}
+            onChange={(e) => handleChange("user", e)}
+            error={errors.user.confirmPassword}
+            helper="Repeat the password"
+          />
         </div>
       )}
 
       {step === 2 && (
-        <div className="flex flex-col w-full h-full min-h-[520px] justify-between">
-          
-          <div className="flex flex-col w-full">
-            <div className="auth-title">Profile Info</div>
-
-            <div className="flex flex-col items-center md:grid gap-1 md:grid-cols-[1fr_1.5fr] my-2">
-              <span className="flex w-full h-[120px] relative rounded-lg bg-gray-500 p-4 overflow-hidden">
-          
-                <span className="absolute inset-0 w-full h-[60px]">
-                  <BannerImage bannerImage={formData.profile.userBanner} />
-                </span>
-          
-                <span className="absolute left-2 bottom-0 w-[100px] h-[100px] rounded-full overflow-hidden">
-                  <ProfileImage input={formData.profile.userAvatar} />
-                </span>
-              </span>
-
-              <span className="flex flex-col gap-2">
-               
-                <div className="flex flex-col w-full">
-                  <label htmlFor="userAvatar" className={selectLabel}>
-                    Select Avatar Icon
-                  </label>
-                  <select
-                    className={selectOptions}
-                    name="userAvatar"
-                    id="userAvatar"
-                    value={formData.profile.userAvatar}
-                    onChange={(e) => handleChange("profile", e)}
-                  >
-                    <option className={selectOption} value="A1">ProfileImageA1</option>
-                    <option className={selectOption} value="A2">ProfileImageA2</option>
-                    <option className={selectOption} value="A3">ProfileImageA3</option>
-                  </select>
-                </div>
-
-                <div className="flex flex-col w-full">
-                  <label htmlFor="userBanner" className={selectLabel}>
-                    Select Banner Image
-                  </label>
-                  <select
-                    className={selectOptions}
-                    name="userBanner"
-                    id="userBanner"
-                    value={formData.profile.userBanner}
-                    onChange={(e) => handleChange("profile", e)}
-                  >
-                    <option className={selectOption} value="B1">BannerImageB1</option>
-                    <option className={selectOption} value="B2">BannerImageB2</option>
-                    <option className={selectOption} value="B3">BannerImageB3</option>
-                  </select>
-                </div>
-              </span>
+        <div className="">
+          <div className="flex flex-col md:grid md:grid-cols-[1fr_1.5fr] gap-2 items-center py-2 lg:pb-4 text-stylep3">
+            <div className="relative w-full h-[100px] lg:h-[120px] rounded-lg bg-gray-500 overflow-hidden">
+              <BannerImage bannerImage={formData.profile.userBanner} />
+              <div className="absolute bottom-0 left-2 w-[60px] h-[60px] lg:w-[100px] lg:h-[100px] rounded-full overflow-hidden">
+                <ProfileImage input={formData.profile.userAvatar} />
+              </div>
             </div>
+            <div className="grid grid-cols-2 items-start justify-start space-y-2 w-full">
+              <label className="text-gray-600 text-stylep2">
+                Select Avatar
+              </label>
+              <select
+                className="w-full border border-white/20 rounded-lg px-2 py-1 bg-skin-colorContent text-skin-colorContent"
+                name="userAvatar"
+                value={formData.profile.userAvatar}
+                onChange={(e) => handleChange("profile", e)}
+              >
+                <option value="A1">Avatar A1</option>
+                <option value="A2">Avatar A2</option>
+                <option value="A3">Avatar A3</option>
+              </select>
 
-            <AuthInput
-              label="Firstname"
-              name="firstname"
-              value={formData.profile.firstname}
-              onChange={(e) => handleChange("profile", e)}
-              error={errors.profile.firstname}
-              helper="required and clean text"
-            />
-            <AuthInput
-              label="Lastname"
-              name="lastname"
-              value={formData.profile.lastname}
-              onChange={(e) => handleChange("profile", e)}
-              error={errors.profile.lastname}
-              helper="required and clean text"
-            />
-            <AuthInput
-              label="Middlename"
-              name="middlename"
-              value={formData.profile.middlename}
-              onChange={(e) => handleChange("profile", e)}
-              error={errors.profile.middlename}
-              helper="required and clean text"
-            />
+              <label className="text-gray-600 text-stylep2 mt-2">
+                Select Banner
+              </label>
+              <select
+                className="w-full border border-white/20 rounded-lg px-2 py-1 bg-skin-colorContent text-skin-colorContent"
+                name="userBanner"
+                value={formData.profile.userBanner}
+                onChange={(e) => handleChange("profile", e)}
+              >
+                <option value="B1">Banner B1</option>
+                <option value="B2">Banner B2</option>
+                <option value="B3">Banner B3</option>
+              </select>
+            </div>
           </div>
 
-          <span className="flex flex-row justify-between">
-            <button className="auth-button" type="button" onClick={handleBack}>
-              Prev
-            </button>
-            <button className="auth-button" type="button" onClick={handleNext}>
-              Next
-            </button>
-          </span>
+          <AuthInput
+            label="Firstname"
+            name="firstname"
+            value={formData.profile.firstname}
+            onChange={(e) => handleChange("profile", e)}
+            error={errors.profile.firstname}
+            helper="Required"
+          />
+          <AuthInput
+            label="Lastname"
+            name="lastname"
+            value={formData.profile.lastname}
+            onChange={(e) => handleChange("profile", e)}
+            error={errors.profile.lastname}
+            helper="Required"
+          />
+          <AuthInput
+            label="Middlename"
+            name="middlename"
+            value={formData.profile.middlename}
+            onChange={(e) => handleChange("profile", e)}
+            error={errors.profile.middlename}
+            helper="Required"
+          />
         </div>
       )}
 
       {step === 3 && (
-        <div className="flex flex-col w-full h-full min-h-[520px] justify-between">
-          <div className="flex flex-col w-full">
-            <div className="auth-title">Address</div>
-            <AuthInput
-              label="Street"
-              name="street"
-              value={formData.address.street}
-              onChange={(e) => handleChange("address", e)}
-              error={errors.address.street}
-            />
-            <AuthInput
-              label="City"
-              name="city"
-              value={formData.address.city}
-              onChange={(e) => handleChange("address", e)}
-              error={errors.address.city}
-            />
-            <AuthInput
-              label="Country"
-              name="country"
-              value={formData.address.country}
-              onChange={(e) => handleChange("address", e)}
-              error={errors.address.country}
-            />
-            <AuthInput
-              label="Postal Code"
-              name="postalCode"
-              value={formData.address.postalCode}
-              onChange={(e) => handleChange("address", e)}
-              error={errors.address.postalCode}
-            />
-          </div>
-          <span className="flex flex-row justify-between">
-            <button className="auth-button" type="button" onClick={handleBack}>
-              Prev
-            </button>
-            <button
-              type="submit"
-              onClick={handleSubmit}
-              disabled={isPending}
-              className="auth-button"
-            >
-              {isPending ? <div>loading . . .</div> : "Sign Up"}
-            </button>
-          </span>
+        <div className="space-y-4">
+          <AuthInput
+            label="Street"
+            name="street"
+            value={formData.address.street}
+            onChange={(e) => handleChange("address", e)}
+            error={errors.address.street}
+          />
+          <AuthInput
+            label="City"
+            name="city"
+            value={formData.address.city}
+            onChange={(e) => handleChange("address", e)}
+            error={errors.address.city}
+          />
+          <AuthInput
+            label="Country"
+            name="country"
+            value={formData.address.country}
+            onChange={(e) => handleChange("address", e)}
+            error={errors.address.country}
+          />
+          <AuthInput
+            label="Postal Code"
+            name="postalCode"
+            value={formData.address.postalCode}
+            onChange={(e) => handleChange("address", e)}
+            error={errors.address.postalCode}
+          />
         </div>
       )}
+
+      <div className="flex justify-between mt-4">
+        {step > 1 && (
+          <button
+            type="button"
+            onClick={handleBack}
+            className="w-1/2 py-2 rounded-lg bg-skin-primary/70 hover:bg-skin-primary text-white transition"
+          >
+            Prev
+          </button>
+        )}
+        {(step == 2 || step == 1) && (
+          <button
+            type="button"
+            onClick={handleNext}
+            className="w-1/2 py-2 rounded-lg bg-skin-green/80 hover:bg-skin-green text-white transition ml-2"
+          >
+            Next
+          </button>
+        )}
+
+        {step === 3 && (
+          <button
+            type="submit"
+            onClick={handleSubmit}
+            disabled={isPending}
+            className="w-1/2 py-2 rounded-lg bg-skin-green/90 hover:bg-skin-green text-white transition ml-2"
+          >
+            {isPending ? "Pending" : "Sign Up"}
+          </button>
+        )}
+      </div>
     </>
   );
+
+  if (token)
+    return (
+      <div className="flex w-full h-full min-h-screen in-center bg-skin-primary text-skin-color1">
+        <span>You are already logged in</span>
+      </div>
+    );
 
   return (
     <AuthLayout
       imageSide={
-        <>
-          <video
-            src={AuthVideo}
-            autoPlay
-            loop
-            muted
-            playsInline
-            className="absolute inset-0 w-full h-full object-cover"
-          />
-          <div className="authbgblur"></div>
-          <div className="absolute inset-0 w-full h-full bg-gradient-to-t to-green-400 from-transparent opacity-30 z-10"></div>
-          <div className="absolute inset-0 bg-gradient-to-t to-skin-end from-transparent opacity-30"></div>
-          <div className="absolute flex flex-col w-full top-1/4 right-0 gap-2 pt-2 text-stylep2 p-5 font-Oswald bg-skin-colorContent bg-opacity-70 hover:bg-skin-primary hover:text-skin-color1 transition-colors duration-1000 ease-in-out">
-            <div className="absolute inset-0 w-full h-full bg-skin-colorContent blur-sm opacity-20 z-10"></div>
-            <span className="z-20 text-stylep3 md:text-stylep2">
-              Already registered?
-            </span>
-            <span className="z-20 text-stylep3 md:text-stylep2 mb-2">
-              Go to Login instead..
-            </span>
-            <Link
-              to="/login"
-              className="flex w-full md:w-2/3 mx-auto justify-center items-center p-2 px-3 bg-skin-primary 
-              hover:bg-green-800 hover:text-green-100 text-skin-color1 font-bold md:font-Oswald text-stylep2 
-              md:text-stylep1 rounded-lg shadow-xl z-20 opacity-100 "
-            >
-              LOGIN
-            </Link>
-          </div>
-        </>
+        <video
+          src={AuthVideo}
+          autoPlay
+          loop
+          muted
+          playsInline
+          className="flex relative inset-0 w-full h-full object-cover"
+        />
       }
+      mode={"signup"}
       redirect={{
         to: "/",
         text: "go back to landing page",
@@ -375,8 +328,28 @@ const SignUpFormComponent = () => {
           <div className="w-12 h-12 border-4 border-t-transparent border-white rounded-full animate-spin"></div>
         </div>
       )}
-      {renderStep()}
-      {error && <p className="error-p">{error}</p>}
+
+      <div
+        className="relative w-full max-w-md mx-auto mt-16 p-6 rounded-2xl
+        bg-skin-colorContent/60 backdrop-blur-xl border border-white/20 shadow-2xl
+        text-skin-colorContent flex flex-col space-y-4"
+      >
+        <div className="absolute inset-0 rounded-2xl bg-white/5 blur-xl -z-10" />
+        <div className="flex flex-row space-x-2 items-center">
+          <h2 className="text-styleh2 font-display text-center">SIGN-UP</h2>
+          <span className="text-styleh2">{"/"}</span>
+          <h3
+            onClick={() => navigate("/login")}
+            className="text-stylep2 font-display text-center 
+          bg-skin-fill-3 text-skin-color3 px-2 py-1 rounded-lg"
+          >
+            {" "}
+            LOGIN
+          </h3>
+        </div>
+        {error && <p className="min-h-[1rem] text-stylep4 text-red-600 text-center mt-2">{error}</p>}
+        {renderStep()}
+      </div>
     </AuthLayout>
   );
 };

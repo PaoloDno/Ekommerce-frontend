@@ -16,12 +16,11 @@ const LoginFormComponent = () => {
 
   const CLEAN_TEXT_REGEX = /^[^&<>"'/]*$/;
   const USER_REGEX = /^[A-z][A-z0-9-_]{3,23}$/;
-  const PWD_REGEX =
-    /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%]).{8,24}$/;
+  const PWD_REGEX = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%]).{8,24}$/;
 
   const sanitizeInput = (input) => {
-    return input.trim().replace(/[\/<>#]/g,"");
-  }
+    return input.trim().replace(/[\/<>#]/g, "");
+  };
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -33,7 +32,7 @@ const LoginFormComponent = () => {
       return "This field is required.";
     }
 
-    switch(name) {
+    switch (name) {
       case "username":
         return USER_REGEX.test(value) ? "" : "Invalid username.";
       case "password":
@@ -41,7 +40,7 @@ const LoginFormComponent = () => {
       default:
         return CLEAN_TEXT_REGEX.test(value) ? "" : "Invalid characters.";
     }
-  }
+  };
 
   const validateFields = () => {
     let newErrors = {};
@@ -64,7 +63,7 @@ const LoginFormComponent = () => {
 
     setErrors({});
 
-    if(validateFields()) {
+    if (validateFields()) {
       const sanitizedCreds = {
         username: sanitizeInput(userCreds.username),
         password: sanitizeInput(userCreds.password),
@@ -87,60 +86,25 @@ const LoginFormComponent = () => {
     }
   };
 
-  if(token) {
+  if (token) {
     return (
-      <div className="flex w-full h-full min-h-screen">
-        <span>It seems ur already </span>
+      <div className="flex w-full h-full min-h-screen in-center bg-skin-primary text-skin-color1">
+        <span>It seems ur already logged in</span>
       </div>
     );
   }
 
-
   return (
     <AuthLayout
       imageSide={
-        <>
-          <video
-            src={AuthVideo}
-            autoPlay
-            loop
-            muted
-            playsInline
-            className="absolute inset-0 w-full h-full object-cover"
-          />
-          <div className="authbgblur"></div>
-          <div
-            className="absolute inset-0 w-full h-full bg-gradient-to-t 
-            to-green-400 from-transparent opacity-30 z-10"
-          ></div>
-          <div
-            className="absolute inset-0 bg-gradient-to-t to-skin-end 
-          from-transparent opacity-30"
-          ></div>
-          <div
-            className="absolute flex flex-col w-full
-              top-1/4 right-0 gap-2 pt-2 text-stylep2
-              p-5 font-Oswald bg-skin-colorContent bg-opacity-70 
-              hover:bg-skin-primary hover:text-skin-color1 transition-colors
-              duration-1000 ease-in-out"
-          >
-            <div
-              className="absolute inset-0 w-full h-full bg-skin-colorContent blur-sm opacity-20 z-10"
-            ></div>
-            <span className="z-20 text-stylep3 md:text-stylep2">You dont have an account?</span>
-            <span className="z-20 text-stylep3 md:text-stylep2 mb-2">Sign up instead..</span>
-            <Link
-              to="/signup"
-              className="flex w-full md:w-2/3 mx-auto justify-center items-center
-                p-2 px-3 bg-skin-primary
-                text-skin-color1 font-bold font-Oswald text-stylep2 md:text-stylep1
-                rounded-lg
-                shadow-xl z-20 opacity-100"
-            >
-              SIGN UP
-            </Link>
-          </div>
-        </>
+        <video
+          src={AuthVideo}
+          autoPlay
+          loop
+          muted
+          playsInline
+          className="flex relative inset-0 w-full h-full object-cover"
+        />
       }
       redirect={{
         to: "/",
@@ -148,32 +112,58 @@ const LoginFormComponent = () => {
         icon: <FaCircleArrowLeft />,
       }}
     >
-      <div className="auth-title">Welcome! We Miss You</div>
-      <AuthInput
-        label="Username"
-        name="username"
-        value={userCreds.username}
-        onChange={handleChange}
-        error={errors.username}
-        helper="3-18 char,"
-      />
-      <AuthInput
-        label="Password"
-        type="password"
-        name="password"
-        value={userCreds.password}
-        onChange={handleChange}
-        error={errors.password}
-      />
-      {error && <p className="error-p">{error}</p>}
-      <button
-        type="submit"
-        onClick={handleSubmit}
-        disabled={isPending}
-        className="auth-button"
+      <div
+        className="relative w-4/5 max-w-md mx-auto mt-16 p-6 rounded-2xl
+          bg-skin-colorContent/60 backdrop-blur-xl
+          border border-white/20 shadow-2xl
+          text-skin-colorContent flex flex-col space-y-4"
       >
-        {isPending ? <div className="loader" /> : "Login"}
-      </button>
+        <div className="absolute inset-0 rounded-2xl bg-white/5 blur-xl -z-10" />
+        <div className="flex flex-row space-x-2 items-center">
+          <h2 className="text-styleh2 font-display text-center">LOGIN</h2>
+          <span className="text-styleh2">{"/"}</span>
+          <h3
+            onClick={() => navigate("/signup")}
+            className="text-stylep2 font-display text-center 
+          bg-skin-fill-3 text-skin-color3 px-2 py-1 rounded-lg"
+          >
+            SIGN-UP
+          </h3>
+        </div>
+        <AuthInput
+          label="Username"
+          name="username"
+          value={userCreds.username}
+          onChange={handleChange}
+          error={errors.username}
+          helper="4–24 chars, starts with a letter, letters/numbers/_/- only"
+        />
+
+        <AuthInput
+          label="Password"
+          type="password"
+          name="password"
+          value={userCreds.password}
+          onChange={handleChange}
+          error={errors.password}
+          helper="8–24 chars, 1 uppercase, 1 lowercase, 1 number, 1 symbol (!@#$%)"
+        />
+
+        {error && <p className="error-p text-center">{error}</p>}
+
+        <button
+          type="submit"
+          onClick={handleSubmit}
+          disabled={isPending}
+          className="mt-4 w-full py-2 rounded-lg
+            bg-skin-green/90 hover:bg-skin-green
+            text-skin-color1 text-styleh4
+            flex justify-center items-center
+            backdrop-blur-md transition-all"
+        >
+          {isPending ? <div className="loader" /> : "Login"}
+        </button>
+      </div>
     </AuthLayout>
   );
 };

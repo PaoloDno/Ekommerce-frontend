@@ -17,7 +17,7 @@ const StoreHomepageSectionComponent = ({ profile, storeNotif }) => {
           <span className="text-stylep3">You don’t own a store yet.</span>
 
           <button
-            className="flex w-[170px] bg-skin-green py-1 px-3 items-center gap-2"
+            className="flex w-[170px] bg-skin-green text-skin-color1 py-1 px-3 items-center gap-2"
             onClick={() => navigate("/create-store")}
           >
             <FaCirclePlus />
@@ -48,8 +48,8 @@ const StoreHomepageSectionComponent = ({ profile, storeNotif }) => {
             <h2 className="font-semibold mb-2">Your Store is Live!</h2>
 
             <button
-              className="w-[160px] bg-skin-cart py-1 px-2 rounded-lg"
-              onClick={() => navigate(`/store/${profile.storeName}`)}
+              className="w-[160px] bg-skin-cart text-skin-color1 py-1 px-2 rounded-lg"
+              onClick={() => navigate(`/user-store`)}
             >
               Visit Store
             </button>
@@ -74,7 +74,7 @@ const StoreHomepageSectionComponent = ({ profile, storeNotif }) => {
                         ? "bg-skin-fill-1 border-skin-border opacity-70"
                         : "bg-skin-fill-2 border-skin-accent shadow-sm"
                     }
-                    hover:bg-skin-fill-4 hover:opacity-100 hover:text-skin-colorHigh
+                    bg-skin-fill-4 hover:opacity-100 text-skin-colorHigh
                   `}
                 >
                   {/* Subject */}

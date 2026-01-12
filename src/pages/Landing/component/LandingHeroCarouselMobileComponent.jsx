@@ -132,7 +132,7 @@ const LandingHeroCarouselMobileComponent = ({
       <div className="w-full text-stylep4 h-[10vh] p-2 flex flex-row justify-center px-4">
         {!token ? (
           <span className="flex flex-col in-center text-sm text-skin-color1 opacity-90">
-            <Link className="bg-skin-fill-3 rounded-3xl text-skin-colorHigh p-2 px-4" to="/login">
+            <Link className="bg-skin-green rounded-3xl text-skin-color1 p-2 px-4" to="/login">
               Sign in
             </Link>
             to personalize your shopping experience

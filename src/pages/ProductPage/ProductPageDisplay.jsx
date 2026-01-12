@@ -134,7 +134,7 @@ const ProductDisplayPage = () => {
 
               <Link
                 to={`/store/${product?.seller?._id}`}
-                className="flex items-center justify-start px-2 gap-2 bg-skin-buttonColor-2 bg-opacity-35 rounded-lg py-1"
+                className="flex items-center justify-start px-2 gap-2 bg-skin-buttonColor-1 bg-opacity-95 rounded-lg py-1"
               >
                 <FaStore /> Visit Store
               </Link>
@@ -211,28 +211,28 @@ const ProductDisplayPage = () => {
         <div className="md:hidden w-full mt-3 grid grid-cols-2 gap-2 bg-skin-colorContent text-skin-colorContent p-2 rounded-lg">
           <button
             onClick={() => setShowAddCartForm(true)}
-            className="flex justify-center gap-2 bg-skin-cart py-1 rounded-sm"
+            className="flex items-center justify-center gap-2 text-skin-color1 bg-skin-green py-1 rounded-sm"
           >
             <FaCartShopping /> Add to Cart
           </button>
 
           <button
             onClick={() => setShowReviewForm(true)}
-            className="flex justify-center gap-2 bg-skin-buttonColor-2 py-1 rounded-sm"
+            className="flex items-center justify-center gap-2 text-skin-color2 bg-skin-buttonColor-2 py-1 rounded-sm"
           >
             <FaNoteSticky /> Review
           </button>
 
           <Link
             to={`/store/${product?.seller?._id}`}
-            className="flex justify-center gap-2 bg-skin-buttonColor-2 bg-opacity-35 py-1 rounded-md"
+            className="flex items-center justify-center gap-2 text-skin-color1 bg-skin-buttonColor-2 py-1 rounded-sm"
           >
             <FaStore /> Store
           </Link>
 
           <Link
             to={`/store/${product?.seller?._id}`}
-            className="flex justify-center gap-2 bg-skin-red text-skin-color1 py-1 rounded-sm"
+            className="flex items-center justify-center gap-2 text-skin-color1 bg-skin-red py-1 rounded-sm"
           >
             <FaCircleExclamation /> Report
           </Link>

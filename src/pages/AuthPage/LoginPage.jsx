@@ -4,9 +4,10 @@ import { useAppContext } from "../../context/AppContext";
 const LoginPage = () => {
   
   return (
-    <div className="flex flex-col relative justify-center w-full 
-    max-w-screen-xl overflow-x-hidden py-2 bg-transparent">
+    <div className="page-body-background in-center">
+      <div className="page-body-section in-center pb-4">
       <LoginFormComponent />
+      </div>
     </div>
   )
 };

@@ -29,6 +29,8 @@ const ThemeSelectorProfile = () => {
       }
     } catch (error) {
       console.error("Failed to change theme", error);
+    } finally {
+      setEditActive(false);
     }
   };
 
@@ -50,25 +52,25 @@ const ThemeSelectorProfile = () => {
             key={theme}
             onClick={() => changeTheme(theme)}
             className={`w-full flex flex-row items-center justify-center text-stylep2 text-skin-color1
-              gap-2 px-2 py-0 m-1 border-2 border-opacity-5 shadow-md bg-skin-colorContent rounded-full
+              gap-2 px-2 py-2 m-1 border-2 border-opacity-5 shadow-md bg-skin-colorContent rounded-full
               ${current === theme ? "border-skin-colorBorder1" : "border-skin-colorBorder2"}`}
           >
-            <FaPalette className={`bg-skin-fill-4 text-skin-colorHigh theme-${theme} box-content p-2 rounded-full`} size={14}/>
-            <span className={`flex items-center text-skin-colorContent text-stylep4 justify-center capitalize`}>
+            <FaPalette className={`bg-skin-fill-4 text-skin-colorHigh theme-${theme} box-content p-1 px-2 rounded-full`} size={14}/>
+            <span className={`flex items-center text-skin-colorContent text-stylep3 justify-center capitalize`}>
               {theme}
             </span>
           </button>
         ))}
       </div>
       <div className="flex flex-row w-full justify-center items-center gap-4">
-        <button className="text-skin-color1 bg-skin-green text-stylep4 space-x-2 rounded-full font-display
-        flex items-center justify-center px-3 py-1 my-2 font-bold w-full sm:w-[160px]"
+        <button className="text-skin-color1 bg-skin-green text-stylep3 space-x-2 rounded-full font-display
+        flex items-center justify-center px-3 py-2 my-2 font-bold w-full sm:w-[160px]"
           onClick={() => themeToggle()}
         >
         <FaSave /><span>SAVE THEME</span>
         </button>
         <button className="text-skin-color1 bg-skin-red text-stylep3 space-x-2 rounded-full font-display
-        flex items-center justify-center px-3 py-1 my-2 font-bold w-full sm:w-[160px]"
+        flex items-center justify-center px-3 py-2 my-2 font-bold w-full sm:w-[160px]"
           onClick={() => setEditActive((s) => !s)}
         >
         <FaXmark /><span>CANCEL</span>
@@ -81,8 +83,8 @@ const ThemeSelectorProfile = () => {
     ) : (
     <div className="flex flex-col min-h-[15vh] in-center">
         <span>We like to make the experience more personalized</span>
-        <button className="text-skin-color1 bg-skin-cart text-stylep4 rounded-full font-display
-        flex items-center justify-center px-3 py-1 my-2 space-x-2 font-bold w-full sm:w-[160px]"
+        <button className="text-skin-color1 bg-skin-cart text-stylep3 rounded-full font-display
+        flex items-center justify-center px-3 py-2 my-2 space-x-2 font-bold w-full sm:w-[160px]"
           onClick={() => setEditActive((s) => !s)}
         >
         <FaPalette/> <span>Change Theme</span>

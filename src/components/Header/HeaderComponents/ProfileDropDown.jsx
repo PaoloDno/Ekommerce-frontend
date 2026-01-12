@@ -72,7 +72,7 @@ const ProfileDropdown = () => {
             onClick={closeDropdown}
             className="flex flex-col items-center justify-center p-1 rounded-xl border-2
             border-skin-colorBorder1 border-opacity-25 shadow-md
-            hover:bg-skin-fill-4 hover:text-skin-colorHigh"
+            bg-skin-colorContent text-skin-colorContent"
           >
             <span className="text-stylep2 -mb-2">Visit Profile</span>
 
@@ -80,7 +80,7 @@ const ProfileDropdown = () => {
               <span className="h-7 w-7 rounded-full overflow-hidden">
                 <ProfileImage profileImage={userAvatar} />
               </span>
-              <span className="text-stylep3 font-medium text-skin-color1">
+              <span className="text-stylep3 font-medium">
                 {username}
               </span>
             </span>
@@ -91,7 +91,7 @@ const ProfileDropdown = () => {
             to="/user-store"
             onClick={closeDropdown}
             className="grid grid-cols-[2rem_auto] items-center gap-2 px-4 py-2
-            hover:bg-skin-fill-4 hover:text-skin-colorHigh transition-all"
+            bg-skin-colorContent text-skin-colorContent transition-all"
           >
             <FaStore size={16} />
             <span className="text-stylep3 font-medium">My Store</span>
@@ -102,7 +102,7 @@ const ProfileDropdown = () => {
             to="/cart-user"
             onClick={closeDropdown}
             className="grid grid-cols-[2rem_auto] items-center gap-2 px-4 py-2
-            hover:bg-skin-fill-4 hover:text-skin-colorHigh transition-all"
+            transition-all bg-skin-colorContent text-skin-colorContent"
           >
             <FaShoppingCart />
             <span className="text-sm font-medium">Cart</span>
@@ -113,7 +113,8 @@ const ProfileDropdown = () => {
             to="/order-user"
             onClick={closeDropdown}
             className="grid grid-cols-[2rem_auto] items-center gap-2 px-4 py-2
-            hover:bg-skin-fill-4 hover:text-skin-colorHigh transition-all"
+            hover:bg-skin-fill-4 hover:text-skin-colorHigh transition-all
+            bg-skin-colorContent text-skin-colorContent"
           >
             <FaBoxArchive />
             <span className="text-sm font-medium">Order</span>
@@ -123,10 +124,10 @@ const ProfileDropdown = () => {
           <button
             onClick={handleLogout}
             className="absolute left-0 right-0 bottom-2 w-full flex items-center justify-center gap-2
-            px-3 py-2 bg-skin-primary bg-opacity-10
-            hover:bg-skin-fill-4 hover:text-skin-colorHigh transition-all"
+            px-3 py-3 bg-opacity-80
+            bg-skin-fill-4 text-skin-colorHigh transition-all"
           >
-            <span className="flex items-center text-stylep3 font-medium">
+            <span className="flex items-center text-stylep2 font-medium">
               Log Out <FaSignOutAlt className="mx-2" />
             </span>
           </button>
