@@ -103,7 +103,7 @@ const ProductDisplayPage = () => {
 
   return (
     <div className="page-body-background in-center">
-      <div className="page-body-section in-center pb-4">
+      <div className="page-body-section in-center pb-4">`
 
         {/* HERO ROW */}
         <div className="flex w-full h-[52vh] md:h-[65vh] lg:h-[75vh] px-2 gap-3">

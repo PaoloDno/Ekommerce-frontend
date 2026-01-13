@@ -54,7 +54,7 @@
 
     --color-button-1: rgb(50,30,15);
     --color-button-2: rgb(90,60,35);
-    --color-button-3: rgb(200,150,90);
+    --color-button-3: rgb(221, 125, 8);
 
     --btn-grad-start-1: rgb(70,50,30);
     --btn-grad-end-1: rgb(50,35,20);
@@ -63,7 +63,7 @@
 
     --color-fill-1: rgb(40,25,10);
     --color-fill-2: rgb(60,40,20);
-    --color-fill-3: rgb(120,80,50);
+    --color-fill-3: rgb(211, 166, 83);
     --color-fill-4: rgb(90,60,35);
     --color-fill-5: rgb(30,20,10);
 
@@ -77,7 +77,7 @@
     --color-red: rgb(167, 20, 20);
     --color-cart: rgb(155, 70, 17);
 
-    --color-content-bg: rgb(245,240,230);
+    --color-content-bg: rgb(211, 162, 55);
     --color-content-text: rgb(60,40,30);
 
     --color-shadow: rgb(40,30,20);

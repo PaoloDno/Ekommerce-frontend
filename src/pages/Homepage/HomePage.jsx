@@ -134,7 +134,7 @@ const HomePage = () => {
           </div>
         </div>
 
-        <div className="grid grid-cols-4 w-full pb-2 lg:pb-4 gap-4 px-3 py-1  bg-skin-primary">
+        <div className="grid grid-cols-4 w-full pb-2 lg:pb-4 gap-4 px-3 py-1 text-skin-color1  bg-skin-primary">
           {[
             { key: "profile", count: 0, label: "Profile", icon: <FaUser size={14}/> },
             { key: "store", count: sellerNotif.length, label: "Store", icon: <FaStore size={14}/> },

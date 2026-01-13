@@ -27,12 +27,12 @@ const CartCardComponent = ({ item, fetchCart }) => {
       i < rounded ? (
         <FaStar
           key={i}
-          className="text-yellow-500 text-stylep2 md:text-stylep1 border border-black border-opacity-10"
+          className="text-yellow-500 text-stylep2 md:text-stylep1 border bg-slate-700 bg-opacity-60 border-black border-opacity-20"
         />
       ) : (
         <FaRegStar
           key={i}
-          className="text-gray-400 text-stylep2 border-black border border-opacity-10"
+          className="text-gray-200 text-stylep2 border-black border bg-slate-700 bg-opacity-60 border-opacity-20"
         />
       )
     );
@@ -104,7 +104,7 @@ const CartCardComponent = ({ item, fetchCart }) => {
         </div>
       </div>
       {/* BOTTOM ROW */}
-      <div className="grid rounded-lg grid-cols-5 gap-1 text-stylep4 items-center justify-center bg-skin-secondary px-3 py-1 w-full h-[7vh]">
+      <div className="grid rounded-lg grid-cols-5 gap-1 text-stylep4 text-skin-color1 items-center justify-center bg-skin-secondary px-3 py-1 w-full h-[7vh]">
         <button
           className="flex flex-row px-3 w-full h-[5vh] in-center rounded bg-skin-red text-skin-color1"
           onClick={() => setClickRemove(true)}

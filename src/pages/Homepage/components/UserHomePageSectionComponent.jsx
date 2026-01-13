@@ -26,6 +26,9 @@ const UserHomePageSectionComponent = ({ profile }) => {
             {profile?.address?.[0]?.country || ""} -{" "}
             {profile?.address?.[0]?.postalCode || ""}
           </span>
+          <span>
+            Phone Number: {profile?.address?.[0].phoneNumber}
+          </span>
         </div>
       </span>
       <div className="flex flex-row in-center md:col-span-2">

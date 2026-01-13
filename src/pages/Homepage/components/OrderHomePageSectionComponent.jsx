@@ -1,18 +1,28 @@
 import { FaArrowRight, FaArrowRightArrowLeft } from "react-icons/fa6";
 import { useNavigate } from "react-router-dom";
 
-const OrderHomePageSectionComponent = ({ orders = []}) => {
+const OrderHomePageSectionComponent = ({ orders = [] }) => {
   const navigate = useNavigate();
+  console.log("ORDER", orders);
 
   return (
-    <div className="flex flex-col md:grid md:grid-cols-2 w-full min-h-[58vh] bg-skin-fill-1 p-2
-     rounded-xl shadow-lg gap-2 text-stylep4 md:text-stylep3 text-skin-color1 px-3 font-Receipt">
+    <div
+      className="flex flex-col md:grid md:grid-cols-2 w-full min-h-[58vh] bg-skin-fill-1 p-2
+     rounded-xl shadow-lg gap-2 text-stylep4 md:text-stylep3 text-skin-color1 px-3 font-Receipt"
+    >
       {/* Header */}
       <div className="flex flex-col text-stylep1 bg-skin-colorContent text-skin-colorContent p-2 pb-5 rounded-lg">
         <h2 className="text-stylep2 font-bold">Store Orders</h2>
-        <span className="text-stylep4 opacity-70">
+        <span className="text-stylep4 opacity-70 font-semibold">
           Manage incoming customer orders
         </span>
+
+        <button
+          className="w-[160px] bg-skin-cart text-skin-color1 py-1 px-2 rounded-lg"
+          onClick={() => navigate(`/order-user`)}
+        >
+          Go To Orders
+        </button>
       </div>
 
       {/* Orders List */}
@@ -20,10 +30,13 @@ const OrderHomePageSectionComponent = ({ orders = []}) => {
         {orders.length === 0 ? (
           <div className="flex space-x-2 items-center justify-center h-full opacity-80">
             <span className="text-styleh4">No orders yet.</span>
-            <span className="flex in-center text-stylep3 p-1 rounded-xl
+            <span
+              className="flex in-center text-stylep3 p-1 rounded-xl
             px-4 bg-skin-fill-3 text-skin-color3 gap-2"
-            onClick={() => navigate("/products")}
-            >Start Buying <FaArrowRight/></span>
+              onClick={() => navigate("/products")}
+            >
+              Start Buying <FaArrowRight />
+            </span>
           </div>
         ) : (
           orders.map((order) => (
@@ -59,13 +72,12 @@ const OrderHomePageSectionComponent = ({ orders = []}) => {
               {/* Meta */}
               <div className="flex justify-between text-xs text-skin-color2">
                 <span>{order.items.length} item(s)</span>
-                <span>₱{order.totalSum.toLocaleString()}</span>
+                <span>₱{order.totalSum}</span>
               </div>
 
               {/* Address */}
               <p className="text-xs mt-1 text-skin-color1 leading-snug line-clamp-2">
-                {order.shippingAddress.street},{" "}
-                {order.shippingAddress.city}
+                {order.shippingAddress.street}, {order.shippingAddress.city}
               </p>
 
               {/* Footer */}
@@ -75,9 +87,7 @@ const OrderHomePageSectionComponent = ({ orders = []}) => {
                 </span>
 
                 <button
-                  onClick={() =>
-                    navigate(`/seller/orders/${order._id}`)
-                  }
+                  onClick={() => navigate(`/seller/orders/${order._id}`)}
                   className="text-xs text-skin-accent font-medium
                     opacity-80 hover:opacity-100"
                 >
@@ -90,6 +100,6 @@ const OrderHomePageSectionComponent = ({ orders = []}) => {
       </div>
     </div>
   );
-}
+};
 
 export default OrderHomePageSectionComponent;

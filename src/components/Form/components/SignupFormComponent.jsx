@@ -38,7 +38,7 @@ const SignUpFormComponent = () => {
       lastname: "",
       middlename: "",
     },
-    address: { street: "", city: "", country: "", postalCode: "" },
+    address: { street: "", city: "", country: "", postalCode: "", phoneNumber: "" },
   });
 
   const [errors, setErrors] = useState({
@@ -231,7 +231,7 @@ const SignUpFormComponent = () => {
       )}
 
       {step === 3 && (
-        <div className="space-y-4">
+        <div className="space-y-2">
           <AuthInput
             label="Street"
             name="street"
@@ -259,6 +259,14 @@ const SignUpFormComponent = () => {
             value={formData.address.postalCode}
             onChange={(e) => handleChange("address", e)}
             error={errors.address.postalCode}
+          />
+          
+          <AuthInput
+            label="Phone No#"
+            name="phoneNumber"
+            value={formData.address.phoneNumber}
+            onChange={(e) => handleChange("address", e)}
+            error={errors.address.phoneNumber}
           />
         </div>
       )}

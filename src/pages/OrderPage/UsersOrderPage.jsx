@@ -1,23 +1,30 @@
 import { useCallback, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getUserOrdersAction } from "../../store/actions/OrderThunks";
+import { FaCheck, FaClock, FaProcedures, FaTimes, FaTruck } from "react-icons/fa";
+import { FaXmark } from "react-icons/fa6";
 
 const UsersOrderPage = () => {
   const dispatch = useDispatch();
   const { token } = useSelector((state) => state.auth);
 
   const [orders, setOrders] = useState([]);
+  const [statusCount, setStatusCount] = useState({});
+  const [activeStatus, setActiveStatus] = useState("all");
 
   const fetchOrders = useCallback(async () => {
     try {
       const resultAction = await dispatch(getUserOrdersAction());
 
       if (getUserOrdersAction.fulfilled.match(resultAction)) {
-        setOrders(resultAction.payload || []);
-        console.log("user-order", resultAction.payload);
+        setOrders(resultAction.payload.data.orders);
+        setStatusCount(resultAction.payload.data.statusCount);
       }
     } catch (error) {
       console.error(error);
+    } finally {
+      console.log(orders);
+      console.log(statusCount);
     }
   }, [dispatch]);
 
@@ -26,41 +33,74 @@ const UsersOrderPage = () => {
   }, [fetchOrders, token]);
 
   const OrderCard = ({ order }) => (
-    <div className="flex w-full h-[130px] p-4 border rounded">
-      <h1>Order #{order._id}</h1>
+    <div className="flex w-full py-2 px-2 pb-3 border rounded shadow-sm bg-skin-colorContent text-skin-colorContent">
+      <div className="flex flex-col">
+        <h1 className="font-semibold">Order #{order._id}</h1>
+        <p className="text-stylep3 capitalize">Status: {order.status}</p>
+        <p className="text-stylep4">Total: ₱{order.totalSum}</p>
+      </div>
     </div>
   );
 
-  const OrderStatusBar = () => {
-    const orderStatuses = [
-      "pending",
-      "paid",
-      "shipped",
-      "delivered",
-      "canceled",
+  const OrderStatusBar = ({ counts }) => {
+    const statuses = [
+      { key: "pending", icon: <FaClock />, label: "Pending", count: counts?.pending || 0 },
+      { key: "processing", icon: <FaProcedures />, label: "Processing", count: counts?.pending || 0 },
+      { key: "shipped", icon: <FaTruck />, label: "Shipped", count: counts?.shipped || 0 },
+      { key: "delivered", icon: <FaCheck />, label: "Delivered", count: counts?.delivered || 0 },
+      { key: "cancelled", icon: <FaTimes />, label: "Canceled", count: counts?.cancelled || 0 },
+      { key: "refunded", icon: <FaXmark />, label: "Refunded", count: counts?.pending || 0 },
     ];
 
     return (
-      <div className="flex gap-2">
-        {orderStatuses.map((status) => (
-          <button key={status} className="px-3 py-1 border rounded">
-            {status}
+      <div className="grid grid-cols-4 gap-2 py-2 px-2 w-full text-skin-color1">
+        {statuses.map((s) => (
+          <button
+            key={s.key}
+            onClick={() => setActiveStatus(s.key)}
+            className={`relative flex flex-col items-center justify-center px-3 py-2
+              bg-skin-buttonColor-1 border-2 border-skin-colorBorder1
+              border-opacity-15 shadow-md rounded transition
+              ${activeStatus === s.key ? "bg-skin-fill-1 text-skin-accent" : ""}`}
+          >
+            <span>{s.icon}</span>
+            <span className="capitalize text-stylep4">{s.label}</span>
+
+            {s.count > 0 && (
+              <span className="absolute -top-2 -right-2 bg-skin-red font-bold
+                w-[22px] h-[22px] rounded-full flex items-center justify-center text-stylep4">
+                {s.count}
+              </span>
+            )}
           </button>
         ))}
       </div>
     );
   };
 
-  return (
-    <div>
-      <OrderStatusBar />
+  const filteredOrders =
+    activeStatus === "all"
+      ? orders
+      : orders.filter((o) => o.status === activeStatus);
 
-      <div className="mt-4 flex flex-col gap-3">
-        {orders.length < 1 || !orders.length ? (
-          <p>No orders found</p>
-        ) : (
-          orders.items.map((order) => <OrderCard key={order._id} order={order} />)
-        )}
+  return (
+    <div className="page-body-background in-center relative">
+      <div className="page-body-section items-start justify-start z-20">
+        <div className="flex flex-col w-full px-2">
+
+          <OrderStatusBar counts={statusCount} />
+
+          <div className="mt-6 flex flex-col gap-3 h-[50vh] overflow-x-hidden overflow-y-auto">
+            {filteredOrders.length === 0 ? (
+              <p className="text-center text-skin-color2">No orders found</p>
+            ) : (
+              filteredOrders.map((order) => (
+                <OrderCard key={order._id} order={order} />
+              ))
+            )}
+          </div>
+
+        </div>
       </div>
     </div>
   );

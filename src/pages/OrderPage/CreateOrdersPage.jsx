@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { FaArrowDown, FaArrowUp } from "react-icons/fa";
+import { FaAddressBook, FaArrowDown, FaArrowUp, FaEnvelope, FaPhone, FaUser } from "react-icons/fa";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { createOrderAction } from "../../store/actions/OrderThunks";
@@ -31,18 +31,21 @@ const ShippingAddress = ({ profile }) => {
   const address = profile?.address?.[0];
 
   return (
-    <div className="flex flex-col w-full min-h-[20vh] text-stylep3">
-      <p>
-        <strong>Name:</strong> {profile?.firstname} {profile?.lastname}
+    <div className="flex flex-col w-full min-h-[20vh] text-stylep3 pb-4">
+      <p className="flex flex-row items-center justify-start mt-2 font-semibold gap-2">
+        <FaUser size={14} /> <strong>Name:</strong> {profile?.firstname} {profile?.lastname}
       </p>
-      <p>
-        <strong>Email:</strong> {profile?.email || "N/A"}
+      <p className="flex flex-row items-center justify-start mt-2 font-semibold gap-2">
+        <FaEnvelope size={14} /> <strong>Email:</strong> {profile?.email || "N/A"}
       </p>
 
-      <p className="mt-2 font-semibold">Shipping Address</p>
+      <p className="flex flex-row items-center justify-start mt-2 font-semibold gap-2"><FaAddressBook size={14} /> Shipping Address :</p>
       <p>{address?.street}</p>
       <p>
-        {address?.city}, {address?.country} {address?.postalCode}
+        {address?.city}, {address?.country} - {address?.postalCode}
+      </p>
+      <p className="flex flex-row items-center justify-start mt-2 font-semibold gap-2">
+        <FaPhone size={14}/> Phone Number: {address?.phoneNumber}
       </p>
     </div>
   );
@@ -52,7 +55,7 @@ const ReceiptItemSumTotal = ({ items = [], totalPrice = 0 }) => {
   if (!items.length) return <p className="text-sm">No items in cart</p>;
 
   return (
-    <div className="flex flex-col w-full min-h-[24vh] text-stylep3">
+    <div className="flex flex-col w-full min-h-[24vh] text-stylep3 pb-4">
       <ul className="flex flex-col mb-2 space-y-1 overflow-hidden overflow-y-auto h-[18vh]">
         {items.map((item) => (
           <li key={item._id} className="grid grid-cols-3 gap-2">
@@ -78,7 +81,71 @@ const CreateOrdersPage = () => {
   const dispatch = useDispatch();
   const { token, profile } = useSelector((state) => state.auth);
   const { items = [], totalPrice = 0 } = useSelector((state) => state.cart);
+  console.log("createORDER", items);
 
+  {/**
+    user: { type: mongoose.Schema.Types.ObjectId, ref: "User", required: true },
+
+    items: [
+      {
+        product: { type: mongoose.Schema.Types.ObjectId, ref: "Product", required: true },
+        name: String,
+        image: String, product?.productImage
+        price: Number,
+        quantity: Number,
+        variant: String,
+
+        sellerStatus: {
+          type: String,
+          enum: ["pending", "processing", "shipped", "delivered", "cancelled", "refunded"],
+          default: "pending",
+        },
+
+        courier: String,
+        trackingNumber: String,
+        shippedAt: Date,
+        deliveredAt: Date,
+      },
+    ],
+
+
+    shippingAddress: {
+      street: String,
+      city: String,
+      country: String,
+      postalCode: String,
+      phone: String,
+    },
+
+    pricing: {
+      itemsTotal: { type: Number, required: true },
+      shippingFee: { type: Number, default: 0 },
+      total: { type: Number, required: true },
+    },
+
+    payment: {
+      method: { type: String, enum: ["cod", "gcash", "paypal"], default: "cod" },
+      isPaid: { type: Boolean, default: false },
+      paidAt: Date,
+      transactionId: String,
+    },
+
+    shipping: {
+      courier: String,
+      trackingNumber: String,
+      shippedAt: Date,
+      deliveredAt: Date,
+    },
+
+    status: {
+      type: String,
+      enum: ["pending", "processing", "shipped", "delivered", "cancelled", "refunded"],
+      default: "pending",
+    },
+  },
+  { timestamps: true }
+    */}
+  console.log("createORDER-PROFILE", profile);
   const shippingFee = 30;
   const address = profile?.address?.[0];
   const totalSum = totalPrice + shippingFee;
