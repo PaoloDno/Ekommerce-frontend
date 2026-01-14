@@ -2,14 +2,13 @@ import React from "react"
 import CreateSellerFormComponent from "./components/CreateSellerFormComponent";
 
 
+
 const CreateStorePage = () => {
-  
   return (
-    <div className="page-section">
-      <div className="page-body">
+    <div className="page-body-background in-center">
+      <div className="page-body-section in-center relative pb-4">
         <CreateSellerFormComponent />
       </div>
-      <div className="page-background"></div>
     </div>
   )
 };

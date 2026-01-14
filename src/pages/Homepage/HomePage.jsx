@@ -137,10 +137,9 @@ const HomePage = () => {
         <div className="grid grid-cols-4 w-full pb-2 lg:pb-4 gap-4 px-3 py-1 text-skin-color1  bg-skin-primary">
           {[
             { key: "profile", count: 0, label: "Profile", icon: <FaUser size={14}/> },
-            { key: "store", count: sellerNotif.length, label: "Store", icon: <FaStore size={14}/> },
-            { key: "cart", count: items.length , label: "Cart", icon: <FaShoppingCart size={14}/> },
-            { key: "orders", count: orders.length , label: "Orders", icon: <FaBoxArchive size={14}/> },
-            
+            { key: "store", count: sellerNotif?.length || 0, label: "Store", icon: <FaStore size={14}/> },
+            { key: "cart", count: items?.length || 0 , label: "Cart", icon: <FaShoppingCart size={14}/> },
+            { key: "orders", count: orders?.length || 0 , label: "Orders", icon: <FaBoxArchive size={14}/> },
           ].map((item) => (
             <button
               key={item.key}

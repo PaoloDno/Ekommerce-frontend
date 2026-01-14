@@ -4,6 +4,7 @@ import { useParams } from "react-router-dom";
 
 const AddProductPage = () => {
   const storeId = useParams();
+  console.log("STOREIDPARAMS", storeId);
   return (
     <div className="page-section">
       <div className="page-body">

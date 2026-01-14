@@ -90,7 +90,7 @@
 
     --color-text1: rgb(235,235,235);
     --color-text2: rgb(175,175,175);
-    --color-text3: rgb(15,15,15);
+    --color-text3: rgb(139, 233, 240);
 
     --color-button-1: rgb(4,4,10);
     --color-button-2: rgb(25,32,41);
@@ -103,12 +103,12 @@
 
     --color-fill-1: rgb(10,10,10);
     --color-fill-2: rgb(20,20,20);
-    --color-fill-3: rgb(180,173,173);
+    --color-fill-3: rgb(73, 97, 121);
     --color-fill-4: rgb(68,50,50);
     --color-fill-5: rgb(61,56,56);
 
-    --color-border1: rgb(60,60,60);
-    --color-border2: rgb(140,140,140);
+    --color-border1: rgb(92, 96, 114);
+    --color-border2: rgb(83, 112, 114);
 
     --color-contrast: rgb(117, 160, 255);
     --color-disable: rgb(90,90,90);

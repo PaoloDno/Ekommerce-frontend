@@ -2,13 +2,14 @@ import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 import { createStoreAction } from "../../../store/actions/SellerThunks";
-import SellerInput from "./SellerFormInput";
+
 import SellerLayout from "./SellerFormLayoput";
 import { FaHome } from "react-icons/fa";
 
 import AuthVideo from "../../../components/Form/videos/Rainy.mp4";
 import StoreImage from "../../../components/ImagesComponent/components/StoreImageComponent";
 import BannerImage from "../../../components/ImagesComponent/components/BannerImageComponent";
+import AuthInput from "../../../components/Form/components/AuthInput";
 
 const CreateSellerFormComponent = () => {
   const { token, isPending } = useSelector((s) => s.auth);
@@ -63,80 +64,83 @@ const CreateSellerFormComponent = () => {
     }));
   };
 
+  const sanitizeInput = (input) => input.trim().replace(/[\/<>#]/g, "");
+
   const validateField = (section, field, value) => {
-    switch (field) {
-      case "email":
-        return EMAIL_REGEX.test(value) ? "" : "Invalid email format.";
-      default:
-        return CLEAN_TEXT.test(value) && value
-          ? ""
-          : "No Empty or Special Characters Allowed.";
+    if (!value || value.trim() === "") return "This field is required.";
+
+    if (field === "email") {
+      return EMAIL_REGEX.test(value) ? "" : "Invalid email format.";
     }
+
+    return CLEAN_TEXT.test(value) ? "" : "Invalid characters.";
   };
 
   const validateStep = () => {
+    if (step === 3) return true; // display step has no text validation
+
     const section = step === 1 ? "store" : "address";
     const fields = formData[section];
     let stepErrors = {};
-    for (const field in fields) {
+
+    Object.keys(fields).forEach((field) => {
       const error = validateField(section, field, fields[field]);
-      if (error) {
-        stepErrors[field] = error;
-        console.log(error);
-      }
-    }
-    if (Object.keys(stepErrors).length) {
+      if (error) stepErrors[field] = error;
+    });
+
+    if (Object.keys(stepErrors).length > 0) {
       setErrors((prev) => ({ ...prev, [section]: stepErrors }));
-      console.log(errors);
       return false;
     }
-    return true;
-  };
 
-  const handleNext = () => {
-    setIsLoading(true);
-    if (validateStep()) setStep((prev) => prev + 1);
+    setErrors((prev) => ({ ...prev, [section]: {} }));
+    return true;
   };
 
   const handleBack = () => {
     setStep((prev) => Math.max(prev - 1, 1));
   };
 
-  useEffect(() => {
-    if (isLoading) {
-      const timer = setTimeout(() => setIsLoading(false), 1500);
-      return () => clearTimeout(timer);
-    }
-  }, [isLoading]);
-
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    console.log("A");
-    if (validateStep()) {
-      const { store, address } = formData;
-      const resultAction = await dispatch(
-        createStoreAction({ ...store, address: { ...address } })
-      );
-
-      if (createStoreAction.fulfilled.match(resultAction)) {
-        const timeoutId = setTimeout(() => {
-          navigate("/user-store");
-        }, 1000);
-        return () => clearTimeout(timeoutId);
-      }
-    } else {
-      console.log("err");
-    }
+  const handleNext = () => {
+    if (validateStep()) setStep((prev) => prev + 1);
   };
 
-  const selectLabel = `text-gray-800 text-stylep1`;
-  const selectOptions = `border-2 border-skin-colorBorder1 rounded-lg
+  const selectLabel = "text-gray-800 text-stylep1";
+  const selectOptions = `
+    border-2 border-skin-colorBorder1 rounded-lg
     w-full px-2 py-2 text-stylep2
     placeholder-transparent shadow-sm
     focus:border-green-500 focus:ring focus:ring-green-200
     focus:outline-none
-    transition-all duration-30`;
-  const selectOption = `text-gray-600 text-stylep2 py-2 px-4`;
+    transition-all duration-300
+  `;
+  const selectOption = "text-gray-600 text-stylep2 py-2 px-4";
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    if (!validateStep()) return;
+
+    const payload = {
+      storeName: sanitizeInput(formData.store.storeName),
+      email: sanitizeInput(formData.store.email),
+      phone: sanitizeInput(formData.store.phone),
+      description: sanitizeInput(formData.store.description),
+      address: {
+        street: sanitizeInput(formData.address.street),
+        city: sanitizeInput(formData.address.city),
+        country: sanitizeInput(formData.address.country),
+        postalCode: sanitizeInput(formData.address.postalCode),
+      },
+      display: formData.display,
+    };
+
+    const resultAction = await dispatch(createStoreAction(payload));
+
+    if (createStoreAction.fulfilled.match(resultAction)) {
+      navigate("/user-store");
+    }
+  };
 
   const renderStep = () => {
     return (
@@ -145,7 +149,7 @@ const CreateSellerFormComponent = () => {
           <div className="flex flex-col w-full h-full min-h-[520px] justify-between">
             <div className="flex flex-col w-full">
               <h2 className="form-title">Create A Store</h2>
-              <SellerInput
+              <AuthInput
                 label="Store Name"
                 name="storeName"
                 value={formData.store.storeName}
@@ -153,7 +157,7 @@ const CreateSellerFormComponent = () => {
                 error={errors.store.storeName}
                 helper="Name for the store is required"
               />
-              <SellerInput
+              <AuthInput
                 label="Email"
                 name="email"
                 type="email"
@@ -162,7 +166,7 @@ const CreateSellerFormComponent = () => {
                 error={errors.store.email}
                 helper="Email format"
               />
-              <SellerInput
+              <AuthInput
                 label="Phone Number"
                 name="phone"
                 type="text"
@@ -171,7 +175,7 @@ const CreateSellerFormComponent = () => {
                 error={errors.store.phone}
                 helper="Store contact number"
               />
-              <SellerInput
+              <AuthInput
                 label="Description"
                 name="description"
                 type="text"
@@ -181,9 +185,13 @@ const CreateSellerFormComponent = () => {
                 helper="Describe the store"
               />
             </div>
-            <span className="flex flex-row justify-between">
+            <span className="flex flex-row w-full items-center justify-center">
               <button
-                className="form-button"
+                className="mt-4 w-full py-2 rounded-lg
+                  bg-skin-green/90 hover:bg-skin-green
+                  text-skin-color1 text-stylep2
+                  flex justify-center items-center
+                  backdrop-blur-md transition-all"
                 type="button"
                 onClick={handleNext}
               >
@@ -197,28 +205,28 @@ const CreateSellerFormComponent = () => {
           <div className="flex flex-col w-full h-full min-h-[520px] justify-between">
             <div className="flex flex-col w-full">
               <h2 className="form-title">Store Address</h2>
-              <SellerInput
+              <AuthInput
                 label="Street"
                 name="street"
                 value={formData.address.street}
                 onChange={(e) => handleChange("address", e)}
                 error={errors.address.street}
               />
-              <SellerInput
+              <AuthInput
                 label="City"
                 name="city"
                 value={formData.address.city}
                 onChange={(e) => handleChange("address", e)}
                 error={errors.address.city}
               />
-              <SellerInput
+              <AuthInput
                 label="Country"
                 name="country"
                 value={formData.address.country}
                 onChange={(e) => handleChange("address", e)}
                 error={errors.address.country}
               />
-              <SellerInput
+              <AuthInput
                 label="Postal Code"
                 name="postalCode"
                 value={formData.address.postalCode}
@@ -226,16 +234,24 @@ const CreateSellerFormComponent = () => {
                 error={errors.address.postalCode}
               />
             </div>
-            <span className="flex flex-row justify-between">
+            <span className="flex flex-row w-full items-center justify-center gap-2">
               <button
-                className="form-button"
+                className="mt-4 w-full py-2 rounded-lg
+                  bg-skin-green/90 hover:bg-skin-green
+                  text-skin-color1 text-stylep2
+                  flex justify-center items-center
+                  backdrop-blur-md transition-all"
                 type="button"
                 onClick={handleBack}
               >
                 PREV
               </button>
               <button
-                className="form-button"
+                className="mt-4 w-full py-2 rounded-lg
+                  bg-skin-green/90 hover:bg-skin-green
+                  text-skin-color1 text-stylep2
+                  flex justify-center items-center
+                  backdrop-blur-md transition-all"
                 type="button"
                 onClick={handleNext}
               >
@@ -312,9 +328,13 @@ const CreateSellerFormComponent = () => {
                 </select>
               </div>
             </div>
-            <span className="flex flex-row justify-between">
+            <span className="flex flex-row justify-between gap-2">
               <button
-                className="form-button"
+                className="mt-4 w-full py-2 rounded-lg
+                  bg-skin-green/90 hover:bg-skin-green
+                  text-skin-color1 text-stylep2
+                  flex justify-center items-center
+                  backdrop-blur-md transition-all"
                 type="button"
                 onClick={handleBack}
               >
@@ -324,9 +344,13 @@ const CreateSellerFormComponent = () => {
                 type="submit"
                 onClick={handleSubmit}
                 disabled={isPending}
-                className="form-button"
+                className="mt-4 w-full py-2 rounded-lg
+                  bg-skin-green/90 hover:bg-skin-green
+                  text-skin-color1 text-stylep4
+                  flex justify-center items-center
+                  backdrop-blur-md transition-all"
               >
-                {isPending ? <div>loading . . .</div> : "CREATE STORE"}
+                {isPending ? <div className="loader" /> : "CREATE STORE"}
               </button>
             </span>
           </div>
@@ -337,14 +361,15 @@ const CreateSellerFormComponent = () => {
 
   return (
     <SellerLayout
-      previewSide={
-        <>
-          <span className="overflow-hidden w-full justify-center items-center bg-cover flex">
-            <span className="absolute inset-0 max-w-screen-xl">
-            <StoreImage storeImage={"S2"} />
-            </span>
-          </span>
-        </>
+      videoSide={
+        <video
+          src={AuthVideo}
+          autoPlay
+          loop
+          muted
+          playsInline
+          className="flex relative inset-0 w-full h-full object-cover"
+        />
       }
       redirect={{
         to: "/",
@@ -352,7 +377,28 @@ const CreateSellerFormComponent = () => {
         icon: <FaHome />,
       }}
     >
-      {renderStep()}
+      <div
+        className="relative w-full max-w-md mx-auto mt-16 p-6 rounded-2xl
+          bg-skin-colorContent/60 backdrop-blur-xl
+          border border-white/20 shadow-2xl
+          text-skin-colorContent flex flex-col space-y-4"
+      >
+        <div className="absolute inset-0 rounded-2xl bg-white/10 blur-xl -z-10" />
+        <div className="flex flex-row space-x-2 items-center">
+          <h2 className="text-styleh4 font-display text-center">
+            CREATE STORE
+          </h2>
+          <span className="text-styleh2">{"/"}</span>
+          <h3
+            onClick={() => navigate("/home")}
+            className="text-stylep3 font-display text-center 
+          bg-skin-fill-3 text-skin-color3 px-2 py-1 rounded-lg"
+          >
+            GO BACK
+          </h3>
+        </div>
+        {renderStep()}
+      </div>
     </SellerLayout>
   );
 };

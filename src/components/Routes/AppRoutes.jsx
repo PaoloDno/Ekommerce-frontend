@@ -38,6 +38,7 @@ import UsersOrderPage from "../../pages/OrderPage/UsersOrderPage.jsx";
 import { Routes, Route } from "react-router-dom";
 import ProtectedRoute from "./ProtectedRoutes.jsx";
 import AdminPage from "../../pages/AdminPage/AdminPage.jsx";
+import OrderIdPage from "../../pages/OrderPage/OrderIdPage.jsx";
 
 const AppRoutes = () => {
   return (
@@ -93,10 +94,12 @@ const AppRoutes = () => {
       
       {/* orders */}
       <Route path="/order" element={<CreateOrdersPage />} />
+      <Route path="/orderId/:orderId" element={<OrderIdPage />} />
       <Route path="/order-user" element={<UsersOrderPage />} />
 
       {/* orders */}
       <Route path="/admin" element={<AdminPage />} />
+      
 
       {/* handle errors*/}
       <Route path="/token-error" element={<TokenErrorPage />} />

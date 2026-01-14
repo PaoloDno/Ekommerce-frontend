@@ -1,76 +1,58 @@
+// store/actions/SellerThunks.js
 import { createAsyncThunk } from "@reduxjs/toolkit";
-
 import { api } from "../features/api";
 
 export const createStoreAction = createAsyncThunk(
   "seller/CreateStoreAction",
   async (storeData, thunkAPI) => {
     try {
-      console.log(storeData);
       const token = thunkAPI.getState().auth.token;
       const response = await api.post("/store/create", storeData, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
+        headers: { Authorization: `Bearer ${token}` },
       });
-      if (response) {
-        const { token } = response.data;
-        localStorage.setItem("token", token);
-      }
       return response.data;
-    } catch (error) {
-      console.log(error);
-      return thunkAPI.rejectWithValue(error.response?.data.message);
+    } catch (err) {
+      return thunkAPI.rejectWithValue(err.response?.data?.message || err.message);
     }
   }
 );
 
 export const getUserStoreAction = createAsyncThunk(
-  "seller/GetUsetStoreAction",
+  "seller/GetUserStoreAction",
   async (_, thunkAPI) => {
     try {
       const token = thunkAPI.getState().auth.token;
       const response = await api.get("/store/get-owner-store", {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
+        headers: { Authorization: `Bearer ${token}` },
       });
-      
+      console.log("SELLER", response.data);
       return response.data;
-    } catch (error) {
-      console.log(error);
-      return thunkAPI.rejectWithValue(error.response?.data.message);
+    } catch (err) {
+      return thunkAPI.rejectWithValue(err.response?.data?.message || err.message);
     }
   }
 );
 
 export const getStoreIdAction = createAsyncThunk(
-  "seller/GetStoreIdAction",
+  "seller/GetStoreByIdAction",
   async (storeId, thunkAPI) => {
     try {
       const response = await api.get(`/store/${storeId}`);
       return response.data;
-    } catch (error) {
-      console.log(error);
-      return thunkAPI.rejectWithValue(error.response?.data.message);
+    } catch (err) {
+      return thunkAPI.rejectWithValue(err.response?.data?.message || err.message);
     }
   }
 );
 
 export const getStoresAction = createAsyncThunk(
-  "seller/getStores",
-  async ( queryParams , thunkAPI) => {
+  "seller/GetStoresAction",
+  async (queryParams = {}, thunkAPI) => {
     try {
-      console.log("GET:", queryParams);
-      const response = await api.get("/store", { 
-        params: queryParams
-      });
-      console.log(response.data);
-      return response.data;  // { stores, pagination }
+      const response = await api.get("/store", { params: queryParams });
+      return response.data;
     } catch (err) {
-      return thunkAPI.rejectWithValue(
-        err.response?.data?.message || "Failed to fetch stores"
-      );
+      return thunkAPI.rejectWithValue(err.response?.data?.message || "Failed to fetch stores");
     }
   }
 );

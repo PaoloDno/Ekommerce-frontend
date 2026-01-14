@@ -3,9 +3,11 @@ import { useDispatch, useSelector } from "react-redux";
 import { getUserOrdersAction } from "../../store/actions/OrderThunks";
 import { FaCheck, FaClock, FaProcedures, FaTimes, FaTruck } from "react-icons/fa";
 import { FaXmark } from "react-icons/fa6";
+import { useNavigate } from "react-router-dom";
 
 const UsersOrderPage = () => {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const { token } = useSelector((state) => state.auth);
 
   const [orders, setOrders] = useState([]);
@@ -33,7 +35,8 @@ const UsersOrderPage = () => {
   }, [fetchOrders, token]);
 
   const OrderCard = ({ order }) => (
-    <div className="flex w-full py-2 px-2 pb-3 border rounded shadow-sm bg-skin-colorContent text-skin-colorContent">
+    <div onClick={() => navigate(`/orderId/${order._id}`)} 
+    className="flex w-full py-2 px-2 pb-3 border rounded shadow-sm bg-skin-colorContent text-skin-colorContent">
       <div className="flex flex-col">
         <h1 className="font-semibold">Order #{order._id}</h1>
         <p className="text-stylep3 capitalize">Status: {order.status}</p>
@@ -45,11 +48,11 @@ const UsersOrderPage = () => {
   const OrderStatusBar = ({ counts }) => {
     const statuses = [
       { key: "pending", icon: <FaClock />, label: "Pending", count: counts?.pending || 0 },
-      { key: "processing", icon: <FaProcedures />, label: "Processing", count: counts?.pending || 0 },
+      { key: "processing", icon: <FaProcedures />, label: "Processing", count: counts?.processing || 0 },
       { key: "shipped", icon: <FaTruck />, label: "Shipped", count: counts?.shipped || 0 },
       { key: "delivered", icon: <FaCheck />, label: "Delivered", count: counts?.delivered || 0 },
       { key: "cancelled", icon: <FaTimes />, label: "Canceled", count: counts?.cancelled || 0 },
-      { key: "refunded", icon: <FaXmark />, label: "Refunded", count: counts?.pending || 0 },
+      { key: "refunded", icon: <FaXmark />, label: "Refunded", count: counts?.refunded || 0 },
     ];
 
     return (

@@ -59,3 +59,24 @@ export const getOrdersByIdAction = createAsyncThunk(
     }
   }
 );
+
+
+export const getSellerOrderAction = createAsyncThunk(
+  "order/GetSellerOrderAction",
+  async (sellerId, thunkAPI) => {
+    try {
+      const token = thunkAPI.getState().auth.token;
+      console.log("SELLERID", sellerId)
+      const response = await api.get(`/order/store/${sellerId}`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      console.log("data", response.data);
+      return response.data;
+    } catch (error) {
+      console.log(error);
+      return thunkAPI.rejectWithValue(error.response?.data.message);
+    }
+  }
+)

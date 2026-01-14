@@ -25,13 +25,36 @@ import { getUserStoreAction } from "../../store/actions/SellerThunks";
 import ProductImages from "../../components/ImagesComponent/components/ProductImageComponent";
 import BannerImage from "../../components/ImagesComponent/components/BannerImageComponent";
 import StoreImage from "../../components/ImagesComponent/components/StoreImageComponent";
+import OrderStatusBar from "./components/OrderStatusBar";
 
 const UserStorePage = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const { token, isPending } = useSelector((s) => s.auth);
 
-  const [store, setStore] = useState({});
+  const [store, setStore] = useState({
+    products: [],
+    address: {},
+    reviews: { top3: [], low3: [] },
+    metrics: {
+      orders: { totalOrders: 0 },
+      products: {
+        totalProducts: 0,
+        lowStockProducts: 0,
+        outOfStockProducts: 0,
+      },
+      revenue: {
+        totalRevenue: 0,
+        monthlyRevenue: 0,
+        dailyRevenue: 0,
+        averageOrderValue: 0,
+      },
+    },
+    sellerBanner: "",
+    sellerLogo: "",
+    ratings: { average: 0, totalReviews: 0 },
+  });
+
   const [isLoading, setIsLoading] = useState(true);
   const isMounted = useRef(true);
 
@@ -41,17 +64,19 @@ const UserStorePage = () => {
 
     try {
       const resultAction = await dispatch(getUserStoreAction());
-      if (
-        getUserStoreAction.fulfilled.match(resultAction) &&
-        isMounted.current
-      ) {
+      if (getUserStoreAction.fulfilled.match(resultAction)) {
+        if (resultAction.payload.hasStore === false) {
+          navigate("/create-store");
+          return;
+        }
         setStore(resultAction.payload.data);
-        console.log("Stores:", resultAction.payload.data);
       }
     } catch (error) {
       console.error(error);
     } finally {
       if (isMounted.current) setIsLoading(false);
+      console.log("STORE set: ", store);
+      console.log("storeId: ", store?._id);
     }
   }, [dispatch, token]);
 
@@ -72,7 +97,9 @@ const UserStorePage = () => {
     return (
       <div className="page-section">
         <div className="page-body">
-          <p className="text-white p-4">Please login to continue</p>
+          <p className="text-white text-stylep2 p-4">
+            Please login to continue
+          </p>
           <button
             onClick={() => navigate("/login")}
             className="px-4 py-2 mt-2 bg-green-500 text-white rounded-md hover:bg-blue-600"
@@ -214,11 +241,11 @@ const UserStorePage = () => {
   };
 
   // Desktop Product Pagination
-  const ProductPaginationDesktop = ({ products, storeId }) => {
+  const ProductPaginationDesktop = ({ products = [], storeId }) => {
     const [productPage, setProductPage] = useState(0);
     const PRODUCTS_PER_PAGE = 3; // 3x2 grid
 
-    const totalPages = Math.ceil(products.length / PRODUCTS_PER_PAGE);
+    const totalPages = Math.ceil((products?.length || 0) / PRODUCTS_PER_PAGE);
     const pagedProducts = products.slice(
       productPage * PRODUCTS_PER_PAGE,
       productPage * PRODUCTS_PER_PAGE + PRODUCTS_PER_PAGE
@@ -254,7 +281,7 @@ const UserStorePage = () => {
           <div
             onClick={() => navigate(`/create-product/${storeId}`)}
             className="flex flex-col h-[180px] w-[140px] in-center bg-skin-colorContent bg-opacity-25
-         rounded-xl border-4 border-skin-colorBorder1 text-skin-colorContent"
+         rounded-xl border-4 border-skin-colorBorder1 text-skin-color1"
           >
             <FaPlusCircle size={26} />
             <span className="text-stylep2 font-display capitalize ">
@@ -278,6 +305,14 @@ const UserStorePage = () => {
     );
   };
 
+  {
+    /**
+    
+    MAIN CONTENT
+    
+    **/
+  }
+
   return (
     <div className="page-body-background in-center">
       <div className="page-body-section in-center relative">
@@ -299,19 +334,20 @@ const UserStorePage = () => {
           {/** DESKTOP sidebar */}
           <div
             className="hidden md:flex flex-col rounded-lg p-3 w-1/3 h-[82vh] min-h-[82vh]
-          items-start justify-start bg-skin-primary text-skin-color1"
+          items-start justify-start bg-skin-primary text-skin-color1 relative overflow-hidden"
           >
+            <div className="absolute flex w-full h-full blur-xl bg-white/5 z-10" />
             <div className="flex flex-col w-full bg-opacity-15 p-2 min-h-[18vh] bg-skin-fill-4 items-baseline justify-end">
               <div className="flex w-full h-[30px] "></div>
 
               <span className="flex flex-row w-full in-center text-stylep2">
-                reviews - {store?.ratings.totalReviews}
+                reviews - {store?.ratings?.totalReviews || 0}
               </span>
               <span className="flex text-styleh2 w-full in-center items-baseline justify-center">
                 {store?.ratings.average}
               </span>
               <span className="flex flex-row items-center mx-auto w-fit px-2 py-1 bg-opacity-60 bg-black rounded-full in-center">
-                {renderStars(store?.ratings?.average)}
+                {renderStars(store?.ratings?.average || 1)}
               </span>
             </div>
             {/** sidebar basic info */}
@@ -334,62 +370,67 @@ const UserStorePage = () => {
               <span>{store?.description}</span>
             </span>
 
-            <div className="flex flex-col min-h-[25vh] w-full  p-2 text-stylep4">
-              <span className="text-skin-color1 text-styleh4 font-display">
-                METRICS
-              </span>
+            <div className="flex flex-col min-h-[25vh] w-full  p-2 text-stylep4 overflow-hidden relative">
+              <div className="absolute flex w-full h-full blur-xl bg-black/5 z-10" />
+              <div className="flex flex-col w-full h-full in-center z-20">
+                <span className="text-skin-color1 text-styleh4 font-display">
+                  METRICS
+                </span>
 
-              <div className="w-full bg-skin-colorContent bg-opacity-60 text-skin-colorContent rounded-md py-2 px-1">
-                {/* Orders */}
-                <div className="border-b border-skin-border1">
-                  <span className="cursor-pointer px-1 py-2 font-bold select-none">
-                    Orders
-                  </span>
-                  <div className="flex flex-col gap-1 px-3">
-                    <span>
-                      Total Orders: {store?.metrics?.orders?.totalOrders}
+                <div className="w-full bg-skin-colorContent bg-opacity-90 text-skin-colorContent rounded-md py-2 px-1">
+                  {/* Orders */}
+                  <div className="border-b border-skin-border1">
+                    <span className="cursor-pointer px-1 py-2 font-bold select-none">
+                      Orders
                     </span>
+                    <div className="flex flex-col gap-1 px-3">
+                      <span>
+                        Total Orders: {store?.metrics?.orders?.totalOrders}
+                      </span>
+                    </div>
                   </div>
-                </div>
 
-                {/* Products */}
-                <div className="border-b border-skin-border1">
-                  <span className="cursor-pointer px-1 py-2 font-bold select-none">
-                    Products
-                  </span>
-                  <div className="flex flex-col gap-1 px-3 ">
-                    <span>
-                      Total Products: {store?.metrics?.products?.totalProducts}
+                  {/* Products */}
+                  <div className="border-b border-skin-border1">
+                    <span className="cursor-pointer px-1 py-2 font-bold select-none">
+                      Products
                     </span>
-                    <span>
-                      Low Stock: {store?.metrics?.products?.lowStockProducts}
-                    </span>
-                    <span>
-                      Out of Stock:{" "}
-                      {store?.metrics?.products?.outOfStockProducts}
-                    </span>
+                    <div className="flex flex-col gap-1 px-3 ">
+                      <span>
+                        Total Products:{" "}
+                        {store?.metrics?.products?.totalProducts}
+                      </span>
+                      <span>
+                        Low Stock: {store?.metrics?.products?.lowStockProducts}
+                      </span>
+                      <span>
+                        Out of Stock:{" "}
+                        {store?.metrics?.products?.outOfStockProducts}
+                      </span>
+                    </div>
                   </div>
-                </div>
 
-                {/* Revenue */}
-                <div>
-                  <span className="cursor-pointer px-1 py-2 font-bold select-none">
-                    Revenue
-                  </span>
-                  <div className="flex flex-col gap-1 px-3">
-                    <span>
-                      Total Revenue: {store?.metrics?.revenue?.totalRevenue}
+                  {/* Revenue */}
+                  <div>
+                    <span className="cursor-pointer px-1 py-2 font-bold select-none">
+                      Revenue
                     </span>
-                    <span>
-                      Monthly Revenue: {store?.metrics?.revenue?.monthlyRevenue}
-                    </span>
-                    <span>
-                      Daily Revenue: {store?.metrics?.revenue?.dailyRevenue}
-                    </span>
-                    <span>
-                      Avg Order Value:{" "}
-                      {store?.metrics?.revenue?.averageOrderValue}
-                    </span>
+                    <div className="flex flex-col gap-1 px-3">
+                      <span>
+                        Total Revenue: {store?.metrics?.revenue?.totalRevenue}
+                      </span>
+                      <span>
+                        Monthly Revenue:{" "}
+                        {store?.metrics?.revenue?.monthlyRevenue}
+                      </span>
+                      <span>
+                        Daily Revenue: {store?.metrics?.revenue?.dailyRevenue}
+                      </span>
+                      <span>
+                        Avg Order Value:{" "}
+                        {store?.metrics?.revenue?.averageOrderValue}
+                      </span>
+                    </div>
                   </div>
                 </div>
               </div>
@@ -404,7 +445,10 @@ const UserStorePage = () => {
             <ReviewPaginationDesktop
               reviews={[...store?.reviews?.low3, ...store?.reviews?.top3] || []}
             />
-            <ProductPaginationDesktop products={store.products} />
+            <ProductPaginationDesktop
+              products={store.products || []}
+              storeId={store?._id}
+            />
           </div>
 
           {/** mobile  */}
@@ -415,13 +459,13 @@ const UserStorePage = () => {
             <div className="flex flex-row md:hidden w-full px-2 items-end justify-end text-skin-color1 font-display text-stylep4">
               <div className="flex flex-col w-1/3 bg-skin-fill-4 bg-opacity-15 p-2 h-[20vh] items-baseline justify-end">
                 <span className="flex flex-row w-full in-center text-stylep2">
-                  reviews - {store?.ratings.totalReviews}
+                  reviews - {store?.ratings.totalReviews || 0}
                 </span>
                 <span className="flex text-styleh2 w-full in-center items-baseline justify-center">
                   {store?.ratings.average}
                 </span>
                 <span className="flex flex-row items-center mx-auto w-fit px-2 py-1 bg-opacity-60 bg-black rounded-full in-center">
-                  {renderStars(store?.ratings?.average)}
+                  {renderStars(store?.ratings?.average || 0)}
                 </span>
               </div>
               <div className="flex flex-col w-2/3 items-end justify-end">
@@ -441,7 +485,11 @@ const UserStorePage = () => {
                 </span>
               </div>
             </div>
-            {/** dispaly reviews */}
+
+            <OrderStatusBar sellerId={store?._id}/>
+
+            {/** dispaly reviews mobile */}
+
             <span className="text-skin-color1 text-styleh4 font-display">
               REVIEWS
             </span>
@@ -469,7 +517,7 @@ const UserStorePage = () => {
                       {review?.user?.username || "Anonymous"}
                     </span>
                     <span className="flex flex-row items-center justify-center w-full px-2 py-1 bg-opacity-20 bg-black rounded-full">
-                      {renderStars(review?.rating)}
+                      {renderStars(review?.rating || 1)}
                     </span>
                   </div>
 
@@ -486,7 +534,7 @@ const UserStorePage = () => {
                       />
                     </div>
                     <span className="text-[10px] truncate opacity-70">
-                      {review.product.name}
+                      {review.product.name || "404 error"}
                     </span>
                   </div>
                 </div>
@@ -507,7 +555,7 @@ const UserStorePage = () => {
                   </summary>
                   <div className="flex flex-col gap-1 px-3">
                     <span>
-                      Total Orders: {store?.metrics?.orders?.totalOrders}
+                      Total Orders: {store?.metrics?.orders?.totalOrders || 0}
                     </span>
                   </div>
                 </details>
@@ -519,14 +567,16 @@ const UserStorePage = () => {
                   </summary>
                   <div className="flex flex-col gap-1 px-3 ">
                     <span>
-                      Total Products: {store?.metrics?.products?.totalProducts}
+                      Total Products:{" "}
+                      {store?.metrics?.products?.totalProducts || 0}
                     </span>
                     <span>
-                      Low Stock: {store?.metrics?.products?.lowStockProducts}
+                      Low Stock:{" "}
+                      {store?.metrics?.products?.lowStockProducts || 0}
                     </span>
                     <span>
                       Out of Stock:{" "}
-                      {store?.metrics?.products?.outOfStockProducts}
+                      {store?.metrics?.products?.outOfStockProducts || 0}
                     </span>
                   </div>
                 </details>
@@ -538,17 +588,20 @@ const UserStorePage = () => {
                   </summary>
                   <div className="flex flex-col gap-1 px-3">
                     <span>
-                      Total Revenue: {store?.metrics?.revenue?.totalRevenue}
+                      Total Revenue:{" "}
+                      {store?.metrics?.revenue?.totalRevenue || 0}
                     </span>
                     <span>
-                      Monthly Revenue: {store?.metrics?.revenue?.monthlyRevenue}
+                      Monthly Revenue:{" "}
+                      {store?.metrics?.revenue?.monthlyRevenue || 0}
                     </span>
                     <span>
-                      Daily Revenue: {store?.metrics?.revenue?.dailyRevenue}
+                      Daily Revenue:{" "}
+                      {store?.metrics?.revenue?.dailyRevenue || 0}
                     </span>
                     <span>
                       Avg Order Value:{" "}
-                      {store?.metrics?.revenue?.averageOrderValue}
+                      {store?.metrics?.revenue?.averageOrderValue || 0}
                     </span>
                   </div>
                 </details>
@@ -575,17 +628,13 @@ const UserStorePage = () => {
               </div>
 
               {store?.products?.map((product) => (
-                <Link
-                  to={`/product/${product._id}`}
-                  className="p-1"
-                  key={product._id}
-                >
+                <Link to={`/product/${product._id}`} key={product._id}>
                   <ProductBox
-                    name={product.name}
-                    productImage={product.productImage}
-                    price={product.price}
-                    stock={product.stock}
-                    averageStar={product.averageRating}
+                    name={product.name || "No Name"}
+                    productImage={product.productImage || []}
+                    price={product.price || 0}
+                    stock={product.stock || 0}
+                    averageStar={product.averageRating || 0}
                   />
                 </Link>
               ))}
