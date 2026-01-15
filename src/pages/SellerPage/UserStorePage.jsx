@@ -182,6 +182,12 @@ const UserStorePage = () => {
 
     return (
       <div className="hidden md:flex flex-col w-full min-h-[40vh] bg-skin-fill-2 bg-opacity-25 rounded-lg p-2">
+        <span className="text-skin-color1 text-styleh4 font-display">
+            STORE ORDERS
+        </span>        
+        <span className="flex py-2 pb-5 w-full">
+          <OrderStatusBar sellerId={store?._id} />
+        </span>
         <div className="flex justify-between items-center mb-2">
           <span className="text-skin-color1 text-styleh4 font-display">
             REVIEWS - {uniqueReviews.length}
@@ -486,7 +492,7 @@ const UserStorePage = () => {
               </div>
             </div>
 
-            <OrderStatusBar sellerId={store?._id}/>
+            <OrderStatusBar sellerId={store?._id} />
 
             {/** dispaly reviews mobile */}
 

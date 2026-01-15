@@ -3,6 +3,7 @@ import {
   createOrderAction,
   getUserOrdersAction,
   getOrdersByIdAction,
+  getSellerOrdersAction,
   getSellerOrderAction,
 } from "../actions/OrderThunks";
 
@@ -11,7 +12,7 @@ const orderSlice = createSlice({
   initialState: {
     order: {}, 
     orders: [],
-    storeOrders: {},      
+    storeOrders: [],      
     isPending: false,
     isRejected: false,
     isSuccess: false,
@@ -40,12 +41,18 @@ const orderSlice = createSlice({
         state.order = action.payload.order;
       })
 
-      
-      .addCase(getSellerOrderAction.fulfilled, (state, action) => {
+      .addCase(getSellerOrdersAction.fulfilled, (state, action) => {
         state.isPending = false;
         state.isSuccess = true;
         state.isRejected = false;
         state.storeOrders = action.payload.storeOrders;
+      })
+
+      .addCase(getSellerOrderAction.fulfilled, (state, action) => {
+        state.isPending = false;
+        state.isSuccess = true;
+        state.isRejected = false;
+        state.order = action.payload.order;
       })
 
       .addMatcher(
@@ -53,6 +60,7 @@ const orderSlice = createSlice({
           createOrderAction,
           getUserOrdersAction,
           getOrdersByIdAction,
+          getSellerOrdersAction,
           getSellerOrderAction,
         ),
         (state) => {
@@ -68,6 +76,7 @@ const orderSlice = createSlice({
           createOrderAction,
           getUserOrdersAction,
           getOrdersByIdAction,
+          getSellerOrdersAction,
           getSellerOrderAction,
         ),
         (state, action) => {

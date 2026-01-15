@@ -1,14 +1,17 @@
 import { useEffect, useMemo } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { getSellerOrderAction } from "../../../store/actions/OrderThunks";
+import { getSellerOrdersAction } from "../../../store/actions/OrderThunks";
+import { useNavigate } from "react-router-dom";
 
 const OrderStatusBar = ({ sellerId }) => {
   const { storeOrders } = useSelector((s) => s.order);
   const dispatch = useDispatch();
+  const navigate = useNavigate();
+
   console.log("storeOrder", storeOrders);
   useEffect(() => {
     if (sellerId) {
-      dispatch(getSellerOrderAction(sellerId));
+      dispatch(getSellerOrdersAction(sellerId));
     }
   }, [dispatch, sellerId]);
 
@@ -37,10 +40,12 @@ const OrderStatusBar = ({ sellerId }) => {
 }, [storeOrders]);
 
 
-  const StatusButton = ({ label, count, bordered }) => (
+  const StatusButton = ({ label, count, bordered, redirect }) => (
     <div
-      className={`text-center w-1/3 h-full flex in-center px-2 ${
-        bordered ? "border-x-2 border-skin-colorBorder2" : ""
+      onClick={() => navigate(`/store-orders/${redirect}`)}
+      className={`text-center w-1/3 h-full flex in-center px-2 overflow-hidden relative
+        hover:bg-skin-primary/15 hover:text-skin-color1 transition-all duration-500
+        ${ bordered ? "border-x-2 border-skin-colorBorder2" : ""
       }`}
     >
       {label} ({count})
@@ -48,10 +53,11 @@ const OrderStatusBar = ({ sellerId }) => {
   );
 
   return (
-    <div className="flex flex-row in-center text-stylep4 w-full h-[10vh] rounded-full bg-skin-colorContent text-skin-colorContent px-2 py-4">
-      <StatusButton label="PENDING ORDER" count={counts.pending} />
-      <StatusButton label="ORDER TO SHIP" count={counts.toShip} bordered />
-      <StatusButton label="ORDER RECEIVED" count={counts.received} />
+    <div className="flex flex-row in-center text-stylep4 w-full h-[10vh] 
+        rounded-full bg-skin-colorContent text-skin-colorContent px-2 py-4">
+      <StatusButton label="PENDING ORDER" count={counts.pending} redirect={"pending"} />
+      <StatusButton label="ORDER TO SHIP" count={counts.toShip} redirect={"shipped"} bordered />
+      <StatusButton label="ORDER RECEIVED" count={counts.received} redirect={"recieved"} />
     </div>
   );
 };

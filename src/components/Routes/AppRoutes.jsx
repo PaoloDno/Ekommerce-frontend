@@ -39,6 +39,8 @@ import { Routes, Route } from "react-router-dom";
 import ProtectedRoute from "./ProtectedRoutes.jsx";
 import AdminPage from "../../pages/AdminPage/AdminPage.jsx";
 import OrderIdPage from "../../pages/OrderPage/OrderIdPage.jsx";
+import StoreOrdersPage from "../../pages/SellerPage/StoreOrdersPage.jsx";
+import StoreOrderPage from "../../pages/SellerPage/StoreOrderPage.jsx";
 
 const AppRoutes = () => {
   return (
@@ -76,6 +78,8 @@ const AppRoutes = () => {
           </ProtectedRoute>
         }
       />
+      <Route path="/store-orders/:orderStatus" element={<StoreOrdersPage />} />
+      <Route path="/store-order/:orderId" element={<StoreOrderPage />} />
       
       {/* cart 
       // <Route path="/cart" element={<CategoriesPage />} /> */}
@@ -96,7 +100,7 @@ const AppRoutes = () => {
       <Route path="/order" element={<CreateOrdersPage />} />
       <Route path="/orderId/:orderId" element={<OrderIdPage />} />
       <Route path="/order-user" element={<UsersOrderPage />} />
-
+      
       {/* orders */}
       <Route path="/admin" element={<AdminPage />} />
       

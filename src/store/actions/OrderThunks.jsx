@@ -61,13 +61,39 @@ export const getOrdersByIdAction = createAsyncThunk(
 );
 
 
-export const getSellerOrderAction = createAsyncThunk(
-  "order/GetSellerOrderAction",
+export const getSellerOrdersAction = createAsyncThunk(
+  "order/GetSellerOrdersAction",
   async (sellerId, thunkAPI) => {
     try {
       const token = thunkAPI.getState().auth.token;
       console.log("SELLERID", sellerId)
       const response = await api.get(`/order/store/${sellerId}`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      console.log("data", response.data);
+      return response.data;
+    } catch (error) {
+      console.log(error);
+      return thunkAPI.rejectWithValue(error.response?.data.message);
+    }
+  }
+)
+
+/**
+ * theres some different name for controllers its bevause i cannot code everything in a day yet
+ * or have a reference
+ * i just make tstuff rn and what is missing I ADD.
+ */
+
+export const getSellerOrderAction = createAsyncThunk(
+  "order/GetSellerOrderAction",
+  async (orderId, thunkAPI) => {
+    try {
+    const token = thunkAPI.getState().auth.token;
+      console.log("OrderID", orderId)
+      const response = await api.get(`/order/store-order/${orderId}`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
