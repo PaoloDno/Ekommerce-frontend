@@ -32,31 +32,50 @@ const UserStorePage = () => {
   const navigate = useNavigate();
   const { token, isPending } = useSelector((s) => s.auth);
 
-  const [store, setStore] = useState({
-    products: [],
-    address: {},
-    reviews: { top3: [], low3: [] },
-    metrics: {
-      orders: { totalOrders: 0 },
-      products: {
-        totalProducts: 0,
-        lowStockProducts: 0,
-        outOfStockProducts: 0,
-      },
-      revenue: {
-        totalRevenue: 0,
-        monthlyRevenue: 0,
-        dailyRevenue: 0,
-        averageOrderValue: 0,
-      },
-    },
-    sellerBanner: "",
-    sellerLogo: "",
-    ratings: { average: 0, totalReviews: 0 },
-  });
+  const [store, setStore] = useState({});
+
+  const sellerId = store?._id || null;
 
   const [isLoading, setIsLoading] = useState(true);
   const isMounted = useRef(true);
+
+    const renderStars = (input) => {
+    const stars = [];
+    const roundedRating = Math.floor(input);
+    for (let i = 1; i <= 5; i++) {
+      stars.push(
+        i <= roundedRating ? (
+          <FaStar
+            key={i}
+            className="text-yellow-400 bg-skin-cart bg-opacity-10"
+          />
+        ) : (
+          <FaRegStar
+            key={i}
+            className="text-gray-400 bg-skin-cart bg-opacity-10"
+          />
+        )
+      );
+    }
+    return stars;
+  };
+
+  const allReviews = useMemo(() => {
+    if (!store?.reviews) return [];
+
+    const low3 = Array.isArray(store.reviews.low3) ? store.reviews.low3 : [];
+    const top3 = Array.isArray(store.reviews.top3) ? store.reviews.top3 : [];
+
+    const merged = [...low3, ...top3].filter(
+      (r) => r && r._id && r.product && r.product._id
+    );
+
+    // de-duplicate by review id
+    return Array.from(new Map(merged.map((r) => [r._id, r])).values());
+  }, [store]);
+
+
+  
 
   const fetchStore = useCallback(async () => {
     if (!token) return;
@@ -69,6 +88,7 @@ const UserStorePage = () => {
           navigate("/create-store");
           return;
         }
+        console.log("payload", resultAction.payload);
         setStore(resultAction.payload.data);
       }
     } catch (error) {
@@ -95,8 +115,8 @@ const UserStorePage = () => {
 
   if (!token) {
     return (
-      <div className="page-section">
-        <div className="page-body">
+      <div className="hidden md:flex flex-col w-full bg-skin-fill-2 min-h-[40vh] bg-opacity-25 rounded-lg px-2">
+        <div className="flex justify-between items-center mb-2">
           <p className="text-white text-stylep2 p-4">
             Please login to continue
           </p>
@@ -119,26 +139,9 @@ const UserStorePage = () => {
     );
   }
 
-  const renderStars = (input) => {
-    const stars = [];
-    const roundedRating = Math.floor(input);
-    for (let i = 1; i <= 5; i++) {
-      stars.push(
-        i <= roundedRating ? (
-          <FaStar
-            key={i}
-            className="text-yellow-400 bg-skin-cart bg-opacity-10"
-          />
-        ) : (
-          <FaRegStar
-            key={i}
-            className="text-gray-400 bg-skin-cart bg-opacity-10"
-          />
-        )
-      );
-    }
-    return stars;
-  };
+
+
+   
 
   const ProductBox = ({ name, productImage, price, stock, averageStar }) => {
     return (
@@ -164,6 +167,9 @@ const UserStorePage = () => {
     );
   };
 
+  
+
+
   // Desktop Review Pagination
   const ReviewPaginationDesktop = ({ reviews }) => {
     const [reviewPage, setReviewPage] = useState(0);
@@ -183,10 +189,10 @@ const UserStorePage = () => {
     return (
       <div className="hidden md:flex flex-col w-full min-h-[40vh] bg-skin-fill-2 bg-opacity-25 rounded-lg p-2">
         <span className="text-skin-color1 text-styleh4 font-display">
-            STORE ORDERS
-        </span>        
+          STORE ORDERS
+        </span>
         <span className="flex py-2 pb-5 w-full">
-          <OrderStatusBar sellerId={store?._id} />
+          {sellerId && <OrderStatusBar sellerId={sellerId} />}
         </span>
         <div className="flex justify-between items-center mb-2">
           <span className="text-skin-color1 text-styleh4 font-display">
@@ -350,7 +356,7 @@ const UserStorePage = () => {
                 reviews - {store?.ratings?.totalReviews || 0}
               </span>
               <span className="flex text-styleh2 w-full in-center items-baseline justify-center">
-                {store?.ratings.average}
+                {store?.ratings?.average}
               </span>
               <span className="flex flex-row items-center mx-auto w-fit px-2 py-1 bg-opacity-60 bg-black rounded-full in-center">
                 {renderStars(store?.ratings?.average || 1)}
@@ -449,8 +455,9 @@ const UserStorePage = () => {
           items-start justify-start bg-skin-primary space-y-1"
           >
             <ReviewPaginationDesktop
-              reviews={[...store?.reviews?.low3, ...store?.reviews?.top3] || []}
+              reviews={[...allReviews]}
             />
+
             <ProductPaginationDesktop
               products={store.products || []}
               storeId={store?._id}
@@ -492,7 +499,7 @@ const UserStorePage = () => {
               </div>
             </div>
 
-            <OrderStatusBar sellerId={store?._id} />
+            {sellerId && <OrderStatusBar sellerId={sellerId} />}
 
             {/** dispaly reviews mobile */}
 

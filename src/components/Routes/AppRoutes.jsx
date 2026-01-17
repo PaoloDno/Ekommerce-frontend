@@ -79,7 +79,7 @@ const AppRoutes = () => {
         }
       />
       <Route path="/store-orders/:orderStatus" element={<StoreOrdersPage />} />
-      <Route path="/store-order/:orderId" element={<StoreOrderPage />} />
+      <Route path="/store-order/:itemId" element={<StoreOrderPage />} />
       
       {/* cart 
       // <Route path="/cart" element={<CategoriesPage />} /> */}

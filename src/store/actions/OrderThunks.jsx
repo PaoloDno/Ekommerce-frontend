@@ -67,19 +67,33 @@ export const getSellerOrdersAction = createAsyncThunk(
     try {
       const token = thunkAPI.getState().auth.token;
       console.log("SELLERID", sellerId)
-      const response = await api.get(`/order/store/${sellerId}`, {
+      const response = await api.get(`/order/seller/${sellerId}`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
       });
-      console.log("data", response.data);
+      console.log("data-seller-orfders", response.data);
       return response.data;
     } catch (error) {
       console.log(error);
       return thunkAPI.rejectWithValue(error.response?.data.message);
     }
+  },{
+    condition: (_, { getState }) => {
+      const { lastStoreOrderFetchedAt } = getState().order;
+
+      // ⛔ block if fetched within last 1 minutes
+      if (
+        lastStoreOrderFetchedAt &&
+        Date.now() - lastStoreOrderFetchedAt < 5000
+      ) {
+        return false; // thunk will NOT run
+      }
+
+      return true;
+    },
   }
-)
+);
 
 /**
  * theres some different name for controllers its bevause i cannot code everything in a day yet
@@ -92,17 +106,46 @@ export const getSellerOrderAction = createAsyncThunk(
   async (orderId, thunkAPI) => {
     try {
     const token = thunkAPI.getState().auth.token;
-      console.log("OrderID", orderId)
-      const response = await api.get(`/order/store-order/${orderId}`, {
+      console.log("OrderID", orderId);
+      const response = await api.get(`/order/store-order-item/${orderId}`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
       });
       console.log("data", response.data);
+      console.log("call");
       return response.data;
     } catch (error) {
       console.log(error);
       return thunkAPI.rejectWithValue(error.response?.data.message);
     }
   }
-)
+);
+
+export const getStoreOrderItemByIdAction = createAsyncThunk(
+  "order/GetStoreOrderItemByIdAction",
+  async (itemId, thunkAPI) => {
+    try {
+      const token = thunkAPI.getState().auth.token;
+      const cachedItem = thunkAPI.getState().order.item;
+
+      console.log("ItemID", itemId);
+      console.log("cached item", cachedItem);
+
+      if (cachedItem && cachedItem._id === itemId) {
+        return { success: true, item: cachedItem };
+      }
+
+      const response = await api.get(`/order/store-order-item/${itemId}`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      console.log("data-item-by-id", response.data);
+
+      return response.data;
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error.response?.data.message);
+    }
+  }
+);

@@ -5,6 +5,7 @@ import {
   getOrdersByIdAction,
   getSellerOrdersAction,
   getSellerOrderAction,
+  getStoreOrderItemByIdAction,
 } from "../actions/OrderThunks";
 
 const orderSlice = createSlice({
@@ -12,7 +13,9 @@ const orderSlice = createSlice({
   initialState: {
     order: {}, 
     orders: [],
-    storeOrders: [],      
+    storeOrders: [],   
+    item: {},   
+    lastStoreOrderFetchedAt: null,
     isPending: false,
     isRejected: false,
     isSuccess: false,
@@ -46,6 +49,7 @@ const orderSlice = createSlice({
         state.isSuccess = true;
         state.isRejected = false;
         state.storeOrders = action.payload.storeOrders;
+        state.lastStoreOrderFetchedAt = Date.now();
       })
 
       .addCase(getSellerOrderAction.fulfilled, (state, action) => {
@@ -55,6 +59,16 @@ const orderSlice = createSlice({
         state.order = action.payload.order;
       })
 
+      .addCase(getStoreOrderItemByIdAction.fulfilled, (state, action) => {
+        state.isPending = false;
+        state.isSuccess = true;
+        state.isRejected = false;
+        console.log("FULL PAYLOAD", action.payload);
+console.log("ITEM", action.payload.item);
+
+        state.item = action.payload.item;
+      })
+
       .addMatcher(
         isPending(
           createOrderAction,
@@ -62,6 +76,7 @@ const orderSlice = createSlice({
           getOrdersByIdAction,
           getSellerOrdersAction,
           getSellerOrderAction,
+          getStoreOrderItemByIdAction,
         ),
         (state) => {
           state.isPending = true;
@@ -78,6 +93,7 @@ const orderSlice = createSlice({
           getOrdersByIdAction,
           getSellerOrdersAction,
           getSellerOrderAction,
+          getStoreOrderItemByIdAction,
         ),
         (state, action) => {
           state.isPending = false;

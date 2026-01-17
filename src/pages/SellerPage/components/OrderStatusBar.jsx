@@ -8,12 +8,12 @@ const OrderStatusBar = ({ sellerId }) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  console.log("storeOrder", storeOrders);
-  useEffect(() => {
+  console.log("store-Id", sellerId);
+    useEffect(() => {
     if (sellerId) {
       dispatch(getSellerOrdersAction(sellerId));
     }
-  }, [dispatch, sellerId]);
+  }, [dispatch, sellerId]); 
 
   const counts = useMemo(() => {
   if (!Array.isArray(storeOrders) || storeOrders.length === 0) {
@@ -25,16 +25,14 @@ const OrderStatusBar = ({ sellerId }) => {
   let received = 0;
 
   storeOrders.forEach((order) => {
-    order.items.forEach((item) => {
-      if (["pending", "processing"].includes(item.productShippingStatus)) {
+      if (["pending", "processing"].includes(order.status)) {
         pending++;
-      } else if (item.productShippingStatus === "shipped") {
+      } else if (order.status === "shipped") {
         toShip++;
-      } else if (item.productShippingStatus === "delivered") {
+      } else if (order.status === "delivered") {
         received++;
       }
     });
-  });
 
   return { pending, toShip, received };
 }, [storeOrders]);
