@@ -1,20 +1,21 @@
 import { createSlice, isPending, isRejected } from "@reduxjs/toolkit";
 import {
   createOrderAction,
-  getUserOrdersAction,
-  getOrdersByIdAction,
   getSellerOrdersAction,
-  getSellerOrderAction,
-  getStoreOrderItemByIdAction,
+  getSellerOrderByIdAction,
+  patchSellerAcceptItemOrderAction,
+  patchSellerAcceptOrderAction,
+  patchShipItemAction,
+  patchShipOrderAction,
 } from "../actions/OrderThunks";
 
 const orderSlice = createSlice({
   name: "order",
   initialState: {
-    order: {}, 
+    order: {},
     orders: [],
-    storeOrders: [],   
-    item: {},   
+    storeOrders: [],
+    item: {},
     lastStoreOrderFetchedAt: null,
     isPending: false,
     isRejected: false,
@@ -22,28 +23,21 @@ const orderSlice = createSlice({
     error: null,
   },
   reducers: {},
-  extraReducers: (builders) => {
-    builders
+  extraReducers: (builder) => {
+    builder
+      // --------------------
+      // Create Order
+      // --------------------
       .addCase(createOrderAction.fulfilled, (state, action) => {
         state.isPending = false;
         state.isSuccess = true;
         state.isRejected = false;
         state.order = action.payload.order;
       })
-      .addCase(getUserOrdersAction.fulfilled, (state, action) => {
-        state.isPending = false;
-        state.isSuccess = true;
-        state.isRejected = false;
-        state.orders = action.payload.orders;
-      })
 
-      .addCase(getOrdersByIdAction.fulfilled, (state, action) => {
-        state.isPending = false;
-        state.isSuccess = true;
-        state.isRejected = false;
-        state.order = action.payload.order;
-      })
-
+      // --------------------
+      // Seller Orders
+      // --------------------
       .addCase(getSellerOrdersAction.fulfilled, (state, action) => {
         state.isPending = false;
         state.isSuccess = true;
@@ -52,31 +46,59 @@ const orderSlice = createSlice({
         state.lastStoreOrderFetchedAt = Date.now();
       })
 
-      .addCase(getSellerOrderAction.fulfilled, (state, action) => {
+      .addCase(getSellerOrderByIdAction.fulfilled, (state, action) => {
         state.isPending = false;
         state.isSuccess = true;
         state.isRejected = false;
         state.order = action.payload.order;
       })
 
-      .addCase(getStoreOrderItemByIdAction.fulfilled, (state, action) => {
+      // --------------------
+      // Accept (item / all)
+      // --------------------
+      .addCase(patchSellerAcceptItemOrderAction.fulfilled, (state, action) => {
         state.isPending = false;
         state.isSuccess = true;
         state.isRejected = false;
-        console.log("FULL PAYLOAD", action.payload);
-console.log("ITEM", action.payload.item);
-
-        state.item = action.payload.item;
+        state.order = action.payload.order;
       })
 
+      .addCase(patchSellerAcceptOrderAction.fulfilled, (state, action) => {
+        state.isPending = false;
+        state.isSuccess = true;
+        state.isRejected = false;
+        state.order = action.payload.order;
+      })
+
+      // --------------------
+      // Ship (item / all)
+      // --------------------
+      .addCase(patchShipItemAction.fulfilled, (state, action) => {
+        state.isPending = false;
+        state.isSuccess = true;
+        state.isRejected = false;
+        state.order = action.payload.order;
+      })
+
+      .addCase(patchShipOrderAction.fulfilled, (state, action) => {
+        state.isPending = false;
+        state.isSuccess = true;
+        state.isRejected = false;
+        state.order = action.payload.order;
+      })
+
+      // --------------------
+      // Pending matcher
+      // --------------------
       .addMatcher(
         isPending(
           createOrderAction,
-          getUserOrdersAction,
-          getOrdersByIdAction,
           getSellerOrdersAction,
-          getSellerOrderAction,
-          getStoreOrderItemByIdAction,
+          getSellerOrderByIdAction,
+          patchSellerAcceptItemOrderAction,
+          patchSellerAcceptOrderAction,
+          patchShipItemAction,
+          patchShipOrderAction
         ),
         (state) => {
           state.isPending = true;
@@ -86,14 +108,18 @@ console.log("ITEM", action.payload.item);
         }
       )
 
+      // --------------------
+      // Rejected matcher
+      // --------------------
       .addMatcher(
         isRejected(
           createOrderAction,
-          getUserOrdersAction,
-          getOrdersByIdAction,
           getSellerOrdersAction,
-          getSellerOrderAction,
-          getStoreOrderItemByIdAction,
+          getSellerOrderByIdAction,
+          patchSellerAcceptItemOrderAction,
+          patchSellerAcceptOrderAction,
+          patchShipItemAction,
+          patchShipOrderAction
         ),
         (state, action) => {
           state.isPending = false;

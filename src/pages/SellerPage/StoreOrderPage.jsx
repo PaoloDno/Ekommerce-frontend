@@ -1,24 +1,18 @@
 import { useCallback, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useParams } from "react-router-dom";
-import { getStoreOrderItemByIdAction } from "../../store/actions/OrderThunks";
+import { useNavigate, useParams } from "react-router-dom";
 import ProductImages from "../../components/ImagesComponent/components/ProductImageComponent";
 import { FaEnvelope } from "react-icons/fa";
 
 const StoreOrderItemPage = () => {
   const { itemId } = useParams();
   const dispatch = useDispatch();
-
+  const navigate = useNavigate();
   const item = useSelector((s) => s.order.item);
 
-  const fetchStoreOrder = useCallback(() => {
-    if (!itemId) return;
-    dispatch(getStoreOrderItemByIdAction(itemId));
-  }, [dispatch, itemId]);
-
-  useEffect(() => {
-    fetchStoreOrder();
-  }, [fetchStoreOrder]);
+  if(!item) {
+    navigate(user)
+  }
 
   useEffect(() => {
     if (item?._id) {

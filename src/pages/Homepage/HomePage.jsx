@@ -13,7 +13,7 @@ import { FaBoxArchive, FaPencil } from "react-icons/fa6";
 import UserHomePageSectionComponent from "./components/UserHomePageSectionComponent";
 import StoreHomepageSectionComponent from "./components/StoreHomePageSectionComponent";
 import CartHomePageSectionComponent from "./components/CartHomePageSectionComponent";
-import { getUserOrdersAction } from "../../store/actions/OrderThunks";
+//import { getUserOrdersAction } from "../../store/actions/OrderThunks";
 import OrderHomePageSectionComponent from "./components/OrderHomePageSectionComponent";
 
 const HomePage = () => {
@@ -48,7 +48,7 @@ const HomePage = () => {
     });
 
     dispatch(getCartAction());
-    dispatch(getUserOrdersAction());
+    // dispatch(getUserOrdersAction());
     dispatch(getUserNotificationsAction());
     console.log("profile", profile);
   }, [dispatch, token]);

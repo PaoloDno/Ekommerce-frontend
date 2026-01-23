@@ -1,25 +1,16 @@
 import { useCallback, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
-import { getStoreOrderItemByIdAction } from "../../store/actions/OrderThunks";
 import ProductImages from "../../components/ImagesComponent/components/ProductImageComponent";
 import { FaEnvelope } from "react-icons/fa";
 
 const StoreOrderItemPage = () => {
   const { itemId } = useParams();
-  const dispatch = useDispatch();
+  
 
   const item = useSelector((s) => s.order.item);
 
-  const fetchStoreOrder = useCallback(() => {
-    if (!itemId) return;
-    dispatch(getStoreOrderItemByIdAction(itemId));
-  }, [dispatch, itemId]);
-
-  useEffect(() => {
-    fetchStoreOrder();
-  }, [fetchStoreOrder]);
-
+  
   useEffect(() => {
     if (item?._id) {
       console.log("Loaded order item:", item);
@@ -32,7 +23,7 @@ const StoreOrderItemPage = () => {
 
   return (
     <div className="page-body-background in-center">
-      <div className="page-body-section in-center relative">
+      <div className="page-body-section in-center relative text-skin-color1">
         <div className="flex flex-col w-full min-h-[80vh] px-2 in-center">
           <div className="absolute inset-0 bg-white/10 blur-lg" />
           <div className="absolute inset-0 bg-skin-colorContent/5 blur-lg" />

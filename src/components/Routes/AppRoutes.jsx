@@ -78,7 +78,7 @@ const AppRoutes = () => {
           </ProtectedRoute>
         }
       />
-      <Route path="/store-orders/:orderStatus" element={<StoreOrdersPage />} />
+      <Route path="/store-orders/:status" element={<StoreOrdersPage />} />
       <Route path="/store-order/:itemId" element={<StoreOrderPage />} />
       
       {/* cart 

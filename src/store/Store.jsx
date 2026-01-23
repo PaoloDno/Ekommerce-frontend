@@ -37,6 +37,7 @@ const saveState = (state) => {
       theme: state.theme,
       product: cleanSlice(state.product),
       seller: cleanSlice(state.seller),
+      order: cleanSlice(state.order),
     };
 
     localStorage.setItem("app_state", JSON.stringify(partialState));

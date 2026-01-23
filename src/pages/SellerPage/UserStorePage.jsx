@@ -39,7 +39,7 @@ const UserStorePage = () => {
   const [isLoading, setIsLoading] = useState(true);
   const isMounted = useRef(true);
 
-    const renderStars = (input) => {
+  const renderStars = (input) => {
     const stars = [];
     const roundedRating = Math.floor(input);
     for (let i = 1; i <= 5; i++) {
@@ -54,7 +54,7 @@ const UserStorePage = () => {
             key={i}
             className="text-gray-400 bg-skin-cart bg-opacity-10"
           />
-        )
+        ),
       );
     }
     return stars;
@@ -67,51 +67,41 @@ const UserStorePage = () => {
     const top3 = Array.isArray(store.reviews.top3) ? store.reviews.top3 : [];
 
     const merged = [...low3, ...top3].filter(
-      (r) => r && r._id && r.product && r.product._id
+      (r) => r && r._id && r.product && r.product._id,
     );
 
     // de-duplicate by review id
     return Array.from(new Map(merged.map((r) => [r._id, r])).values());
   }, [store]);
 
-
-  
-
-  const fetchStore = useCallback(async () => {
-    if (!token) return;
-    setIsLoading(true);
-
-    try {
-      const resultAction = await dispatch(getUserStoreAction());
-      if (getUserStoreAction.fulfilled.match(resultAction)) {
-        if (resultAction.payload.hasStore === false) {
-          navigate("/create-store");
-          return;
-        }
-        console.log("payload", resultAction.payload);
-        setStore(resultAction.payload.data);
-      }
-    } catch (error) {
-      console.error(error);
-    } finally {
-      if (isMounted.current) setIsLoading(false);
-      console.log("STORE set: ", store);
-      console.log("storeId: ", store?._id);
-    }
-  }, [dispatch, token]);
-
   useEffect(() => {
-    isMounted.current = true;
-    if (token) {
-      fetchStore();
-    } else {
-      setIsLoading(false);
-    }
+    if (!token) return;
 
-    return () => {
-      isMounted.current = false;
+    let mounted = true;
+
+    const load = async () => {
+      setIsLoading(true);
+      try {
+        const resultAction = await dispatch(getUserStoreAction());
+        if (getUserStoreAction.fulfilled.match(resultAction)) {
+          if (resultAction.payload.hasStore === false) {
+            navigate("/create-store");
+            return;
+          }
+          if (mounted) setStore(resultAction.payload.data);
+        }
+      } catch (err) {
+        console.error(err);
+      } finally {
+        if (mounted) setIsLoading(false);
+      }
     };
-  }, [fetchStore, token]);
+
+    load();
+    return () => {
+      mounted = false;
+    };
+  }, [dispatch, token, navigate]);
 
   if (!token) {
     return (
@@ -139,10 +129,6 @@ const UserStorePage = () => {
     );
   }
 
-
-
-   
-
   const ProductBox = ({ name, productImage, price, stock, averageStar }) => {
     return (
       <div
@@ -167,9 +153,6 @@ const UserStorePage = () => {
     );
   };
 
-  
-
-
   // Desktop Review Pagination
   const ReviewPaginationDesktop = ({ reviews }) => {
     const [reviewPage, setReviewPage] = useState(0);
@@ -183,17 +166,11 @@ const UserStorePage = () => {
 
     const pagedReviews = uniqueReviews.slice(
       reviewPage * REVIEWS_PER_PAGE,
-      reviewPage * REVIEWS_PER_PAGE + REVIEWS_PER_PAGE
+      reviewPage * REVIEWS_PER_PAGE + REVIEWS_PER_PAGE,
     );
 
     return (
       <div className="hidden md:flex flex-col w-full min-h-[40vh] bg-skin-fill-2 bg-opacity-25 rounded-lg p-2">
-        <span className="text-skin-color1 text-styleh4 font-display">
-          STORE ORDERS
-        </span>
-        <span className="flex py-2 pb-5 w-full">
-          {sellerId && <OrderStatusBar sellerId={sellerId} />}
-        </span>
         <div className="flex justify-between items-center mb-2">
           <span className="text-skin-color1 text-styleh4 font-display">
             REVIEWS - {uniqueReviews.length}
@@ -260,7 +237,7 @@ const UserStorePage = () => {
     const totalPages = Math.ceil((products?.length || 0) / PRODUCTS_PER_PAGE);
     const pagedProducts = products.slice(
       productPage * PRODUCTS_PER_PAGE,
-      productPage * PRODUCTS_PER_PAGE + PRODUCTS_PER_PAGE
+      productPage * PRODUCTS_PER_PAGE + PRODUCTS_PER_PAGE,
     );
 
     return (
@@ -345,7 +322,7 @@ const UserStorePage = () => {
         <div className="flex flex-row w-full min-h-[85vh] items-start justify-start gap-2 z-10 px-1 bg-skin-fill-2">
           {/** DESKTOP sidebar */}
           <div
-            className="hidden md:flex flex-col rounded-lg p-3 w-1/3 h-[82vh] min-h-[82vh]
+            className="hidden md:flex flex-col rounded-lg p-3 w-1/3 min-h-[82vh]
           items-start justify-start bg-skin-primary text-skin-color1 relative overflow-hidden"
           >
             <div className="absolute flex w-full h-full blur-xl bg-white/5 z-10" />
@@ -398,6 +375,20 @@ const UserStorePage = () => {
                     <div className="flex flex-col gap-1 px-3">
                       <span>
                         Total Orders: {store?.metrics?.orders?.totalOrders}
+                      </span>
+                      <span>
+                        Pending Orders: {store?.metrics?.orders?.ordersPending}
+                      </span>
+                      <span>
+                        Processing Orders:{" "}
+                        {store?.metrics?.orders?.ordersProcessing}
+                      </span>
+                      <span>
+                        ToShip Orders: {store?.metrics?.orders?.ordersToShip}
+                      </span>
+                      <span>
+                        Completed Orders:{" "}
+                        {store?.metrics?.orders?.totalDelivered}
                       </span>
                     </div>
                   </div>
@@ -454,9 +445,14 @@ const UserStorePage = () => {
             className="md:flex md:flex-col hidden rounded-lg w-full h-full p-2 min-h-[82vh]
           items-start justify-start bg-skin-primary space-y-1"
           >
-            <ReviewPaginationDesktop
-              reviews={[...allReviews]}
-            />
+            <span className="text-skin-color1 text-styleh4 font-display">
+              STORE ORDERS
+            </span>
+            <span className="flex py-2 pb-5 w-full">
+              {sellerId && <OrderStatusBar sellerId={sellerId} />}
+            </span>
+
+            <ReviewPaginationDesktop reviews={[...allReviews]} />
 
             <ProductPaginationDesktop
               products={store.products || []}
@@ -499,8 +495,6 @@ const UserStorePage = () => {
               </div>
             </div>
 
-            {sellerId && <OrderStatusBar sellerId={sellerId} />}
-
             {/** dispaly reviews mobile */}
 
             <span className="text-skin-color1 text-styleh4 font-display">
@@ -516,8 +510,8 @@ const UserStorePage = () => {
                   [
                     ...(store?.reviews?.low3 || []),
                     ...(store?.reviews?.top3 || []),
-                  ].map((r) => [r._id, r])
-                ).values()
+                  ].map((r) => [r._id, r]),
+                ).values(),
               ).map((review) => (
                 <div
                   key={review._id}
@@ -554,6 +548,13 @@ const UserStorePage = () => {
               ))}
             </div>
 
+            <span className="text-skin-color1 text-styleh4 font-display">
+              STORE ORDERS
+            </span>
+            <span className="flex py-2 pb-5 w-full">
+              {sellerId && <OrderStatusBar sellerId={sellerId} />}
+            </span>
+
             {/* store metrics accordion */}
             <div className="flex flex-col md:hidden min-h-[25vh] w-full bg-skin-fill-2 bg-opacity-40 p-2 text-stylep4">
               <span className="text-skin-color1 text-styleh4 font-display">
@@ -568,7 +569,21 @@ const UserStorePage = () => {
                   </summary>
                   <div className="flex flex-col gap-1 px-3">
                     <span>
-                      Total Orders: {store?.metrics?.orders?.totalOrders || 0}
+                      Total Orders: {store?.metrics?.orders?.totalOrders}
+                    </span>
+                    <span>
+                      Pending Orders: {store?.metrics?.orders?.ordersPending}
+                    </span>
+                    <span>
+                      Processing Orders:{" "}
+                      {store?.metrics?.orders?.ordersProcessing}
+                    </span>
+                    <span>
+                      ToShip Orders: {store?.metrics?.orders?.ordersToShip}
+                    </span>
+                    <span>
+                      Completed Orders:{" "}
+                      {store?.metrics?.orders?.ordersDelivered}
                     </span>
                   </div>
                 </details>

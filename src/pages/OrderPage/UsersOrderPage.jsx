@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { getUserOrdersAction } from "../../store/actions/OrderThunks";
+//import { getUserOrdersAction } from "../../store/actions/OrderThunks";
 import { FaCheck, FaClock, FaProcedures, FaTimes, FaTruck } from "react-icons/fa";
 import { FaXmark } from "react-icons/fa6";
 import { useNavigate } from "react-router-dom";
@@ -14,7 +14,9 @@ const UsersOrderPage = () => {
   const [statusCount, setStatusCount] = useState({});
   const [activeStatus, setActiveStatus] = useState("all");
 
-  const fetchOrders = useCallback(async () => {
+  /**
+   * {
+    const fetchOrders = useCallback(async () => {
     try {
       const resultAction = await dispatch(getUserOrdersAction());
 
@@ -33,6 +35,8 @@ const UsersOrderPage = () => {
   useEffect(() => {
     if (token) fetchOrders();
   }, [fetchOrders, token]);
+  
+  **/
 
   const OrderCard = ({ order }) => (
     <div onClick={() => navigate(`/orderId/${order._id}`)} 
