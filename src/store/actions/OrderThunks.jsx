@@ -135,8 +135,8 @@ export const patchShipItemAction = createAsyncThunk(
       const { orderId, itemId } = putParameters;
       const token = thunkAPI.getState().auth.token;
       const response = await api.put(
-        `/order/seller/${orderId}/accept-item/${itemId}`,
-        { optional: "placeholder" },
+        `/order/seller/${orderId}/ship-item/${itemId}`,
+        { courierId: "12345123API" }, // future
         {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -174,71 +174,153 @@ export const patchShipOrderAction = createAsyncThunk(
   },
 );
 
-/** 
-export const getUserOrdersAction = createAsyncThunk(
-  "order/GetUserOrdersAction",
+
+export const patchSellerCancelItemAction = createAsyncThunk(
+  "order/PatchSellerCancelItemAction",
+  async (putParamaeters, thunkAPI) => {
+    try {
+      const { orderId, itemId, sellerId } = putParamaeters;
+      const token = thunkAPI.getState().auth.token;
+      const response = await api.put(
+        `/order/seller/${sellerId}/order/${orderId}/cancel-item/${itemId}/`,
+        { optional: "placeholder" },
+        {
+          headers: { Authorization: `Bearer ${token}` },
+        },
+      );
+      console.log("response: ", response.data);
+      return response.data;
+    } catch (error) {
+      console.log(error);
+      return thunkAPI.rejectWithValue(error.response?.data.message);
+    }
+  },
+);
+
+export const patchSellerHandleRefundAction = createAsyncThunk(
+  "order/PatchSellerHandleRefundAction",
+  async (putParamaeters, thunkAPI) => {
+    try {
+      const { orderId, itemId, sellerId, action } = putParamaeters;
+      const token = thunkAPI.getState().auth.token;
+      const response = await api.put(
+        `/order/seller/${sellerId}/order/${orderId}/handle-refund/${itemId}/`,
+        { action },
+        {
+          headers: { Authorization: `Bearer ${token}` },
+        },
+      );
+      console.log("response: ", response.data);
+      return response.data;
+    } catch (error) {
+      console.log(error);
+      return thunkAPI.rejectWithValue(error.response?.data.message);
+    }
+  },
+);
+
+
+// USER ORDERS
+
+export const fetchUserOrdersAction = createAsyncThunk(
+  "order/FetchUserOrdersAction",
   async (_, thunkAPI) => {
     try {
       const token = thunkAPI.getState().auth.token;
-      const response = await api.get(`/order/users-orders`, {
-        headers: {
-          Authorization: `Bearer ${token}`,
+      const response = await api.get(
+        `/order/user-order/`,
+        {
+          headers: { Authorization: `Bearer ${token}` },
         },
-      });
-      console.log("data orders", response.data);
+      );
+      console.log("response: ", response.data);
       return response.data;
     } catch (error) {
       console.log(error);
       return thunkAPI.rejectWithValue(error.response?.data.message);
     }
-  }
+  },
 );
 
-export const getOrdersByIdAction = createAsyncThunk(
-  "order/GetOrdersByIdAction",
-  async (ordersId, thunkAPI) => {
+
+export const cancelUserOrdersAction = createAsyncThunk(
+  "order/CancelUserOrdersAction",
+  async (orderId, thunkAPI) => {
     try {
       const token = thunkAPI.getState().auth.token;
-      const response = await api.get(`/order/${ordersId}`, {
-        headers: {
-          Authorization: `Bearer ${token}`,
+      const response = await api.put(
+        `/order/user-cancel/${orderId}`,
+        {
+          headers: { Authorization: `Bearer ${token}` },
         },
-      });
-      console.log("data", response.data);
+      );
+      console.log("response: ", response.data);
       return response.data;
     } catch (error) {
       console.log(error);
       return thunkAPI.rejectWithValue(error.response?.data.message);
     }
-  }
+  },
 );
 
 
-export const getStoreOrderItemByIdAction = createAsyncThunk(
-  "order/GetStoreOrderItemByIdAction",
+export const requstRefundUserOrderAction = createAsyncThunk(
+  "order/RequstRefundUserOrderAction",
   async (itemId, thunkAPI) => {
     try {
       const token = thunkAPI.getState().auth.token;
-      const cachedItem = thunkAPI.getState().order.item;
-
-      console.log("ItemID", itemId);
-      console.log("cached item", cachedItem);
-
-      if (cachedItem && cachedItem._id === itemId) {
-        return { success: true, item: cachedItem };
-      }
-
-      const response = await api.get(`/order/store-order-item/${itemId}`, {
-        headers: {
-          Authorization: `Bearer ${token}`,
+      const response = await api.put(
+        `/order/user-refund/${itemId}`,
+        {
+          headers: { Authorization: `Bearer ${token}` },
         },
-      });
-      console.log("data-item-by-id", response.data);
-
+      );
+      console.log("response: ", response.data);
       return response.data;
     } catch (error) {
+      console.log(error);
       return thunkAPI.rejectWithValue(error.response?.data.message);
+    }
+  },
+);
+
+// ------
+// View
+// -----
+
+export const getOrderByIdAction = createAsyncThunk(
+  "order/GetOrderByIdAction",
+  async (orderId, thunkAPI) => {
+    try {
+      const token = thunkAPI.getState().auth.token;
+      const response = await api.get(
+        `/order/${orderId}`, {
+         headers: { Authorization: `Bearer ${token}` },
+        },
+      );
+      console.log("response: ", response.data);
+      return response.data;
+    } catch (error) {
+      next(error);
     }
   }
 );
-*/
+
+
+export const getItemByIdAction = createAsyncThunk(
+  "order/GetItemByIdAction",
+  async (itemId, thunkAPI) => {
+    try {
+      const token = thunkAPI.getState().auth.token;
+      const response = await api.get(
+        `/order/item/${itemId}`, {
+         headers: { Authorization: `Bearer ${token}` },
+        },
+      );
+      console.log("response: ", response.data);
+      return response.data;
+    } catch (error) {
+      next(error);
+    }
+  }
+);

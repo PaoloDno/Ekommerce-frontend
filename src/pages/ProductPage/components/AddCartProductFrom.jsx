@@ -80,7 +80,7 @@ const handleInput = (e) => {
             <div className="flex flex-col text-stylep4">
               <p className="font-semibold">{name}</p>
               <p className="opacity-90 line-clamp-2">{description}</p>
-              <p className="opacity-90">₱ {price}</p>
+              <p className="opacity-90">₱ {price * quantity} - {"("}₱ {price}/item{")"}</p>
               <p className="opacity-90">Stock: {stock}</p>
             </div>
           </div>
@@ -92,7 +92,7 @@ const handleInput = (e) => {
                 type="number"
                 value={quantity}
                 onChange={handleInput}
-                className="w-[90px] text-center border rounded py-1 bg-skin-fill-4 text-skin-colorHigh"
+                className="w-[90px] text-center border rounded py-1 bg-skin-fill-4 text-skin-colorHigh in-center"
               />
               <button type="button" onClick={() => changeQty(1)} className="bg-skin-buttonColor-1 text-skin-color1 in-center w-[20px] h-[20px] p-2 box-content">+</button>
             </div>
@@ -103,10 +103,10 @@ const handleInput = (e) => {
           </form>
 
           <div className="flex flex-row in-center text-stylep3 w-full gap-2">
-            <button onClick={handleClose} className="opacity-70 hover:opacity-100 bg-skin-red text-skin-color1 min-w-[110px]">
+            <button onClick={handleClose} className="opacity-80 in-center hover:opacity-100 rounded-sm bg-skin-red text-skin-color1 min-w-[110px]">
               CANCEL
             </button>
-            <Link to={`/store/${seller?._id}`} className="opacity-70 hover:opacity-100 bg-skin-fill-3 text-skin-colorContent truncate min-w-[110px]">
+            <Link to={`/store/${seller?._id}`} className="flex opacity-70 hover:opacity-100 rounded-sm bg-skin-fill-3 text-skin-colorContent truncate min-w-[110px] in-center">
               VISIT STORE
             </Link>
           </div>

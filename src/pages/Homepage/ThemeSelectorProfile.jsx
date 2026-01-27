@@ -2,8 +2,11 @@ import React, { useEffect, useState } from "react";
 import { FaPalette, FaSave } from "react-icons/fa";
 import { useTheme } from "../../context/ThemeContext";
 import { themeToggleAction } from "../../store/actions/AuthThunks";
+
 import { useDispatch, useSelector } from "react-redux";
 import { FaXmark } from "react-icons/fa6";
+import { setThemeInProfile } from "../../store/reducers/AuthSlice.jsx"
+
 
 const ThemeSelectorProfile = () => {
   const { current, changeTheme } = useTheme();
@@ -31,6 +34,7 @@ const ThemeSelectorProfile = () => {
       console.error("Failed to change theme", error);
     } finally {
       setEditActive(false);
+      dispatch(setThemeInProfile(theme));
     }
   };
 

@@ -329,10 +329,11 @@ const StoreIdPage = () => {
             className="md:flex md:flex-col hidden rounded-lg w-full h-full p-2 min-h-[82vh]
           items-start justify-start bg-skin-primary space-y-1"
           >
+            <ProductPaginationDesktop products={store.products} />
+
             <ReviewPaginationDesktop
               reviews={[...store?.reviews?.low3, ...store?.reviews?.top3] || []}
             />
-            <ProductPaginationDesktop products={store.products} />
           </div>
 
           {/** mobile  */}
@@ -369,6 +370,37 @@ const StoreIdPage = () => {
                 </span>
               </div>
             </div>
+            
+
+                        {/** add product or display */}
+            <span className="text-skin-color1 text-styleh4 font-display">
+              PRODUCTS
+            </span>
+            <div
+              className="flex flex-row w-full h-[30vh] relative bg-skin-fill-2 p-2 rounded-lg bg-opacity-25 
+                overflow-hidden overflow-x-auto items-center justify-start
+                text-skin-colorContent text-stylep3"
+            >
+
+
+              {store?.products?.map((product) => (
+                <Link
+                  to={`/product/${product._id}`}
+                  className="p-1"
+                  key={product._id}
+                >
+                  <ProductBox
+                    name={product.name}
+                    productImage={product.productImage}
+                    price={product.price}
+                    stock={product.stock}
+                    averageStar={product.averageRating}
+                  />
+                </Link>
+              ))}
+            </div>
+
+
             {/** dispaly reviews */}
             <span className="text-skin-color1 text-styleh4 font-display">
               REVIEWS
@@ -418,34 +450,6 @@ const StoreIdPage = () => {
                     </span>
                   </div>
                 </div>
-              ))}
-            </div>
-
-                        {/** add product or display */}
-            <span className="text-skin-color1 text-styleh4 font-display">
-              PRODUCTS
-            </span>
-            <div
-              className="flex flex-row w-full h-[30vh] relative bg-skin-fill-2 p-2 rounded-lg bg-opacity-25 
-                overflow-hidden overflow-x-auto items-center justify-start
-                text-skin-colorContent text-stylep3"
-            >
-
-
-              {store?.products?.map((product) => (
-                <Link
-                  to={`/product/${product._id}`}
-                  className="p-1"
-                  key={product._id}
-                >
-                  <ProductBox
-                    name={product.name}
-                    productImage={product.productImage}
-                    price={product.price}
-                    stock={product.stock}
-                    averageStar={product.averageRating}
-                  />
-                </Link>
               ))}
             </div>
           </div>

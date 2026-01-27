@@ -40,7 +40,7 @@ import ProtectedRoute from "./ProtectedRoutes.jsx";
 import AdminPage from "../../pages/AdminPage/AdminPage.jsx";
 import OrderIdPage from "../../pages/OrderPage/OrderIdPage.jsx";
 import StoreOrdersPage from "../../pages/SellerPage/StoreOrdersPage.jsx";
-import StoreOrderPage from "../../pages/SellerPage/StoreOrderPage.jsx";
+//import StoreOrderPage from "../../pages/SellerPage/StoreOrderPage.jsx";
 
 const AppRoutes = () => {
   return (
@@ -79,7 +79,7 @@ const AppRoutes = () => {
         }
       />
       <Route path="/store-orders/:status" element={<StoreOrdersPage />} />
-      <Route path="/store-order/:itemId" element={<StoreOrderPage />} />
+      {/* <Route path="/store-order/:itemId" element={<StoreOrderPage />} />*/}
       
       {/* cart 
       // <Route path="/cart" element={<CategoriesPage />} /> */}

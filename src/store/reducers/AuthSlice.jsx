@@ -21,7 +21,13 @@ const authSlice = createSlice({
     error: null,
     lastProfileFetchedAt: null,
   },
-  reducers: {},
+  reducers: {
+      setThemeInProfile: (state, action) => {
+        if (state.profile) {
+          state.profile.userTheme = action.payload;
+        }
+      },
+  },
   extraReducers: (builder) => {
     builder
       .addCase(loginAction.fulfilled, (state, action) => {
@@ -77,14 +83,14 @@ const authSlice = createSlice({
           signUpAction,
           logoutAction,
           getUserProfileAction,
-          themeToggleAction
+          themeToggleAction,
         ),
         (state) => {
           state.isPending = true;
           state.isRejected = false;
           state.isSuccess = false;
           state.error = null;
-        }
+        },
       )
 
       .addMatcher(
@@ -93,16 +99,17 @@ const authSlice = createSlice({
           signUpAction,
           logoutAction,
           getUserProfileAction,
-          themeToggleAction
+          themeToggleAction,
         ),
         (state, action) => {
           state.isPending = false;
           state.isRejected = true;
           state.isSuccess = false;
           state.error = action.payload || "Something went wrong";
-        }
+        },
       );
   },
 });
 
+export const { setThemeInProfile } = authSlice.actions;
 export default authSlice.reducer;

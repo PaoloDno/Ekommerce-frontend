@@ -7,6 +7,7 @@ import {
   patchSellerAcceptItemOrderAction,
   patchSellerAcceptOrderAction,
   getSellerOrdersAction,
+  patchShipItemAction,
 } from "../../store/actions/OrderThunks";
 
 const filterStates = {
@@ -52,7 +53,7 @@ const StoreOrdersPage = () => {
           item.seller?.toString() === seller._id.toString() &&
           allowedStatuses.includes(item.sellerStatus)
         );
-      })
+      }),
     );
 
     setOrders(filtered);
@@ -60,10 +61,13 @@ const StoreOrdersPage = () => {
 
   const handleOrderAccept = async (orderId) => {
     const result = await dispatch(
-      patchSellerAcceptOrderAction({ orderId, sellerId: seller._id })
+      patchSellerAcceptOrderAction({ orderId, sellerId: seller._id }),
     );
     if (patchSellerAcceptOrderAction.fulfilled.match(result)) {
       console.log("Order accepted:", orderId);
+      if (seller?._id) {
+        dispatch(getSellerOrdersAction(seller._id));
+      }
     }
   };
 
@@ -71,12 +75,29 @@ const StoreOrdersPage = () => {
     console.log("Trigger");
     console.log(orderId);
     console.log(itemId);
-    
+
     const result = await dispatch(
-      patchSellerAcceptItemOrderAction({ orderId, itemId })
+      patchSellerAcceptItemOrderAction({ orderId, itemId }),
     );
     if (patchSellerAcceptItemOrderAction.fulfilled.match(result)) {
       console.log("Item accepted:", itemId);
+      if (seller?._id) {
+        dispatch(getSellerOrdersAction(seller._id));
+      }
+    }
+  };
+
+  const handleItemShip = async (orderId, itemId) => {
+    console.log("Trigger");
+    console.log(orderId);
+    console.log(itemId);
+
+    const result = await dispatch(patchShipItemAction({ orderId, itemId }));
+    if (patchShipItemAction.fulfilled.match(result)) {
+      console.log("Item Shipped", itemId);
+      if (seller?._id) {
+        dispatch(getSellerOrdersAction(seller._id));
+      }
     }
   };
 
@@ -85,12 +106,13 @@ const StoreOrdersPage = () => {
       <div className="page-body-section in-center relative py-4 px-2 gap-2">
         <OrderStatusBar sellerId={seller?._id} />
 
-        <div className="flex flex-col w-full h-[130vh] overflow-y-auto p-3 rounded-2xl
-          bg-skin-colorContent/20 backdrop-blur-xl border border-white/20 shadow-xl gap-4">
-
+        <div
+          className="flex flex-col w-full h-[130vh] overflow-y-auto p-3 rounded-2xl
+          bg-skin-colorContent/20 backdrop-blur-xl border border-white/20 shadow-xl gap-4"
+        >
           {orders.map((order) => {
             const sellerItems = order.items.filter(
-              (item) => item.seller.toString() === seller._id
+              (item) => item.seller.toString() === seller._id,
             );
 
             if (!sellerItems.length) return null;
@@ -108,11 +130,14 @@ const StoreOrdersPage = () => {
                     </span>
 
                     <span className="opacity-90">
-                      Buyer: {order.user?.lastname}, {order.user?.firstname} – {order.user?.email}
+                      Buyer: {order.user?.lastname}, {order.user?.firstname} –{" "}
+                      {order.user?.email}
                     </span>
 
                     <span className="opacity-90">
-                      Address: {order.shippingAddress?.street}, {order.shippingAddress?.city}, {order.shippingAddress?.country}
+                      Address: {order.shippingAddress?.street},{" "}
+                      {order.shippingAddress?.city},{" "}
+                      {order.shippingAddress?.country}
                     </span>
                   </div>
 
@@ -143,28 +168,35 @@ const StoreOrdersPage = () => {
                           rounded-lg overflow-hidden bg-black/10"
                       >
                         <div className="w-full h-full flex items-center justify-center border-2 border-gray-500/20">
-                          <ProductImages productImages={item.product?.productImage} />
+                          <ProductImages
+                            productImages={item.product?.productImage}
+                          />
                         </div>
                       </div>
 
                       <div className="flex flex-col justify-center">
                         <span className="font-semibold">{item.name}</span>
                         <span className="text-stylep3 opacity-80">
-                          ₱{item.price} × {item.quantity} = ₱{item.quantity * item.price}
+                          ₱{item.price} × {item.quantity} = ₱
+                          {item.quantity * item.price}
                         </span>
                       </div>
 
                       <div className="flex items-center">
-                        <span className="px-4 py-1 rounded-full text-sm capitalize
-                          bg-skin-fill-4/50 text-skin-colorHigh border border-white/40">
+                        <span
+                          className="px-4 py-1 rounded-full text-sm capitalize
+                          bg-skin-fill-4/50 text-skin-colorHigh border border-white/40"
+                        >
                           {item.sellerStatus}
                         </span>
                       </div>
 
-                      <div className="flex items-center justify-end">
+                      <div className="flex flex-col gap-2 items-center justify-end">
                         {item.sellerStatus === "pending" && (
                           <button
-                            onClick={() => handleItemAccept(order._id, item._id)}
+                            onClick={() =>
+                              handleItemAccept(order._id, item._id)
+                            }
                             className="px-4 py-2 rounded-lg text-sm
                               bg-skin-green text-skin-color1 hover:bg-skin-primary/80 transition"
                           >
@@ -173,11 +205,29 @@ const StoreOrdersPage = () => {
                         )}
                         {item.sellerStatus === "processing" && (
                           <button
-                            onClick={() => handleItemAccept(order._id, item._id)}
+                            onClick={() => handleItemShip(order._id, item._id)}
                             className="px-4 py-2 rounded-lg text-sm
                               bg-skin-green text-skin-color1 hover:bg-skin-primary/80 transition"
                           >
                             Request Shipment
+                          </button>
+                        )}
+                        {item.sellerStatus === "shipped" && (
+                          <button
+                            onClick={() => handleItemShip(order._id, item._id)}
+                            className="px-4 py-2 rounded-lg text-sm
+                              bg-skin-green text-skin-color1 hover:bg-skin-primary/80 transition"
+                          >
+                            Request Shipment
+                          </button>
+                        )}
+                        {(item.sellerStatus === "pending" || item.sellerStatus === "processing") && (
+                          <button
+                            onClick={() => handleItemShip(order._id, item._id)}
+                            className="px-4 py-2 rounded-lg text-sm
+                              bg-skin-red text-skin-color1 hover:bg-skin-primary/80 transition"
+                          >
+                            Cancel Item Order
                           </button>
                         )}
                       </div>

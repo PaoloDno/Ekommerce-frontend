@@ -1,42 +1,46 @@
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-//import { getUserOrdersAction } from "../../store/actions/OrderThunks";
 import { FaCheck, FaClock, FaProcedures, FaTimes, FaTruck } from "react-icons/fa";
 import { FaXmark } from "react-icons/fa6";
 import { useNavigate } from "react-router-dom";
+import { fetchUserOrdersAction } from "../../store/actions/OrderThunks";
+
 
 const UsersOrderPage = () => {
+
+  // to be refactored
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const { token } = useSelector((state) => state.auth);
+  const { token } = useSelector((s) => s.auth);
 
-  const [orders, setOrders] = useState([]);
+  const { userOrders, orders} = useSelector((s) => s.order);
   const [statusCount, setStatusCount] = useState({});
   const [activeStatus, setActiveStatus] = useState("all");
 
-  /**
-   * {
-    const fetchOrders = useCallback(async () => {
-    try {
-      const resultAction = await dispatch(getUserOrdersAction());
+  const isMounted = useRef(true);
 
-      if (getUserOrdersAction.fulfilled.match(resultAction)) {
-        setOrders(resultAction.payload.data.orders);
-        setStatusCount(resultAction.payload.data.statusCount);
+  const fetchUsersOrders = useCallback( async () => {
+    try {
+      const resultAction = await dispatch(fetchUserOrdersAction());
+      if (fetchUserOrdersAction.fulfilled.match(resultAction) && isMounted.current) {
+        console.log("result action", resultAction.payload);
       }
     } catch (error) {
-      console.error(error);
+      console.log(error);
     } finally {
-      console.log(orders);
-      console.log(statusCount);
+      console.log("userOrders", userOrders);
     }
   }, [dispatch]);
 
   useEffect(() => {
-    if (token) fetchOrders();
-  }, [fetchOrders, token]);
-  
-  **/
+    isMounted.current = true;
+
+    if(token) fetchUsersOrders();
+
+    return () => {
+      isMounted.current = false;
+    }
+  }, [fetchUsersOrders, token])
 
   const OrderCard = ({ order }) => (
     <div onClick={() => navigate(`/orderId/${order._id}`)} 

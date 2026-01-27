@@ -95,7 +95,7 @@ const OrderStatusBar = ({ sellerId }) => {
         bordered
       />
       <StatusButton
-        label="ORDER RECEIVED"
+        label="ORDER DELIVERED"
         count={counts.received}
         redirect={"recieved"}
       />

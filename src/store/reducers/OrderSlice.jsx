@@ -7,6 +7,16 @@ import {
   patchSellerAcceptOrderAction,
   patchShipItemAction,
   patchShipOrderAction,
+  // cancel seller
+  patchSellerCancelItemAction,
+  patchSellerHandleRefundAction,
+  // users
+  fetchUserOrdersAction,
+  cancelUserOrdersAction,
+  requstRefundUserOrderAction,
+  // view
+  getOrderByIdAction,
+  getItemByIdAction,
 } from "../actions/OrderThunks";
 
 const orderSlice = createSlice({
@@ -15,6 +25,7 @@ const orderSlice = createSlice({
     order: {},
     orders: [],
     storeOrders: [],
+    userOrders: [],
     item: {},
     lastStoreOrderFetchedAt: null,
     isPending: false,
@@ -88,6 +99,62 @@ const orderSlice = createSlice({
       })
 
       // --------------------
+      // Seller
+      // --------------------
+
+      .addCase(patchSellerCancelItemAction.fulfilled, (state, action) => {
+        state.isPending = false;
+        state.isSuccess = true;
+        state.isRejected = false;
+        state.order = action.payload.order;
+      })
+
+      .addCase(patchSellerHandleRefundAction.fulfilled, (state, action) => {
+        state.isPending = false;
+        state.isSuccess = true;
+        state.isRejected = false;
+        state.order = action.payload.order;
+      })
+
+      // -----
+      // User Order
+      // -----
+      .addCase(fetchUserOrdersAction.fulfilled, (state, action) => {
+        state.isPending = false;
+        state.isSuccess = true;
+        state.isRejected = false;
+        state.userOrders = action.payload.userOrders;
+      })
+
+      .addCase(cancelUserOrdersAction.fulfilled, (state, action) => {
+        state.isPending = false;
+        state.isSuccess = true;
+        state.isRejected = false;
+        state.order = action.payload.order;
+      })
+
+      .addCase(requstRefundUserOrderAction.fulfilled, (state, action) => {
+        state.isPending = false;
+        state.isSuccess = true;
+        state.isRejected = false;
+        state.order = action.payload.order;
+      })
+
+      // view order
+      .addCase(getOrderByIdAction.fulfilled, (state, action) => {
+        state.isPending = false;
+        state.isSuccess = true;
+        state.isRejected = false;
+        state.order = action.payload.order;
+      })
+
+      .addCase(getItemByIdAction.fulfilled, (state, action) => {
+        state.isPending = false;
+        state.isSuccess = true;
+        state.isRejected = false;
+        state.item = action.payload.item;
+      })
+      // --------------------
       // Pending matcher
       // --------------------
       .addMatcher(
@@ -98,14 +165,21 @@ const orderSlice = createSlice({
           patchSellerAcceptItemOrderAction,
           patchSellerAcceptOrderAction,
           patchShipItemAction,
-          patchShipOrderAction
+          patchShipOrderAction,
+          patchSellerCancelItemAction,
+          patchSellerHandleRefundAction,
+          fetchUserOrdersAction,
+          cancelUserOrdersAction,
+          requstRefundUserOrderAction,
+          getOrderByIdAction,
+          getItemByIdAction,
         ),
         (state) => {
           state.isPending = true;
           state.isSuccess = false;
           state.isRejected = false;
           state.error = null;
-        }
+        },
       )
 
       // --------------------
@@ -119,14 +193,21 @@ const orderSlice = createSlice({
           patchSellerAcceptItemOrderAction,
           patchSellerAcceptOrderAction,
           patchShipItemAction,
-          patchShipOrderAction
+          patchShipOrderAction,
+          patchSellerCancelItemAction,
+          patchSellerHandleRefundAction,
+          fetchUserOrdersAction,
+          cancelUserOrdersAction,
+          requstRefundUserOrderAction,
+          getOrderByIdAction,
+          getItemByIdAction,
         ),
         (state, action) => {
           state.isPending = false;
           state.isSuccess = false;
           state.isRejected = true;
           state.error = action.payload || "Something went wrong";
-        }
+        },
       );
   },
 });
