@@ -250,6 +250,7 @@ export const cancelUserOrdersAction = createAsyncThunk(
       const token = thunkAPI.getState().auth.token;
       const response = await api.put(
         `/order/user-cancel/${orderId}`,
+        {placeholder: "a"},
         {
           headers: { Authorization: `Bearer ${token}` },
         },
@@ -271,6 +272,7 @@ export const requstRefundUserOrderAction = createAsyncThunk(
       const token = thunkAPI.getState().auth.token;
       const response = await api.put(
         `/order/user-refund/${itemId}`,
+        {placeholder: "a"},
         {
           headers: { Authorization: `Bearer ${token}` },
         },

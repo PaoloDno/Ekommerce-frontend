@@ -2,7 +2,6 @@ import React, {
   createContext,
   useContext,
   useCallback,
-  useDebugValue,
   useEffect,
   useState,
 } from "react";
@@ -12,13 +11,14 @@ import { nextTheme, setTheme } from "../store/reducers/ThemeSlice";
 const ThemeContext = createContext();
 
 export const ThemeProvider = ({ children }) => {
-  const { currentTheme, userTheme } = useSelector((state) => state.theme);
+  const { currentTheme } = useSelector((state) => state.theme);
   const dispatch = useDispatch();
   const [current, setCurrent] = useState("default");
 
   useEffect(() => {
     setCurrent(currentTheme);
   }, [currentTheme]);
+
   // Helpers
   const toggleTheme = useCallback(() => dispatch(nextTheme()), [dispatch]);
   const changeTheme = useCallback(
@@ -27,10 +27,6 @@ export const ThemeProvider = ({ children }) => {
     },
     [dispatch],
   );
-
-  const changeToUserTheme = useCallback(() => {
-    dispatch(setTheme(userTheme));
-  }, [dispatch, userTheme]);
 
   return (
     <ThemeContext.Provider value={{ current, toggleTheme, changeTheme }}>

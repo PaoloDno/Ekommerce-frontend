@@ -33,6 +33,15 @@ const ViewStoreOrderItemPage = () => {
       isMounted.current = false;
     }
   }, [fetchOrder]);
+
+
+  return (
+    <div className="page-body-background in-center">
+      <div className="page-body-section in-center">
+
+      </div>
+    </div>
+  )
 }
 
 export default ViewStoreOrderItemPage;

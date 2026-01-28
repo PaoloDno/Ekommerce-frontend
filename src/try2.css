@@ -3,6 +3,7 @@
     --color-shadow: rgb(0,0,0);
   }
 
+  /* ---------------- DEFAULT ---------------- */
   .theme-default {
     --color-primary: rgb(180,30,30);
     --color-secondary: rgb(220,50,50);
@@ -30,19 +31,71 @@
     --color-border1: rgb(220,100,100);
     --color-border2: rgb(150,10,10);
 
-    --color-contrast: rgb(255, 117, 170);
+    --color-contrast: rgb(255,117,170);
     --color-disable: rgb(140,80,80);
 
     --color-green: rgb(30,120,30);
     --color-red: rgb(180,30,30);
     --color-cart: rgb(245,130,45);
 
-    --color-content-bg: rgb(232, 168, 202);
+    --color-content-bg: rgb(228, 202, 169);
     --color-content-text: rgb(40,10,10);
 
     --color-shadow: rgb(100,40,40);
   }
 
+  .theme-defaul2 {
+  /* Base colors */
+  --color-primary: rgb(30,144,255);        /* Dodger Blue – main accent */
+  --color-secondary: rgb(135,206,250);    /* Light Sky Blue – secondary */
+  --color-back: rgb(159, 172, 185);         /* Very light blue background */
+
+  /* Text */
+  --color-text1: rgb(20,20,40);           /* Dark navy – primary text */
+  --color-text2: rgb(60,60,90);           /* Medium navy – secondary text */
+  --color-text3: rgb(255,255,255);        /* White – highlight text */
+
+  /* Buttons */
+  --color-button-1: rgb(30,144,255);      /* Primary button – Dodger Blue */
+  --color-button-2: rgb(0,191,255);       /* Secondary button – Deep Sky Blue */
+  --color-button-3: rgb(255,255,255);     /* Text or outline button */
+
+  /* Button gradients */
+  --btn-grad-start-1: rgb(30,144,255);
+  --btn-grad-end-1: rgb(0,191,255);
+  --btn-grad-start-2: rgb(135,206,250);
+  --btn-grad-end-2: rgb(70,130,180);
+
+  /* Fills / backgrounds for cards or panels */
+  --color-fill-1: rgb(240,248,255);       /* Alice Blue – light panel background */
+  --color-fill-2: rgb(224,255,255);       /* Light Cyan */
+  --color-fill-3: rgb(255,255,255);       /* White – content cards */
+  --color-fill-4: rgb(176,224,230);       /* Powder Blue */
+  --color-fill-5: rgb(173,216,230);       /* Light Blue */
+
+  /* Borders */
+  --color-border1: rgb(30,144,255);       /* Primary border – Dodger Blue */
+  --color-border2: rgb(135,206,250);      /* Lighter border accent */
+
+  /* Contrast and disabled */
+  --color-contrast: rgb(255,69,0);        /* Orange-Red – buttons, highlights */
+  --color-disable: rgb(200,200,220);      /* Light gray for disabled items */
+
+  /* Status */
+  --color-green: rgb(50,205,50);          /* Lime Green – success */
+  --color-red: rgb(255,69,0);             /* Red-Orange – errors */
+  --color-cart: rgb(255,165,0);           /* Orange – cart accent */
+
+  /* Content background / text */
+  --color-content-bg: rgb(255,255,255);   /* White – card or content background */
+  --color-content-text: rgb(20,20,40);    /* Dark navy – content text */
+
+  /* Shadow */
+  --color-shadow: rgb(100,149,237);       /* Cornflower Blue – subtle shadows */
+}
+
+
+  /* ---------------- COFFEE ---------------- */
   .theme-coffee {
     --color-primary: rgb(30,20,10);
     --color-secondary: rgb(70,50,30);
@@ -54,7 +107,7 @@
 
     --color-button-1: rgb(50,30,15);
     --color-button-2: rgb(90,60,35);
-    --color-button-3: rgb(221, 125, 8);
+    --color-button-3: rgb(221,125,8);
 
     --btn-grad-start-1: rgb(70,50,30);
     --btn-grad-end-1: rgb(50,35,20);
@@ -63,34 +116,35 @@
 
     --color-fill-1: rgb(40,25,10);
     --color-fill-2: rgb(60,40,20);
-    --color-fill-3: rgb(211, 166, 83);
+    --color-fill-3: rgb(211,166,83);
     --color-fill-4: rgb(90,60,35);
     --color-fill-5: rgb(30,20,10);
 
     --color-border1: rgb(90,60,40);
     --color-border2: rgb(150,100,60);
 
-    --color-contrast: rgb(252, 255, 71);
+    --color-contrast: rgb(252,255,71);
     --color-disable: rgb(60,40,20);
 
-    --color-green: rgb(3, 151, 40);
-    --color-red: rgb(167, 20, 20);
-    --color-cart: rgb(155, 70, 17);
+    --color-green: rgb(3,151,40);
+    --color-red: rgb(167,20,20);
+    --color-cart: rgb(155,70,17);
 
-    --color-content-bg: rgb(211, 162, 55);
+    --color-content-bg: rgb(226, 153, 84);
     --color-content-text: rgb(60,40,30);
 
     --color-shadow: rgb(40,30,20);
   }
 
+  /* ---------------- DARK ---------------- */
   .theme-dark {
     --color-primary: rgb(20,20,20);
     --color-secondary: rgb(45,45,45);
-    --color-back: rgb(15,15,15);
+    --color-back: rgb(2, 13, 20);
 
     --color-text1: rgb(235,235,235);
     --color-text2: rgb(175,175,175);
-    --color-text3: rgb(139, 233, 240);
+    --color-text3: rgb(139,233,240);
 
     --color-button-1: rgb(4,4,10);
     --color-button-2: rgb(25,32,41);
@@ -103,30 +157,31 @@
 
     --color-fill-1: rgb(10,10,10);
     --color-fill-2: rgb(20,20,20);
-    --color-fill-3: rgb(73, 97, 121);
+    --color-fill-3: rgb(73,97,121);
     --color-fill-4: rgb(68,50,50);
     --color-fill-5: rgb(61,56,56);
 
-    --color-border1: rgb(92, 96, 114);
-    --color-border2: rgb(83, 112, 114);
+    --color-border1: rgb(60,60,60);
+    --color-border2: rgb(140,140,140);
 
-    --color-contrast: rgb(117, 160, 255);
+    --color-contrast: rgb(117,160,255);
     --color-disable: rgb(90,90,90);
 
     --color-green: rgb(46,100,25);
     --color-red: rgb(102,17,17);
     --color-cart: rgb(158,72,2);
 
-    --color-content-bg: rgb(25,25,25);
+    --color-content-bg: rgb(34, 43, 54);
     --color-content-text: rgb(215,218,220);
 
     --color-shadow: rgb(0,0,0);
   }
 
+  /* ---------------- SAKURA ---------------- */
   .theme-sakura {
-    --color-primary: rgb(243,159,190);
-    --color-secondary: rgb(223,98,150);
-    --color-back: rgb(231,177,197);
+    --color-primary: rgb(253, 142, 183);
+    --color-secondary: rgb(223, 80, 139);
+    --color-back: rgb(216, 102, 143);
 
     --color-text1: rgb(80,20,50);
     --color-text2: rgb(140,60,100);
@@ -157,19 +212,20 @@
     --color-red: rgb(248,126,153);
     --color-cart: rgb(241,231,169);
 
-    --color-content-bg: rgb(116,38,64);
+    --color-content-bg: rgb(110, 49, 83);
     --color-content-text: rgb(255,240,245);
 
     --color-shadow: rgb(247,116,169);
   }
 
+  /* ---------------- DARK2 ---------------- */
   .theme-dark2 {
     --color-primary: rgb(230,20,40);
     --color-secondary: rgb(201,36,7);
     --color-back: rgb(10,5,30);
 
-    --color-text1: rgb(227,230,20);
-    --color-text2: rgb(201,228,51);
+    --color-text1: rgb(232, 235, 61);
+    --color-text2: rgb(208, 236, 44);
     --color-text3: rgb(24,24,2);
 
     --color-button-1: rgb(230,20,40);
@@ -203,42 +259,43 @@
     --color-shadow: rgb(100,0,150);
   }
 
+  /* ---------------- FOREST ---------------- */
   .theme-forest {
     --color-primary: rgb(34,85,34);
     --color-secondary: rgb(60,120,60);
-    --color-back: rgb(255,255,255);
+    --color-back: rgb(12,46,12);
 
-    --color-text1: rgb(0,54,0);
-    --color-text2: rgb(14,138,14);
-    --color-text3: rgb(201,243,201);
+    --color-text1: rgb(240,255,240);
+    --color-text2: rgb(200,230,200);
+    --color-text3: rgb(10,40,10);
 
-    --color-button-1: rgb(0,80,0);
-    --color-button-2: rgb(0,120,0);
+    --color-button-1: rgb(25,55,25);
+    --color-button-2: rgb(50,100,50);
     --color-button-3: rgb(200,240,200);
 
-    --btn-grad-start-1: rgb(186,243,186);
-    --btn-grad-end-1: rgb(140,210,140);
-    --btn-grad-start-2: rgb(100,200,100);
-    --btn-grad-end-2: rgb(200,240,200);
+    --btn-grad-start-1: rgb(60,120,60);
+    --btn-grad-end-1: rgb(30,85,30);
+    --btn-grad-start-2: rgb(10,30,10);
+    --btn-grad-end-2: rgb(180,220,180);
 
-    --color-fill-1: rgb(180,230,180);
-    --color-fill-2: rgb(140,200,140);
-    --color-fill-3: rgb(220,255,220);
-    --color-fill-4: rgb(160,210,160);
-    --color-fill-5: rgb(100,180,100);
+    --color-fill-1: rgb(5,15,5);
+    --color-fill-2: rgb(20,60,20);
+    --color-fill-3: rgb(230,245,230);
+    --color-fill-4: rgb(15,35,15);
+    --color-fill-5: rgb(10,50,10);
 
-    --color-border1: rgb(0,100,0);
-    --color-border2: rgb(0,160,0);
+    --color-border1: rgb(15,40,15);
+    --color-border2: rgb(150,230,150);
 
-    --color-contrast: rgb(0,200,0);
-    --color-disable: rgb(180,220,180);
+    --color-contrast: rgb(108,255,108);
+    --color-disable: rgb(50,80,50);
 
-    --color-green: rgb(0,145,0);
-    --color-red: rgb(120,20,20);
-    --color-cart: rgb(0,180,0);
+    --color-green: rgb(53,173,6);
+    --color-red: rgb(3,34,8);
+    --color-cart: rgb(16,201,72);
 
-    --color-content-bg: rgb(255,255,255);
-    --color-content-text: rgb(0,54,0);
+    --color-content-bg: rgb(200,230,200);
+    --color-content-text: rgb(20,50,20);
 
     --color-shadow: rgb(50,90,50);
   }

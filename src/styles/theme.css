@@ -37,7 +37,7 @@
     --color-red: 180,30,30;
     --color-cart: 245,130,45;
 
-    --color-content-bg: 232, 168, 202;
+    --color-content-bg: 228, 202, 169;
     --color-content-text: 40,10,10;
 
     --color-shadow: 100,40,40;
@@ -77,7 +77,7 @@
     --color-red: 167, 20, 20;
     --color-cart: 155, 70, 17;
 
-    --color-content-bg: 228, 148, 57;
+    --color-content-bg: 226, 153, 84;
     --color-content-text: 60,40,30;
 
     --color-shadow: 40,30,20;
@@ -86,7 +86,7 @@
   .theme-dark {
     --color-primary: 20,20,20;
     --color-secondary: 45,45,45;
-    --color-back: 15,15,15;
+    --color-back: 12, 13, 20;
 
     --color-text1: 235,235,235;
     --color-text2: 175,175,175;
@@ -117,16 +117,16 @@
     --color-red: 102,17,17;
     --color-cart: 158,72,2;
 
-    --color-content-bg: 25,25,25;
+    --color-content-bg: 34, 43, 54;
     --color-content-text: 215,218,220;
 
     --color-shadow: 0,0,0;
   }
 
   .theme-sakura {
-    --color-primary: 243,159,190;
-    --color-secondary: 223,98,150;
-    --color-back: 231,177,197;
+    --color-primary: 253, 142, 183;
+    --color-secondary: 223, 80, 139;
+    --color-back: 216, 102, 143;
 
     --color-text1: 80,20,50;
     --color-text2: 140,60,100;
@@ -157,7 +157,7 @@
     --color-red: 248,126,153;
     --color-cart: 241,231,169;
 
-    --color-content-bg: 116,38,64;
+    --color-content-bg: 110, 49, 83;
     --color-content-text: 255,240,245;
 
     --color-shadow: 247,116,169;
@@ -168,7 +168,7 @@
     --color-secondary: 201,36,7;
     --color-back: 10,5,30;
 
-    --color-text1: 227,230,20;
+    --color-text1: 232, 235, 61;
     --color-text2: 201,228,51;
     --color-text3: 24,24,2;
 

@@ -8,6 +8,7 @@ import {
   patchSellerAcceptOrderAction,
   getSellerOrdersAction,
   patchShipItemAction,
+  patchSellerCancelItemAction,
 } from "../../store/actions/OrderThunks";
 
 const filterStates = {
@@ -94,6 +95,20 @@ const StoreOrdersPage = () => {
 
     const result = await dispatch(patchShipItemAction({ orderId, itemId }));
     if (patchShipItemAction.fulfilled.match(result)) {
+      console.log("Item Shipped", itemId);
+      if (seller?._id) {
+        dispatch(getSellerOrdersAction(seller._id));
+      }
+    }
+  };
+
+  const handleItemCancel = async (orderId, itemId) => {
+    console.log("Trigger");
+    console.log(orderId);
+    console.log(itemId);
+
+    const result = await dispatch(patchSellerCancelItemAction({ orderId, itemId }));
+    if (patchSellerCancelItemAction.fulfilled.match(result)) {
       console.log("Item Shipped", itemId);
       if (seller?._id) {
         dispatch(getSellerOrdersAction(seller._id));
@@ -205,7 +220,7 @@ const StoreOrdersPage = () => {
                         )}
                         {item.sellerStatus === "processing" && (
                           <button
-                            onClick={() => handleItemShip(order._id, item._id)}
+                            onClick={() => handleItemAccept(order._id, item._id)}
                             className="px-4 py-2 rounded-lg text-sm
                               bg-skin-green text-skin-color1 hover:bg-skin-primary/80 transition"
                           >
@@ -223,7 +238,7 @@ const StoreOrdersPage = () => {
                         )}
                         {(item.sellerStatus === "pending" || item.sellerStatus === "processing") && (
                           <button
-                            onClick={() => handleItemShip(order._id, item._id)}
+                            onClick={() => handleItemCancel(order._id, item._id)}
                             className="px-4 py-2 rounded-lg text-sm
                               bg-skin-red text-skin-color1 hover:bg-skin-primary/80 transition"
                           >
