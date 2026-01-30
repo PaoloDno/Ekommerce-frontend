@@ -1,25 +1,20 @@
-################################################################
+
 #                     Ekommerce — Full Stack                   #
 #                  MERN E-Commerce Application                #
-################################################################
 
 Ekommerce is a full-stack e-commerce platform built using the MERN stack — MongoDB, Express.js, React (Vite), and Node.js.
 It provides the foundation for an online store with product browsing, shopping cart, and user authentication.
 
 Both frontend and backend are separate repositories under GitHub (PaoloDno) and are designed to work together.
 
-################################################################
 #                         Architecture                         #
-################################################################
 
 Ekommerce
 ├── Frontend (React + Vite) — UI + User interactions
 ├── Backend (Node.js + Express) — REST API + business logic
 └── MongoDB — NoSQL database for storing users, products, carts, etc.
 
-################################################################
 #                        Repositories                          #
-################################################################
 
 # Frontend
 URL: https://github.com/PaoloDno/Ekommerce-frontend
@@ -53,9 +48,7 @@ Structure:
 - middlewares/ — authentication and error handling
 - server.js — entrypoint for the Express server
 
-################################################################
 #                           Features                            #
-################################################################
 
 - Full Stack MERN architecture
 - RESTful API for products, users, carts, authentication
@@ -63,9 +56,7 @@ Structure:
 - JWT authentication
 - Ready for deployment (Render, Vercel, Netlify)
 
-################################################################
 #                        Installation                           #
-################################################################
 
 Replace YOUR_MONGO_URI with your MongoDB Atlas connection string.
 
@@ -86,9 +77,7 @@ npm install
 # VITE_API_URL=http://localhost:5000/kommerce
 npm run dev
 
-################################################################
 #                   Environment Variables                       #
-################################################################
 
 # Backend .env
 PORT=5000
@@ -100,9 +89,7 @@ VITE_API_URL=http://localhost:5000/kommerce
 
 On production (Render), set VITE_API_URL to your deployed backend URL.
 
-################################################################
 #                          Deployment                            #
-################################################################
 
 # Backend (Render)
 1. Connect the backend repository to Render
@@ -119,9 +106,7 @@ On production (Render), set VITE_API_URL to your deployed backend URL.
 4. Set environment variable: VITE_API_URL=https://your-backend.onrender.com/kommerce
 5. Deploy
 
-################################################################
 #                            Usage                               #
-################################################################
 
 Once deployed:
 - Browse products
@@ -130,9 +115,7 @@ Once deployed:
 - API calls use import.meta.env.VITE_API_URL
 - Redux state handles UI interactions
 
-################################################################
 #                        Contributions                           #
-################################################################
 
 Contributions are welcome:
 - Improve UI/UX
@@ -140,8 +123,6 @@ Contributions are welcome:
 - Add admin panel
 - Add order history
 
-################################################################
 #                           License                               #
-################################################################
 
 This project is open source and free to use/modify.
