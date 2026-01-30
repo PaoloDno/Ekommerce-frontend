@@ -6,8 +6,11 @@ import { FaBars, FaFilter, FaSearch } from "react-icons/fa";
 import PaginationComponent from "../../components/Pagination/Pagination";
 import ProductCards from "../../components/Cards/ProductCards";
 import { FaXmark } from "react-icons/fa6";
+import { useParams } from "react-router-dom";
 
 const ProductsPage = () => {
+  const { keyword, categoryName, storeName } = useParams();
+
   const dispatch = useDispatch();
   const { products, pagination } = useSelector((state) => state.product);
 
@@ -16,14 +19,27 @@ const ProductsPage = () => {
     limit: 6,
     sortBy: "createdAt",
     sortOrder: "asc",
-    name: "",
+    name: keyword || "",
     brand: "",
-    categoryName: "",
-    storeName: "",
+    categoryName: categoryName || "",
+    storeName: storeName || "",
     minPrice: 0,
     maxPrice: 1000000,
     minRating: 1,
   });
+
+  useEffect(() => {
+    const updated = {
+      ...activeFilters,
+      name: keyword || "",
+      categoryName: categoryName || "",
+      storeName: storeName || "",
+      page: 1,
+    };
+
+    setActiveFilters(updated);
+    setDraftFilters(updated);
+  }, [keyword, categoryName, storeName]);
 
   const [draftFilters, setDraftFilters] = useState(activeFilters);
 
@@ -104,7 +120,6 @@ const ProductsPage = () => {
     isMounted.current = true;
     fetchProducts();
   }, [fetchProducts]);
-
 
   return (
     <div className="page-body-background in-center">
@@ -290,7 +305,7 @@ const ProductsPage = () => {
                 <FaSearch size={14} /> <FaFilter size={14} />
               </span>
             </span>
-            
+
             <span className="flex w-full px-2 mt-3">SORT BY</span>
             <select
               value={draftFilters.sortBy}
@@ -316,7 +331,6 @@ const ProductsPage = () => {
               <option value="asc">Ascending</option>
             </select>
 
-          
             <span className="flex w-full px-2 mt-3">FILTER BY</span>
 
             <div className="flex flex-col in-center w-full p-2 gap-1">

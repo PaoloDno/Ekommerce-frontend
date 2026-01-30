@@ -15,7 +15,7 @@ const LandingFeatureComponent = () => {
     
     return (
       <div className={`landing-feature-card`}>
-        <div className="landing-feature-card-image in-center">
+        <div className="landing-feature-card-image in-center overflow-hidden">
           <img src={image} alt={title} className="bg-cover object-cover" />
           <div className="landing-feature-gradient z-20" />
         </div>

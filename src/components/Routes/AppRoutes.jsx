@@ -20,9 +20,6 @@ import ProductDisplayPage from "../../pages/ProductPage/ProductPageDisplay.jsx";
 import AddProductPage from "../../pages/ProductPage/AddProductPage.jsx";
 import ProductsPage from "../../pages/ProductPage/ProductsPage.jsx";
 
-// category
-import CategoriesPage from "../../pages/CategoriesPage/CategoriesPage.jsx";
-
 // cart
 import CartOwnerPage from "../../pages/CartPage/CartOwnerPage.jsx";
 
@@ -40,7 +37,6 @@ import ProtectedRoute from "./ProtectedRoutes.jsx";
 import AdminPage from "../../pages/AdminPage/AdminPage.jsx";
 import OrderIdPage from "../../pages/OrderPage/OrderIdPage.jsx";
 import StoreOrdersPage from "../../pages/SellerPage/StoreOrdersPage.jsx";
-//import StoreOrderPage from "../../pages/SellerPage/StoreOrderPage.jsx";
 
 const AppRoutes = () => {
   return (
@@ -50,7 +46,7 @@ const AppRoutes = () => {
       <Route
         path="/home"
         element={
-          <ProtectedRoute toAdmin >
+          <ProtectedRoute toAdmin>
             <HomePage />
           </ProtectedRoute>
         }
@@ -80,10 +76,10 @@ const AppRoutes = () => {
       />
       <Route path="/store-orders/:status" element={<StoreOrdersPage />} />
       {/* <Route path="/store-order/:itemId" element={<StoreOrderPage />} />*/}
-      
+
       {/* cart 
       // <Route path="/cart" element={<CategoriesPage />} /> */}
-      
+
       {/* products */}
       <Route
         path="/create-product/:storeId"
@@ -95,21 +91,25 @@ const AppRoutes = () => {
       />
       <Route path="/product/:productId" element={<ProductDisplayPage />} />
       <Route path="/products" element={<ProductsPage />} />
-      
+      <Route path="/products/search/:keyword" element={<ProductsPage />} />
+      <Route
+        path="/products/category/:categoryName"
+        element={<ProductsPage />}
+      />
+      <Route path="/products/store/:storeName" element={<ProductsPage />} />
+
       {/* orders */}
       <Route path="/order" element={<CreateOrdersPage />} />
       <Route path="/orderId/:orderId" element={<OrderIdPage />} />
       <Route path="/order-user" element={<UsersOrderPage />} />
-      
+
       {/* orders */}
       <Route path="/admin" element={<AdminPage />} />
-      
 
       {/* handle errors*/}
       <Route path="/token-error" element={<TokenErrorPage />} />
       <Route path="/unauthorize" element={<NotAuthorizedPage />} />
       <Route path="*" element={<ErrorPage />} />
-
     </Routes>
   );
 };

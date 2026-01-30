@@ -1,6 +1,7 @@
 import { useMemo } from "react";
 import { useTheme } from "../../../context/ThemeContext";
 import { FEATURE_CONFIG } from "./featureConfig";
+import { Link } from "react-router-dom";
 
 const LandingFeatureRows = () => {
   const { current } = useTheme();
@@ -61,9 +62,9 @@ const LandingFeatureRows = () => {
         <div className="grid grid-cols-[2fr_1fr] px-2 py-1 items-center">
           <span className="truncate font-accent text-stylep2">{title}</span>
           <span className="flex w-full items-center justify-end">
-          <a href={link} className="landing-feature-link">
+          <Link to={`products/category/${link}`} className="landing-feature-link">
             see more
-          </a>
+          </Link>
           </span>
         </div>
       </div>

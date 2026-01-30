@@ -20,17 +20,24 @@ function SearchBar() {
 
   const handleSearch = () => {
     const safeQuery = santiizeSearchInput(query);
+    if (!safeQuery) return;
 
-    if (safeQuery) {
-      navigate(`/search?type=${filter}&query=${encodeURIComponent(safeQuery)}`);
+    if (filter === "product") {
+      navigate(`/products/search/${encodeURIComponent(safeQuery)}`);
+    }
+
+    if (filter === "category") {
+      navigate(`/products/category/${encodeURIComponent(safeQuery)}`);
+    }
+
+    if (filter === "store") {
+      navigate(`/products/store/${encodeURIComponent(safeQuery)}`);
     }
   };
 
   /* handle open */
   const [open, setOpen] = useState(false);
   const dropdownRef = useRef(null);
-
-  
 
   useEffect(() => {
     const handleClickOutside = (evernt) => {
@@ -46,9 +53,12 @@ function SearchBar() {
 
   return (
     <div className="header-component-search" ref={dropdownRef}>
-      <button onClick={() => setOpen((prev) => !prev)} className="flex text-stylep2 text-skin-color1 cursor-pointer bg-opacity-10 
-      bg-skin-fill-2 ml-2 p-3 relative opacity-100 md:opacity-80 hover:opacity-100 in-center">
-        <FaSearch className="text-stylep2"/>
+      <button
+        onClick={() => setOpen((prev) => !prev)}
+        className="flex text-stylep2 text-skin-color1 cursor-pointer bg-opacity-10 
+      bg-skin-fill-2 ml-2 p-3 relative opacity-100 md:opacity-80 hover:opacity-100 in-center"
+      >
+        <FaSearch className="text-stylep2" />
       </button>
       {/* Dropdown */}
 
@@ -75,13 +85,18 @@ function SearchBar() {
           />
 
           {/* Search Button */}
-          <button className="header-component-search-icon" onClick={handleSearch}>
+          <button
+            className="header-component-search-icon"
+            onClick={handleSearch}
+          >
             <FaSearch />
           </button>
-          <button className="header-component-search-icon" onClick={() => setOpen(false)}>
+          <button
+            className="header-component-search-icon"
+            onClick={() => setOpen(false)}
+          >
             <FaXmark />
           </button>
-          
         </div>
       )}
     </div>
