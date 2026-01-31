@@ -65,21 +65,7 @@ const StoreIdPage = () => {
     };
   }, [fetchStore, token, storeId]);
 
-  if (!token) {
-    return (
-      <div className="page-section">
-        <div className="page-body">
-          <p className="text-white p-4">Please login to continue</p>
-          <button
-            onClick={() => navigate("/login")}
-            className="px-4 py-2 mt-2 bg-green-500 text-white rounded-md hover:bg-blue-600"
-          >
-            Go to Login
-          </button>
-        </div>
-      </div>
-    );
-  }
+  
 
   if (isPending) {
     return (
