@@ -38,44 +38,46 @@ const StoreIdPage = () => {
   const [loading, setLoading] = useState(true);
 
   const fetchStore = useCallback(async () => {
-    if (!token) return;
-
-    try {
-      const resultAction = await dispatch(getStoreIdAction(storeId));
-      if (getStoreIdAction.fulfilled.match(resultAction) && isMounted.current) {
-        setStore(resultAction.payload.data);
-        console.log("Store: ", resultAction.payload.data);
-      }
-    } catch (error) {
-      console.error(error);
-    } finally {
-      if (isMounted) setLoading(false);
+  try {
+    const resultAction = await dispatch(getStoreIdAction(storeId));
+    if (getStoreIdAction.fulfilled.match(resultAction) && isMounted.current) {
+      setStore(resultAction.payload.data);
+      console.log("Store: ", resultAction.payload.data);
     }
-  }, [dispatch, token, storeId]);
+  } catch (error) {
+    console.error(error);
+  } finally {
+    if (isMounted.current) setLoading(false);
+  }
+}, [dispatch, storeId]); // removed token dependency
 
-  useEffect(() => {
-    isMounted.current = true;
-    if (token) {
-      setLoading(true);
-      fetchStore();
-    }
+useEffect(() => {
+  isMounted.current = true;
+  setLoading(true);
+  fetchStore();
 
-    return () => {
-      isMounted.current = false;
-    };
-  }, [fetchStore, token, storeId]);
+  return () => {
+    isMounted.current = false;
+  };
+}, [fetchStore, storeId]); // removed token dependency
+
 
   
 
   if (isPending) {
     return (
-      <div className="flex justify-center items-center w-full h-full">
+  <div className="bg-skin-primary text-skin-color1 w-full h-full in-center running on render 1st API CALLS take awhile">
         Backend Loading...
       </div>
     );
   }
 
-  if (loading) return <div>Loading store...</div>;
+if (loading) return (
+  <div className="bg-skin-primary text-skin-color1 w-full h-full in-center running on render 1st API CALLS take awhile">
+    Loading store...
+  </div>
+);
+
 
   const renderStars = (input) => {
     const stars = [];
@@ -315,6 +317,12 @@ const StoreIdPage = () => {
             className="md:flex md:flex-col hidden rounded-lg w-full h-full p-2 min-h-[82vh]
           items-start justify-start bg-skin-primary space-y-1"
           >
+            { !token && 
+              <div className="flex flex-row w-full in-center px-2 py-1 text-stylep4 gap-2 text-skin-color1 bg-skin-green/90">
+                LOGIN TO REVIEW AND ADD PRODUCTS TO CART <Link className="flex in-center px-4 py-1 bg-skin-fill-4 text-skin-colorHigh rounded-full">LOGIN/SIGNUP</Link>
+              </div>
+            }
+
             <ProductPaginationDesktop products={store.products} />
 
             <ReviewPaginationDesktop
