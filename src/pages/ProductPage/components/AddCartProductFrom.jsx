@@ -73,13 +73,13 @@ const handleInput = (e) => {
           Add Product to Cart
         </h2>
 
-          <div className="flex flex-row gap-1 items-center border h-[120px] py-2 px-1 rounded-lg bg-skin-buttonColor-1 text-skin-color1 w-full">
-            <div className="w-[120px] h-[120px]">
+          <div className="flex flex-row gap-1 items-start justify-start border-2 overflow-hidden border-black/40 h-[140px] p-0 rounded-lg bg-skin-buttonColor-1 text-skin-color1 w-full">
+            <div className="w-[140px] h-[140px] overflow-hidden">
               <ProductImages productImage={productImage} />
             </div>
             <div className="flex flex-col text-stylep4">
-              <p className="font-semibold">{name}</p>
-              <p className="opacity-90 line-clamp-2">{description}</p>
+              <p className="font-semibold truncate">{name}</p>
+              <p className="opacity-90 line-clamp-2 truncate">{description}</p>
               <p className="opacity-90">₱ {price * quantity} - {"("}₱ {price}/item{")"}</p>
               <p className="opacity-90">Stock: {stock}</p>
             </div>
@@ -87,26 +87,26 @@ const handleInput = (e) => {
 
           <form onSubmit={handleSubmit} className="flex flex-col gap-3 w-full py-2">
             <div className="flex justify-center items-center gap-3 text-stylep2">
-              <button type="button" onClick={() => changeQty(-1)} className="bg-skin-buttonColor-1 text-skin-color1 in-center w-[20px] h-[20px] p-2 box-content">−</button>
+              <button type="button" onClick={() => changeQty(-1)} className="bg-skin-buttonColor-1 rounded-md text-skin-color1 in-center w-[20px] h-[20px] p-2 box-content">−</button>
               <input
                 type="number"
                 value={quantity}
                 onChange={handleInput}
-                className="w-[90px] text-center border rounded py-1 bg-skin-fill-4 text-skin-colorHigh in-center"
+                className="w-[90px] text-center border rounded-md py-1 bg-skin-fill-4 text-skin-colorHigh in-center"
               />
-              <button type="button" onClick={() => changeQty(1)} className="bg-skin-buttonColor-1 text-skin-color1 in-center w-[20px] h-[20px] p-2 box-content">+</button>
+              <button type="button" onClick={() => changeQty(1)} className="bg-skin-buttonColor-1 rounded-md text-skin-color1 in-center w-[20px] h-[20px] p-2 box-content">+</button>
             </div>
 
-            <button type="submit" className="bg-skin-cart text-skin-color1 py-2 rounded-md">
+            <button type="submit" className="bg-skin-cart text-skin-color1 py-2 rounded-md text-stylep3">
               ADD TO CART
             </button>
           </form>
 
           <div className="flex flex-row in-center text-stylep3 w-full gap-2">
-            <button onClick={handleClose} className="opacity-80 in-center hover:opacity-100 rounded-sm bg-skin-red text-skin-color1 min-w-[110px]">
+            <button onClick={handleClose} className="opacity-80 in-center rounded-md hover:opacity-100 bg-skin-red text-skin-color1 min-w-[110px]">
               CANCEL
             </button>
-            <Link to={`/store/${seller?._id}`} className="flex opacity-70 hover:opacity-100 rounded-sm bg-skin-fill-3 text-skin-colorContent truncate min-w-[110px] in-center">
+            <Link to={`/store/${seller?._id}`} className="flex opacity-70 rounded-md hover:opacity-100 bg-skin-fill-3 text-skin-colorContent truncate min-w-[110px] in-center">
               VISIT STORE
             </Link>
           </div>

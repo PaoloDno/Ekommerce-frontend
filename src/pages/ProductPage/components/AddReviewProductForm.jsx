@@ -35,8 +35,8 @@ const ReviewForm = ({ onClose, onSubmit, productId }) => {
   };
 
   return (
-    <div className="fixed inset-0 flex items-center justify-center bg-black/50 z-50 font-display">
-      <div className="bg-skin-colorContent text-skin-colorContent rounded-lg p-4 w-[90%] max-w-[400px] shadow-lg">
+    <div className="fixed inset-0 flex items-center justify-center bg-black/70 z-50 font-display">
+      <div className="bg-skin-colorContent text-skin-colorContent bg-opacity-90 rounded-lg p-4 w-[90%] max-w-[400px] shadow-lg">
         <h2 className="text-styleh4 font-semibold text-center mb-2">
           Leave a Review
         </h2>
@@ -63,7 +63,7 @@ const ReviewForm = ({ onClose, onSubmit, productId }) => {
             <textarea
               value={comment}
               onChange={(e) => setComment(e.target.value)}
-              className="w-full h-24 p-2 rounded-md border bg-skin-buttonColor-1 text-skin-color1 resize-none"
+              className="w-full h-24 p-2 rounded-md bg-skin-colorContent border-2 border-skin-colorBorder2 text-skin-colorContent resize-none"
             />
           </div>
 
@@ -73,13 +73,13 @@ const ReviewForm = ({ onClose, onSubmit, productId }) => {
             <button
               type="button"
               onClick={handleClose}
-              className="px-3 py-1 rounded-md bg-skin-red w-[120px]"
+              className="px-3 py-1 rounded-md bg-skin-red text-skin-color1 w-[120px]"
             >
               Cancel
             </button>
             <button
               type="submit"
-              className="px-3 py-1 rounded-md bg-skin-green w-[120px]"
+              className="px-3 py-1 rounded-md bg-skin-green text-skin-color1 w-[120px]"
             >
               Submit
             </button>

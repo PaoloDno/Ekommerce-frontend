@@ -12,6 +12,7 @@ import {
   FaStore,
   FaStar,
   FaRegStar,
+  FaCirclePlus,
 } from "react-icons/fa6";
 
 import ReviewForm from "./components/AddReviewProductForm";
@@ -117,17 +118,17 @@ const ProductDisplayPage = () => {
 
           {/* DESKTOP ACTIONS + REVIEWS */}
           <div className="hidden md:flex flex-col w-[33.333%] h-full gap-2">
-            <div className="grid gap-2 bg-skin-colorContent p-2 rounded-lg text-skin-color1">
+            <div className="grid gap-2 bg-skin-colorContent p-2 rounded-lg text-skin-color1 text-stylep3">
               <button
                 onClick={() => setShowAddCartForm(true)}
-                className="flex items-center justify-start px-2 gap-2 bg-skin-cart text-skin-color1 py-2 rounded-sm md:rounded-lg lg:text-styleh3"
+                className="flex items-center justify-start px-2 gap-2 bg-skin-cart text-skin-color1 py-2 rounded-sm md:rounded-lg lg:text-styleh4"
               >
-                <FaCartShopping /> Add to Cart
+                <FaCirclePlus size={16} className="text-green-600"/><FaCartShopping size={16} /> ADD TO CART 
               </button>
 
               <button
                 onClick={() => setShowReviewForm(true)}
-                className="flex items-center justify-start px-2 gap-2 bg-skin-buttonColor-2 rounded-lg"
+                className="flex items-center justify-start px-2 gap-2 bg-skin-buttonColor-1 py-1 rounded-lg"
               >
                 <FaNoteSticky /> Leave A Review
               </button>
@@ -173,17 +174,17 @@ const ProductDisplayPage = () => {
           <div className="w-[50%] md:w-[33.333%] h-full grid grid-cols-2 gap-0 bg-skin-colorContent text-start items-start justify-start
              text-skin-colorContent font-Receipt px-2 py-2 rounded-lg overflow-y-auto text-stylep3">
             <div className="col-span-2">
-              <h2 className="text-styleh3 px-2 py-1 bg-skin-fill-4 text-skin-colorHigh">
+              <h2 className="text-styleh3 px-2 py-1 bg-skin-fill-4 rounded-md text-skin-colorHigh font-Receipt">
                 Price: ₱ {product?.price}
               </h2>
               <div className="border-b w-full" />
             </div>
 
-            <div className="col-span-2">P.Name: {product?.name}</div>
-            <div>SKU: {product?.sku}</div>
-            <div >Brand: {product?.brand}</div>
+            <div className="col-span-2 truncate">P.Name: {product?.name}</div>
+            <div className="col-span-2 truncate">SKU: {product?.sku}</div>
+            <div className="col-span-2 truncate">Brand: {product?.brand}</div>
             <div className="col-span-2 flex items-center gap-1">
-              Rating: {renderStars(product?.averageRating)}
+              Rating: <span className="flex flex-row bg-gray-500/60 rounded-md px-3 py-1">{renderStars(product?.averageRating)}</span> 
             </div>
             <div className="col-span-2">Stocks: {product?.stock}</div>
             <div className="col-span-2">
@@ -208,31 +209,31 @@ const ProductDisplayPage = () => {
         </div>
 
         {/* MOBILE ACTIONS */}
-        <div className="md:hidden w-full mt-3 grid grid-cols-2 gap-2 bg-skin-colorContent text-skin-colorContent p-2 rounded-lg">
+        <div className="md:hidden w-full mt-3 grid grid-cols-2 gap-2 bg-skin-colorContent text-skin-colorContent p-2 rounded-lg text-stylep3">
           <button
             onClick={() => setShowAddCartForm(true)}
-            className="flex items-center justify-center gap-2 text-skin-color1 bg-skin-green py-1 rounded-sm"
+            className="flex items-center justify-center gap-2 text-skin-color1 bg-skin-green py-2 rounded-sm"
           >
-            <FaCartShopping /> Add to Cart
+            <FaCartShopping /> Add to Cart <FaCirclePlus className="text-orange-500" />
           </button>
 
           <button
             onClick={() => setShowReviewForm(true)}
-            className="flex items-center justify-center gap-2 text-skin-color2 bg-skin-buttonColor-2 py-1 rounded-sm"
+            className="flex items-center justify-center gap-2 text-skin-color2 bg-skin-buttonColor-1 py-2 rounded-sm"
           >
             <FaNoteSticky /> Review
           </button>
 
           <Link
             to={`/store/${product?.seller?._id}`}
-            className="flex items-center justify-center gap-2 text-skin-color1 bg-skin-buttonColor-2 py-1 rounded-sm"
+            className="flex items-center justify-center gap-2 text-skin-color1 bg-skin-buttonColor-1 py-2 rounded-sm"
           >
             <FaStore /> Store
           </Link>
 
           <Link
             to={`/store/${product?.seller?._id}`}
-            className="flex items-center justify-center gap-2 text-skin-color1 bg-skin-red py-1 rounded-sm"
+            className="flex items-center justify-center gap-2 text-skin-color1 bg-skin-red py-2 rounded-sm"
           >
             <FaCircleExclamation /> Report
           </Link>

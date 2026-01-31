@@ -74,13 +74,13 @@ const LandingHeroComponent = () => {
       text-skin-color1 text-styleh3 font-accent "
     >
       <div
-        className="flex flex-row w-full h-[62vh] relative
+        className="flex flex-row w-full h-[58vh] relative
         text-skin-color1 text-styleh3 font-accent md:hidden"
       >
         <div className="absolute h-[100%] rotate-180 opacity-20 right-0 
              top-0 bg-gradient-back-transparent w-full -z-10" />
 
-        <div className="relative top-5 w-full h-[58vh] z-10 ">
+        <div className="relative top-5 w-full h-[55vh] z-10 ">
           <LandingHeroCarouselMobileComponent
             items={heroItems}
             itemsPerView={1}
@@ -88,10 +88,10 @@ const LandingHeroComponent = () => {
         </div>
       </div>
       <div
-      className="md:flex flex-row w-full h-[85vh] relative
+      className="md:flex flex-row w-full h-[65vh] relative
         text-skin-color1 text-styleh3 font-accent hidden"
       >
-      <div className="relative top-5 w-full h-[82vh] z-10 mb-6">
+      <div className="relative top-5 w-full h-[62vh] z-10 mb-6">
         <LandingHeroCarouselDesktopComponent
             items={heroItems}
             itemsPerView={1}
